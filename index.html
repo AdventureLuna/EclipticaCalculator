@@ -1,21 +1,1135 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ecliptica Calculator</title>
-  <link rel="stylesheet" href="./style.css">
-  <script src="./script.js" defer></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ecliptica Build Forge</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #f7f2ff;
+      --muted: #ad9ebd;
+      --panel: rgba(18, 7, 31, .86);
+      --panel-2: rgba(35, 14, 55, .82);
+      --class-rgb: 255, 0, 244;
+      --class-deep: #170319;
+      --class-logo: url("pictures/Class7.png");
+      --line: rgba(var(--class-rgb), .19);
+      --accent: rgb(var(--class-rgb));
+      --physical: #9b9b94;
+      --fire: #ff612f;
+      --frost: #42cfff;
+      --electric: #ffe31f;
+      --luminous: #dbef71;
+      --shadow: #b83cff;
+      --poison: #ff3fc8;
+      --positive: #8ef6b1;
+      --negative: #ff8b9c;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 11% 18%, rgba(var(--class-rgb), .31), transparent 31rem),
+        radial-gradient(circle at 84% 75%, rgba(var(--class-rgb), .17), transparent 38rem),
+        linear-gradient(145deg, var(--class-deep), #07030b 66%, var(--class-deep));
+      background-attachment: fixed;
+    }
+
+    body[data-class="Spellsword"] { --class-rgb: 255, 20, 28; --class-deep: #1c0307; --class-logo: url("pictures/Class1.png"); }
+    body[data-class="Twinmage"] { --class-rgb: 0, 204, 24; --class-deep: #031a0a; --class-logo: url("pictures/Class2.png"); }
+    body[data-class="Gunmancer"] { --class-rgb: 191, 207, 229; --class-deep: #0a0e16; --class-logo: url("pictures/Class3.png"); }
+    body[data-class="Fistmage"] { --class-rgb: 255, 235, 0; --class-deep: #1b1700; --class-logo: url("pictures/Class4.png"); }
+    body[data-class="Spellhammer"] { --class-rgb: 255, 126, 0; --class-deep: #211003; --class-logo: url("pictures/Class5.png"); }
+    body[data-class="Shield Mage"] { --class-rgb: 0, 229, 239; --class-deep: #021b20; --class-logo: url("pictures/Class6.png"); }
+    body[data-class="Thaumaturge"] { --class-rgb: 255, 0, 244; --class-deep: #1c031d; --class-logo: url("pictures/Class7.png"); }
+    body[data-class="Nekomancer"] { --class-rgb: 139, 28, 255; --class-deep: #120326; --class-logo: url("pictures/Class8.png"); }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .22;
+      background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, black, transparent 92%);
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      z-index: 0;
+      right: -5vw;
+      bottom: -16vh;
+      width: min(68vw, 920px);
+      height: min(82vh, 920px);
+      pointer-events: none;
+      opacity: .075;
+      background: var(--class-logo) right bottom / contain no-repeat;
+      filter: saturate(1.25);
+    }
+
+    button, input, select { font: inherit; }
+    button { color: inherit; }
+
+    .shell {
+      position: relative;
+      z-index: 1;
+      width: min(1600px, 100%);
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow {
+      margin: 0 0 3px;
+      color: rgb(var(--class-rgb));
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.35rem, 2vw, 2rem);
+      line-height: 1.05;
+      letter-spacing: -.03em;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      min-width: 0;
+    }
+
+    .class-logo {
+      width: 58px;
+      height: 58px;
+      flex: 0 0 auto;
+      object-fit: contain;
+      filter: drop-shadow(0 7px 16px rgba(var(--class-rgb), .28));
+    }
+
+    .reset, .clear-search {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: rgba(255,255,255,.045);
+      padding: 9px 13px;
+      cursor: pointer;
+    }
+
+    .reset:hover, .clear-search:hover { border-color: rgba(217, 164, 255, .55); }
+
+    .top-actions {
+      display: flex;
+      align-items: end;
+      gap: 9px;
+    }
+
+    .class-picker {
+      display: grid;
+      gap: 4px;
+      color: #bdaac9;
+      font-size: .61rem;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .class-picker select {
+      min-width: 170px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      outline: none;
+      color: var(--ink);
+      background: rgba(12, 4, 20, .82);
+      padding: 8px 10px;
+      text-transform: none;
+    }
+
+    .class-picker select:focus { border-color: var(--accent); }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(310px, 390px) minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: linear-gradient(160deg, rgba(var(--class-rgb), .105), var(--panel));
+      box-shadow: 0 24px 70px rgba(0,0,0,.32);
+      backdrop-filter: blur(14px);
+    }
+
+    .stats-panel {
+      position: sticky;
+      top: 18px;
+      max-height: calc(100vh - 36px);
+      overflow: auto;
+      padding: 20px;
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: .78rem;
+      color: #cbb7da;
+      letter-spacing: .17em;
+      text-transform: uppercase;
+    }
+
+    .stat-list {
+      margin-top: 15px;
+      display: grid;
+      gap: 3px;
+      font-family: "Arial Narrow", "Roboto Condensed", Impact, sans-serif;
+      font-stretch: condensed;
+      font-size: .94rem;
+      font-weight: 800;
+      font-style: italic;
+      text-transform: none;
+    }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: baseline;
+      min-height: 20px;
+      padding: 1px 5px;
+      border-radius: 5px;
+      cursor: help;
+    }
+
+    .stat-row.element { padding-left: 28px; }
+    .stat-row.changed { background: rgba(255,255,255,.045); }
+    .stat-row .value { color: #fff; white-space: nowrap; }
+    .stat-row .delta { margin-left: 4px; font-size: .7rem; font-style: normal; }
+    .delta.up { color: var(--positive); }
+    .delta.down { color: var(--negative); }
+    .stat-gap { height: 13px; }
+    .physical { color: var(--physical); }
+    .fire { color: var(--fire); }
+    .frost { color: var(--frost); }
+    .electric { color: var(--electric); }
+    .luminous { color: var(--luminous); }
+    .shadow { color: var(--shadow); }
+    .poison { color: var(--poison); }
+
+    .stat-tooltip {
+      position: fixed;
+      z-index: 1000;
+      display: none;
+      width: min(650px, calc(100vw - 28px));
+      max-height: min(440px, calc(100vh - 28px));
+      overflow: auto;
+      border: 1px solid rgba(211, 158, 255, .48);
+      border-radius: 13px;
+      color: var(--ink);
+      background: rgba(13, 5, 23, .98);
+      box-shadow: 0 22px 65px rgba(0,0,0,.62);
+      padding: 12px;
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: .75rem;
+      font-style: normal;
+      text-transform: none;
+      backdrop-filter: blur(16px);
+      pointer-events: none;
+    }
+
+    .stat-tooltip.visible { display: block; }
+    .stat-tooltip h3 { margin: 0 0 9px; font-size: .88rem; }
+    .stat-tooltip table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+    .stat-tooltip th {
+      color: #bdaac9;
+      font-size: .62rem;
+      letter-spacing: .09em;
+      text-align: left;
+      text-transform: uppercase;
+    }
+    .stat-tooltip th, .stat-tooltip td {
+      padding: 6px 7px;
+      border-bottom: 1px solid rgba(224, 198, 255, .11);
+      vertical-align: top;
+      overflow-wrap: anywhere;
+    }
+    .stat-tooltip th:nth-child(1) { width: 16%; }
+    .stat-tooltip th:nth-child(2) { width: 16%; }
+    .stat-tooltip th:nth-child(3) { width: 27%; }
+    .stat-tooltip th:nth-child(4) { width: 41%; }
+    .stat-tooltip .source-value { color: #fff; font-weight: 800; white-space: nowrap; }
+    .stat-tooltip .source-type { color: #d3a8f1; }
+    .cap-calculation {
+      margin-top: 10px;
+      border: 1px solid rgba(255, 222, 73, .22);
+      border-radius: 9px;
+      color: #d8cde0;
+      background: rgba(255, 211, 45, .055);
+      padding: 8px 9px;
+      line-height: 1.5;
+    }
+    .cap-calculation strong { color: #ffe66c; }
+    .cap-formula { color: #f6effa; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+
+    .explorer {
+      padding: 18px;
+      min-width: 0;
+    }
+
+    .picked-head, .catalog-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 1rem;
+      letter-spacing: -.01em;
+    }
+
+    .summary {
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    .picked-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      min-height: 49px;
+      margin: 12px 0 19px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(0,0,0,.17);
+    }
+
+    .empty {
+      align-self: center;
+      color: #887994;
+      font-size: .85rem;
+    }
+
+    .picked-item {
+      display: grid;
+      grid-template-columns: 32px minmax(80px, 1fr) auto;
+      align-items: center;
+      gap: 7px;
+      max-width: 265px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 5px 6px;
+      background: rgba(255,255,255,.035);
+    }
+
+    .picked-item.rare { border-color: rgba(78, 162, 255, .45); background: rgba(34, 105, 181, .1); }
+    .picked-item.legendary { border-color: rgba(255, 157, 56, .5); background: rgba(181, 87, 25, .11); }
+    .picked-item img { width: 30px; height: 30px; object-fit: contain; }
+    .picked-name { overflow: hidden; font-size: .74rem; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+    .picked-stepper { display: flex; align-items: center; gap: 5px; }
+    .picked-stepper button {
+      width: 22px;
+      height: 22px;
+      padding: 0;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: rgba(255,255,255,.06);
+      cursor: pointer;
+    }
+    .picked-stepper span { min-width: 16px; text-align: center; font-size: .75rem; font-weight: 800; }
+
+    .tools {
+      display: grid;
+      grid-template-columns: minmax(180px, 1fr) 160px 150px;
+      gap: 8px;
+      margin: 11px 0 14px;
+    }
+
+    .control {
+      width: 100%;
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      outline: none;
+      color: var(--ink);
+      background: rgba(5, 1, 10, .5);
+      padding: 10px 11px;
+    }
+    .control:focus { border-color: var(--accent); }
+
+    .catalog {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 10px;
+    }
+
+    .upgrade {
+      position: relative;
+      display: grid;
+      grid-template-columns: 58px minmax(0, 1fr);
+      gap: 11px;
+      min-height: 116px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: rgba(255,255,255,.032);
+      padding: 11px;
+      text-align: left;
+      cursor: pointer;
+      transition: transform .13s ease, border-color .13s ease, background .13s ease;
+      user-select: none;
+    }
+
+    .upgrade:hover {
+      z-index: 2;
+      transform: translateY(-2px);
+      border-color: rgba(205, 147, 255, .55);
+      background: rgba(129, 67, 164, .1);
+    }
+
+    .upgrade.rare { border-top-color: #4ea2ff; }
+    .upgrade.legendary { border-top-color: #ff9d38; }
+    .upgrade.selected { box-shadow: inset 0 0 0 1px rgba(205, 147, 255, .38); }
+    .upgrade img { width: 58px; height: 58px; object-fit: contain; filter: drop-shadow(0 5px 8px rgba(0,0,0,.4)); }
+    .upgrade-copy { min-width: 0; }
+    .upgrade-name { margin: 1px 28px 2px 0; font-size: .84rem; line-height: 1.15; }
+    .meta { color: var(--muted); font-size: .64rem; letter-spacing: .08em; text-transform: uppercase; }
+    .upgrade.rare .meta { color: #83bdff; }
+    .upgrade.legendary .meta { color: #ffb86f; }
+    .effect { margin: 7px 0 0; color: #c9bdcf; font-size: .69rem; line-height: 1.35; }
+    .count {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      display: grid;
+      place-items: center;
+      min-width: 25px;
+      height: 25px;
+      border-radius: 999px;
+      color: #190523;
+      background: #e6b6ff;
+      font-size: .7rem;
+      font-weight: 900;
+    }
+
+    .no-results {
+      grid-column: 1 / -1;
+      padding: 34px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .shell { padding: 14px; }
+      .layout { grid-template-columns: 1fr; }
+      .stats-panel { position: relative; top: 0; max-height: none; }
+      .tools { grid-template-columns: 1fr 1fr; }
+      .tools input { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 520px) {
+      .topbar { align-items: flex-start; flex-direction: column; }
+      .top-actions { width: 100%; align-items: end; }
+      .class-picker { flex: 1; }
+      .class-picker select { width: 100%; min-width: 0; }
+      .explorer, .stats-panel { padding: 14px; }
+      .tools { grid-template-columns: 1fr; }
+      .tools input { grid-column: auto; }
+      .catalog { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
-  <main class="page-shell">
-    <section class="status-card" aria-labelledby="page-title">
-      <p class="eyebrow">GitHub Pages Test</p>
-      <h1 id="page-title">Ecliptica Calculator</h1>
-      <p class="lede">GitHub Pages is working</p>
-      <button id="test-button" type="button">Test JavaScript</button>
-      <p id="status-message" class="status-message" aria-live="polite">Click the button to test JavaScript</p>
-    </section>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <img class="class-logo" id="class-logo" src="pictures/Class7.png" alt="">
+        <div>
+          <p class="eyebrow" id="active-class-label">Thaumaturge</p>
+          <h1>Ecliptica Build Forge</h1>
+        </div>
+      </div>
+      <div class="top-actions">
+        <label class="class-picker">Class
+          <select id="class-select">
+            <option>Spellsword</option>
+            <option>Twinmage</option>
+            <option>Gunmancer</option>
+            <option>Fistmage</option>
+            <option>Spellhammer</option>
+            <option>Shield Mage</option>
+            <option>Thaumaturge</option>
+            <option>Nekomancer</option>
+          </select>
+        </label>
+        <button class="reset" id="reset-upgrades" type="button">Reset selected upgrades</button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="panel stats-panel">
+        <h2 class="panel-title">Current statistics</h2>
+        <div class="stat-list" id="stats"></div>
+      </aside>
+
+      <section class="panel explorer">
+        <div class="picked-head">
+          <h2 class="section-title">Picked upgrades</h2>
+          <span class="summary" id="picked-summary">0 upgrades</span>
+        </div>
+        <div class="picked-list" id="picked-list"></div>
+
+        <div class="catalog-head">
+          <h2 class="section-title">Upgrade explorer</h2>
+          <span class="summary" id="result-summary"></span>
+        </div>
+        <div class="tools">
+          <input class="control" id="search" type="search" placeholder="Search upgrades…" autocomplete="off">
+          <select class="control" id="family-filter" aria-label="Filter by family">
+            <option value="">All families</option>
+            <option>Thaumaturge</option>
+            <option>Endurance Crystal</option>
+            <option>Mobility Crystal</option>
+            <option>Chronowizard</option>
+          </select>
+          <select class="control" id="rarity-filter" aria-label="Filter by rarity">
+            <option value="">All rarities</option>
+            <option>Common</option>
+            <option>Rare</option>
+            <option>Legendary</option>
+          </select>
+        </div>
+        <div class="catalog" id="catalog"></div>
+      </section>
+    </div>
   </main>
+  <div class="stat-tooltip" id="stat-tooltip" role="tooltip"></div>
+
+  <script>
+    const U = [
+      ["Thaumaturge","Common","Thaumaturge_Keen_Eye.png","Thaumaturge: Keen Eye","Pain Exchange range +15 m (+15 m)."],
+      ["Thaumaturge","Common","Thaumaturge_Proficiency.png","Thaumaturge: Proficiency","Pain Exchange healing +3 HP (+3); cooldown −15% (−15%)."],
+      ["Thaumaturge","Rare","Thaumaturge_Splitshot.png","Thaumaturge: Splitshot","Foul Postule projectiles +1; spread +15% (+5%); damage −30%."],
+      ["Thaumaturge","Rare","Thaumaturge_Mastery.png","Thaumaturge: Mastery","Pain Exchange energy cost −3% (−3%); reduction capped at 24%."],
+      ["Thaumaturge","Legendary","Thaumaturge_Doping.png","Thaumaturge: Doping","Pain Exchange grants 6 Enforced stacks lasting 1.1 seconds each; damage taken −50% during uptime."],
+      ["Thaumaturge","Legendary","Thaumaturge_Everlife.png","Everlife","Life-energy gain −10% per stack. Revive mechanics are not included."],
+      ["Thaumaturge","Legendary","Thaumaturge_Splashback.png","Thaumaturge: Splashback","Pain Exchange causes 75 additional Poison damage per stack."],
+
+      ["Spellsword","Common","Spellsword_Profiency.png","Spellsword: Proficiency","Piercing Strike range increases by 5 m per stack. Linear stacking."],
+      ["Spellsword","Rare","Spellsword_Mastery.png","Spellsword: Mastery","Bleeding damage restores 1 HP per stack. Linear stacking."],
+      ["Spellsword","Rare","Spellsword_Burst.png","Spellsword: Burst","Utility grants +25% Attack Speed per stack for 3 seconds, but Utility Cooldown Rate is reduced by 20% per stack."],
+      ["Spellsword","Legendary","Spellsword_Swift_Stab.png","Spellsword: Swift Stab","Piercing Strike gains 35% damage per stack from Movement Speed above 100%."],
+      ["Spellsword","Legendary","Spellsword_Shieldbreaker.png","Spellsword: Shieldbreaker","Piercing Strike penetrates armor and deals 25% additional damage, with hyperbolic stacking."],
+      ["Spellsword","Legendary","Spellsword_Whirlwind.png","Spellsword: Whirlwind","A fully charged Piercing Strike releases a Physical-damage whirlwind; charge time rises 10% per stack."],
+
+      ["Twinmage","Common","Twinmage-Hand-Boost-L.png","Twinmage: Sinistra","Left hand gains +5% damage and Attack Speed per stack; right hand loses 3% of each per stack."],
+      ["Twinmage","Common","Twinmage-Hand-Boost-R.png","Twinmage: Dextra","Right hand gains +5% damage and Attack Speed per stack; left hand loses 3% of each per stack."],
+      ["Twinmage","Common","Twinmage_Profiency.png","Twinmage: Proficiency","Quickwarp distance increases by 3 m per stack. Linear stacking."],
+      ["Twinmage","Common","TwinMRush.png","Twinmage: Rush","Applying a status grants 4 Haste stacks, plus 2 more for each additional upgrade stack."],
+      ["Twinmage","Rare","Twinmage_Guarded.png","Twinmage: Guarded","Applying a status grants 4 Enforced stacks, plus 2 more for each additional upgrade stack."],
+      ["Twinmage","Rare","Twinmage_Mastery.png","Twinmage: Mastery","Elemental Hand impacts create a growing splash radius that deals 25% of the projectile damage."],
+      ["Twinmage","Rare","Twinmage_Wicked_Sign.png","Twinmage: Wicked Sign","Quickwarp has a 6.7% chance to grant Empowered, Enforced, Haste and Frenzied stacks; it is guaranteed at 67 HP."],
+      ["Twinmage","Legendary","Twinmage_Retaliation.png","Twinmage: Retaliation","Taking damage matching either Elemental Hand grants 3 Empowered stacks, plus 2 per additional upgrade stack."],
+
+      ["Gunmancer","Common","Gunmancer_Overcharged.png","Gunmancer: Overcharged (VA-11 Blast Cannon)","Blast Cannon beam width grows 5% and Electric Damage rises 15% per stack."],
+      ["Gunmancer","Common","Gunmancer_Proficiency.png","Gunmancer: Proficiency (Firebomb)","Firebomb radius grows by 1 m and Fire Damage rises 7%, with hyperbolic stacking.","Gunmancer_Proficiency_Firebomb"],
+      ["Gunmancer","Common","Gunmancer_Proficiency.png","Gunmancer: Proficiency (Photon Condenser)","The charged Photon Condenser gains one projectile and Luminous Damage rises 7%, with hyperbolic stacking.","Gunmancer_Proficiency_Photon"],
+      ["Gunmancer","Common","Gunmancer_Proficiency.png","Gunmancer: Proficiency (Antimatter Accelerator)","The charged Antimatter Accelerator gains one projectile and Shadow Damage rises 5%, with hyperbolic stacking.","Gunmancer_Proficiency_Antimatter"],
+      ["Gunmancer","Common","Gunmancer_Sidestep.png","Gunmancer: Sidestep","Airblast Dash grants Haste stacks; the wiki does not currently specify the amount."],
+      ["Gunmancer","Legendary","Gunmancer_Marksman.png","Gunmancer: Marksman (VA-11 Blast Cannon)","Periodically toss a coin that redirects a Blast Cannon hit and boosts its explosion by 400%; practical shot damage is about ×1.66."],
+      ["Gunmancer","Legendary","Gunmancer_Mastery.png","Gunmancer: Mastery","Charged Shot Damage rises 50% per stack. Linear stacking."],
+
+      ["Fistmage","Common","Fistmage_Proficiency.png","Fistmage: Proficiency","A successful Deflecting Swipe heals 2 HP per stack and creates an ally-healing aura for half that personal healing."],
+      ["Fistmage","Rare","Fistmage_Mach_Punch.png","Fistmage: Mach Punch","Gain Physical Damage equal to 25% per stack of Movement Speed above 100%."],
+      ["Fistmage","Rare","Fistmage_Mastery.png","Fistmage: Mastery","A successful deflection grants one additional Empowered and Enforced stack per upgrade stack."],
+      ["Fistmage","Rare","FistMRage.png","Fistmage: Rage","Deflecting Swipe grants +100% Attack Speed for 4 seconds and 3 Haste stacks, with one more Haste stack per upgrade stack."],
+      ["Fistmage","Rare","FistMRunner.png","Fistmage: Runner","Movement Speed gradually increases while Aura Fist is charging. Multiplicative linear stacking."],
+      ["Fistmage","Legendary","Fistmage_Apply_Force.png","Fistmage: Apply Force","A deflection grants Apply-Force; a fully charged Aura Fist consumes it to launch a Physical projectile. Swipe cooldown increases 30%."],
+
+      ["Spellhammer","Common","Spellhammer_Proficiency.png","Spellhammer: Proficiency (Jump Smash)","Knockback Force rises 10% and Jump Smash strength rises 5% per stack.","Spellhammer_Proficiency_Jump"],
+      ["Spellhammer","Common","Spellhammer_Proficiency.png","Spellhammer: Proficiency (Chuck)","Knockback Force rises 10% and thrown-hammer gravity drop falls 10% per stack.","Spellhammer_Proficiency_Chuck"],
+      ["Spellhammer","Rare","Spellhammer_Boosted.png","Spellhammer: Boosted","Disperse Blast strength and damage each rise 10% per stack."],
+      ["Spellhammer","Rare","Spellhammer_Mastery.png","Spellhammer: Mastery (Jump Smash)","Landing Jump Smash directly on an enemy reduces its cooldown by 25%, with hyperbolic stacking.","Spellhammer_Mastery_Jump"],
+      ["Spellhammer","Rare","Spellhammer_Mastery.png","Spellhammer: Mastery (Chuck)","The thrown hammer bounces to one additional enemy per stack and loses 5% gravity drop per stack.","Spellhammer_Mastery_Chuck"],
+      ["Spellhammer","Legendary","Spellhammer_Concussion.png","Spellhammer: Concussion (Jump Smash)","A high-power Jump Smash deals extra Electric Damage with a 50% Paralysis chance. Hyperbolic stacking.","Spellhammer_Concussion_Jump"],
+      ["Spellhammer","Legendary","Spellhammer_Concussion.png","Spellhammer: Concussion (Chuck)","A hit creates an Electric area with a 50% Paralysis chance. Hyperbolic stacking.","Spellhammer_Concussion_Chuck"],
+      ["Spellhammer","Legendary","Spellhammer_Juggernaut.png","Spellhammer: Juggernaut (Jump Smash)","A high-power Jump Smash briefly grants Enforced. Linear stacking.","Spellhammer_Juggernaut_Jump"],
+      ["Spellhammer","Legendary","Spellhammer_Juggernaut.png","Spellhammer: Juggernaut (Chuck)","A full-power throw briefly grants Empowered. Linear stacking.","Spellhammer_Juggernaut_Chuck"],
+
+      ["Shield Mage","Common","Shieldmage_Proficiency.png","Shieldmage: Proficiency","The Defensive Stance shield area grows by an amount not currently specified on the wiki. Hyperbolic stacking."],
+      ["Shield Mage","Common","Shieldmage_Unbreakable.png","Shieldmage: Unbreakable","Purple damage received falls 5%, or 10% while the Evasive Maneuver shield is active. Hyperbolic stacking."],
+      ["Shield Mage","Rare","Shieldmage_Ice_Burst.png","Shieldmage: Ice Burst","Each blocked attack increases Ice Burst charge power. Linear stacking."],
+      ["Shield Mage","Rare","Shieldmage_Mastery.png","Shieldmage: Mastery","Evasive Maneuver shield size increases by an amount not currently specified on the wiki. Linear stacking."],
+      ["Shield Mage","Legendary","Shieldmage_Rally_Up.png","Shieldmage: Rally Up","Evasive Maneuver briefly grants Empowered to you and nearby allies. Linear stacking."],
+      ["Shield Mage","Legendary","Shieldmage_Warden.png","Shieldmage: Warden","Evasive Maneuver grants the party Resilience to block one damage instance; Utility cooldown increases 100%."],
+
+      ["Nekomancer","Common","Nekomancer_Proficiency.png","Nekomancer: Proficiency","Slain enemies gain +5% Soul-drop chance and random Soul spawn rate rises 25% per stack."],
+      ["Nekomancer","Rare","Nekomancer_Death_Blossom.png","Nekomancer: Death Blossom","Kitty Totem healing speed rises 10%, range grows 1 m and Overall Damage falls 3% per stack."],
+      ["Nekomancer","Rare","Nekomancer_Mastery.png","Nekomancer: Mastery","Each held Soul grants +2% Overall Damage and +20% Health Regeneration per upgrade stack."],
+      ["Nekomancer","Rare","Nekomancer_Soul_Detonation.png","Nekomancer: Soul Detonation","A dying kitty releases a Shadow explosion with a 50% chance to inflict Breached."],
+      ["Nekomancer","Legendary","Nekomancer_Necropact.png","Nekomancer: Necropact","With a kitty summoned, 600% of damage taken at low HP is redirected to one kitty."],
+
+      ["Endurance Crystal","Common","Fluffy.png","Fluffy","Maximum HP +10 (+10)."],
+      ["Endurance Crystal","Common","Gluttonous.png","Gluttonous","Healing dealt and received +5% (+5%)."],
+      ["Endurance Crystal","Common","Sacrificial_Lamb.png","Sacrificial Lamb","On death, heal all other party members for 15 HP (+15)."],
+      ["Endurance Crystal","Common","Swarm_Enforcer.png","Swarm Enforcer","Defence +1.5% per enemy within 32 m (+1.5%)."],
+      ["Endurance Crystal","Common","Vitality.png","Vitality","Health regeneration +80% (+80%)."],
+      ["Endurance Crystal","Common","Vital_Drain.png","Vital Drain","Critical hits restore 2 HP (+2); unaffected by healing modifiers."],
+      ["Endurance Crystal","Rare","Adrenaline_Fiend.png","Adrenaline Fiend","Utility heals 6 HP; Utility cooldown recovery +7%; healing −15%."],
+      ["Endurance Crystal","Rare","Big_and_Lazy.png","Big and Lazy","After 1s still, regeneration coefficient +200% (+50%); no regeneration while moving."],
+      ["Endurance Crystal","Rare","Big_and_Round.png","Big and Round","Knockback resistance +50%; max HP +30; jump and movement −10%."],
+      ["Endurance Crystal","Rare","Cold_Blooded.png","Cold Blooded","Freeze duration −?%; Frost Defence +15%; Fire Defence −15%."],
+      ["Endurance Crystal","Rare","Conductive_Armor.png","Conductive Armor","Physical Defence +20%; bleed resistance +?%; elemental defences −5%."],
+      ["Endurance Crystal","Rare","Holy_Blessing.png","Holy Blessing","Near death: Luminous explosion applies Weakened; Luminous/Shadow Defence +15%; damage −10%."],
+      ["Endurance Crystal","Rare","Iron_Skin.png","Iron Skin","Defence +8%; movement −3%; damage −2%."],
+      ["Endurance Crystal","Rare","Last_Stand.png","Last Stand","Brief invulnerability when damage leaves you at 1 HP."],
+      ["Endurance Crystal","Rare","Life_Leech.png","Life Leech","Damage heals 1 HP; damage −10%; regeneration −50%; healing received −20%."],
+      ["Endurance Crystal","Rare","Masochist.png","Masochist","Paralysis duration −?%; Electric Defence +15%; Physical Defence −10% (−15%)."],
+      ["Endurance Crystal","Rare","Nature's_Gift.png","Nature’s Gift","Every 10s create up to 3 (+1) personal healing auras; each heals 20 HP."],
+      ["Endurance Crystal","Legendary","Benison_of_Purification.png","Benison of Purification","Periodically fire Luminous magic within 64 m; Shadow Defence +10%; defence −5%."],
+      ["Endurance Crystal","Legendary","Curse_of_Wrath.png","Curse of Wrath","Every 3s fire Shadow magic within 32 m; Luminous Defence −20%."],
+      ["Endurance Crystal","Legendary","Glass_Cannon.png","Glass Cannon","Damage +30%; maximum HP −50."],
+      ["Endurance Crystal","Legendary","Healthy_Guard.png","Healthy Guard","After 15s at full HP, reduce next hit by 50% (+10%?); affects Tankbusters."],
+      ["Endurance Crystal","Legendary","Mass_Aspect.png","Mass Aspect","Maximum HP +75; movement speed −30%."],
+      ["Endurance Crystal","Legendary","Volatile_Tenacity.png","Volatile Tenacity","Fatal damage leaves 1 HP while not near death; 150s cooldown (+25%)."],
+      ["Endurance Crystal","Legendary","Big-and-Wrathful.png","Big and Wrathful","Near death: damage +50%, threshold +10%, defence −20%."],
+      ["Mobility Crystal","Common","Athletic.png","Athletic","Movement speed +8% (+8%)."],
+      ["Mobility Crystal","Common","Eagle_Eye.png","Eagle Eye","Projectile speed +35% (+35%)."],
+      ["Mobility Crystal","Common","Hawkeye.png","Hawkeye","Projectile range +10 m; spread −1% (?)."],
+      ["Mobility Crystal","Common","Quick_Breath.png","Quick Breath","Utility cooldown recovery rate +10% (+10%)."],
+      ["Mobility Crystal","Common","Springfoot.png","Springfoot","Jump height +20% (+20%)."],
+      ["Mobility Crystal","Common","Swift_Hands.png","Swift Hands","Attack speed +15% (+15%)."],
+      ["Mobility Crystal","Rare","Leg_Day.png","Leg Day","Slowed resistance; movement +5%; jump height +10%."],
+      ["Mobility Crystal","Rare","Reactive_Panic.png","Reactive Panic","Taking damage briefly grants Frenzy (+? seconds)."],
+      ["Mobility Crystal","Rare","Smell_the_Roses.png","Smell the Roses","Near death briefly grants Sprint; 30s cooldown."],
+      ["Mobility Crystal","Rare","Thunder_Aura.png","Thunder Aura","23 Electric damage/sec within 4.4 m; damage −10%; movement −5%."],
+      ["Mobility Crystal","Legendary","Berserker's_Soul.png","Berserker’s Soul","Primary hits stack damage/attack speed and reduce movement; hit taken clears stacks; damage −20%, attack speed −40%."],
+      ["Mobility Crystal","Legendary","Big_and_Speedy.png","Big and Speedy","Utility cooldown recovery rate +50%; defence −20%."],
+      ["Mobility Crystal","Legendary","Featherweight.png","Featherweight","Movement speed +30%; defence −20%."],
+      ["Mobility Crystal","Legendary","Heavy_Hand.png","Heavy Hand","Damage +30%; attack speed −40%."],
+      ["Mobility Crystal","Legendary","Partial_Flight.png","Partial Flight","Extra jumps +1 (+1)."],
+      ["Mobility Crystal","Legendary","Rapid_Fire.png","Rapid Fire","Attack speed +50%; damage −20%."],
+      ["Mobility Crystal","Legendary","Way_of_the_Law.png","Way of the Law","Alternate STOP (damage up, speed down) and GO (speed up, damage down)."],
+      ["Chronowizard","Common","Full_Focus.png","Full Focus","Critical chance +5%; critical damage +5%."],
+      ["Chronowizard","Common","Potent_Strike.png","Potent Strike","Critical-hit status application chance +6% (+6%)."],
+      ["Chronowizard","Common","Sorcerer's_Mastery.png","Sorcerer’s Mastery","Elemental damage +8% (+8%)."],
+      ["Chronowizard","Common","Strength.png","Strength","Physical damage +10% (+10%)."],
+      ["Chronowizard","Rare","Clutch_or_Kick.png","Clutch or Kick","Damage +7% per dead party member (+7%)."],
+      ["Chronowizard","Rare","Greater_Focus.png","Greater Focus","Near death: critical chance +10%; critical damage +3%."],
+      ["Chronowizard","Rare","An_IQ_Too_High_.png","An IQ Too High?","Elemental damage +25%; projectile speed −15%; attack speed −10%."],
+      ["Chronowizard","Rare","Sticky.png","Sticky","Statuses last 2 extra ticks; all status resistance reduced."],
+      ["Chronowizard","Rare","Cutting_Edge.png","Cutting Edge","Bleed chance +10%; Physical Defence −5%."],
+      ["Chronowizard","Rare","Fire_Aspect.png","Fire Aspect","Fire Defence/Damage +15%; Burn chance +5%; Frost Defence −10%."],
+      ["Chronowizard","Rare","Frost_Aspect.png","Frost Aspect","Frost Defence/Damage +15%; Freeze chance +5%; Fire Defence −10%."],
+      ["Chronowizard","Rare","Luminous_Aspect.png","Luminous Aspect","Luminous Damage +15%; Shadow Defence +15%; Weaken chance +5%; Shadow Defence −5%."],
+      ["Chronowizard","Rare","Poison_Aspect.png","Poison Aspect","Poison Damage/resistance +15%; poison chance +5%; healing −15%."],
+      ["Chronowizard","Rare","Shadow_Aspect.png","Shadow Aspect","Shadow Damage +15%; Corrosion chance +5% (+15%); Luminous Defence −10%."],
+      ["Chronowizard","Legendary","Charged_Strike.png","Charged Strike","Critical hits explode; critical chance −5%."],
+      ["Chronowizard","Legendary","Pocket_Abacus.png","Pocket Abacus","Every 5th attack crits; crit damage +10%; non-crits −10%; random crits disabled."],
+      ["Chronowizard","Legendary","Flaming_Spirit.png","Flaming Spirit","At full HP, Primary fires a 16-damage fireball (+50%); healing −5%; regeneration −20%."],
+      ["Chronowizard","Legendary","Frozen_Heart.png","Frozen Heart","At full HP, Primary fires a Frost icicle; healing −5%; regeneration −20%."],
+      ["Chronowizard","Legendary","Third_Law.png","Third Law","When hit, deal 150% received damage as Physical to nearby enemies (+25%)."],
+      ["Chronowizard","Legendary","Warrior's_Will.png","Warrior’s Will","Utility grants Empowered (×1.25 damage) for 5s; cooldown recovery rate −15%."]
+    ].map(([family, rarity, icon, name, effect, explicitId]) => ({
+      family, rarity, icon, name, effect, id: explicitId || icon.replace(".png", "")
+    }));
+
+    const BASE = {
+      health: 100, attackSpeed: 100, projectileSpeed: 100, movementSpeed: 100,
+      jumpHeight: 100, extraJumps: 0, healthRegeneration: 100, healingReceived: 50,
+      criticalChance: 2, criticalDamage: 150, knockbackResistance: 100, utilityCooldownRate: 100,
+      overallDefense: 100, physicalDefense: 100, fireDefense: 100, frostDefense: 100,
+      electricDefense: 100, luminousDefense: 100, shadowDefense: 100, poisonDefense: 100,
+      overallDamage: 100, physicalDamage: 100, fireDamage: 100, frostDamage: 100,
+      electricDamage: 100, luminousDamage: 100, shadowDamage: 100, poisonDamage: 100
+    };
+
+    const CAPS = {
+      attackSpeed: [250, 375], projectileSpeed: [250, 375], movementSpeed: [150, 225],
+      criticalChance: [40, 60], utilityCooldownRate: [200, 300], overallDefense: [200, 300],
+      fireDefense: [200, 300], frostDefense: [200, 300], electricDefense: [200, 300],
+      luminousDefense: [200, 300], shadowDefense: [200, 300], poisonDefense: [200, 300],
+      fireDamage: [350, 525], frostDamage: [350, 525], electricDamage: [350, 525],
+      luminousDamage: [350, 525], shadowDamage: [350, 525], poisonDamage: [350, 525]
+    };
+
+    const LOWER_CAPS = {
+      attackSpeed: 50,
+      projectileSpeed: 50,
+      movementSpeed: 50,
+      utilityCooldownRate: 50,
+      overallDefense: 70,
+      physicalDefense: 50,
+      fireDefense: 50,
+      frostDefense: 50,
+      electricDefense: 50,
+      luminousDefense: 50,
+      shadowDefense: 50,
+      poisonDefense: 50,
+      overallDamage: 50
+    };
+
+    const STAT_ROWS = [
+      ["health","Health"], ["attackSpeed","Attack Speed"], ["projectileSpeed","Projectile Speed"],
+      ["movementSpeed","Movement Speed"], ["jumpHeight","Jump Height"], ["extraJumps","Extra Jumps"],
+      ["healthRegeneration","Health Regeneration"], ["healingReceived","Healing Received"],
+      ["criticalChance","Critical Strike Chance"], ["criticalDamage","Critical Strike Damage"],
+      ["knockbackResistance","Knockback Resistance"], ["utilityCooldownRate","Utility Cooldown Rate"],
+      [null], ["overallDefense","Overall Defense"],
+      ["physicalDefense","Physical Defense","physical"], ["fireDefense","Fire Defense","fire"],
+      ["frostDefense","Frost Defense","frost"], ["electricDefense","Electric Defense","electric"],
+      ["luminousDefense","Luminous Defense","luminous"], ["shadowDefense","Shadow Defense","shadow"],
+      ["poisonDefense","Poison Defense","poison"], [null], ["overallDamage","Overall Damage"],
+      ["physicalDamage","Physical Damage","physical"], ["fireDamage","Fire Damage","fire"],
+      ["frostDamage","Frost Damage","frost"], ["electricDamage","Electric Damage","electric"],
+      ["luminousDamage","Luminous Damage","luminous"], ["shadowDamage","Shadow Damage","shadow"],
+      ["poisonDamage","Poison Damage","poison"]
+    ];
+
+    const CLASS_FAMILIES = ["Spellsword","Twinmage","Gunmancer","Fistmage","Spellhammer","Shield Mage","Thaumaturge","Nekomancer"];
+    const DEFAULT_FAMILIES = ["Endurance Crystal","Mobility Crystal","Chronowizard"];
+    const CLASS_BASE_HEALTH = {
+      Spellsword: 150,
+      Twinmage: 100,
+      Gunmancer: 100,
+      Fistmage: 200,
+      Spellhammer: 150,
+      "Shield Mage": 150,
+      Thaumaturge: 100,
+      Nekomancer: 75
+    };
+    const CLASS_LOGOS = {
+      Spellsword: "Class1.png",
+      Twinmage: "Class2.png",
+      Gunmancer: "Class3.png",
+      Fistmage: "Class4.png",
+      Spellhammer: "Class5.png",
+      "Shield Mage": "Class6.png",
+      Thaumaturge: "Class7.png",
+      Nekomancer: "Class8.png"
+    };
+    const savedClass = localStorage.getItem("ecliptica-upgrade-explorer-class");
+    let selectedClass = CLASS_FAMILIES.includes(savedClass) ? savedClass : "Thaumaturge";
+    const counts = loadCounts();
+    const $ = selector => document.querySelector(selector);
+
+    function loadCounts() {
+      try {
+        const saved = JSON.parse(localStorage.getItem("ecliptica-upgrade-explorer-v1") || "{}");
+        return saved && typeof saved === "object" ? saved : {};
+      } catch { return {}; }
+    }
+
+    function saveCounts() {
+      localStorage.setItem("ecliptica-upgrade-explorer-v1", JSON.stringify(counts));
+    }
+
+    const upgradeIndex = new Map(U.map(upgrade => [upgrade.id, upgrade]));
+    function isUpgradeAvailable(upgrade) {
+      return upgrade.family === selectedClass || DEFAULT_FAMILIES.includes(upgrade.family);
+    }
+    function count(id) {
+      const upgrade = upgradeIndex.get(id);
+      if (upgrade && !isUpgradeAvailable(upgrade)) return 0;
+      return Math.max(0, Number(counts[id]) || 0);
+    }
+
+    function syncClassUi() {
+      $("#class-select").value = selectedClass;
+      $("#active-class-label").textContent = selectedClass;
+      document.body.dataset.class = selectedClass;
+      $("#class-logo").src = `pictures/${CLASS_LOGOS[selectedClass]}`;
+      $("#class-logo").alt = `${selectedClass} class logo`;
+      const familyFilter = $("#family-filter");
+      const previous = familyFilter.value;
+      const availableFamilies = [selectedClass, ...DEFAULT_FAMILIES];
+      familyFilter.innerHTML = `<option value="">All available upgrades</option>${availableFamilies
+        .map(family => `<option>${escapeHtml(family)}</option>`).join("")}`;
+      familyFilter.value = availableFamilies.includes(previous) ? previous : "";
+    }
+
+    const STAT_EFFECTS = [
+      ["health", "Fluffy", 10], ["health", "Big_and_Round", 30],
+      ["health", "Glass_Cannon", -50], ["health", "Mass_Aspect", 75],
+      ["healingReceived", "Gluttonous", 5], ["healingReceived", "Adrenaline_Fiend", -15],
+      ["healingReceived", "Life_Leech", -20, { once: true, notes: "This penalty only applies once." }],
+      ["healingReceived", "Poison_Aspect", -15], ["healingReceived", "Flaming_Spirit", -5],
+      ["healingReceived", "Frozen_Heart", -5],
+      ["healthRegeneration", "Vitality", 80], ["healthRegeneration", "Life_Leech", -50],
+      ["healthRegeneration", "Flaming_Spirit", -20], ["healthRegeneration", "Frozen_Heart", -20],
+
+      ["overallDefense", "Swarm_Enforcer", 1.5, { notes: "With 1 enemy in presence." }],
+      ["overallDefense", "Iron_Skin", 8], ["overallDefense", "Big_and_Speedy", -20],
+      ["overallDefense", "Featherweight", -20], ["overallDefense", "Benison_of_Purification", -5],
+      ["physicalDefense", "Conductive_Armor", 20], ["physicalDefense", "Cutting_Edge", -5],
+      ["physicalDefense", "Masochist", n => -10 - 15 * (n - 1), { notes: "First stack: −10%. Each additional stack: −15%." }],
+      ...["fireDefense","frostDefense","electricDefense","luminousDefense","shadowDefense","poisonDefense"]
+        .map(stat => [stat, "Conductive_Armor", -5]),
+      ["frostDefense", "Cold_Blooded", 15], ["fireDefense", "Cold_Blooded", -15],
+      ["fireDefense", "Fire_Aspect", 15], ["frostDefense", "Fire_Aspect", -10],
+      ["frostDefense", "Frost_Aspect", 15], ["fireDefense", "Frost_Aspect", -10],
+      ["electricDefense", "Masochist", 15], ["poisonDefense", "Poison_Aspect", 15],
+      ["luminousDefense", "Holy_Blessing", 15], ["shadowDefense", "Holy_Blessing", 15],
+      ["shadowDefense", "Benison_of_Purification", 10], ["luminousDefense", "Curse_of_Wrath", -20],
+      ["shadowDefense", "Luminous_Aspect", 10, { notes: "Net result of the listed +15% and −5% Shadow Defence modifiers." }],
+      ["luminousDefense", "Shadow_Aspect", -10],
+
+      ["overallDamage", "Thaumaturge_Splitshot", -30], ["overallDamage", "Iron_Skin", -2],
+      ["overallDamage", "Life_Leech", -10, { once: true, notes: "This penalty only applies once." }],
+      ["overallDamage", "Glass_Cannon", 30], ["overallDamage", "Heavy_Hand", 30],
+      ["overallDamage", "Rapid_Fire", -20],
+      ["overallDamage", "Thunder_Aura", -10, { once: true, notes: "This penalty only applies once." }],
+      ["overallDamage", "Holy_Blessing", -10], ["overallDamage", "Berserker's_Soul", -20],
+      ["overallDamage", "Nekomancer_Death_Blossom", -3],
+      ["physicalDamage", "Strength", 10],
+      ...["fireDamage","frostDamage","electricDamage","luminousDamage","shadowDamage","poisonDamage"]
+        .flatMap(stat => [[stat, "Sorcerer's_Mastery", 8], [stat, "An_IQ_Too_High_", 25]]),
+      ["fireDamage", "Fire_Aspect", 15], ["frostDamage", "Frost_Aspect", 15],
+      ["luminousDamage", "Luminous_Aspect", 15], ["poisonDamage", "Poison_Aspect", 15],
+      ["shadowDamage", "Shadow_Aspect", 15],
+      ["electricDamage", "Gunmancer_Overcharged", 15],
+      ["fireDamage", "Gunmancer_Proficiency_Firebomb", 7, { notes: "Firebomb variant." }],
+      ["luminousDamage", "Gunmancer_Proficiency_Photon", 7, { notes: "Photon Condenser variant." }],
+      ["shadowDamage", "Gunmancer_Proficiency_Antimatter", 5, { notes: "Antimatter Accelerator variant." }],
+
+      ["attackSpeed", "Swift_Hands", 15], ["attackSpeed", "Heavy_Hand", -40],
+      ["attackSpeed", "Rapid_Fire", 50], ["attackSpeed", "An_IQ_Too_High_", -10],
+      ["attackSpeed", "Berserker's_Soul", -40],
+      ["projectileSpeed", "Eagle_Eye", 35], ["projectileSpeed", "An_IQ_Too_High_", -15],
+      ["movementSpeed", "Big_and_Round", -10], ["movementSpeed", "Iron_Skin", -3],
+      ["movementSpeed", "Mass_Aspect", -30], ["movementSpeed", "Athletic", 8],
+      ["movementSpeed", "Leg_Day", 5],
+      ["movementSpeed", "Thunder_Aura", -5, { once: true, notes: "This penalty only applies once." }],
+      ["movementSpeed", "Featherweight", 30],
+      ["jumpHeight", "Big_and_Round", -10], ["jumpHeight", "Springfoot", 20],
+      ["jumpHeight", "Leg_Day", 10], ["extraJumps", "Partial_Flight", 1],
+      ["knockbackResistance", "Big_and_Round", 50],
+      ["criticalChance", "Full_Focus", 5], ["criticalChance", "Charged_Strike", -5],
+      ["criticalDamage", "Full_Focus", 5], ["criticalDamage", "Pocket_Abacus", 10],
+      ["utilityCooldownRate", "Adrenaline_Fiend", 7], ["utilityCooldownRate", "Quick_Breath", 10],
+      ["utilityCooldownRate", "Big_and_Speedy", 50], ["utilityCooldownRate", "Warrior's_Will", -15],
+      ["utilityCooldownRate", "Spellsword_Burst", -20]
+    ].map(([stat, id, value, options = {}]) => ({ stat, id, value, ...options }));
+
+    function capValue(stat, raw) {
+      const cap = CAPS[stat];
+      if (!cap || raw <= cap[0]) return raw;
+      const [soft, hard] = cap;
+      const overflow = raw - soft;
+      return soft + (hard - soft) * overflow / ((hard - soft) + overflow);
+    }
+
+    function calculateStats() {
+      const activeBase = {
+        ...BASE,
+        health: CLASS_BASE_HEALTH[selectedClass],
+        healingReceived: selectedClass === "Thaumaturge" ? 50 : 100
+      };
+      const bonus = Object.fromEntries(Object.keys(activeBase).map(stat => [stat, 0]));
+      const breakdowns = Object.fromEntries(Object.entries(activeBase).map(([stat, base]) => [stat, [{
+        value: formatContribution(stat, base),
+        type: "Base",
+        source: selectedClass,
+        notes: "Default class value."
+      }]]));
+
+      for (const effect of STAT_EFFECTS) {
+        const selected = count(effect.id);
+        if (!selected) continue;
+        const appliedStacks = effect.once ? 1 : selected;
+        const total = typeof effect.value === "function"
+          ? effect.value(selected)
+          : effect.value * appliedStacks;
+        bonus[effect.stat] += total;
+
+        const stackNote = typeof effect.value === "number" && selected > 1
+          ? `${selected} stacks × ${formatContribution(effect.stat, effect.value)}.`
+          : effect.once && selected > 1
+            ? `${selected} selected; the modifier is only applied once.`
+            : "";
+        breakdowns[effect.stat].push({
+          value: formatContribution(effect.stat, total, true),
+          type: "Additive",
+          source: upgradeIndex.get(effect.id)?.name || effect.id,
+          notes: [effect.notes, stackNote].filter(Boolean).join(" ")
+        });
+      }
+
+      const caps = {};
+      const result = Object.fromEntries(Object.entries(activeBase).map(([stat, base]) => {
+        const raw = base + bonus[stat];
+        const cappedRaw = capValue(stat, raw);
+        const cappedBase = capValue(stat, base);
+        const lowerSoftCap = LOWER_CAPS[stat];
+        let effective = bonus[stat] > 0 ? base + cappedRaw - cappedBase : raw;
+        if (bonus[stat] > 0 && Math.abs(cappedRaw - raw) > .0001) {
+          const [soft, hard] = CAPS[stat];
+          caps[stat] = {
+            kind: "upper", base, bonus: bonus[stat], raw, soft, hard,
+            overflow: raw - soft, range: hard - soft,
+            cappedRaw, cappedBase, effective
+          };
+        } else if (lowerSoftCap && bonus[stat] < -lowerSoftCap) {
+          effective = lowerSoftCap ** 2 / Math.abs(bonus[stat]);
+          caps[stat] = {
+            kind: "lower",
+            base,
+            bonus: bonus[stat],
+            raw,
+            soft: lowerSoftCap,
+            divisor: Math.abs(bonus[stat]),
+            numerator: lowerSoftCap ** 2,
+            effective
+          };
+        }
+        return [stat, effective];
+      }));
+
+      const wardenStacks = count("Shieldmage_Warden");
+      if (wardenStacks) {
+        const divisor = 1 + wardenStacks;
+        breakdowns.utilityCooldownRate.push({
+          value: `÷${formatNumber(divisor)}`,
+          type: "Multiplicative",
+          source: upgradeIndex.get("Shieldmage_Warden")?.name || "Shieldmage: Warden",
+          notes: `+100% cooldown per stack is converted to recovery rate; ${formatNumber(result.utilityCooldownRate)}% ÷ ${formatNumber(divisor)}.`
+        });
+        result.utilityCooldownRate /= divisor;
+      }
+      return { stats: result, base: activeBase, breakdowns, caps };
+    }
+
+    function formatNumber(value) {
+      const rounded = Math.round(value * 10) / 10;
+      return Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(1);
+    }
+
+    function formatContribution(stat, value, showSign = false) {
+      const prefix = showSign && value > 0 ? "+" : "";
+      const suffix = stat === "health" || stat === "extraJumps" ? "" : "%";
+      return `${prefix}${formatNumber(value)}${suffix}`;
+    }
+
+    function formatStat(stat, value) {
+      if (stat === "health" || stat === "extraJumps") return formatNumber(value);
+      if (stat === "movementSpeed") return `${formatNumber(value)}% · ${formatNumber(7 * value / 100)} m/s`;
+      return `${formatNumber(value)}%`;
+    }
+
+    let latestCalculation;
+
+    function renderStats() {
+      hideStatTooltip();
+      latestCalculation = calculateStats();
+      const stats = latestCalculation.stats;
+      $("#stats").innerHTML = STAT_ROWS.map(([stat, label, color]) => {
+        if (!stat) return '<div class="stat-gap"></div>';
+        const delta = stats[stat] - latestCalculation.base[stat];
+        const changed = Math.abs(delta) > .001;
+        const deltaHtml = changed
+          ? `<span class="delta ${delta > 0 ? "up" : "down"}">${delta > 0 ? "+" : ""}${formatNumber(delta)}</span>`
+          : "";
+        return `<div class="stat-row ${color ? `element ${color}` : ""} ${changed ? "changed" : ""}"
+          data-stat="${stat}" data-label="${escapeHtml(label)}" tabindex="0">
+          <span>${label}:</span><span class="value">${formatStat(stat, stats[stat])}${deltaHtml}</span>
+        </div>`;
+      }).join("");
+    }
+
+    function softCapMarkup(stat) {
+      const cap = latestCalculation?.caps?.[stat];
+      if (!cap) return "";
+      const unit = stat === "health" || stat === "extraJumps" ? "" : "%";
+      const n = value => `${formatNumber(value)}${unit}`;
+      if (cap.kind === "lower") {
+        return `<div class="cap-calculation">
+          <strong>Lower soft-cap calculation</strong><br>
+          Raw additive sum: <span class="cap-formula">${n(cap.base)} ${cap.bonus < 0 ? "−" : "+"} ${n(Math.abs(cap.bonus))} = ${n(cap.raw)}</span><br>
+          Negative modifier exceeds the ${n(cap.soft)} lower soft cap.<br>
+          <span class="cap-formula">${formatNumber(cap.soft)}² ÷ |${n(cap.bonus)}| = ${formatNumber(cap.numerator)} ÷ ${n(cap.divisor)} = ${n(cap.effective)}</span>
+        </div>`;
+      }
+      return `<div class="cap-calculation">
+        <strong>Upper soft-cap calculation</strong><br>
+        Raw additive sum: <span class="cap-formula">${n(cap.base)} + ${n(cap.bonus)} = ${n(cap.raw)}</span><br>
+        Soft cap ${n(cap.soft)} · hard-cap limit ${n(cap.hard)}<br>
+        <span class="cap-formula">${n(cap.soft)} + (${n(cap.range)} × ${n(cap.overflow)} ÷ (${n(cap.range)} + ${n(cap.overflow)})) = ${n(cap.cappedRaw)}</span><br>
+        Effective result: <span class="cap-formula">${n(cap.base)} + ${n(cap.cappedRaw)} − ${n(cap.cappedBase)} = ${n(cap.effective)}</span>
+      </div>`;
+    }
+
+    function showStatTooltip(row) {
+      const stat = row.dataset.stat;
+      const label = row.dataset.label;
+      const entries = latestCalculation?.breakdowns?.[stat] || [];
+      const tooltip = $("#stat-tooltip");
+      tooltip.innerHTML = `<h3>${escapeHtml(label)} · ${formatStat(stat, latestCalculation.stats[stat])}</h3>
+        <table>
+          <thead><tr><th>Value</th><th>Type</th><th>Source</th><th>Notes</th></tr></thead>
+          <tbody>${entries.map(entry => `<tr>
+            <td class="source-value">${escapeHtml(entry.value)}</td>
+            <td class="source-type">${escapeHtml(entry.type)}</td>
+            <td>${escapeHtml(entry.source)}</td>
+            <td>${escapeHtml(entry.notes || "—")}</td>
+          </tr>`).join("")}</tbody>
+        </table>
+        ${softCapMarkup(stat)}`;
+      tooltip.classList.add("visible");
+
+      const rect = row.getBoundingClientRect();
+      const box = tooltip.getBoundingClientRect();
+      const gap = 10;
+      let left = rect.right + gap;
+      let top = rect.top - 12;
+      if (left + box.width > window.innerWidth - 12) left = Math.max(12, rect.left - box.width - gap);
+      if (top + box.height > window.innerHeight - 12) top = window.innerHeight - box.height - 12;
+      tooltip.style.left = `${Math.max(12, left)}px`;
+      tooltip.style.top = `${Math.max(12, top)}px`;
+    }
+
+    function hideStatTooltip() {
+      $("#stat-tooltip").classList.remove("visible");
+    }
+
+    function setCount(id, next) {
+      if (next > 0) counts[id] = next;
+      else delete counts[id];
+      saveCounts();
+      render();
+    }
+
+    function renderPicked() {
+      const selected = U.filter(u => count(u.id));
+      const total = selected.reduce((sum, u) => sum + count(u.id), 0);
+      $("#picked-summary").textContent = `${total} upgrade${total === 1 ? "" : "s"} · ${selected.length} unique`;
+      $("#picked-list").innerHTML = selected.length ? selected.map(u => `
+        <div class="picked-item ${u.rarity.toLowerCase()}" title="${escapeHtml(u.effect)}">
+          <img src="pictures/${encodeURIComponent(u.icon).replaceAll("%2F", "/")}" alt="">
+          <span class="picked-name">${escapeHtml(u.name)}</span>
+          <span class="picked-stepper">
+            <button type="button" data-action="minus" data-id="${u.id}" aria-label="Remove one ${escapeHtml(u.name)}">−</button>
+            <span>${count(u.id)}</span>
+            <button type="button" data-action="plus" data-id="${u.id}" aria-label="Add one ${escapeHtml(u.name)}">+</button>
+          </span>
+        </div>`).join("") : '<span class="empty">No upgrades picked yet.</span>';
+    }
+
+    function filteredUpgrades() {
+      const query = $("#search").value.trim().toLowerCase();
+      const family = $("#family-filter").value;
+      const rarity = $("#rarity-filter").value;
+      return U.filter(u =>
+        isUpgradeAvailable(u) &&
+        (!family || u.family === family) &&
+        (!rarity || u.rarity === rarity) &&
+        (!query || `${u.name} ${u.family} ${u.rarity} ${u.effect}`.toLowerCase().includes(query))
+      );
+    }
+
+    function renderCatalog() {
+      const list = filteredUpgrades();
+      const availableTotal = U.filter(isUpgradeAvailable).length;
+      $("#result-summary").textContent = `${list.length} of ${availableTotal}`;
+      $("#catalog").innerHTML = list.length ? list.map(u => `
+        <article class="upgrade ${u.rarity.toLowerCase()} ${count(u.id) ? "selected" : ""}"
+          data-id="${u.id}" title="Left-click to add · Right-click to remove">
+          ${count(u.id) ? `<span class="count">×${count(u.id)}</span>` : ""}
+          <img src="pictures/${encodeURIComponent(u.icon).replaceAll("%2F", "/")}" alt="">
+          <div class="upgrade-copy">
+            <h3 class="upgrade-name">${escapeHtml(u.name)}</h3>
+            <div class="meta">${escapeHtml(u.rarity)} · ${escapeHtml(u.family)}</div>
+            <p class="effect">${escapeHtml(u.effect)}</p>
+          </div>
+        </article>`).join("") : '<div class="no-results">No upgrades match these filters.</div>';
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, char => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+      })[char]);
+    }
+
+    function render() {
+      renderStats();
+      renderPicked();
+      renderCatalog();
+    }
+
+    $("#stats").addEventListener("mouseover", event => {
+      const row = event.target.closest(".stat-row[data-stat]");
+      if (row) showStatTooltip(row);
+    });
+
+    $("#stats").addEventListener("mouseout", event => {
+      const row = event.target.closest(".stat-row[data-stat]");
+      if (row && !row.contains(event.relatedTarget)) hideStatTooltip();
+    });
+
+    $("#stats").addEventListener("focusin", event => {
+      const row = event.target.closest(".stat-row[data-stat]");
+      if (row) showStatTooltip(row);
+    });
+
+    $("#stats").addEventListener("focusout", hideStatTooltip);
+
+    $("#catalog").addEventListener("click", event => {
+      const card = event.target.closest(".upgrade");
+      if (card) setCount(card.dataset.id, count(card.dataset.id) + 1);
+    });
+
+    $("#catalog").addEventListener("contextmenu", event => {
+      const card = event.target.closest(".upgrade");
+      if (!card) return;
+      event.preventDefault();
+      setCount(card.dataset.id, count(card.dataset.id) - 1);
+    });
+
+    $("#picked-list").addEventListener("click", event => {
+      const button = event.target.closest("button[data-id]");
+      if (!button) return;
+      setCount(button.dataset.id, count(button.dataset.id) + (button.dataset.action === "plus" ? 1 : -1));
+    });
+
+    ["search", "family-filter", "rarity-filter"].forEach(id => {
+      $(`#${id}`).addEventListener(id === "search" ? "input" : "change", renderCatalog);
+    });
+
+    $("#class-select").addEventListener("change", event => {
+      selectedClass = CLASS_FAMILIES.includes(event.target.value) ? event.target.value : "Thaumaturge";
+      localStorage.setItem("ecliptica-upgrade-explorer-class", selectedClass);
+      syncClassUi();
+      render();
+    });
+
+    $("#reset-upgrades").addEventListener("click", () => {
+      U.filter(isUpgradeAvailable).forEach(upgrade => delete counts[upgrade.id]);
+      saveCounts();
+      render();
+    });
+
+    syncClassUi();
+    render();
+  </script>
 </body>
 </html>
