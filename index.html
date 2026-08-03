@@ -448,6 +448,44 @@
       .tools input { grid-column: 1 / -1; }
     }
 
+    .share-build {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 7px;
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+    }
+
+    .share-build .panel-title { grid-column: 1 / -1; }
+    .share-url {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      outline: none;
+      color: var(--muted);
+      background: rgba(5, 2, 9, .62);
+      padding: 8px 9px;
+      font-size: .72rem;
+    }
+    .share-url:focus { border-color: var(--accent); }
+    .copy-link {
+      border: 1px solid rgba(var(--class-rgb), .38);
+      border-radius: 9px;
+      background: rgba(var(--class-rgb), .13);
+      padding: 8px 11px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .copy-link:hover { border-color: var(--accent); }
+    .copy-status {
+      grid-column: 1 / -1;
+      min-height: 1em;
+      color: var(--positive);
+      font-size: .7rem;
+      text-align: right;
+    }
+
     @media (max-width: 520px) {
       .topbar { align-items: flex-start; flex-direction: column; }
       .top-actions { width: 100%; align-items: end; }
@@ -491,6 +529,12 @@
       <aside class="panel stats-panel">
         <h2 class="panel-title">Current statistics</h2>
         <div class="stat-list" id="stats"></div>
+        <div class="share-build" aria-labelledby="share-build-title">
+          <h2 class="panel-title" id="share-build-title">Share build</h2>
+          <input class="share-url" id="share-url" type="text" readonly aria-label="Share build URL">
+          <button class="copy-link" id="copy-link" type="button">Copy link</button>
+          <span class="copy-status" id="copy-status" role="status" aria-live="polite"></span>
+        </div>
       </aside>
 
       <section class="panel explorer">
@@ -526,6 +570,7 @@
   </main>
   <div class="stat-tooltip" id="stat-tooltip" role="tooltip"></div>
 
+  <script src="share-build.js"></script>
   <script>
     const U = [
       ["Thaumaturge","Common","Thaumaturge_Keen_Eye.png","Thaumaturge: Keen Eye","Pain Exchange range +15 m (+15 m)."],
@@ -651,8 +696,9 @@
       ["Chronowizard","Legendary","Frozen_Heart.png","Frozen Heart","At full HP, Primary fires a Frost icicle; healing −5%; regeneration −20%."],
       ["Chronowizard","Legendary","Third_Law.png","Third Law","When hit, deal 150% received damage as Physical to nearby enemies (+25%)."],
       ["Chronowizard","Legendary","Warrior's_Will.png","Warrior’s Will","Utility grants Empowered (×1.25 damage) for 5s; cooldown recovery rate −15%."]
-    ].map(([family, rarity, icon, name, effect, explicitId]) => ({
-      family, rarity, icon, name, effect, id: explicitId || icon.replace(".png", "")
+    ].map(([family, rarity, icon, name, effect, explicitId], globalId) => ({
+      // Array position is the permanent global ID. Append new upgrades; never reorder or reuse removed IDs.
+      family, rarity, icon, name, effect, id: explicitId || icon.replace(".png", ""), globalId
     }));
 
     const BASE = {
@@ -1012,7 +1058,103 @@
       $("#stat-tooltip").classList.remove("visible");
     }
 
+    let loadingSharedBuild = false;
+
+    function getCurrentBuild() {
+      return {
+        version: ShareBuildCodec.FORMAT_VERSION,
+        characterId: CLASS_FAMILIES.indexOf(selectedClass),
+        upgrades: U.filter(upgrade => count(upgrade.id) > 0)
+          .map(upgrade => ({ id: upgrade.globalId, count: Math.min(100, Math.max(1, count(upgrade.id))) }))
+          .sort((a, b) => a.id - b.id)
+      };
+    }
+
+    function encodeBuildV1(build) { return ShareBuildCodec.encodeBuildV1(build); }
+    function encodeBuild(build) { return ShareBuildCodec.encodeBuild(build); }
+
+    function decodeBuildV1(reader) { return ShareBuildCodec.decodeBuildV1(reader); }
+    function decodeBuild(code) {
+      return ShareBuildCodec.decodeBuild(code, {
+        characterCount: CLASS_FAMILIES.length,
+        upgradeCount: U.length,
+        isUpgradeAllowed: (upgradeId, characterId) => {
+          const upgrade = U[upgradeId];
+          const character = CLASS_FAMILIES[characterId];
+          return Boolean(upgrade && (upgrade.family === character || DEFAULT_FAMILIES.includes(upgrade.family)));
+        }
+      });
+    }
+
+    function applyBuild(build) {
+      if (!build || !CLASS_FAMILIES[build.characterId]) throw new Error("Unknown character ID");
+      loadingSharedBuild = true;
+      try {
+        selectedClass = CLASS_FAMILIES[build.characterId];
+        localStorage.setItem("ecliptica-upgrade-explorer-class", selectedClass);
+        Object.keys(counts).forEach(id => delete counts[id]);
+        for (const entry of build.upgrades) {
+          const upgrade = U[entry.id];
+          if (upgrade && Number.isInteger(entry.count) && entry.count >= 1 && entry.count <= 100)
+            counts[upgrade.id] = entry.count;
+        }
+        saveCounts();
+        syncClassUi();
+        render();
+      } finally {
+        loadingSharedBuild = false;
+      }
+    }
+
+    function createShareUrl() {
+      const url = new URL(location.href);
+      const parameters = new URLSearchParams(url.hash.slice(1));
+      parameters.set("b", encodeBuild(getCurrentBuild()));
+      url.hash = parameters.toString();
+      return url.href;
+    }
+
+    function updateShareWidget() {
+      if (loadingSharedBuild) return;
+      const shareUrl = createShareUrl();
+      $("#share-url").value = shareUrl;
+      history.replaceState(null, "", shareUrl);
+    }
+
+    function loadBuildFromHash() {
+      const code = new URLSearchParams(location.hash.slice(1)).get("b");
+      if (!code) { updateShareWidget(); return; }
+      try {
+        const build = decodeBuild(code);
+        applyBuild(build);
+        // Preserve the original code (including valid ignored entries) while refreshing the widget.
+        $("#share-url").value = location.href;
+        $("#copy-status").textContent = build.warnings.length ? `Loaded with ${build.warnings.length} ignored entr${build.warnings.length === 1 ? "y" : "ies"}.` : "";
+      } catch (error) {
+        console.warn("Could not load shared build:", error);
+        $("#copy-status").textContent = "Invalid build link; current build kept.";
+        $("#share-url").value = location.href;
+      }
+    }
+
+    async function copyShareUrl() {
+      const input = $("#share-url");
+      try {
+        if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(input.value);
+        else {
+          input.select();
+          input.setSelectionRange(0, input.value.length);
+          if (!document.execCommand("copy")) throw new Error("Copy command failed");
+          input.setSelectionRange(0, 0);
+        }
+        $("#copy-status").textContent = "Copied!";
+      } catch {
+        $("#copy-status").textContent = "Copy failed — select the link manually.";
+      }
+    }
+
     function setCount(id, next) {
+      next = Math.min(100, Math.max(0, Number(next) || 0));
       if (next > 0) counts[id] = next;
       else delete counts[id];
       saveCounts();
@@ -1074,6 +1216,7 @@
       renderStats();
       renderPicked();
       renderCatalog();
+      updateShareWidget();
     }
 
     $("#stats").addEventListener("mouseover", event => {
@@ -1128,8 +1271,12 @@
       render();
     });
 
+    $("#copy-link").addEventListener("click", copyShareUrl);
+    window.addEventListener("hashchange", loadBuildFromHash);
+
     syncClassUi();
-    render();
+    if (new URLSearchParams(location.hash.slice(1)).has("b")) loadBuildFromHash();
+    else render();
   </script>
 </body>
 </html>
