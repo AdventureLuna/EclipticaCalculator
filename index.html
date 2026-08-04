@@ -295,6 +295,21 @@
       min-width: 0;
     }
 
+    .tabs { display: flex; gap: 6px; overflow-x: auto; margin: 0 0 18px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+    .tab-button { border: 1px solid var(--line); border-radius: 9px; color: var(--muted); background: rgba(255,255,255,.03); padding: 9px 13px; cursor: pointer; }
+    .tab-button[aria-selected="true"] { border-color: rgba(var(--class-rgb), .55); color: var(--ink); background: rgba(var(--class-rgb), .14); }
+    .tab-pane[hidden] { display: none; }
+    .placeholder-pane { min-height: 260px; display: grid; place-items: center; color: var(--muted); text-align: center; }
+    .item-placeholder { width: 58px; height: 58px; display: grid; place-items: center; border: 1px dashed rgba(255,255,255,.22); border-radius: 10px; color: #8e8097; font-size: 1.35rem; }
+    .artifact-card.selected, .rune-card.selected { box-shadow: inset 0 0 0 2px rgba(205,147,255,.55); }
+    .slot-grid { display: grid; grid-template-columns: repeat(4, minmax(145px, 1fr)); gap: 8px; margin: 12px 0 18px; }
+    .rune-slot { border: 1px solid var(--line); border-radius: 11px; background: rgba(0,0,0,.16); padding: 10px; cursor: pointer; }
+    .rune-slot.active { border-color: var(--accent); background: rgba(var(--class-rgb), .12); }
+    .slot-name { display: block; color: #d3a8f1; font-size: .68rem; font-weight: 800; text-transform: uppercase; }
+    .slot-rune { display: block; min-height: 2.2em; margin: 5px 0; font-size: .78rem; font-weight: 700; }
+    .curse-select { width: 100%; border: 1px solid var(--line); border-radius: 7px; color: var(--ink); background: #160d1d; padding: 6px; font-size: .68rem; }
+    .rune-help { margin: -7px 0 14px; color: var(--muted); font-size: .75rem; line-height: 1.45; }
+
     .picked-head, .catalog-head {
       display: flex;
       align-items: center;
@@ -446,6 +461,7 @@
       .stats-panel { position: relative; top: 0; max-height: none; }
       .tools { grid-template-columns: 1fr 1fr; }
       .tools input { grid-column: 1 / -1; }
+      .slot-grid { grid-template-columns: 1fr 1fr; }
     }
 
     .share-build {
@@ -495,6 +511,7 @@
       .tools { grid-template-columns: 1fr; }
       .tools input { grid-column: auto; }
       .catalog { grid-template-columns: 1fr; }
+      .slot-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -538,6 +555,15 @@
       </aside>
 
       <section class="panel explorer">
+        <nav class="tabs" role="tablist" aria-label="Build sections">
+          <button class="tab-button" role="tab" aria-selected="false" data-tab="configuration">Configuration</button>
+          <button class="tab-button" role="tab" aria-selected="true" data-tab="upgrades">Upgrades</button>
+          <button class="tab-button" role="tab" aria-selected="false" data-tab="artifacts">Artifacts</button>
+          <button class="tab-button" role="tab" aria-selected="false" data-tab="runes">Runes</button>
+          <button class="tab-button" role="tab" aria-selected="false" data-tab="calculations">Calculations</button>
+        </nav>
+        <div class="tab-pane placeholder-pane" id="tab-configuration" role="tabpanel" hidden>Configuration options will be added here.</div>
+        <div class="tab-pane" id="tab-upgrades" role="tabpanel">
         <div class="picked-head">
           <h2 class="section-title">Picked upgrades</h2>
           <span class="summary" id="picked-summary">0 upgrades</span>
@@ -565,6 +591,19 @@
           </select>
         </div>
         <div class="catalog" id="catalog"></div>
+        </div>
+        <div class="tab-pane" id="tab-artifacts" role="tabpanel" hidden>
+          <div class="catalog-head"><h2 class="section-title">Artifacts</h2><span class="summary" id="artifact-summary"></span></div>
+          <p class="rune-help">Select the artifacts sacrificed by the party. Artwork placeholders are reserved for a future image pass.</p>
+          <div class="catalog" id="artifact-catalog"></div>
+        </div>
+        <div class="tab-pane" id="tab-runes" role="tabpanel" hidden>
+          <div class="catalog-head"><h2 class="section-title">Rune loadout</h2><span class="summary">Four phase slots</span></div>
+          <p class="rune-help">Choose a slot, then click a rune. Selection advances to the next empty slot. Each slot may also receive a random Runic Curse; duplicate curses are allowed.</p>
+          <div class="slot-grid" id="rune-slots"></div>
+          <div class="catalog" id="rune-catalog"></div>
+        </div>
+        <div class="tab-pane placeholder-pane" id="tab-calculations" role="tabpanel" hidden>Additional calculations will be added here.</div>
       </section>
     </div>
   </main>
@@ -771,9 +810,57 @@
       Thaumaturge: "Class7.png",
       Nekomancer: "Class8.png"
     };
+    const ARTIFACTS = [
+      { id: "encrypted-archive", name: "Encrypted Archive", effect: "Utility Cooldown Rate +5%; Movement Speed +5%.", stats: { utilityCooldownRate: 5, movementSpeed: 5 } },
+      { id: "goblet-sun", name: "Goblet of the Sun", effect: "Luminous Damage +8%; Shadow Defense +8%.", stats: { luminousDamage: 8, shadowDefense: 8 } },
+      { id: "hc-armor", name: "HC Armor Plating", effect: "Physical Defense +7%.", stats: { physicalDefense: 7 } },
+      { id: "heart-cinders", name: "Heart of Cinders", effect: "Elemental Defense +6%.", stats: Object.fromEntries(["fireDefense","frostDefense","electricDefense","luminousDefense","shadowDefense","poisonDefense"].map(stat => [stat, 6])) },
+      { id: "essence-malice", name: "Essence of Malice", effect: "Shadow Damage +6%; Luminous Defense +6%.", stats: { shadowDamage: 6, luminousDefense: 6 } },
+      { id: "wheel-reincarnation", name: "Wheel of Reincarnation", effect: "Received Healing +3%; Maximum HP +5.", stats: { healingReceived: 3, health: 5 } },
+      { id: "sealed-megium", name: "Sealed Megium", effect: "Overall Damage +3%.", stats: { overallDamage: 3 } }
+    ];
+    const RUNES = [
+      { id: "focus", name: "Focus Growth", effect: "Critical Strike Chance +10% for each phase.", stats: p => ({ criticalChance: 10 * p }) },
+      { id: "cleansing", name: "Cleansing Growth", effect: "Increasing resistance to all negative status effects each phase." },
+      { id: "recovery", name: "Recovery Growth", effect: "Utility Cooldown Rate +15% for each phase.", stats: p => ({ utilityCooldownRate: 15 * p }) },
+      { id: "power", name: "Power Growth", effect: "Overall Damage +10% for each phase.", stats: p => ({ overallDamage: 10 * p }) },
+      { id: "dexterity", name: "Dexterity Growth", effect: "Attack Speed +30% for each phase.", stats: p => ({ attackSpeed: 30 * p }) },
+      { id: "precision", name: "Precision Growth", effect: "Critical Strike Damage +15% for each phase.", stats: p => ({ criticalDamage: 15 * p }) },
+      { id: "health", name: "Health Growth", effect: "Maximum HP +15 for each phase.", stats: p => ({ health: 15 * p }) },
+      { id: "satiety", name: "Satiety Growth", effect: "Healing Received +10% for each phase.", stats: p => ({ healingReceived: 10 * p }) },
+      { id: "defence", name: "Defence Growth", effect: "Overall Defense +5% for each phase.", stats: p => ({ overallDefense: 5 * p }) },
+      { id: "rejuvenating", name: "Rejuvenating Growth", effect: "Health Regeneration +150% for each phase.", stats: p => ({ healthRegeneration: 150 * p }) },
+      { id: "skybound", name: "Skybound", effect: "Extra Jump +1 for each phase.", stats: p => ({ extraJumps: p }) },
+      { id: "turtle", name: "Way of the Turtle", effect: "Maximum HP and Defense increase; Movement Speed decreases each phase.", stats: p => ({ health: 20 + 10 * (p - 1), overallDefense: 10 * p, movementSpeed: -20 * p }) },
+      { id: "guard", name: "Active Guard", effect: "Utility use can grant Resilience; chance increases each phase." },
+      { id: "gambit", name: "Manic Gambit", effect: "Sacrificed artifacts grant 300% of their stats, +100% for each later phase; stages grant only 1 Token." },
+      { id: "greedy", name: "Big and Greedy", effect: "Chance to find extra Tokens increases each phase." },
+      { id: "needy", name: "Big and Needy", effect: "Chance to refund Common-upgrade Tokens increases each phase." },
+      { id: "picky", name: "Big and Picky", effect: "Gain an extra upgrade option and additional rerolls each phase." },
+      { id: "insured", name: "Big and Insured", effect: "Receive Tokens and extra upgrade rerolls as phases advance." }
+    ];
+    const RUNE_SLOTS = ["Penumbra", "Antumbra", "Umbra", "Eclipse"];
+    const CURSES = [
+      { id: "fragility", name: "Fragility", effect: "Physical Defense -9% per stack.", stats: p => ({ physicalDefense: -9 * p }) },
+      { id: "smolder", name: "Smolder", effect: "Fire Defense -9% per stack.", stats: p => ({ fireDefense: -9 * p }) },
+      { id: "fever", name: "Fever", effect: "Frost Defense -9% per stack.", stats: p => ({ frostDefense: -9 * p }) },
+      { id: "conductor", name: "Conductor", effect: "Electric Defense -9% per stack.", stats: p => ({ electricDefense: -9 * p }) },
+      { id: "profane", name: "Profane", effect: "Luminous Defense -9% per stack.", stats: p => ({ luminousDefense: -9 * p }) },
+      { id: "divine", name: "Divine", effect: "Shadow Defense -9% per stack.", stats: p => ({ shadowDefense: -9 * p }) },
+      { id: "rot", name: "Rot", effect: "Poison Defense -9% per stack.", stats: p => ({ poisonDefense: -9 * p }) },
+      { id: "tremor", name: "Tremor", effect: "Projectile Spread +2.5% per stack." },
+      { id: "drain", name: "Drain", effect: "Maximum HP -10 per stack.", stats: p => ({ health: -10 * p }) },
+      { id: "shedding", name: "Shedding", effect: "Overall Defense -5% per stack.", stats: p => ({ overallDefense: -5 * p }) },
+      { id: "anaemia", name: "Anaemia", effect: "Health Regeneration -150% per stack.", stats: p => ({ healthRegeneration: -150 * p }) },
+      { id: "hypoxia", name: "Hypoxia", effect: "Healing Received -10% per stack.", stats: p => ({ healingReceived: -10 * p }) },
+      { id: "light", name: "Light", effect: "Knockback from enemies +15% per stack.", stats: p => ({ knockbackResistance: -15 * p }) },
+      { id: "asthma", name: "Asthma", effect: "Utility Cooldown Rate -15% per stack.", stats: p => ({ utilityCooldownRate: -15 * p }) }
+    ];
     const savedClass = localStorage.getItem("ecliptica-upgrade-explorer-class");
     let selectedClass = CLASS_FAMILIES.includes(savedClass) ? savedClass : "Thaumaturge";
     const counts = loadCounts();
+    const buildOptions = loadBuildOptions();
+    let activeRuneSlot = Math.max(0, buildOptions.runes.findIndex(id => !id));
     const $ = selector => document.querySelector(selector);
 
     function loadCounts() {
@@ -785,6 +872,21 @@
 
     function saveCounts() {
       localStorage.setItem("ecliptica-upgrade-explorer-v1", JSON.stringify(counts));
+    }
+
+    function loadBuildOptions() {
+      try {
+        const saved = JSON.parse(localStorage.getItem("ecliptica-build-options-v1") || "{}");
+        return {
+          artifacts: Array.isArray(saved.artifacts) ? saved.artifacts.filter(id => ARTIFACTS.some(item => item.id === id)) : [],
+          runes: RUNE_SLOTS.map((_, index) => RUNES.some(item => item.id === saved.runes?.[index]) ? saved.runes[index] : null),
+          curses: RUNE_SLOTS.map((_, index) => CURSES.some(item => item.id === saved.curses?.[index]) ? saved.curses[index] : null)
+        };
+      } catch { return { artifacts: [], runes: [null, null, null, null], curses: [null, null, null, null] }; }
+    }
+
+    function saveBuildOptions() {
+      localStorage.setItem("ecliptica-build-options-v1", JSON.stringify(buildOptions));
     }
 
     const upgradeIndex = new Map(U.map(upgrade => [upgrade.id, upgrade]));
@@ -919,6 +1021,31 @@
         });
       }
 
+      const addBuildStats = (stats, source, type = "Additive") => {
+        for (const [stat, value] of Object.entries(stats || {})) {
+          if (!(stat in bonus) || !value) continue;
+          bonus[stat] += value;
+          breakdowns[stat].push({
+            value: formatContribution(stat, value, true), type, source,
+            notes: "Selected outside the upgrade catalog."
+          });
+        }
+      };
+      const gambitSlot = buildOptions.runes.findIndex(id => id === "gambit");
+      const artifactMultiplier = gambitSlot < 0 ? 1 : gambitSlot + 3;
+      for (const artifactId of buildOptions.artifacts) {
+        const artifact = ARTIFACTS.find(item => item.id === artifactId);
+        if (!artifact) continue;
+        addBuildStats(Object.fromEntries(Object.entries(artifact.stats).map(([stat, value]) => [stat, value * artifactMultiplier])),
+          artifact.name, artifactMultiplier > 1 ? `Artifact ×${artifactMultiplier}` : "Artifact");
+      }
+      buildOptions.runes.forEach((runeId, index) => {
+        const rune = RUNES.find(item => item.id === runeId);
+        if (rune?.stats) addBuildStats(rune.stats(index + 1), `${RUNE_SLOTS[index]} · ${rune.name}`, "Rune");
+        const curse = rune && CURSES.find(item => item.id === buildOptions.curses[index]);
+        if (curse?.stats) addBuildStats(curse.stats(index + 1), `${RUNE_SLOTS[index]} · Runic Curse: ${curse.name}`, "Curse");
+      });
+
       const caps = {};
       const defenseCalculations = {};
       const result = Object.fromEntries(Object.entries(activeBase).map(([stat, base]) => {
@@ -966,6 +1093,7 @@
         });
         result.utilityCooldownRate /= divisor;
       }
+      if (result.health < 1) result.health = 1;
       return { stats: result, base: activeBase, breakdowns, caps, defenseCalculations };
     }
 
@@ -1021,6 +1149,7 @@
       }
       return `<div class="cap-calculation">
         <strong>Upper soft-cap calculation</strong><br>
+        <em>Warning: the game's exact approaching-hard-cap formula is not yet known; this is an estimate.</em><br>
         Raw additive sum: <span class="cap-formula">${n(cap.base)} + ${n(cap.bonus)} = ${n(cap.raw)}</span><br>
         Soft cap ${n(cap.soft)} · hard-cap limit ${n(cap.hard)}<br>
         <span class="cap-formula">${n(cap.soft)} + (${n(cap.range)} × ${n(cap.overflow)} ÷ (${n(cap.range)} + ${n(cap.overflow)})) = ${n(cap.cappedRaw)}</span><br>
@@ -1230,6 +1359,39 @@
         </article>`).join("") : '<div class="no-results">No upgrades match these filters.</div>';
     }
 
+    function renderArtifacts() {
+      $("#artifact-summary").textContent = `${buildOptions.artifacts.length} selected`;
+      $("#artifact-catalog").innerHTML = ARTIFACTS.map(item => `
+        <article class="upgrade artifact-card ${buildOptions.artifacts.includes(item.id) ? "selected" : ""}" data-id="${item.id}">
+          <div class="item-placeholder" aria-hidden="true">◇</div>
+          <div class="upgrade-copy"><h3 class="upgrade-name">${escapeHtml(item.name)}</h3>
+            <div class="meta">Party artifact</div><p class="effect">${escapeHtml(item.effect)}</p></div>
+        </article>`).join("");
+    }
+
+    function renderRunes() {
+      const curseOptions = `<option value="">No curse selected</option>${CURSES.map(curse =>
+        `<option value="${curse.id}">Runic Curse: ${escapeHtml(curse.name)}</option>`).join("")}`;
+      $("#rune-slots").innerHTML = RUNE_SLOTS.map((slot, index) => {
+        const rune = RUNES.find(item => item.id === buildOptions.runes[index]);
+        return `<div class="rune-slot ${activeRuneSlot === index ? "active" : ""}" data-slot="${index}" role="button" tabindex="0">
+          <span class="slot-name">${slot} · ${index + 1} curse stack${index ? "s" : ""}</span>
+          <span class="slot-rune">${rune ? escapeHtml(rune.name) : "Choose a rune…"}</span>
+          <select class="curse-select" data-curse-slot="${index}" aria-label="${slot} Runic Curse">${curseOptions}</select>
+        </div>`;
+      }).join("");
+      buildOptions.curses.forEach((curse, index) => { $(`[data-curse-slot="${index}"]`).value = curse || ""; });
+      $("#rune-catalog").innerHTML = RUNES.map(item => {
+        const selectedSlot = buildOptions.runes.indexOf(item.id);
+        return `<article class="upgrade rune-card ${selectedSlot >= 0 ? "selected" : ""}" data-id="${item.id}">
+          ${selectedSlot >= 0 ? `<span class="count">${selectedSlot + 1}</span>` : ""}
+          <div class="item-placeholder" aria-hidden="true">◈</div>
+          <div class="upgrade-copy"><h3 class="upgrade-name">${escapeHtml(item.name)}</h3>
+            <div class="meta">Rune</div><p class="effect">${escapeHtml(item.effect)}</p></div>
+        </article>`;
+      }).join("");
+    }
+
     function escapeHtml(value) {
       return String(value).replace(/[&<>"']/g, char => ({
         "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
@@ -1240,6 +1402,8 @@
       renderStats();
       renderPicked();
       renderCatalog();
+      renderArtifacts();
+      renderRunes();
       updateShareWidget();
     }
 
@@ -1280,6 +1444,54 @@
 
     ["search", "family-filter", "rarity-filter"].forEach(id => {
       $(`#${id}`).addEventListener(id === "search" ? "input" : "change", renderCatalog);
+    });
+
+    document.querySelector(".tabs").addEventListener("click", event => {
+      const button = event.target.closest("[data-tab]");
+      if (!button) return;
+      document.querySelectorAll("[data-tab]").forEach(tab => tab.setAttribute("aria-selected", String(tab === button)));
+      document.querySelectorAll(".tab-pane").forEach(pane => { pane.hidden = pane.id !== `tab-${button.dataset.tab}`; });
+    });
+
+    $("#artifact-catalog").addEventListener("click", event => {
+      const card = event.target.closest("[data-id]");
+      if (!card) return;
+      const index = buildOptions.artifacts.indexOf(card.dataset.id);
+      if (index >= 0) buildOptions.artifacts.splice(index, 1);
+      else buildOptions.artifacts.push(card.dataset.id);
+      saveBuildOptions();
+      render();
+    });
+
+    $("#rune-slots").addEventListener("click", event => {
+      if (event.target.closest("select")) return;
+      const slot = event.target.closest("[data-slot]");
+      if (!slot) return;
+      activeRuneSlot = Number(slot.dataset.slot);
+      renderRunes();
+    });
+    $("#rune-slots").addEventListener("change", event => {
+      const select = event.target.closest("[data-curse-slot]");
+      if (!select) return;
+      buildOptions.curses[Number(select.dataset.curseSlot)] = select.value || null;
+      saveBuildOptions();
+      render();
+    });
+    $("#rune-catalog").addEventListener("click", event => {
+      const card = event.target.closest("[data-id]");
+      if (!card) return;
+      const existing = buildOptions.runes.indexOf(card.dataset.id);
+      if (existing >= 0) {
+        buildOptions.runes[existing] = null;
+        activeRuneSlot = existing;
+      } else {
+        buildOptions.runes[activeRuneSlot] = card.dataset.id;
+        const next = buildOptions.runes.findIndex((id, index) => !id && index > activeRuneSlot);
+        const wrapped = buildOptions.runes.findIndex(id => !id);
+        if (next >= 0 || wrapped >= 0) activeRuneSlot = next >= 0 ? next : wrapped;
+      }
+      saveBuildOptions();
+      render();
     });
 
     $("#class-select").addEventListener("change", event => {

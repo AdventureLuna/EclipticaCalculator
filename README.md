@@ -18,6 +18,9 @@ Upgrade names, descriptions, and numerical modifiers are checked against the Eng
 [Ecliptica Wiki](https://ecliptica.miraheze.org/wiki/Main_Page). The crystal upgrade
 data comes from the wiki's [Upgrades](https://ecliptica.miraheze.org/wiki/Upgrades)
 page, while class-specific upgrades come from the individual English class pages.
+Artifact and rune mechanics come from the wiki's
+[Artifacts](https://ecliptica.miraheze.org/wiki/Artifacts) and
+[Runes](https://ecliptica.miraheze.org/wiki/Runes) pages.
 The current data was reviewed against wiki revisions available on August 4, 2026.
 
 ## Run locally
