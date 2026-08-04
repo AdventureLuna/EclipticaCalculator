@@ -27,7 +27,7 @@ assert.throws(() => decodeBuild("not+base64", options), /Base64URL/);
 assert.throws(() => decodeBuild(encodeBuild({ version: 1, characterId: 2, upgrades: [{ id: 2, count: 100 }] }).slice(0, -2), options), /Truncated|stack count/);
 
 const unsupported = new BitWriter();
-unsupported.writeBits(2, 3);
+unsupported.writeBits(3, 3);
 assert.throws(() => decodeBuild(bytesToBase64Url(unsupported.toBytes()), options), /Unsupported/);
 
 const unknown = decodeBuild(encodeBuild({ version: 1, characterId: 2, upgrades: [{ id: 120, count: 1 }] }), options);
@@ -45,5 +45,22 @@ const loaded = decodeBuild(encodeBuild(original), options);
 freshState.characterId = loaded.characterId;
 freshState.counts = Object.fromEntries(loaded.upgrades.map(entry => [entry.id, entry.count]));
 assert.deepEqual(freshState, { characterId: 6, counts: { 0: 4, 114: 100 } });
+
+const completeBuild = {
+  version: 2,
+  characterId: 5,
+  upgrades: [{ id: 4, count: 3 }, { id: 92, count: 17 }],
+  artifacts: [{ id: 0, count: 2 }, { id: 6, count: 100 }],
+  runes: [0, 17, null, 5],
+  curses: [13, null, 0, 5]
+};
+const completeResult = decodeBuild(encodeBuild(completeBuild), { ...options, artifactCount: 7, runeCount: 18, curseCount: 14 });
+assert.deepEqual({ ...completeResult, warnings: undefined }, { ...completeBuild, warnings: undefined });
+
+// Version 1 links remain valid and receive empty build-option defaults.
+const legacy = decodeBuild(encodeBuild({ version: 1, characterId: 2, upgrades: [] }), options);
+assert.deepEqual(legacy.artifacts, []);
+assert.deepEqual(legacy.runes, [null, null, null, null]);
+assert.deepEqual(legacy.curses, [null, null, null, null]);
 
 console.log("Share-build codec tests passed.");
