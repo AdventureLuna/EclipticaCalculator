@@ -733,7 +733,7 @@
       ["Chronowizard","Rare","Poison_Aspect.png","Poison Aspect","POISON Damage +15% (+15% per stack) POISON Defense +15% (+15% per stack) Chance to inflict POISONED status effect +5% (-5% per stack) Received Healing -5% (-5% per stack)"],
       ["Chronowizard","Rare","Shadow_Aspect.png","Shadow Aspect","SHADOW Damage +15% (+15% per stack) Chance to inflict the BREACHED status effect +5% (+5% per stack) LUMINOUS Defense -10% (+10% per stack)"],
       ["Chronowizard","Legendary","Charged_Strike.png","Charged Strike","Critical Hits will cause an explosion dealing X (+X per stack) PHYSICAL Damage Critical Strike Chance -5% (-5% per stack)"],
-      ["Chronowizard","Legendary","Pocket_Abacus.png","Pocket Abacus","Every fifth (5th) instance of Damage you deal will become a guaranteed Critical Strike Critical Strike Damage +10% (+10% per stack) Non-Critical Strike Damage -10% (-10% per stack) Sets Critical Strike Chance to 0%"],
+      ["Chronowizard","Legendary","Pocket_Abacus.png","Pocket Abacus","Every fifth (5th) instance of Damage you deal will become a guaranteed Critical Strike Critical Strike Damage +10% (+10% per stack) Overall Damage -10% (-10% per stack) Sets Critical Strike Chance to 0%"],
       ["Chronowizard","Legendary","Flaming_Spirit.png","Flaming Spirit","When at full HP, performing your primary skill fires a fireball dealing 16 (+X per stack) FIRE Damage Received Healing -5% (-5% per stack) Health Regeneration -20% (-20% per stack)"],
       ["Chronowizard","Legendary","Frozen_Heart.png","Frozen Heart","When at full HP, performing your primary skill fires an icicle dealing 18 (+X per stack) FROST damage Received Healing -5% (-5% per stack) Health Regeneration -20% (-20% per stack)"],
       ["Chronowizard","Legendary","Third_Law.png","Third Law","Upon taking Damage, deal 150% (+25% per stack) of its RAW value to enemies around you as PHYSICAL Damage On Fistmage's Parry, deal 50% of the Damage around you as PHYSICAL Damage"],
@@ -843,13 +843,13 @@
     ];
     const RUNE_SLOTS = ["Penumbra", "Antumbra", "Umbra", "Eclipse"];
     const CURSES = [
-      { id: "fragility", name: "Fragility", effect: "Physical Defense -9% per stack.", stats: p => ({ physicalDefense: -9 * p }) },
-      { id: "smolder", name: "Smolder", effect: "Fire Defense -9% per stack.", stats: p => ({ fireDefense: -9 * p }) },
-      { id: "fever", name: "Fever", effect: "Frost Defense -9% per stack.", stats: p => ({ frostDefense: -9 * p }) },
-      { id: "conductor", name: "Conductor", effect: "Electric Defense -9% per stack.", stats: p => ({ electricDefense: -9 * p }) },
-      { id: "profane", name: "Profane", effect: "Luminous Defense -9% per stack.", stats: p => ({ luminousDefense: -9 * p }) },
-      { id: "divine", name: "Divine", effect: "Shadow Defense -9% per stack.", stats: p => ({ shadowDefense: -9 * p }) },
-      { id: "rot", name: "Rot", effect: "Poison Defense -9% per stack.", stats: p => ({ poisonDefense: -9 * p }) },
+      { id: "fragility", name: "Fragility", effect: "Physical Defense -10% per stack.", stats: p => ({ physicalDefense: -10 * p }) },
+      { id: "smolder", name: "Smolder", effect: "Fire Defense -10% per stack.", stats: p => ({ fireDefense: -10 * p }) },
+      { id: "fever", name: "Fever", effect: "Frost Defense -10% per stack.", stats: p => ({ frostDefense: -10 * p }) },
+      { id: "conductor", name: "Conductor", effect: "Electric Defense -10% per stack.", stats: p => ({ electricDefense: -10 * p }) },
+      { id: "profane", name: "Profane", effect: "Luminous Defense -10% per stack.", stats: p => ({ luminousDefense: -10 * p }) },
+      { id: "divine", name: "Divine", effect: "Shadow Defense -10% per stack.", stats: p => ({ shadowDefense: -10 * p }) },
+      { id: "rot", name: "Rot", effect: "Poison Defense -10% per stack.", stats: p => ({ poisonDefense: -10 * p }) },
       { id: "tremor", name: "Tremor", effect: "Projectile Spread +2.5% per stack." },
       { id: "drain", name: "Drain", effect: "Maximum HP -10 per stack.", stats: p => ({ health: -10 * p }) },
       { id: "shedding", name: "Shedding", effect: "Overall Defense -5% per stack.", stats: p => ({ overallDefense: -5 * p }) },
@@ -951,7 +951,7 @@
       ["overallDamage", "Rapid_Fire", -20],
       ["overallDamage", "Thunder_Aura", -10, { once: true, notes: "This penalty only applies once." }],
       ["overallDamage", "Holy_Blessing", -10], ["overallDamage", "Berserker's_Soul", -20],
-      ["overallDamage", "Nekomancer_Death_Blossom", -3],
+      ["overallDamage", "Nekomancer_Death_Blossom", -3], ["overallDamage", "Pocket_Abacus", -10],
       ["physicalDamage", "Strength", 10],
       ...["fireDamage","frostDamage","electricDamage","luminousDamage","shadowDamage","poisonDamage"]
         .flatMap(stat => [[stat, "Sorcerer's_Mastery", 8], [stat, "An_IQ_Too_High_", 25]]),
@@ -1179,7 +1179,7 @@
         <strong>Defense derived from damage taken</strong><br>
         Defense modifiers apply inversely to damage taken.<br>
         Damage taken: <span class="cap-formula">${modifierFormula}</span>${capMarkup}<br>
-        Shown defense: <span class="cap-formula">100% ÷ (${n(calculation.damageTaken)} ÷ 100%) = ${n(calculation.defense)}</span>
+        Shown defense: <span class="cap-formula">100% ÷ ${n(calculation.damageTaken)} = ${n(calculation.defense)}</span>
       </div>`;
     }
 
