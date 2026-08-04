@@ -9,5 +9,14 @@ assert.equal((page.match(/name: "(?:Encrypted Archive|Goblet of the Sun|HC Armor
 assert.match(page, /const RUNE_SLOTS = \["Penumbra", "Antumbra", "Umbra", "Eclipse"\]/);
 assert.equal((page.match(/id: "(?:fragility|smolder|fever|conductor|profane|divine|rot|tremor|drain|shedding|anaemia|hypoxia|light|asthma)", name:/g) || []).length, 14);
 assert.match(page, /const artifactMultiplier = gambitSlot < 0 \? 1 : gambitSlot \+ 3/);
+assert.match(page, /buildOptions\.artifacts\[card\.dataset\.id\] = Math\.min\(100/);
+assert.match(page, /Shown defense:.*100% ÷ \(\$\{n\(calculation\.damageTaken\)\} ÷ 100%\)/);
+assert.match(page, /artifacts: ARTIFACTS\.map/);
+assert.match(page, /runes: buildOptions\.runes\.map/);
+assert.match(page, /curses: buildOptions\.curses\.map/);
+assert.match(page, /id: "hypoxia", name: "Hypoxia", effect: "Healing Received -15% per stack\.", stats: p => \(\{ healingReceived: -15 \* p \}\)/);
+assert.match(page, /id="reset-build"[^>]*>Reset build<\/button>/);
+assert.match(page, /data-remove-rune="\$\{index\}"/);
+assert.match(page, /buildOptions\.artifacts = \{\};[\s\S]*buildOptions\.runes = RUNE_SLOTS\.map\(\(\) => null\);[\s\S]*buildOptions\.curses = RUNE_SLOTS\.map\(\(\) => null\);/);
 
 console.log("Build option regression tests passed.");
