@@ -10,7 +10,8 @@ assert.match(page, /const RUNE_SLOTS = \["Penumbra", "Antumbra", "Umbra", "Eclip
 assert.equal((page.match(/id: "(?:fragility|smolder|fever|conductor|profane|divine|rot|tremor|drain|shedding|anaemia|hypoxia|light|asthma)", name:/g) || []).length, 14);
 assert.match(page, /const artifactMultiplier = gambitSlot < 0 \? 1 : gambitSlot \+ 3/);
 assert.match(page, /buildOptions\.artifacts\[card\.dataset\.id\] = Math\.min\(100/);
-assert.match(page, /Shown defense:.*100% ÷ \(\$\{n\(calculation\.damageTaken\)\} ÷ 100%\)/);
+assert.match(page, /Shown defense:.*100% ÷ \$\{n\(calculation\.damageTaken\)\} = \$\{n\(calculation\.defense\)\}/);
+assert.doesNotMatch(page, /Shown defense:.*÷ 100%/);
 assert.match(page, /artifacts: ARTIFACTS\.map/);
 assert.match(page, /runes: buildOptions\.runes\.map/);
 assert.match(page, /curses: buildOptions\.curses\.map/);
