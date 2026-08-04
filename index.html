@@ -571,6 +571,7 @@
   <div class="stat-tooltip" id="stat-tooltip" role="tooltip"></div>
 
   <script src="share-build.js"></script>
+  <script src="defense-calculation.js"></script>
   <script>
     const U = [
       ["Thaumaturge","Common","Thaumaturge_Keen_Eye.png","Thaumaturge: Keen Eye","Pain Exchange range +15 m (+15 m)."],
@@ -713,9 +714,7 @@
 
     const CAPS = {
       attackSpeed: [250, 375], projectileSpeed: [250, 375], movementSpeed: [150, 225],
-      criticalChance: [40, 60], utilityCooldownRate: [200, 300], overallDefense: [200, 300],
-      fireDefense: [200, 300], frostDefense: [200, 300], electricDefense: [200, 300],
-      luminousDefense: [200, 300], shadowDefense: [200, 300], poisonDefense: [200, 300],
+      criticalChance: [40, 60], utilityCooldownRate: [200, 300],
       fireDamage: [350, 525], frostDamage: [350, 525], electricDamage: [350, 525],
       luminousDamage: [350, 525], shadowDamage: [350, 525], poisonDamage: [350, 525]
     };
@@ -725,16 +724,13 @@
       projectileSpeed: 50,
       movementSpeed: 50,
       utilityCooldownRate: 50,
-      overallDefense: 70,
-      physicalDefense: 50,
-      fireDefense: 50,
-      frostDefense: 50,
-      electricDefense: 50,
-      luminousDefense: 50,
-      shadowDefense: 50,
-      poisonDefense: 50,
       overallDamage: 50
     };
+
+    const DEFENSE_STATS = new Set([
+      "overallDefense", "physicalDefense", "fireDefense", "frostDefense",
+      "electricDefense", "luminousDefense", "shadowDefense", "poisonDefense"
+    ]);
 
     const STAT_ROWS = [
       ["health","Health"], ["attackSpeed","Attack Speed"], ["projectileSpeed","Projectile Speed"],
@@ -923,7 +919,13 @@
       }
 
       const caps = {};
+      const defenseCalculations = {};
       const result = Object.fromEntries(Object.entries(activeBase).map(([stat, base]) => {
+        if (DEFENSE_STATS.has(stat)) {
+          const calculation = DefenseCalculation.calculateDefense(bonus[stat]);
+          defenseCalculations[stat] = calculation;
+          return [stat, calculation.defense];
+        }
         const raw = base + bonus[stat];
         const cappedRaw = capValue(stat, raw);
         const cappedBase = capValue(stat, base);
@@ -963,7 +965,7 @@
         });
         result.utilityCooldownRate /= divisor;
       }
-      return { stats: result, base: activeBase, breakdowns, caps };
+      return { stats: result, base: activeBase, breakdowns, caps, defenseCalculations };
     }
 
     function formatNumber(value) {
@@ -1025,6 +1027,26 @@
       </div>`;
     }
 
+    function defenseCalculationMarkup(stat) {
+      const calculation = latestCalculation?.defenseCalculations?.[stat];
+      if (!calculation) return "";
+      const n = value => `${formatNumber(value)}%`;
+      const modifier = calculation.defenseModifier;
+      const modifierFormula = modifier === 0
+        ? n(calculation.rawDamageTaken)
+        : `${n(DefenseCalculation.BASE_DAMAGE_TAKEN)} ${modifier > 0 ? "−" : "+"} ${n(Math.abs(modifier))} = ${n(calculation.rawDamageTaken)}`;
+      const capMarkup = calculation.isSoftCapped
+        ? `<br>Reduction exceeds the ${n(calculation.softCap)} damage-taken lower soft cap.<br>
+          <span class="cap-formula">${formatNumber(calculation.softCap)}² ÷ ${n(modifier)} = ${formatNumber(calculation.numerator)} ÷ ${n(modifier)} = ${n(calculation.damageTaken)}</span>`
+        : "";
+      return `<div class="cap-calculation">
+        <strong>Defense derived from damage taken</strong><br>
+        Defense modifiers apply inversely to damage taken.<br>
+        Damage taken: <span class="cap-formula">${modifierFormula}</span>${capMarkup}<br>
+        Shown defense: <span class="cap-formula">100% ÷ ${formatNumber(calculation.damageTaken / 100)} = ${n(calculation.defense)}</span>
+      </div>`;
+    }
+
     function showStatTooltip(row) {
       const stat = row.dataset.stat;
       const label = row.dataset.label;
@@ -1040,6 +1062,7 @@
             <td>${escapeHtml(entry.notes || "—")}</td>
           </tr>`).join("")}</tbody>
         </table>
+        ${defenseCalculationMarkup(stat)}
         ${softCapMarkup(stat)}`;
       tooltip.classList.add("visible");
 
