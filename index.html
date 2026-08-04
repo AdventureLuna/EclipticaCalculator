@@ -571,131 +571,132 @@
   <div class="stat-tooltip" id="stat-tooltip" role="tooltip"></div>
 
   <script src="share-build.js"></script>
+  <script src="defense-calculation.js"></script>
   <script>
     const U = [
-      ["Thaumaturge","Common","Thaumaturge_Keen_Eye.png","Thaumaturge: Keen Eye","Pain Exchange range +15 m (+15 m)."],
-      ["Thaumaturge","Common","Thaumaturge_Proficiency.png","Thaumaturge: Proficiency","Pain Exchange healing +3 HP (+3); cooldown −15% (−15%)."],
-      ["Thaumaturge","Rare","Thaumaturge_Splitshot.png","Thaumaturge: Splitshot","Foul Postule projectiles +1; spread +15% (+5%); damage −30%."],
-      ["Thaumaturge","Rare","Thaumaturge_Mastery.png","Thaumaturge: Mastery","Pain Exchange energy cost −3% (−3%); reduction capped at 24%."],
-      ["Thaumaturge","Legendary","Thaumaturge_Doping.png","Thaumaturge: Doping","Pain Exchange grants 6 Enforced stacks lasting 1.1 seconds each; damage taken −50% during uptime."],
-      ["Thaumaturge","Legendary","Thaumaturge_Everlife.png","Everlife","Life-energy gain −10% per stack. Revive mechanics are not included."],
-      ["Thaumaturge","Legendary","Thaumaturge_Splashback.png","Thaumaturge: Splashback","Pain Exchange causes 75 additional Poison damage per stack."],
+      ["Thaumaturge","Common","Thaumaturge_Keen_Eye.png","Thaumaturge: Keen Eye","Pain Exchange range: +15 (+15 per stack) meters"],
+      ["Thaumaturge","Common","Thaumaturge_Proficiency.png","Thaumaturge: Proficiency","Pain Exchange Healing amount +3 (+3 per stack) Pain Exchange Cooldown: -10% (-10% per stack)"],
+      ["Thaumaturge","Rare","Thaumaturge_Splitshot.png","Thaumaturge: Splitshot","When using Foul Pustule, fire an extra projectile. Projectile Spread +2.5% (+2.5% per stack) Damage -30% (-30% per stack)"],
+      ["Thaumaturge","Rare","Thaumaturge_Mastery.png","Thaumaturge: Mastery","LIFE ENERGY required to cast Pain Exchange: -3% (-3% per stack) * This is additive, not multiplicative, Ex. 25% - 3% = 22% life energy cost."],
+      ["Thaumaturge","Legendary","Thaumaturge_Doping.png","Thaumaturge: Doping","The target of Pain Exchange will receive 6 (+3 per stack) stacks of the ENFORCED status effect If the target of Pain Exchange is yourself, a maximum of 3 stacks of ENFORCED is applied and cannot be pushed past If the target of Pain Exchange is someone else, there is a maximum of X stacks of ENFORCED applied"],
+      ["Thaumaturge","Legendary","Thaumaturge_Everlife.png","Everlife","Gain the ability to spend 100% LIFE ENERGY to revive a player with the MORTAL CURSE. Doing so will inflict you with 60 (-10 per stack) stacks of the BREACHED and WEAKENED status effects. Upon use, reduces Max Health by 25 until the end of the current round. LIFE ENERGY gain -10% (-10% per stack)"],
+      ["Thaumaturge","Legendary","Thaumaturge_Splashback.png","Thaumaturge: Splashback","When healing yourself or an ally, cast an explosion on the target that deals 75 (+25 per stack) POISON damage in a 3 (+3 per stack) meter radius."],
 
-      ["Spellsword","Common","Spellsword_Profiency.png","Spellsword: Proficiency","Piercing Strike range increases by 5 m per stack. Linear stacking."],
-      ["Spellsword","Rare","Spellsword_Mastery.png","Spellsword: Mastery","Bleeding damage restores 1 HP per stack. Linear stacking."],
-      ["Spellsword","Rare","Spellsword_Burst.png","Spellsword: Burst","Utility grants +25% Attack Speed per stack for 3 seconds, but Utility Cooldown Rate is reduced by 20% per stack."],
-      ["Spellsword","Legendary","Spellsword_Swift_Stab.png","Spellsword: Swift Stab","Piercing Strike gains 35% damage per stack from Movement Speed above 100%."],
-      ["Spellsword","Legendary","Spellsword_Shieldbreaker.png","Spellsword: Shieldbreaker","Piercing Strike penetrates armor and deals 25% additional damage, with hyperbolic stacking."],
-      ["Spellsword","Legendary","Spellsword_Whirlwind.png","Spellsword: Whirlwind","A fully charged Piercing Strike releases a Physical-damage whirlwind; charge time rises 10% per stack."],
+      ["Spellsword","Common","Spellsword_Profiency.png","Spellsword: Proficiency","Piercing Strike range: +4 (+4 per stack) meters Hitting an enemy with Telekinetic Strike has a 2.5% (+2.5% per stack) chance to give you X stacks of the FRENZIED status effect."],
+      ["Spellsword","Rare","Spellsword_Mastery.png","Spellsword: Mastery","Restore 2 (+2 per stack) HP upon dealing damage with the BLEEDING status effect. Health Regeneration -100% (-100% per stack)"],
+      ["Spellsword","Rare","Spellsword_Burst.png","Spellsword: Burst","Using your Utility skill increases your Attack Speed by 25% (+25% per stack) for 3 seconds. Utility Cooldown Rate -20% (-20% per stack)"],
+      ["Spellsword","Legendary","Spellsword_Swift_Stab.png","Spellsword: Swift Stab","Your Piercing Strike damage will be increased by 35% (+35% per stack) of your Movement Speed% above 100%."],
+      ["Spellsword","Legendary","Spellsword_Shieldbreaker.png","Spellsword: Shieldbreaker","Your Piercing Strike will penetrate armor, dealing 25% (+X% per stack) Damage. Your base attack will deal an additional 25% (+X% per stack) Damage."],
+      ["Spellsword","Legendary","Spellsword_Whirlwind.png","Spellsword: Whirlwind","Releasing a fully charged piercing strike will cast a large whirlwind, continuously dealing X (+X per stack) PHYSICAL Damage. Piercing Strike Charge Time +30% (+30% per stack)"],
 
-      ["Twinmage","Common","Twinmage-Hand-Boost-L.png","Twinmage: Sinistra","Left hand gains +5% damage and Attack Speed per stack; right hand loses 3% of each per stack."],
-      ["Twinmage","Common","Twinmage-Hand-Boost-R.png","Twinmage: Dextra","Right hand gains +5% damage and Attack Speed per stack; left hand loses 3% of each per stack."],
-      ["Twinmage","Common","Twinmage_Profiency.png","Twinmage: Proficiency","Quickwarp distance increases by 3 m per stack. Linear stacking."],
-      ["Twinmage","Common","TwinMRush.png","Twinmage: Rush","Applying a status grants 4 Haste stacks, plus 2 more for each additional upgrade stack."],
-      ["Twinmage","Rare","Twinmage_Guarded.png","Twinmage: Guarded","Applying a status grants 4 Enforced stacks, plus 2 more for each additional upgrade stack."],
-      ["Twinmage","Rare","Twinmage_Mastery.png","Twinmage: Mastery","Elemental Hand impacts create a growing splash radius that deals 25% of the projectile damage."],
-      ["Twinmage","Rare","Twinmage_Wicked_Sign.png","Twinmage: Wicked Sign","Quickwarp has a 6.7% chance to grant Empowered, Enforced, Haste and Frenzied stacks; it is guaranteed at 67 HP."],
-      ["Twinmage","Legendary","Twinmage_Retaliation.png","Twinmage: Retaliation","Taking damage matching either Elemental Hand grants 3 Empowered stacks, plus 2 per additional upgrade stack."],
+      ["Twinmage","Common","Twinmage-Hand-Boost-L.png","Twinmage: Sinistra","Left Hand Damage +5% (+5% per stack) Left Hand Attack Speed +5% (+5% per stack) Right Hand Damage -3% (-3% per stack) Right Hand Attack Speed -3% (-3% per stack)"],
+      ["Twinmage","Common","Twinmage-Hand-Boost-R.png","Twinmage: Dextra","Right Hand Damage +5% (+5% per stack) Right Hand Attack Speed +5% (+5% per stack) Left Hand Damage -3% (-3% per stack) Left Hand Attack Speed -3% (-3% per stack)"],
+      ["Twinmage","Common","Twinmage_Profiency.png","Twinmage: Proficiency","Quickwarp distance: +3 (+3 per stack) meters"],
+      ["Twinmage","Common","TwinMRush.png","Twinmage: Rush","Applying a status effect to an enemy will grant you 4 (+2 per stack) stacks of the HASTE status effect."],
+      ["Twinmage","Rare","Twinmage_Guarded.png","Twinmage: Guarded","Applying a status effect to an enemy will grant you 4 (+2 per stack) stacks of the ENFORCED status effect"],
+      ["Twinmage","Rare","Twinmage_Mastery.png","Twinmage: Mastery","Your Elemental Hand projectiles explode in a X (+X per stack) meter radius upon impact, dealing 25% of their damage as splash damage."],
+      ["Twinmage","Rare","Twinmage_Wicked_Sign.png","Twinmage: Wicked Sign","Casting Quickwarp has a 6.7% chance to grant you 8 (+2 per stack) stacks of the EMPOWERED, ENFORCED, HASTE AND FRENZIED status effects. This will be guaranteed to happen if you are at 67 HP."],
+      ["Twinmage","Legendary","Twinmage_Retaliation.png","Twinmage: Retaliation","Taking damage of the element of one of your Elemental Hands will grant you 3 (+2 per stack) stacks of the EMPOWERED status effect."],
 
-      ["Gunmancer","Common","Gunmancer_Overcharged.png","Gunmancer: Overcharged (VA-11 Blast Cannon)","Blast Cannon beam width grows 5% and Electric Damage rises 15% per stack."],
-      ["Gunmancer","Common","Gunmancer_Proficiency.png","Gunmancer: Proficiency (Firebomb)","Firebomb radius grows by 1 m and Fire Damage rises 7%, with hyperbolic stacking.","Gunmancer_Proficiency_Firebomb"],
-      ["Gunmancer","Common","Gunmancer_Proficiency.png","Gunmancer: Proficiency (Photon Condenser)","The charged Photon Condenser gains one projectile and Luminous Damage rises 7%, with hyperbolic stacking.","Gunmancer_Proficiency_Photon"],
-      ["Gunmancer","Common","Gunmancer_Proficiency.png","Gunmancer: Proficiency (Antimatter Accelerator)","The charged Antimatter Accelerator gains one projectile and Shadow Damage rises 5%, with hyperbolic stacking.","Gunmancer_Proficiency_Antimatter"],
-      ["Gunmancer","Common","Gunmancer_Sidestep.png","Gunmancer: Sidestep","Airblast Dash grants Haste stacks; the wiki does not currently specify the amount."],
-      ["Gunmancer","Legendary","Gunmancer_Marksman.png","Gunmancer: Marksman (VA-11 Blast Cannon)","Periodically toss a coin that redirects a Blast Cannon hit and boosts its explosion by 400%; practical shot damage is about ×1.66."],
-      ["Gunmancer","Legendary","Gunmancer_Mastery.png","Gunmancer: Mastery","Charged Shot Damage rises 50% per stack. Linear stacking."],
+      ["Gunmancer","Common","Gunmancer_Overcharged.png","Gunmancer: Overcharged (VA-11 Blast Cannon)","VA-11 Blast Cannon beam width: +5% (+5% per stack) ELECTRIC Damage: +15% (+15% per stack)"],
+      ["Gunmancer","Common","Gunmancer_Proficiency.png","Gunmancer: Proficiency (Firebomb)","Firebomb explosion radius: +1 m (+1 m per stack) FIRE Damage +7%","Gunmancer_Proficiency_Firebomb"],
+      ["Gunmancer","Common","Gunmancer_Proficiency.png","Gunmancer: Proficiency (Photon Condenser)","Photon Condenser Projectile Count +2 (+2 per stack) LUMINOUS Damage +7%","Gunmancer_Proficiency_Photon"],
+      ["Gunmancer","Common","Gunmancer_Proficiency.png","Gunmancer: Proficiency (Antimatter Accelerator)","Antimatter Accelerator Projectile Count +1 (+1 per stack) SHADOW Damage +5%","Gunmancer_Proficiency_Antimatter"],
+      ["Gunmancer","Common","Gunmancer_Sidestep.png","Gunmancer: Sidestep","Using your Airblast Dash will grant you X (+X per stack) stacks of the HASTE status effect"],
+      ["Gunmancer","Legendary","Gunmancer_Marksman.png","Gunmancer: Marksman (VA-11 Blast Cannon)","Periodically throw a coin. Hitting the coin with your Blast Cannon will direct the blast towards the nearest enemy and increase the Damage by 400% Coin Size +10% * Actually multiplies specifically the explosion, so the practical damage over a normal shot is only 1.66x"],
+      ["Gunmancer","Legendary","Gunmancer_Mastery.png","Gunmancer: Mastery","Charged Shot Damage +50% (+50% per stack)"],
 
-      ["Fistmage","Common","Fistmage_Proficiency.png","Fistmage: Proficiency","A successful Deflecting Swipe heals 2 HP per stack and creates an ally-healing aura for half that personal healing."],
-      ["Fistmage","Rare","Fistmage_Mach_Punch.png","Fistmage: Mach Punch","Gain Physical Damage equal to 25% per stack of Movement Speed above 100%."],
-      ["Fistmage","Rare","Fistmage_Mastery.png","Fistmage: Mastery","A successful deflection grants one additional Empowered and Enforced stack per upgrade stack."],
-      ["Fistmage","Rare","FistMRage.png","Fistmage: Rage","Deflecting Swipe grants +100% Attack Speed for 4 seconds and 3 Haste stacks, with one more Haste stack per upgrade stack."],
-      ["Fistmage","Rare","FistMRunner.png","Fistmage: Runner","Movement Speed gradually increases while Aura Fist is charging. Multiplicative linear stacking."],
-      ["Fistmage","Legendary","Fistmage_Apply_Force.png","Fistmage: Apply Force","A deflection grants Apply-Force; a fully charged Aura Fist consumes it to launch a Physical projectile. Swipe cooldown increases 30%."],
+      ["Fistmage","Common","Fistmage_Proficiency.png","Fistmage: Proficiency","On a successful Deflecting Swipe, heal 2 (+2 per stack) HP and summon an aura around yourself, healing nearby allies for half of your personal healing"],
+      ["Fistmage","Rare","Fistmage_Mach_Punch.png","Fistmage: Mach Punch","Gain additional PHYSICAL Damage equivalent to 25% (+25% per stack) of your Movement Speed stat past 100%"],
+      ["Fistmage","Rare","Fistmage_Mastery.png","Fistmage: Mastery","On a successful deflection, the gained EMPOWERED and ENFORCED status effects are increase by 1 (+1 per stack) stack."],
+      ["Fistmage","Rare","FistMRage.png","Fistmage: Rage","On a successful Deflecting Swipe, increase attack speed by 100% (+X% per stack) for 4 seconds and grant you 3 (+1 per stack) stacks of the HASTE status effect. You may only have a maximum of 10 stacks of HASTE."],
+      ["Fistmage","Rare","FistMRunner.png","Fistmage: Runner","While charging Aura Fist, gradually increase your movement speed."],
+      ["Fistmage","Legendary","Fistmage_Apply_Force.png","Fistmage: Apply Force","Upon a successful Deflecting Swipe, gain a brief APPLY-FORCE status effect. Upon releasing a fully charged Aura Fist punch with the status effect active, fire a Ranged Projectile dealing PHYSICAL Damage and consume 1 stack of the status effect. Deflecting Swipe Cooldown +30%"],
 
-      ["Spellhammer","Common","Spellhammer_Proficiency.png","Spellhammer: Proficiency (Jump Smash)","Knockback Force rises 10% and Jump Smash strength rises 5% per stack.","Spellhammer_Proficiency_Jump"],
-      ["Spellhammer","Common","Spellhammer_Proficiency.png","Spellhammer: Proficiency (Chuck)","Knockback Force rises 10% and thrown-hammer gravity drop falls 10% per stack.","Spellhammer_Proficiency_Chuck"],
-      ["Spellhammer","Rare","Spellhammer_Boosted.png","Spellhammer: Boosted","Disperse Blast strength and damage each rise 10% per stack."],
-      ["Spellhammer","Rare","Spellhammer_Mastery.png","Spellhammer: Mastery (Jump Smash)","Landing Jump Smash directly on an enemy reduces its cooldown by 25%, with hyperbolic stacking.","Spellhammer_Mastery_Jump"],
-      ["Spellhammer","Rare","Spellhammer_Mastery.png","Spellhammer: Mastery (Chuck)","The thrown hammer bounces to one additional enemy per stack and loses 5% gravity drop per stack.","Spellhammer_Mastery_Chuck"],
-      ["Spellhammer","Legendary","Spellhammer_Concussion.png","Spellhammer: Concussion (Jump Smash)","A high-power Jump Smash deals extra Electric Damage with a 50% Paralysis chance. Hyperbolic stacking.","Spellhammer_Concussion_Jump"],
-      ["Spellhammer","Legendary","Spellhammer_Concussion.png","Spellhammer: Concussion (Chuck)","A hit creates an Electric area with a 50% Paralysis chance. Hyperbolic stacking.","Spellhammer_Concussion_Chuck"],
-      ["Spellhammer","Legendary","Spellhammer_Juggernaut.png","Spellhammer: Juggernaut (Jump Smash)","A high-power Jump Smash briefly grants Enforced. Linear stacking.","Spellhammer_Juggernaut_Jump"],
-      ["Spellhammer","Legendary","Spellhammer_Juggernaut.png","Spellhammer: Juggernaut (Chuck)","A full-power throw briefly grants Empowered. Linear stacking.","Spellhammer_Juggernaut_Chuck"],
+      ["Spellhammer","Common","Spellhammer_Proficiency.png","Spellhammer: Proficiency (Jump Smash)","Knockback Force: +10% (+10% per stack) Jump Smash Strength +5% (+5% per stack)","Spellhammer_Proficiency_Jump"],
+      ["Spellhammer","Common","Spellhammer_Proficiency.png","Spellhammer: Proficiency (Chuck)","Knockback Force +10% (+10% per stack) Chucked Hammer Gravity Drop -10% (-10% per stack)","Spellhammer_Proficiency_Chuck"],
+      ["Spellhammer","Rare","Spellhammer_Boosted.png","Spellhammer: Boosted","Disperse Blast Strength +10% Disperse Blast Damage +10%"],
+      ["Spellhammer","Rare","Spellhammer_Mastery.png","Spellhammer: Mastery (Jump Smash)","Performing Jump Smash on top of an enemy will reduce the cooldown by 25% (X% per stack)","Spellhammer_Mastery_Jump"],
+      ["Spellhammer","Rare","Spellhammer_Mastery.png","Spellhammer: Mastery (Chuck)","Upon impact, your Chucked Hammer will bounce towards the nearest enemy 1 time (+1 per stack) Chucked Hammer Gravity Drop -5% (-5% per stack)","Spellhammer_Mastery_Chuck"],
+      ["Spellhammer","Legendary","Spellhammer_Concussion.png","Spellhammer: Concussion (Jump Smash)","Performing a high-power Jump Smash will deal additional ELECTRIC Damage with a 50% Chance to inflict the PARALYZED status effect","Spellhammer_Concussion_Jump"],
+      ["Spellhammer","Legendary","Spellhammer_Concussion.png","Spellhammer: Concussion (Chuck)","On a successful hit, spawn an Area of Effect that will deal ELECTRIC Damage with a 50% Chance to inflict the PARALYZED status effect.","Spellhammer_Concussion_Chuck"],
+      ["Spellhammer","Legendary","Spellhammer_Juggernaut.png","Spellhammer: Juggernaut (Jump Smash)","Performing a high-power Jump Smash will grant you a brief ENFORCED status effect","Spellhammer_Juggernaut_Jump"],
+      ["Spellhammer","Legendary","Spellhammer_Juggernaut.png","Spellhammer: Juggernaut (Chuck)","Performing a full-power throw will grant you a brief EMPOWERED status effect. You may only have a maximum of 5 stacks of EMPOWERED (each upgrade increases this cap by 2)","Spellhammer_Juggernaut_Chuck"],
 
-      ["Shield Mage","Common","Shieldmage_Proficiency.png","Shieldmage: Proficiency","The Defensive Stance shield area grows by an amount not currently specified on the wiki. Hyperbolic stacking."],
-      ["Shield Mage","Common","Shieldmage_Unbreakable.png","Shieldmage: Unbreakable","Purple damage received falls 5%, or 10% while the Evasive Maneuver shield is active. Hyperbolic stacking."],
-      ["Shield Mage","Rare","Shieldmage_Ice_Burst.png","Shieldmage: Ice Burst","Each blocked attack increases Ice Burst charge power. Linear stacking."],
-      ["Shield Mage","Rare","Shieldmage_Mastery.png","Shieldmage: Mastery","Evasive Maneuver shield size increases by an amount not currently specified on the wiki. Linear stacking."],
-      ["Shield Mage","Legendary","Shieldmage_Rally_Up.png","Shieldmage: Rally Up","Evasive Maneuver briefly grants Empowered to you and nearby allies. Linear stacking."],
-      ["Shield Mage","Legendary","Shieldmage_Warden.png","Shieldmage: Warden","Evasive Maneuver grants the party Resilience to block one damage instance; Utility cooldown increases 100%."],
+      ["Shield Mage","Common","Shieldmage_Proficiency.png","Shieldmage: Proficiency","Increase the effect area of your Defensive Stance shield by X% (X% per stack)"],
+      ["Shield Mage","Common","Shieldmage_Unbreakable.png","Shieldmage: Unbreakable","Damage received from PURPLE Attacks -5% Damage received from PURPLE Attacks with an active Evasive Maneuver Shield -10%"],
+      ["Shield Mage","Rare","Shieldmage_Ice_Burst.png","Shieldmage: Ice Burst","Increases charge-up power of Ice Burst for each blocked Attack"],
+      ["Shield Mage","Rare","Shieldmage_Mastery.png","Shieldmage: Mastery","Increase the size of your Evasive Maneuver shield by X% (X% per stack)"],
+      ["Shield Mage","Legendary","Shieldmage_Rally_Up.png","Shieldmage: Rally Up","Using your Evasive Maneuver Shield gives you and your allies around you a brief EMPOWERED status effect"],
+      ["Shield Mage","Legendary","Shieldmage_Warden.png","Shieldmage: Warden","Using your Evasive Maneuver Shield gives you and all your allies the RESILIENCE status effect, letting them block an instance of Damage Utility Cooldown +100%"],
 
-      ["Nekomancer","Common","Nekomancer_Proficiency.png","Nekomancer: Proficiency","Slain enemies gain +5% Soul-drop chance and random Soul spawn rate rises 25% per stack."],
-      ["Nekomancer","Rare","Nekomancer_Death_Blossom.png","Nekomancer: Death Blossom","Kitty Totem healing speed rises 10%, range grows 1 m and Overall Damage falls 3% per stack."],
-      ["Nekomancer","Rare","Nekomancer_Mastery.png","Nekomancer: Mastery","Each held Soul grants +2% Overall Damage and +20% Health Regeneration per upgrade stack."],
-      ["Nekomancer","Rare","Nekomancer_Soul_Detonation.png","Nekomancer: Soul Detonation","A dying kitty releases a Shadow explosion with a 50% chance to inflict Breached."],
-      ["Nekomancer","Legendary","Nekomancer_Necropact.png","Nekomancer: Necropact","With a kitty summoned, 600% of damage taken at low HP is redirected to one kitty."],
+      ["Nekomancer","Common","Nekomancer_Proficiency.png","Nekomancer: Proficiency","Chance for a slain enemy to leave a Soul: +5% Random Soul spawn rate: +25%"],
+      ["Nekomancer","Rare","Nekomancer_Death_Blossom.png","Nekomancer: Death Blossom","Kitty Totem Healing Speed +10% Kitty Totem Healing Range +1 M Damage -3%"],
+      ["Nekomancer","Rare","Nekomancer_Mastery.png","Nekomancer: Mastery","Overall Damage +2% Health Regeneration +20% (For each Soul you are holding)"],
+      ["Nekomancer","Rare","Nekomancer_Soul_Detonation.png","Nekomancer: Soul Detonation","Upon the death of a kitty: A large explosion of 2 meters (+1.5 meters per stack) dealing SHADOW Damage will be released with a 50% Chance to inflict the BREACHED status effect"],
+      ["Nekomancer","Legendary","Nekomancer_Necropact.png","Nekomancer: Necropact","With at least 1 summoned kitty: 600% of any Damage taken at low HP will be redirected towards 1 kitty"],
 
-      ["Endurance Crystal","Common","Fluffy.png","Fluffy","Maximum HP +10 (+10)."],
-      ["Endurance Crystal","Common","Gluttonous.png","Gluttonous","Healing dealt and received +5% (+5%)."],
-      ["Endurance Crystal","Common","Sacrificial_Lamb.png","Sacrificial Lamb","On death, heal all other party members for 15 HP (+15)."],
-      ["Endurance Crystal","Common","Swarm_Enforcer.png","Swarm Enforcer","Defence +1.5% per enemy within 32 m (+1.5%)."],
-      ["Endurance Crystal","Common","Vitality.png","Vitality","Health regeneration +80% (+80%)."],
-      ["Endurance Crystal","Common","Vital_Drain.png","Vital Drain","Critical hits restore 2 HP (+2); unaffected by healing modifiers."],
-      ["Endurance Crystal","Rare","Adrenaline_Fiend.png","Adrenaline Fiend","Utility heals 6 HP; Utility cooldown recovery +7%; healing −15%."],
-      ["Endurance Crystal","Rare","Big_and_Lazy.png","Big and Lazy","After 1s still, regeneration coefficient +200% (+50%); no regeneration while moving."],
-      ["Endurance Crystal","Rare","Big_and_Round.png","Big and Round","Knockback resistance +50%; max HP +30; jump and movement −10%."],
-      ["Endurance Crystal","Rare","Cold_Blooded.png","Cold Blooded","Freeze duration −?%; Frost Defence +15%; Fire Defence −15%."],
-      ["Endurance Crystal","Rare","Conductive_Armor.png","Conductive Armor","Physical Defence +20%; bleed resistance +?%; elemental defences −5%."],
-      ["Endurance Crystal","Rare","Holy_Blessing.png","Holy Blessing","Near death: Luminous explosion applies Weakened; Luminous/Shadow Defence +15%; damage −10%."],
-      ["Endurance Crystal","Rare","Iron_Skin.png","Iron Skin","Defence +8%; movement −3%; damage −2%."],
-      ["Endurance Crystal","Rare","Last_Stand.png","Last Stand","Brief invulnerability when damage leaves you at 1 HP."],
-      ["Endurance Crystal","Rare","Life_Leech.png","Life Leech","Damage heals 1 HP; damage −10%; regeneration −50%; healing received −20%."],
-      ["Endurance Crystal","Rare","Masochist.png","Masochist","Paralysis duration −?%; Electric Defence +15%; Physical Defence −10% (−15%)."],
-      ["Endurance Crystal","Rare","Nature's_Gift.png","Nature’s Gift","Every 10s create up to 3 (+1) personal healing auras; each heals 20 HP."],
-      ["Endurance Crystal","Legendary","Benison_of_Purification.png","Benison of Purification","Periodically fire Luminous magic within 64 m; Shadow Defence +10%; defence −5%."],
-      ["Endurance Crystal","Legendary","Curse_of_Wrath.png","Curse of Wrath","Every 3s fire Shadow magic within 32 m; Luminous Defence −20%."],
-      ["Endurance Crystal","Legendary","Glass_Cannon.png","Glass Cannon","Damage +30%; maximum HP −50."],
-      ["Endurance Crystal","Legendary","Healthy_Guard.png","Healthy Guard","After 15s at full HP, reduce next hit by 50% (+10%?); affects Tankbusters."],
-      ["Endurance Crystal","Legendary","Mass_Aspect.png","Mass Aspect","Maximum HP +75; movement speed −30%."],
-      ["Endurance Crystal","Legendary","Volatile_Tenacity.png","Volatile Tenacity","Fatal damage leaves 1 HP while not near death; 150s cooldown (+25%)."],
-      ["Endurance Crystal","Legendary","Big-and-Wrathful.png","Big and Wrathful","Near death: damage +50%, threshold +10%, defence −20%."],
-      ["Mobility Crystal","Common","Athletic.png","Athletic","Movement speed +8% (+8%)."],
-      ["Mobility Crystal","Common","Eagle_Eye.png","Eagle Eye","Projectile speed +35% (+35%)."],
-      ["Mobility Crystal","Common","Hawkeye.png","Hawkeye","Projectile range +10 m; spread −1% (?)."],
-      ["Mobility Crystal","Common","Quick_Breath.png","Quick Breath","Utility cooldown recovery rate +10% (+10%)."],
-      ["Mobility Crystal","Common","Springfoot.png","Springfoot","Jump height +20% (+20%)."],
-      ["Mobility Crystal","Common","Swift_Hands.png","Swift Hands","Attack speed +15% (+15%)."],
-      ["Mobility Crystal","Rare","Leg_Day.png","Leg Day","Slowed resistance; movement +5%; jump height +10%."],
-      ["Mobility Crystal","Rare","Reactive_Panic.png","Reactive Panic","Taking damage briefly grants Frenzy (+? seconds)."],
-      ["Mobility Crystal","Rare","Smell_the_Roses.png","Smell the Roses","Near death briefly grants Sprint; 30s cooldown."],
-      ["Mobility Crystal","Rare","Thunder_Aura.png","Thunder Aura","23 Electric damage/sec within 4.4 m; damage −10%; movement −5%."],
-      ["Mobility Crystal","Legendary","Berserker's_Soul.png","Berserker’s Soul","Primary hits stack damage/attack speed and reduce movement; hit taken clears stacks; damage −20%, attack speed −40%."],
-      ["Mobility Crystal","Legendary","Big_and_Speedy.png","Big and Speedy","Utility cooldown recovery rate +50%; defence −20%."],
-      ["Mobility Crystal","Legendary","Featherweight.png","Featherweight","Movement speed +30%; defence −20%."],
-      ["Mobility Crystal","Legendary","Heavy_Hand.png","Heavy Hand","Damage +30%; attack speed −40%."],
-      ["Mobility Crystal","Legendary","Partial_Flight.png","Partial Flight","Extra jumps +1 (+1)."],
-      ["Mobility Crystal","Legendary","Rapid_Fire.png","Rapid Fire","Attack speed +50%; damage −20%."],
-      ["Mobility Crystal","Legendary","Way_of_the_Law.png","Way of the Law","Alternate STOP (damage up, speed down) and GO (speed up, damage down)."],
-      ["Chronowizard","Common","Full_Focus.png","Full Focus","Critical chance +5%; critical damage +5%."],
-      ["Chronowizard","Common","Potent_Strike.png","Potent Strike","Critical-hit status application chance +6% (+6%)."],
-      ["Chronowizard","Common","Sorcerer's_Mastery.png","Sorcerer’s Mastery","Elemental damage +8% (+8%)."],
-      ["Chronowizard","Common","Strength.png","Strength","Physical damage +10% (+10%)."],
-      ["Chronowizard","Rare","Clutch_or_Kick.png","Clutch or Kick","Damage +7% per dead party member (+7%)."],
-      ["Chronowizard","Rare","Greater_Focus.png","Greater Focus","Near death: critical chance +10%; critical damage +3%."],
-      ["Chronowizard","Rare","An_IQ_Too_High_.png","An IQ Too High?","Elemental damage +25%; projectile speed −15%; attack speed −10%."],
-      ["Chronowizard","Rare","Sticky.png","Sticky","Statuses last 2 extra ticks; all status resistance reduced."],
-      ["Chronowizard","Rare","Cutting_Edge.png","Cutting Edge","Bleed chance +10%; Physical Defence −5%."],
-      ["Chronowizard","Rare","Fire_Aspect.png","Fire Aspect","Fire Defence/Damage +15%; Burn chance +5%; Frost Defence −10%."],
-      ["Chronowizard","Rare","Frost_Aspect.png","Frost Aspect","Frost Defence/Damage +15%; Freeze chance +5%; Fire Defence −10%."],
-      ["Chronowizard","Rare","Luminous_Aspect.png","Luminous Aspect","Luminous Damage +15%; Shadow Defence +15%; Weaken chance +5%; Shadow Defence −5%."],
-      ["Chronowizard","Rare","Poison_Aspect.png","Poison Aspect","Poison Damage/resistance +15%; poison chance +5%; healing −15%."],
-      ["Chronowizard","Rare","Shadow_Aspect.png","Shadow Aspect","Shadow Damage +15%; Corrosion chance +5% (+15%); Luminous Defence −10%."],
-      ["Chronowizard","Legendary","Charged_Strike.png","Charged Strike","Critical hits explode; critical chance −5%."],
-      ["Chronowizard","Legendary","Pocket_Abacus.png","Pocket Abacus","Every 5th attack crits; crit damage +10%; non-crits −10%; random crits disabled."],
-      ["Chronowizard","Legendary","Flaming_Spirit.png","Flaming Spirit","At full HP, Primary fires a 16-damage fireball (+50%); healing −5%; regeneration −20%."],
-      ["Chronowizard","Legendary","Frozen_Heart.png","Frozen Heart","At full HP, Primary fires a Frost icicle; healing −5%; regeneration −20%."],
-      ["Chronowizard","Legendary","Third_Law.png","Third Law","When hit, deal 150% received damage as Physical to nearby enemies (+25%)."],
-      ["Chronowizard","Legendary","Warrior's_Will.png","Warrior’s Will","Utility grants Empowered (×1.25 damage) for 5s; cooldown recovery rate −15%."]
+      ["Endurance Crystal","Common","Fluffy.png","Fluffy","Max HP: +10 (+10 per stack)"],
+      ["Endurance Crystal","Common","Gluttonous.png","Gluttonous","Received Healing +5% (+5% per stack)"],
+      ["Endurance Crystal","Common","Sacrificial_Lamb.png","Sacrificial Lamb","Upon dying, heal every other party member by 15 HP (+15 HP per stack)"],
+      ["Endurance Crystal","Common","Swarm_Enforcer.png","Swarm Enforcer","Gain +1.5% Defense for each enemy within 32 meters of you. (+1.5% Defense per stack)"],
+      ["Endurance Crystal","Common","Vitality.png","Vitality","Health Regeneration: +80% (+80% per stack)"],
+      ["Endurance Crystal","Common","Vital_Drain.png","Vital Drain","Critical strikes recover 2 HP (+2 HP per stack)"],
+      ["Endurance Crystal","Rare","Adrenaline_Fiend.png","Adrenaline Fiend","Using your Utility skill recovers 6 (+6 per stack) HP Utility Cooldown Rate +7% (+7% per stack) Received Healing -15% (-15% per stack)"],
+      ["Endurance Crystal","Rare","Big_and_Lazy.png","Big and Lazy","When standing still for at least 1 second, gain 200% (+50% per stack) extra Health Regeneration. When moving, set Health Regeneration to 0%."],
+      ["Endurance Crystal","Rare","Big_and_Round.png","Big and Round","Knockback Resistance: +50% (+50% per stack) Max HP: +30 (+30 per stack) Jump Height: -10% (-10% per stack) Movement Speed: -10% (-10% per stack)"],
+      ["Endurance Crystal","Rare","Cold_Blooded.png","Cold Blooded","Reduce number of stacks taken of the FREEZING status effect by X (X per stack) FROST Defense: +15% (+15% per stack) FIRE Defense: -15% (-15% per stack)"],
+      ["Endurance Crystal","Rare","Conductive_Armor.png","Conductive Armor","PHYSICAL Defense +20% (+20% per stack) Reduce number of stacks taken of the BLEEDING status effect by X(+X per stack) ELEMENTAL Defense -5% (-5% per stack)"],
+      ["Endurance Crystal","Rare","Holy_Blessing.png","Holy Blessing","Falling to LOW HP will cause a large explosion dealing 275 (+X per stack) LUMINOUS damage, with a 100% chance to inflict the WEAKENED status effect. LUMINOUS Defense: +15% (+15% per stack) SHADOW Defense: +15% (+15% per stack) Overall Damage: -10% (-10% per stack)"],
+      ["Endurance Crystal","Rare","Iron_Skin.png","Iron Skin","Defense: +8% (+8% per stack) Movement Speed: -3% (-3% per stack) Overall Damage: -2% (-2% per stack)"],
+      ["Endurance Crystal","Rare","Last_Stand.png","Last Stand","Upon taking damage which leaves you at 1 HP, receive X stacks of the INVINCIBLE status effect"],
+      ["Endurance Crystal","Rare","Life_Leech.png","Life Leech","Restore 1 (+1 per stack) HP upon dealing damage. Overall Damage: -10% (-10% per stack) Health Regeneration: -50% (-50% per stack) Received Healing -20% (-20% per stack)"],
+      ["Endurance Crystal","Rare","Masochist.png","Masochist","Reduce number of stacks taken of the PARALYZED status effect by X (X per stack) ELECTRIC Defense: +15% (+15% per stack) PHYSICAL Defense: -10% (-15% per stack)"],
+      ["Endurance Crystal","Rare","Nature's_Gift.png","Nature’s Gift","Spawn up to 3 (+1 per level) personal Healing Auras at a random location on the stage every 10 seconds which heals you for 20 HP."],
+      ["Endurance Crystal","Legendary","Benison_of_Purification.png","Benison of Purification","Periodically fire a projectile dealing 25 (+X per stack) LUMINOUS damage at the closest enemy within 64 meters. SHADOW Defense +10% (+10% per stack) Overall Defense -5% (-5% per stack)"],
+      ["Endurance Crystal","Legendary","Curse_of_Wrath.png","Curse of Wrath","Periodically fire a projectile dealing 25 (+X per stack) SHADOW damage at the closest enemy within 32 meters. LUMINOUS Defense -20% (-20% per stack)"],
+      ["Endurance Crystal","Legendary","Glass_Cannon.png","Glass Cannon","Damage +30% (+30% per stack) Health -50 (-50 per stack)"],
+      ["Endurance Crystal","Legendary","Healthy_Guard.png","Healthy Guard","After being at FULL HP for 15 seconds (-X seconds per stack), the next instance of damage you take will be reduced by 50% (+50% per stack)"],
+      ["Endurance Crystal","Legendary","Mass_Aspect.png","Mass Aspect","Health: +75 (+75 per stack) Movement Speed: -30% (-30% per stack)"],
+      ["Endurance Crystal","Legendary","Volatile_Tenacity.png","Volatile Tenacity","Upon taking lethal damage when above LOW HP, survive and be left with 1 HP. 150 second cooldown, increases the cooldown rate by 25% per stack."],
+      ["Endurance Crystal","Legendary","Big-and-Wrathful.png","Big and Wrathful","Damage dealt at LOW HP +50% Raise your LOW HP threshold by 10% Defense at LOW HP -25%"],
+      ["Mobility Crystal","Common","Athletic.png","Athletic","Movement Speed: +8% (+8% per stack)"],
+      ["Mobility Crystal","Common","Eagle_Eye.png","Eagle Eye","Projectile Speed +35% (+35% per stack)"],
+      ["Mobility Crystal","Common","Hawkeye.png","Hawkeye","Projectile Distance +10 M (+10 M per stack) Projectile Spread -1% (-1% per stack)"],
+      ["Mobility Crystal","Common","Quick_Breath.png","Quick Breath","Utility Cooldown Rate: +10% (+10% per stack)"],
+      ["Mobility Crystal","Common","Springfoot.png","Springfoot","Jump Height: +20% (+20% per stack)"],
+      ["Mobility Crystal","Common","Swift_Hands.png","Swift Hands","Attack Speed: +15% (+15% per stack)"],
+      ["Mobility Crystal","Rare","Leg_Day.png","Leg Day","Reduces number of stacks taken of the HEAVY status effect by X (+X per stack) Movement Speed +5% (+5% per stack) Jump Height +10% (+10% per stack)"],
+      ["Mobility Crystal","Rare","Reactive_Panic.png","Reactive Panic","Taking damage will grant you 1 (+1 per stack) stack of the FRENZIED status effect"],
+      ["Mobility Crystal","Rare","Smell_the_Roses.png","Smell the Roses","Falling to low HP will grant you 7 (+2 per stack) stacks of the HASTE status effect with a 30 second Cooldown"],
+      ["Mobility Crystal","Rare","Thunder_Aura.png","Thunder Aura","Every second inflict 25 (+X per stack) ELECTRIC Damage to enemies in a radius around you.. Overall Damage: -10% (-X% per stack) Movement Speed: -5% (-X% per stack)"],
+      ["Mobility Crystal","Legendary","Berserker's_Soul.png","Berserker’s Soul","Dealing damage with your main attack grants you a stack of Berserker's Soul, up to X stacks. Each stack grants you +X% Overall Damage, +X% Attack Speed and -X% Health Regeneration. Taking damage sets your stacks to zero. Overall Damage: -20% (-20% per stack) Attack Speed: -40% (-40% per stack)"],
+      ["Mobility Crystal","Legendary","Big_and_Speedy.png","Big and Speedy","Utility Cooldown Rate: +50% (+50% per stack) Overall Defense: -20% (-20% per stack)"],
+      ["Mobility Crystal","Legendary","Featherweight.png","Featherweight","Movement Speed: +30% (+30% per stack) Overall Defense: -20% (-20% per stack)"],
+      ["Mobility Crystal","Legendary","Heavy_Hand.png","Heavy Hand","Damage +30% (+30% per stack) Attack Speed -40% (-40% per stack)"],
+      ["Mobility Crystal","Legendary","Partial_Flight.png","Partial Flight","Extra Jump: +1 (+1 per stack)"],
+      ["Mobility Crystal","Legendary","Rapid_Fire.png","Rapid Fire","Attack Speed: +50% (+50% per stack) Overall Damage: -20% (-20% per stack)"],
+      ["Mobility Crystal","Legendary","Way_of_the_Law.png","Way of the Law","Periodically switch between the STOP and GO status effects. STOP reduces Movement and Attack Speed, but increases Damage. GO increases Movement and Attack Speed, but decreases Damage"],
+      ["Chronowizard","Common","Full_Focus.png","Full Focus","Critical Strike Chance +5% (+5% per stack) Critical Strike Damage +5% (+5% per stack)"],
+      ["Chronowizard","Common","Potent_Strike.png","Potent Strike","Critical Strikes have a 6% (+6% per stack) higher chance to inflict a status effect."],
+      ["Chronowizard","Common","Sorcerer's_Mastery.png","Sorcerer’s Mastery","ELEMENTAL Damage +8% (+8% per stack)"],
+      ["Chronowizard","Common","Strength.png","Strength","PHYSICAL Damage +10% (+10% per stack)"],
+      ["Chronowizard","Rare","Clutch_or_Kick.png","Clutch or Kick","Gain +7% (+7% per stack) Overall Damage for every dead player in the party"],
+      ["Chronowizard","Rare","Greater_Focus.png","Greater Focus","Critical Strike Chance at low HP +10% (+10% per stack) Critical Strike Damage +3% (+3% per stack)"],
+      ["Chronowizard","Rare","An_IQ_Too_High_.png","An IQ Too High?","ELEMENTAL Damage +25% (+25% per stack) Projectile Speed -15% (-15% per stack) Attack Speed -10% (-10% per stack)"],
+      ["Chronowizard","Rare","Sticky.png","Sticky","Apply 2 (+2 per stack) additional stacks of status effects against enemies. Negative status effects apply X (+X per stack) additional stacks to you."],
+      ["Chronowizard","Rare","Cutting_Edge.png","Cutting Edge","Chance to inflict BLEEDING status effect +10% (+10% per stack) PHYSICAL Defense -5% (-5% per stack)"],
+      ["Chronowizard","Rare","Fire_Aspect.png","Fire Aspect","FIRE Defense +15% (+15% per stack) FIRE Damage +15% (+15% per stack) Chance to inflict the BURNING status effect +5% (+5% per stack) FROST Defense -10% (-10% per stack)"],
+      ["Chronowizard","Rare","Frost_Aspect.png","Frost Aspect","FROST Defense +15% (+15% per stack) FROST Damage +15% (+15% per stack Chance to inflict the FROZEN status effect +5% (+5% per stack) FIRE Defense -10% (-10% per stack)"],
+      ["Chronowizard","Rare","Luminous_Aspect.png","Luminous Aspect","LUMINOUS Damage +15% (15% per stack) SHADOW Defense +15% (+15% per stack) Chance to inflict the WEAKENED status effect +5% (+5% per stack) ELEMENTAL Defense -5% (-5% per stack)"],
+      ["Chronowizard","Rare","Poison_Aspect.png","Poison Aspect","POISON Damage +15% (+15% per stack) POISON Defense +15% (+15% per stack) Chance to inflict POISONED status effect +5% (-5% per stack) Received Healing -5% (-5% per stack)"],
+      ["Chronowizard","Rare","Shadow_Aspect.png","Shadow Aspect","SHADOW Damage +15% (+15% per stack) Chance to inflict the BREACHED status effect +5% (+5% per stack) LUMINOUS Defense -10% (+10% per stack)"],
+      ["Chronowizard","Legendary","Charged_Strike.png","Charged Strike","Critical Hits will cause an explosion dealing X (+X per stack) PHYSICAL Damage Critical Strike Chance -5% (-5% per stack)"],
+      ["Chronowizard","Legendary","Pocket_Abacus.png","Pocket Abacus","Every fifth (5th) instance of Damage you deal will become a guaranteed Critical Strike Critical Strike Damage +10% (+10% per stack) Non-Critical Strike Damage -10% (-10% per stack) Sets Critical Strike Chance to 0%"],
+      ["Chronowizard","Legendary","Flaming_Spirit.png","Flaming Spirit","When at full HP, performing your primary skill fires a fireball dealing 16 (+X per stack) FIRE Damage Received Healing -5% (-5% per stack) Health Regeneration -20% (-20% per stack)"],
+      ["Chronowizard","Legendary","Frozen_Heart.png","Frozen Heart","When at full HP, performing your primary skill fires an icicle dealing 18 (+X per stack) FROST damage Received Healing -5% (-5% per stack) Health Regeneration -20% (-20% per stack)"],
+      ["Chronowizard","Legendary","Third_Law.png","Third Law","Upon taking Damage, deal 150% (+25% per stack) of its RAW value to enemies around you as PHYSICAL Damage On Fistmage's Parry, deal 50% of the Damage around you as PHYSICAL Damage"],
+      ["Chronowizard","Legendary","Warrior's_Will.png","Warrior’s Will","Using your Utility Skill grants you 4 (+2 per stack) stacks of the EMPOWERED status effect Utility Cooldown Rate -15% (-15% per stack)"]
     ].map(([family, rarity, icon, name, effect, explicitId], globalId) => ({
       // Array position is the permanent global ID. Append new upgrades; never reorder or reuse removed IDs.
       family, rarity, icon, name, effect, id: explicitId || icon.replace(".png", ""), globalId
@@ -713,9 +714,7 @@
 
     const CAPS = {
       attackSpeed: [250, 375], projectileSpeed: [250, 375], movementSpeed: [150, 225],
-      criticalChance: [40, 60], utilityCooldownRate: [200, 300], overallDefense: [200, 300],
-      fireDefense: [200, 300], frostDefense: [200, 300], electricDefense: [200, 300],
-      luminousDefense: [200, 300], shadowDefense: [200, 300], poisonDefense: [200, 300],
+      criticalChance: [40, 60], utilityCooldownRate: [200, 300],
       fireDamage: [350, 525], frostDamage: [350, 525], electricDamage: [350, 525],
       luminousDamage: [350, 525], shadowDamage: [350, 525], poisonDamage: [350, 525]
     };
@@ -725,16 +724,13 @@
       projectileSpeed: 50,
       movementSpeed: 50,
       utilityCooldownRate: 50,
-      overallDefense: 70,
-      physicalDefense: 50,
-      fireDefense: 50,
-      frostDefense: 50,
-      electricDefense: 50,
-      luminousDefense: 50,
-      shadowDefense: 50,
-      poisonDefense: 50,
       overallDamage: 50
     };
+
+    const DEFENSE_STATS = new Set([
+      "overallDefense", "physicalDefense", "fireDefense", "frostDefense",
+      "electricDefense", "luminousDefense", "shadowDefense", "poisonDefense"
+    ]);
 
     const STAT_ROWS = [
       ["health","Health"], ["attackSpeed","Attack Speed"], ["projectileSpeed","Projectile Speed"],
@@ -820,9 +816,10 @@
       ["health", "Glass_Cannon", -50], ["health", "Mass_Aspect", 75],
       ["healingReceived", "Gluttonous", 5], ["healingReceived", "Adrenaline_Fiend", -15],
       ["healingReceived", "Life_Leech", -20, { once: true, notes: "This penalty only applies once." }],
-      ["healingReceived", "Poison_Aspect", -15], ["healingReceived", "Flaming_Spirit", -5],
+      ["healingReceived", "Poison_Aspect", -5], ["healingReceived", "Flaming_Spirit", -5],
       ["healingReceived", "Frozen_Heart", -5],
       ["healthRegeneration", "Vitality", 80], ["healthRegeneration", "Life_Leech", -50],
+      ["healthRegeneration", "Spellsword_Mastery", -100],
       ["healthRegeneration", "Flaming_Spirit", -20], ["healthRegeneration", "Frozen_Heart", -20],
 
       ["overallDefense", "Swarm_Enforcer", 1.5, { notes: "With 1 enemy in presence." }],
@@ -923,7 +920,13 @@
       }
 
       const caps = {};
+      const defenseCalculations = {};
       const result = Object.fromEntries(Object.entries(activeBase).map(([stat, base]) => {
+        if (DEFENSE_STATS.has(stat)) {
+          const calculation = DefenseCalculation.calculateDefense(bonus[stat]);
+          defenseCalculations[stat] = calculation;
+          return [stat, calculation.defense];
+        }
         const raw = base + bonus[stat];
         const cappedRaw = capValue(stat, raw);
         const cappedBase = capValue(stat, base);
@@ -963,7 +966,7 @@
         });
         result.utilityCooldownRate /= divisor;
       }
-      return { stats: result, base: activeBase, breakdowns, caps };
+      return { stats: result, base: activeBase, breakdowns, caps, defenseCalculations };
     }
 
     function formatNumber(value) {
@@ -1025,6 +1028,26 @@
       </div>`;
     }
 
+    function defenseCalculationMarkup(stat) {
+      const calculation = latestCalculation?.defenseCalculations?.[stat];
+      if (!calculation) return "";
+      const n = value => `${formatNumber(value)}%`;
+      const modifier = calculation.defenseModifier;
+      const modifierFormula = modifier === 0
+        ? n(calculation.rawDamageTaken)
+        : `${n(DefenseCalculation.BASE_DAMAGE_TAKEN)} ${modifier > 0 ? "−" : "+"} ${n(Math.abs(modifier))} = ${n(calculation.rawDamageTaken)}`;
+      const capMarkup = calculation.isSoftCapped
+        ? `<br>Reduction exceeds the ${n(calculation.softCap)} damage-taken lower soft cap.<br>
+          <span class="cap-formula">${formatNumber(calculation.softCap)}² ÷ ${n(modifier)} = ${formatNumber(calculation.numerator)} ÷ ${n(modifier)} = ${n(calculation.damageTaken)}</span>`
+        : "";
+      return `<div class="cap-calculation">
+        <strong>Defense derived from damage taken</strong><br>
+        Defense modifiers apply inversely to damage taken.<br>
+        Damage taken: <span class="cap-formula">${modifierFormula}</span>${capMarkup}<br>
+        Shown defense: <span class="cap-formula">100% ÷ ${formatNumber(calculation.damageTaken / 100)} = ${n(calculation.defense)}</span>
+      </div>`;
+    }
+
     function showStatTooltip(row) {
       const stat = row.dataset.stat;
       const label = row.dataset.label;
@@ -1040,6 +1063,7 @@
             <td>${escapeHtml(entry.notes || "—")}</td>
           </tr>`).join("")}</tbody>
         </table>
+        ${defenseCalculationMarkup(stat)}
         ${softCapMarkup(stat)}`;
       tooltip.classList.add("visible");
 
