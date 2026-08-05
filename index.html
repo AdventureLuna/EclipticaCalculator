@@ -766,10 +766,15 @@
     };
 
     const CAPS = {
-      attackSpeed: [250, 375], projectileSpeed: [250, 375], movementSpeed: [150, 225],
-      criticalChance: [40, 60], utilityCooldownRate: [200, 300],
+      attackSpeed: [250, 400], projectileSpeed: [250, 400], movementSpeed: [150, 200],
+      criticalChance: [30, 60], utilityCooldownRate: [200, 300],
       fireDamage: [350, 525], frostDamage: [350, 525], electricDamage: [350, 525],
       luminousDamage: [350, 525], shadowDamage: [350, 525], poisonDamage: [350, 525]
+    };
+
+    const HARD_CAPS = {
+      healingReceived: 200,
+      criticalDamage: 200
     };
 
     const LOWER_CAPS = {
@@ -864,7 +869,7 @@
       { id: "rot", name: "Rot", effect: "Poison Defense -10% per stack.", stats: p => ({ poisonDefense: -10 * p }) },
       { id: "tremor", name: "Tremor", effect: "Projectile Spread +2.5% per stack." },
       { id: "drain", name: "Drain", effect: "Maximum HP -10 per stack.", stats: p => ({ health: -10 * p }) },
-      { id: "shedding", name: "Shedding", effect: "Overall Defense -5% per stack.", stats: p => ({ overallDefense: -5 * p }) },
+      { id: "shedding", name: "Shedding", effect: "Overall Defense -7% per stack.", stats: p => ({ overallDefense: -7 * p }) },
       { id: "anaemia", name: "Anaemia", effect: "Health Regeneration -150% per stack.", stats: p => ({ healthRegeneration: -150 * p }) },
       { id: "hypoxia", name: "Hypoxia", effect: "Healing Received -15% per stack.", stats: p => ({ healingReceived: -15 * p }) },
       { id: "light", name: "Light", effect: "Knockback from enemies +15% per stack.", stats: p => ({ knockbackResistance: -15 * p }) },
@@ -1002,6 +1007,11 @@
       return soft + (hard - soft) * overflow / ((hard - soft) + overflow);
     }
 
+    function hardCapValue(stat, raw) {
+      const hardCap = HARD_CAPS[stat];
+      return hardCap && raw > hardCap ? hardCap : raw;
+    }
+
     function calculateStats() {
       const activeBase = {
         ...BASE,
@@ -1048,14 +1058,12 @@
           });
         }
       };
-      const gambitSlot = buildOptions.runes.findIndex(id => id === "gambit");
-      const artifactMultiplier = gambitSlot < 0 ? 1 : gambitSlot + 3;
       for (const [artifactId, artifactCount] of Object.entries(buildOptions.artifacts)) {
         const artifact = ARTIFACTS.find(item => item.id === artifactId);
         if (!artifact) continue;
-        const totalMultiplier = artifactMultiplier * artifactCount;
+        const totalMultiplier = artifactCount;
         addBuildStats(Object.fromEntries(Object.entries(artifact.stats).map(([stat, value]) => [stat, value * totalMultiplier])),
-          artifact.name, `Artifact ×${artifactCount}${artifactMultiplier > 1 ? ` · Gambit ×${artifactMultiplier}` : ""}`);
+          artifact.name, `Artifact ×${artifactCount}`);
       }
       buildOptions.runes.forEach((runeId, index) => {
         const rune = RUNES.find(item => item.id === runeId);
@@ -1076,6 +1084,7 @@
         const cappedRaw = capValue(stat, raw);
         const cappedBase = capValue(stat, base);
         const lowerSoftCap = LOWER_CAPS[stat];
+        const hardCappedRaw = hardCapValue(stat, raw);
         let effective = bonus[stat] > 0 ? base + cappedRaw - cappedBase : raw;
         if (bonus[stat] > 0 && Math.abs(cappedRaw - raw) > .0001) {
           const [soft, hard] = CAPS[stat];
@@ -1083,6 +1092,12 @@
             kind: "upper", base, bonus: bonus[stat], raw, soft, hard,
             overflow: raw - soft, range: hard - soft,
             cappedRaw, cappedBase, effective
+          };
+        } else if (Math.abs(hardCappedRaw - raw) > .0001) {
+          effective = hardCappedRaw;
+          caps[stat] = {
+            kind: "hard", base, bonus: bonus[stat], raw,
+            hard: HARD_CAPS[stat], effective
           };
         } else if (lowerSoftCap && bonus[stat] < -lowerSoftCap) {
           effective = lowerSoftCap ** 2 / Math.abs(bonus[stat]);
@@ -1163,6 +1178,14 @@
           Raw additive sum: <span class="cap-formula">${n(cap.base)} ${cap.bonus < 0 ? "−" : "+"} ${n(Math.abs(cap.bonus))} = ${n(cap.raw)}</span><br>
           Negative modifier exceeds the ${n(cap.soft)} lower soft cap.<br>
           <span class="cap-formula">${formatNumber(cap.soft)}² ÷ |${n(cap.bonus)}| = ${formatNumber(cap.numerator)} ÷ ${n(cap.divisor)} = ${n(cap.effective)}</span>
+        </div>`;
+      }
+      if (cap.kind === "hard") {
+        return `<div class="cap-calculation">
+          <strong>Hard-cap calculation</strong><br>
+          Raw additive sum: <span class="cap-formula">${n(cap.base)} + ${n(cap.bonus)} = ${n(cap.raw)}</span><br>
+          Hard cap ${n(cap.hard)}<br>
+          Effective result: <span class="cap-formula">min(${n(cap.raw)}, ${n(cap.hard)}) = ${n(cap.effective)}</span>
         </div>`;
       }
       return `<div class="cap-calculation">
@@ -1480,6 +1503,17 @@
 
     ["search", "family-filter", "rarity-filter"].forEach(id => {
       $(`#${id}`).addEventListener(id === "search" ? "input" : "change", renderCatalog);
+    });
+
+    document.querySelector(".explorer").addEventListener("keydown", event => {
+      const search = $("#search");
+      if (event.code !== "Space" || event.target === search || event.defaultPrevented) return;
+      event.preventDefault();
+      if (search.value) {
+        search.value = "";
+        renderCatalog();
+      }
+      search.focus();
     });
 
     document.querySelector(".tabs").addEventListener("click", event => {
