@@ -21,5 +21,15 @@ assert.match(page, /id: "shedding", name: "Shedding", effect: "Overall Defense -
 assert.match(page, /id="reset-build"[^>]*>Reset build<\/button>/);
 assert.match(page, /data-remove-rune="\$\{index\}"/);
 assert.match(page, /buildOptions\.artifacts = \{\};[\s\S]*buildOptions\.runes = RUNE_SLOTS\.map\(\(\) => null\);[\s\S]*buildOptions\.curses = RUNE_SLOTS\.map\(\(\) => null\);/);
+assert.equal((page.match(/\{ id: "(?:fire|frost|lightning|physical|luminous|shadow)", name:/g) || []).length, 6);
+assert.match(page, /name="twinmage-\$\{hand\}"/);
+assert.match(page, /twinmagePrimary: TWINMAGE_ELEMENTS\.some/);
+assert.match(page, /twinmageSecondary: TWINMAGE_ELEMENTS\.some/);
+assert.match(page, /name="twinmage-\$\{hand\}-damage"/);
+assert.match(page, /twinmagePrimaryDamage: saved\.twinmagePrimaryDamage !== false/);
+assert.match(page, /twinmageSecondaryDamage: saved\.twinmageSecondaryDamage !== false/);
+assert.match(page, /if \(!buildOptions\.twinmagePrimaryDamage && !buildOptions\.twinmageSecondaryDamage\) buildOptions\.twinmagePrimaryDamage = true;/);
+assert.match(page, /if \(!buildOptions\.twinmagePrimaryDamage && !buildOptions\.twinmageSecondaryDamage\)/);
+assert.match(page, /buildOptions\.twinmagePrimary = "fire";[\s\S]*buildOptions\.twinmageSecondary = "lightning";[\s\S]*buildOptions\.twinmagePrimaryDamage = true;[\s\S]*buildOptions\.twinmageSecondaryDamage = true;/);
 
 console.log("Build option regression tests passed.");

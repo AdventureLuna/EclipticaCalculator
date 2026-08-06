@@ -300,6 +300,23 @@
     .tab-button[aria-selected="true"] { border-color: rgba(var(--class-rgb), .55); color: var(--ink); background: rgba(var(--class-rgb), .14); }
     .tab-pane[hidden] { display: none; }
     .placeholder-pane { min-height: 260px; display: grid; place-items: center; color: var(--muted); text-align: center; }
+    .configuration-empty { min-height: 260px; display: grid; place-items: center; color: var(--muted); text-align: center; }
+    .twinmage-configuration { display: grid; gap: 24px; }
+    .element-picker { border: 0; margin: 0; padding: 0; }
+    .element-picker legend { width: 100%; margin-bottom: 10px; color: var(--ink); }
+    .element-picker-heading { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+    .element-picker-title { font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; }
+    .damage-calculation-toggle { display: inline-flex; align-items: center; gap: 7px; color: var(--muted); font-size: .72rem; font-weight: 700; text-transform: none; letter-spacing: 0; cursor: pointer; }
+    .damage-calculation-toggle input { width: 16px; height: 16px; margin: 0; accent-color: rgb(var(--class-rgb)); cursor: pointer; }
+    .element-options { display: grid; grid-template-columns: repeat(6, minmax(76px, 1fr)); gap: 10px; }
+    .element-option { position: relative; display: grid; justify-items: center; gap: 7px; min-width: 0; border: 1px solid var(--line); border-radius: 12px; color: var(--muted); background: rgba(255,255,255,.025); padding: 11px 7px 9px; cursor: pointer; transition: border-color .15s, background .15s, color .15s, transform .15s; }
+    .element-option:hover { border-color: rgba(var(--class-rgb), .45); color: var(--ink); transform: translateY(-1px); }
+    .element-option:has(input:focus-visible) { outline: 2px solid rgba(var(--class-rgb), .8); outline-offset: 2px; }
+    .element-option:has(input:checked) { border-color: rgba(var(--class-rgb), .8); color: var(--ink); background: rgba(var(--class-rgb), .16); box-shadow: inset 0 0 0 1px rgba(var(--class-rgb), .3), 0 0 18px rgba(var(--class-rgb), .13); }
+    .element-option input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+    .element-icon { width: 64px; height: 64px; display: block; object-fit: contain; filter: saturate(.88); }
+    .element-option:has(input:checked) .element-icon { filter: saturate(1.16) drop-shadow(0 0 7px rgba(var(--class-rgb), .4)); }
+    .element-name { overflow: hidden; max-width: 100%; font-size: .72rem; font-weight: 800; text-transform: uppercase; text-overflow: ellipsis; }
     .item-placeholder { width: 58px; height: 58px; display: grid; place-items: center; flex: 0 0 auto; border: 1px dashed rgba(255,255,255,.22); border-radius: 10px; color: #8e8097; font-size: 1.35rem; overflow: hidden; }
     .item-art { width: 100%; height: 100%; display: block; object-fit: contain; }
     .artifact-card.selected, .rune-card.selected { box-shadow: inset 0 0 0 2px rgba(205,147,255,.55); }
@@ -524,6 +541,8 @@
       .tools { grid-template-columns: 1fr; }
       .tools input { grid-column: auto; }
       .catalog { grid-template-columns: 1fr; }
+      .element-options { grid-template-columns: repeat(3, minmax(76px, 1fr)); }
+      .element-picker-heading { align-items: flex-start; flex-direction: column; gap: 7px; }
       .slot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; aspect-ratio: auto; }
       .slot-grid::before, .slot-grid::after { display: none; }
       .rune-slot, .rune-slot:nth-child(n) { position: relative; inset: auto; width: auto; min-height: 0; border-width: 2px; }
@@ -577,7 +596,9 @@
           <button class="tab-button" role="tab" aria-selected="false" data-tab="runes">Runes</button>
           <button class="tab-button" role="tab" aria-selected="false" data-tab="calculations">Calculations</button>
         </nav>
-        <div class="tab-pane placeholder-pane" id="tab-configuration" role="tabpanel" hidden>Configuration options will be added here.</div>
+        <div class="tab-pane" id="tab-configuration" role="tabpanel" hidden>
+          <div id="configuration-content"></div>
+        </div>
         <div class="tab-pane" id="tab-upgrades" role="tabpanel">
         <div class="picked-head">
           <h2 class="section-title">Picked upgrades</h2>
@@ -829,6 +850,14 @@
       Thaumaturge: "Class7.png",
       Nekomancer: "Class8.png"
     };
+    const TWINMAGE_ELEMENTS = [
+      { id: "fire", name: "Fire", image: "Twinmage_Element_Fire.png" },
+      { id: "frost", name: "Frost", image: "Twinmage_Element_Frost.png" },
+      { id: "lightning", name: "Lightning", image: "Twinmage_Element_Lightning.png" },
+      { id: "physical", name: "Physical", image: "Twinmage_Element_Physical.png" },
+      { id: "luminous", name: "Luminous", image: "Twinmage_Element_Luminous.png" },
+      { id: "shadow", name: "Shadow", image: "Twinmage_Element_Shadow.png" }
+    ];
     const ARTIFACTS = [
       { id: "encrypted-archive", name: "Encrypted Archive", image: "Artifact_Encrypted_Archive.png", effect: "Utility Cooldown Rate +5%; Movement Speed +5%.", stats: { utilityCooldownRate: 5, movementSpeed: 5 } },
       { id: "goblet-sun", name: "Goblet of the Sun", image: "Artifact_Goblet_of_the_Sun.png", effect: "Luminous Damage +8%; Shadow Defense +8%.", stats: { luminousDamage: 8, shadowDefense: 8 } },
@@ -879,6 +908,7 @@
     let selectedClass = CLASS_FAMILIES.includes(savedClass) ? savedClass : "Thaumaturge";
     const counts = loadCounts();
     const buildOptions = loadBuildOptions();
+    if (!buildOptions.twinmagePrimaryDamage && !buildOptions.twinmageSecondaryDamage) buildOptions.twinmagePrimaryDamage = true;
     let activeRuneSlot = Math.max(0, buildOptions.runes.findIndex(id => !id));
     const $ = selector => document.querySelector(selector);
 
@@ -902,9 +932,13 @@
         return {
           artifacts: Object.fromEntries(ARTIFACTS.map(item => [item.id, Math.min(100, Math.max(0, Number(savedArtifacts[item.id]) || 0))]).filter(([, count]) => count)),
           runes: RUNE_SLOTS.map((_, index) => RUNES.some(item => item.id === saved.runes?.[index]) ? saved.runes[index] : null),
-          curses: RUNE_SLOTS.map((_, index) => CURSES.some(item => item.id === saved.curses?.[index]) ? saved.curses[index] : null)
+          curses: RUNE_SLOTS.map((_, index) => CURSES.some(item => item.id === saved.curses?.[index]) ? saved.curses[index] : null),
+          twinmagePrimary: TWINMAGE_ELEMENTS.some(item => item.id === saved.twinmagePrimary) ? saved.twinmagePrimary : "fire",
+          twinmageSecondary: TWINMAGE_ELEMENTS.some(item => item.id === saved.twinmageSecondary) ? saved.twinmageSecondary : "lightning",
+          twinmagePrimaryDamage: saved.twinmagePrimaryDamage !== false,
+          twinmageSecondaryDamage: saved.twinmageSecondaryDamage !== false
         };
-      } catch { return { artifacts: {}, runes: [null, null, null, null], curses: [null, null, null, null] }; }
+      } catch { return { artifacts: {}, runes: [null, null, null, null], curses: [null, null, null, null], twinmagePrimary: "fire", twinmageSecondary: "lightning", twinmagePrimaryDamage: true, twinmageSecondaryDamage: true }; }
     }
 
     function saveBuildOptions() {
@@ -1426,6 +1460,36 @@
         </article>`).join("");
     }
 
+    function renderConfiguration() {
+      const content = $("#configuration-content");
+      if (selectedClass !== "Twinmage") {
+        content.innerHTML = '<div class="configuration-empty">No configuration options are available for this class yet.</div>';
+        return;
+      }
+      const picker = (hand, label, selected, useForDamage) => `
+        <fieldset class="element-picker">
+          <legend><span class="element-picker-heading">
+            <span class="element-picker-title">${label}</span>
+            <label class="damage-calculation-toggle">
+              <input type="checkbox" name="twinmage-${hand}-damage" ${useForDamage ? "checked" : ""}>
+              <span>Use for damage calculations</span>
+            </label>
+          </span></legend>
+          <div class="element-options">
+            ${TWINMAGE_ELEMENTS.map(element => `
+              <label class="element-option">
+                <input type="radio" name="twinmage-${hand}" value="${element.id}" ${element.id === selected ? "checked" : ""}>
+                <img class="element-icon" src="pictures/${encodeURIComponent(element.image)}" alt="">
+                <span class="element-name">${element.name}</span>
+              </label>`).join("")}
+          </div>
+        </fieldset>`;
+      content.innerHTML = `<div class="twinmage-configuration">
+        ${picker("primary", "Primary element", buildOptions.twinmagePrimary, buildOptions.twinmagePrimaryDamage)}
+        ${picker("secondary", "Secondary element", buildOptions.twinmageSecondary, buildOptions.twinmageSecondaryDamage)}
+      </div>`;
+    }
+
     function renderRunes() {
       const curseOptions = `<option value="">No curse selected</option>${CURSES.map(curse =>
         `<option value="${curse.id}">Runic Curse: ${escapeHtml(curse.name)}</option>`).join("")}`;
@@ -1459,6 +1523,7 @@
 
     function render() {
       renderStats();
+      renderConfiguration();
       renderPicked();
       renderCatalog();
       renderArtifacts();
@@ -1521,6 +1586,29 @@
       if (!button) return;
       document.querySelectorAll("[data-tab]").forEach(tab => tab.setAttribute("aria-selected", String(tab === button)));
       document.querySelectorAll(".tab-pane").forEach(pane => { pane.hidden = pane.id !== `tab-${button.dataset.tab}`; });
+    });
+
+    $("#configuration-content").addEventListener("change", event => {
+      const damageToggle = event.target.closest('input[type="checkbox"][name$="-damage"]');
+      if (damageToggle) {
+        if (damageToggle.name === "twinmage-primary-damage") buildOptions.twinmagePrimaryDamage = damageToggle.checked;
+        else if (damageToggle.name === "twinmage-secondary-damage") buildOptions.twinmageSecondaryDamage = damageToggle.checked;
+        if (!buildOptions.twinmagePrimaryDamage && !buildOptions.twinmageSecondaryDamage) {
+          if (damageToggle.name === "twinmage-primary-damage") buildOptions.twinmageSecondaryDamage = true;
+          else buildOptions.twinmagePrimaryDamage = true;
+        }
+        saveBuildOptions();
+        renderConfiguration();
+        updateShareWidget();
+        return;
+      }
+      const choice = event.target.closest('input[type="radio"][name^="twinmage-"]');
+      if (!choice || !TWINMAGE_ELEMENTS.some(element => element.id === choice.value)) return;
+      if (choice.name === "twinmage-primary") buildOptions.twinmagePrimary = choice.value;
+      else if (choice.name === "twinmage-secondary") buildOptions.twinmageSecondary = choice.value;
+      saveBuildOptions();
+      renderConfiguration();
+      updateShareWidget();
     });
 
     $("#artifact-catalog").addEventListener("click", event => {
@@ -1592,6 +1680,10 @@
       buildOptions.artifacts = {};
       buildOptions.runes = RUNE_SLOTS.map(() => null);
       buildOptions.curses = RUNE_SLOTS.map(() => null);
+      buildOptions.twinmagePrimary = "fire";
+      buildOptions.twinmageSecondary = "lightning";
+      buildOptions.twinmagePrimaryDamage = true;
+      buildOptions.twinmageSecondaryDamage = true;
       activeRuneSlot = 0;
       saveCounts();
       saveBuildOptions();
