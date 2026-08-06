@@ -16,7 +16,7 @@
       --class-logo: url("pictures/Class7.png");
       --line: rgba(var(--class-rgb), .19);
       --accent: rgb(var(--class-rgb));
-      --physical: #9b9b94;
+      --physical: #ff5b6e;
       --fire: #ff612f;
       --frost: #42cfff;
       --electric: #ffe31f;
@@ -205,7 +205,7 @@
       font-stretch: condensed;
       font-size: .94rem;
       font-weight: 800;
-      font-style: italic;
+      font-style: normal;
       text-transform: none;
     }
 
@@ -242,12 +242,12 @@
       width: min(650px, calc(100vw - 28px));
       max-height: min(440px, calc(100vh - 28px));
       overflow: auto;
-      border: 1px solid rgba(211, 158, 255, .48);
-      border-radius: 13px;
+      border: 1px solid rgba(221, 177, 255, .58);
+      border-radius: 16px;
       color: var(--ink);
-      background: rgba(13, 5, 23, .98);
-      box-shadow: 0 22px 65px rgba(0,0,0,.62);
-      padding: 12px;
+      background: radial-gradient(circle at 12% 0, rgba(184, 91, 255, .18), transparent 38%), linear-gradient(145deg, rgba(27, 14, 37, .98), rgba(8, 8, 13, .98));
+      box-shadow: inset 0 1px rgba(255,255,255,.08), 0 22px 65px rgba(0,0,0,.68), 0 0 24px rgba(183, 91, 255, .14);
+      padding: 14px;
       font-family: Inter, ui-sans-serif, system-ui, sans-serif;
       font-size: .75rem;
       font-style: normal;
@@ -257,10 +257,10 @@
     }
 
     .stat-tooltip.visible { display: block; }
-    .stat-tooltip h3 { margin: 0 0 9px; font-size: .88rem; }
+    .stat-tooltip h3 { margin: 0 0 11px; color: #f0ceff; font-size: .9rem; letter-spacing: .02em; }
     .stat-tooltip table { width: 100%; border-collapse: collapse; table-layout: fixed; }
     .stat-tooltip th {
-      color: #bdaac9;
+      color: #d7b8e8;
       font-size: .62rem;
       letter-spacing: .09em;
       text-align: left;
@@ -278,6 +278,7 @@
     .stat-tooltip th:nth-child(4) { width: 41%; }
     .stat-tooltip .source-value { color: #fff; font-weight: 800; white-space: nowrap; }
     .stat-tooltip .source-type { color: #d3a8f1; }
+    .stat-tooltip tbody tr:hover { background: rgba(215, 151, 255, .07); }
     .cap-calculation {
       margin-top: 10px;
       border: 1px solid rgba(255, 222, 73, .22);
@@ -300,6 +301,110 @@
     .tab-button[aria-selected="true"] { border-color: rgba(var(--class-rgb), .55); color: var(--ink); background: rgba(var(--class-rgb), .14); }
     .tab-pane[hidden] { display: none; }
     .placeholder-pane { min-height: 260px; display: grid; place-items: center; color: var(--muted); text-align: center; }
+    .configuration-empty { min-height: 260px; display: grid; place-items: center; color: var(--muted); text-align: center; }
+    .twinmage-configuration { display: grid; gap: 24px; }
+    .element-picker { border: 0; margin: 0; padding: 0; }
+    .element-picker legend { width: 100%; margin-bottom: 10px; color: var(--ink); }
+    .element-picker-heading { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+    .element-picker-title { font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; }
+    .damage-calculation-toggle { display: inline-flex; align-items: center; gap: 7px; color: var(--muted); font-size: .72rem; font-weight: 700; text-transform: none; letter-spacing: 0; cursor: pointer; }
+    .damage-calculation-toggle input { width: 16px; height: 16px; margin: 0; accent-color: rgb(var(--class-rgb)); cursor: pointer; }
+    .element-options { display: grid; grid-template-columns: repeat(6, minmax(76px, 1fr)); gap: 10px; }
+    .element-option { position: relative; display: grid; justify-items: center; gap: 7px; min-width: 0; border: 1px solid var(--line); border-radius: 12px; color: var(--muted); background: rgba(255,255,255,.025); padding: 11px 7px 9px; cursor: pointer; transition: border-color .15s, background .15s, color .15s, transform .15s; }
+    .element-option:hover { border-color: rgba(var(--class-rgb), .45); color: var(--ink); transform: translateY(-1px); }
+    .element-option:has(input:focus-visible) { outline: 2px solid rgba(var(--class-rgb), .8); outline-offset: 2px; }
+    .element-option:has(input:checked) { border-color: rgba(var(--class-rgb), .8); color: var(--ink); background: rgba(var(--class-rgb), .16); box-shadow: inset 0 0 0 1px rgba(var(--class-rgb), .3), 0 0 18px rgba(var(--class-rgb), .13); }
+    .element-option input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+    .element-icon { width: 64px; height: 64px; display: block; object-fit: contain; filter: saturate(.88); }
+    .element-option:has(input:checked) .element-icon { filter: saturate(1.16) drop-shadow(0 0 7px rgba(var(--class-rgb), .4)); }
+    .element-name { overflow: hidden; max-width: 100%; font-size: .72rem; font-weight: 800; text-transform: uppercase; text-overflow: ellipsis; }
+    .calculation-empty { min-height: 260px; display: grid; place-items: center; color: var(--muted); text-align: center; }
+    .calculation-stack { display: grid; gap: 12px; align-items: start; justify-items: start; }
+    .calculation-secondary { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start; max-width: 100%; }
+    .damage-calculation { width: 100%; }
+    .damage-table-wrap { width: max-content; max-width: 100%; overflow-x: auto; border: 1px solid rgba(var(--class-rgb), .58); border-radius: 12px; background: linear-gradient(135deg, rgba(255,255,255,.025), rgba(0,0,0,.22)); box-shadow: inset 0 0 18px rgba(0,0,0,.22), 0 0 12px rgba(var(--class-rgb), .08); }
+    .damage-table { width: auto; min-width: 0; border-collapse: collapse; table-layout: fixed; }
+    .damage-table .damage-label-col { width: 120px; }
+    .damage-table .damage-data-col { width: 72px; }
+    .damage-table th, .damage-table td { border-right: 1px solid rgba(255,255,255,.13); border-bottom: 1px solid rgba(255,255,255,.13); padding: 6px 9px; }
+    .damage-table tr > :last-child { border-right: 0; }
+    .damage-table tbody tr:last-child > * { border-bottom: 0; }
+    .damage-table thead th { height: 42px; background: rgba(0,0,0,.18); }
+    .damage-table .damage-label { width: 120px; min-width: 120px; color: #e8e8ec; font-size: .66rem; font-weight: 650; text-align: left; white-space: nowrap; }
+    .damage-column { --damage-color: #d8dde5; width: 72px; min-width: 72px; color: var(--damage-color); text-align: center; }
+    .damage-column[data-element="fire"] { --damage-color: #ff8717; }
+    .damage-column[data-element="frost"] { --damage-color: #59b8ff; }
+    .damage-column[data-element="lightning"] { --damage-color: #ffe45e; }
+    .damage-column[data-element="physical"] { --damage-color: var(--physical); }
+    .damage-column[data-element="luminous"] { --damage-color: #fff3a0; }
+    .damage-column[data-element="shadow"] { --damage-color: #c77dff; }
+    .damage-column[data-element="burning"] { --damage-color: #ff8717; }
+    .damage-column[data-element="bleeding"] { --damage-color: var(--physical); }
+    .damage-column.status-effect-column { background: rgba(255, 135, 23, .035); }
+    .damage-column.status-group-start { border-left: 3px solid rgba(var(--class-rgb), .72); }
+    .damage-hand-position { display: block; margin-bottom: 2px; color: #9d93a4; font-size: .46rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+    .damage-hand-title { display: block; color: var(--damage-color); font-size: .7rem; font-weight: 900; line-height: 1.05; overflow-wrap: anywhere; }
+    .damage-value { color: var(--damage-color); font-size: .72rem; font-variant-numeric: tabular-nums; font-weight: 800; }
+    .damage-section-break > * { border-top: 3px solid rgba(255,255,255,.11); }
+    .damage-total-row .damage-label, .damage-total-row .damage-value { font-size: .93rem; font-weight: 950; }
+    .damage-combined-row > * { border-top: 4px solid rgba(var(--class-rgb), .5); border-bottom: 0; background: linear-gradient(90deg, rgba(var(--class-rgb), .14), rgba(var(--class-rgb), .045)); padding-top: 10px; padding-bottom: 10px; }
+    .damage-combined-label { color: #f1f3f4; font-size: .78rem; font-weight: 950; letter-spacing: .035em; text-align: left; text-transform: uppercase; }
+    .damage-combined-value { display: inline-block; min-width: 82px; color: rgb(var(--class-rgb)); font-size: 1.34rem; font-variant-numeric: tabular-nums; font-weight: 950; line-height: 1; text-shadow: 0 0 14px rgba(var(--class-rgb), .42); }
+    .crit-table-wrap { width: max-content; max-width: 100%; overflow-x: auto; border: 1px solid rgba(255, 112, 190, .58); border-radius: 12px; background: linear-gradient(135deg, rgba(255,112,190,.055), rgba(0,0,0,.22)); box-shadow: inset 0 0 18px rgba(0,0,0,.22), 0 0 12px rgba(255,112,190,.06); }
+    .crit-table { width: 230px; border-collapse: collapse; table-layout: fixed; }
+    .crit-table th, .crit-table td { border-right: 1px solid rgba(255,255,255,.13); border-bottom: 1px solid rgba(255,255,255,.13); padding: 6px 9px; }
+    .crit-table tr > :last-child { border-right: 0; }
+    .crit-table tbody tr:last-child > * { border-bottom: 0; }
+    .crit-table thead th { color: #ffb7dc; background: rgba(0,0,0,.18); font-size: .7rem; font-weight: 900; letter-spacing: .06em; text-align: left; text-transform: uppercase; }
+    .crit-label { width: 150px; color: #e8e8ec; font-size: .66rem; font-weight: 650; text-align: left; white-space: nowrap; }
+    .crit-value { width: 80px; color: #ff8bc9; font-size: .72rem; font-variant-numeric: tabular-nums; font-weight: 850; text-align: center; }
+    .status-table-wrap { --status-color: #ff8717; width: max-content; max-width: 100%; overflow-x: auto; border: 1px solid color-mix(in srgb, var(--status-color) 62%, transparent); border-radius: 12px; background: linear-gradient(135deg, color-mix(in srgb, var(--status-color) 7%, transparent), rgba(0,0,0,.22)); box-shadow: inset 0 0 18px rgba(0,0,0,.22), 0 0 12px color-mix(in srgb, var(--status-color) 8%, transparent); }
+    .status-table-wrap[data-status="bleeding"] { --status-color: #ff5b6e; }
+    .status-table-wrap[data-status="frozen"] { --status-color: #59b8ff; }
+    .status-table-wrap[data-status="paralyzed"] { --status-color: #ffe45e; }
+    .status-table-wrap[data-status="weakened"] { --status-color: #fff3a0; }
+    .status-table-wrap[data-status="breached"] { --status-color: #c77dff; }
+    .status-table { width: 240px; border-collapse: collapse; table-layout: fixed; }
+    .status-table th, .status-table td { border-right: 1px solid rgba(255,255,255,.13); border-bottom: 1px solid rgba(255,255,255,.13); padding: 6px 9px; }
+    .status-table tr > :last-child { border-right: 0; }
+    .status-table tbody tr:last-child > * { border-bottom: 0; }
+    .status-table thead th { color: color-mix(in srgb, var(--status-color) 76%, white); background: rgba(0,0,0,.18); font-size: .7rem; font-weight: 900; letter-spacing: .06em; text-align: left; text-transform: uppercase; }
+    .status-label { width: 160px; color: #e8e8ec; font-size: .66rem; font-weight: 650; text-align: left; }
+    .status-value { width: 80px; color: var(--status-color); font-size: .72rem; font-variant-numeric: tabular-nums; font-weight: 850; text-align: center; }
+    .status-value-unknown { color: #aaa6af; font-size: .82rem; }
+    .status-note { color: #aaa6af; background: color-mix(in srgb, var(--status-color) 5%, transparent); padding: 7px 9px !important; font-size: .58rem; font-weight: 650; line-height: 1.35; text-align: left; }
+    .status-uncapped-uptime { margin-left: 3px; color: #929099; font-size: .62rem; font-weight: 750; white-space: nowrap; }
+    [data-calculation-formula] { cursor: help; border-radius: 4px; transition: background .12s, box-shadow .12s, color .12s; }
+    .calculation-reference { background: rgba(255, 230, 92, .18) !important; box-shadow: inset 0 0 0 1px rgba(255, 230, 92, .72), 0 0 10px rgba(255, 230, 92, .28); }
+    .calculation-tooltip { --tooltip-accent: #d9a4ff; position: fixed; z-index: 1100; display: none; min-width: 150px; max-width: min(390px, calc(100vw - 24px)); overflow: hidden; border: 1px solid color-mix(in srgb, var(--tooltip-accent) 58%, transparent); border-radius: 12px; color: #f7f3f8; background: radial-gradient(circle at 8% 0, color-mix(in srgb, var(--tooltip-accent) 18%, transparent), transparent 48%), linear-gradient(145deg, rgba(24, 22, 28, .98), rgba(7, 8, 11, .98)); box-shadow: inset 0 1px rgba(255,255,255,.1), 0 14px 38px rgba(0,0,0,.62), 0 0 22px color-mix(in srgb, var(--tooltip-accent) 18%, transparent); padding: 11px 13px 10px; font: 700 .7rem/1.42 ui-monospace, SFMono-Regular, Consolas, monospace; backdrop-filter: blur(18px) saturate(1.25); pointer-events: none; }
+    .calculation-tooltip::before { content: ""; position: absolute; inset: 0 0 auto; height: 3px; background: linear-gradient(90deg, transparent, var(--tooltip-accent) 22% 78%, transparent); box-shadow: 0 0 12px var(--tooltip-accent); }
+    .calculation-tooltip.visible { display: block; }
+    .calculation-tooltip-head { display: flex; gap: 7px; align-items: center; margin-bottom: 4px; color: color-mix(in srgb, var(--tooltip-accent) 86%, white); font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: .58rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+    .calculation-tooltip-icon { width: 15px; height: 15px; display: inline-grid; place-items: center; border: 1px solid color-mix(in srgb, var(--tooltip-accent) 72%, transparent); border-radius: 5px; background: color-mix(in srgb, var(--tooltip-accent) 14%, transparent); box-shadow: 0 0 8px color-mix(in srgb, var(--tooltip-accent) 22%, transparent); font-size: .48rem; }
+    .calculation-tooltip-title { margin: 2px 0 6px; color: color-mix(in srgb, var(--tooltip-accent) 80%, white); font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: .82rem; font-weight: 900; }
+    .calculation-tooltip-lines { display: grid; gap: 2px; color: #d8d3dc; }
+    .calculation-tooltip-source-with-icon { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 10px; align-items: center; }
+    .calculation-tooltip-source-icon { width: 44px; height: 44px; display: block; object-fit: contain; border: 1px solid color-mix(in srgb, var(--tooltip-accent) 48%, transparent); border-radius: 10px; background: color-mix(in srgb, var(--tooltip-accent) 8%, rgba(255,255,255,.025)); box-shadow: inset 0 1px rgba(255,255,255,.08), 0 0 14px color-mix(in srgb, var(--tooltip-accent) 18%, transparent); }
+    .calculation-tooltip-mini-source-icon { width: 20px; height: 20px; display: block; margin-left: 3px; object-fit: contain; filter: drop-shadow(0 0 5px color-mix(in srgb, var(--tooltip-accent) 32%, transparent)); }
+    .calculation-tooltip-source-with-icon .calculation-tooltip-title { margin-top: 0; }
+    .calculation-tooltip-expression { display: grid; gap: 5px; color: #fff; font-size: .72rem; text-shadow: 0 0 10px color-mix(in srgb, var(--tooltip-accent) 22%, transparent); }
+    .calculation-tooltip-expression-line + .calculation-tooltip-expression-line { border-top: 1px solid color-mix(in srgb, var(--tooltip-accent) 20%, transparent); padding-top: 5px; }
+    .calculation-tooltip-upgrade { display: grid; grid-template-columns: 42px minmax(0, 1fr) auto; gap: 9px; align-items: center; margin: -2px -2px 10px; border-bottom: 1px solid color-mix(in srgb, var(--tooltip-accent) 22%, transparent); padding: 2px 2px 10px; }
+    .calculation-tooltip-upgrade-icon { width: 42px; height: 42px; display: block; object-fit: contain; border: 1px solid color-mix(in srgb, var(--tooltip-accent) 42%, transparent); border-radius: 9px; background: rgba(255,255,255,.035); box-shadow: 0 0 12px color-mix(in srgb, var(--tooltip-accent) 14%, transparent); }
+    .calculation-tooltip-upgrade-name { color: color-mix(in srgb, var(--tooltip-accent) 78%, white); font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: .72rem; font-weight: 900; }
+    .calculation-tooltip-upgrade-effect { grid-column: 2 / -1; margin-top: -4px; color: #aaa5af; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: .61rem; font-weight: 600; line-height: 1.35; }
+    .calculation-tooltip-upgrade-stacks { align-self: start; border: 1px solid color-mix(in srgb, var(--tooltip-accent) 48%, transparent); border-radius: 999px; color: #fff; background: color-mix(in srgb, var(--tooltip-accent) 13%, transparent); padding: 2px 6px; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: .55rem; font-weight: 900; white-space: nowrap; }
+    .calculation-damage-type { --type-color: #fff; margin-left: auto; border: 1px solid color-mix(in srgb, var(--type-color) 62%, transparent); border-radius: 999px; color: var(--type-color); background: color-mix(in srgb, var(--type-color) 12%, transparent); padding: 2px 7px; font-size: .55rem; letter-spacing: .08em; box-shadow: 0 0 9px color-mix(in srgb, var(--type-color) 16%, transparent); }
+    .damage-type-fire { --type-color: var(--fire); }
+    .damage-type-frost { --type-color: var(--frost); }
+    .damage-type-electric { --type-color: var(--electric); }
+    .damage-type-physical { --type-color: var(--physical); }
+    .damage-type-luminous { --type-color: var(--luminous); }
+    .damage-type-shadow { --type-color: var(--shadow); }
+    .damage-type-poison { --type-color: var(--poison); }
+    .calculation-damage-breakdown { display: grid; gap: 4px; margin-top: 8px; border-top: 1px solid rgba(255,255,255,.1); padding-top: 7px; }
+    .calculation-damage-breakdown-row { display: flex; justify-content: space-between; gap: 18px; color: var(--type-color); }
+    .calculation-damage-breakdown-row strong { color: inherit; font-size: .74rem; }
     .item-placeholder { width: 58px; height: 58px; display: grid; place-items: center; flex: 0 0 auto; border: 1px dashed rgba(255,255,255,.22); border-radius: 10px; color: #8e8097; font-size: 1.35rem; overflow: hidden; }
     .item-art { width: 100%; height: 100%; display: block; object-fit: contain; }
     .artifact-card.selected, .rune-card.selected { box-shadow: inset 0 0 0 2px rgba(205,147,255,.55); }
@@ -524,6 +629,9 @@
       .tools { grid-template-columns: 1fr; }
       .tools input { grid-column: auto; }
       .catalog { grid-template-columns: 1fr; }
+      .element-options { grid-template-columns: repeat(3, minmax(76px, 1fr)); }
+      .element-picker-heading { align-items: flex-start; flex-direction: column; gap: 7px; }
+      .damage-table th, .damage-table td { padding: 6px 8px; }
       .slot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; aspect-ratio: auto; }
       .slot-grid::before, .slot-grid::after { display: none; }
       .rune-slot, .rune-slot:nth-child(n) { position: relative; inset: auto; width: auto; min-height: 0; border-width: 2px; }
@@ -577,7 +685,9 @@
           <button class="tab-button" role="tab" aria-selected="false" data-tab="runes">Runes</button>
           <button class="tab-button" role="tab" aria-selected="false" data-tab="calculations">Calculations</button>
         </nav>
-        <div class="tab-pane placeholder-pane" id="tab-configuration" role="tabpanel" hidden>Configuration options will be added here.</div>
+        <div class="tab-pane" id="tab-configuration" role="tabpanel" hidden>
+          <div id="configuration-content"></div>
+        </div>
         <div class="tab-pane" id="tab-upgrades" role="tabpanel">
         <div class="picked-head">
           <h2 class="section-title">Picked upgrades</h2>
@@ -617,11 +727,14 @@
           <div class="slot-grid" id="rune-slots"></div>
           <div class="catalog" id="rune-catalog"></div>
         </div>
-        <div class="tab-pane placeholder-pane" id="tab-calculations" role="tabpanel" hidden>Additional calculations will be added here.</div>
+        <div class="tab-pane" id="tab-calculations" role="tabpanel" hidden>
+          <div id="calculation-content"></div>
+        </div>
       </section>
     </div>
   </main>
   <div class="stat-tooltip" id="stat-tooltip" role="tooltip"></div>
+  <div class="calculation-tooltip" id="calculation-tooltip" role="tooltip"></div>
 
   <script src="share-build.js"></script>
   <script src="defense-calculation.js"></script>
@@ -829,6 +942,32 @@
       Thaumaturge: "Class7.png",
       Nekomancer: "Class8.png"
     };
+    const TWINMAGE_ELEMENTS = [
+      { id: "fire", name: "Fire", handName: "Flaming Hand", baseDamage: 30, damageStat: "fireDamage", canCrit: true, statusChances: { burning: 0.10 }, image: "Twinmage_Element_Fire.png" },
+      { id: "frost", name: "Frost", handName: "Ice Hand", baseDamage: 30, damageStat: "frostDamage", canCrit: true, statusChances: { frozen: 0.10 }, image: "Twinmage_Element_Frost.png" },
+      { id: "lightning", name: "Electric", handName: "Electric Hand", baseDamage: 30, damageStat: "electricDamage", canCrit: true, statusChances: { paralyzed: 0.10 }, image: "Twinmage_Element_Lightning.png" },
+      { id: "physical", name: "Physical", handName: "Wind Blade", baseDamage: 30, damageStat: "physicalDamage", canCrit: true, statusChances: { bleeding: 0.10 }, image: "Twinmage_Element_Physical.png" },
+      { id: "luminous", name: "Luminous", handName: "Divine Hand", baseDamage: 35, damageStat: "luminousDamage", canCrit: true, statusChances: { weakened: 0.10 }, image: "Twinmage_Element_Luminous.png" },
+      { id: "shadow", name: "Shadow", handName: "Profane Hand", baseDamage: 20, damageStat: "shadowDamage", canCrit: true, statusChances: { breached: 0.10 }, image: "Twinmage_Element_Shadow.png" }
+    ];
+    const BURNING = { baseStacks: 20, stacksPerSticky: 2, durationPerStack: 0.5, bossApplicationPenalty: 3 };
+    const BLEEDING = { baseStacks: 16, stacksPerSticky: 2, durationPerStack: 0.8, bossApplicationPenalty: 3 };
+    const STATUS_CHANCE_BONUSES = {
+      burning: { upgradeId: "Fire_Aspect", chancePerStack: 0.05 },
+      bleeding: { upgradeId: "Cutting_Edge", chancePerStack: 0.10 },
+      frozen: { upgradeId: "Frost_Aspect", chancePerStack: 0.05 },
+      weakened: { upgradeId: "Luminous_Aspect", chancePerStack: 0.05 },
+      breached: { upgradeId: "Shadow_Aspect", chancePerStack: 0.05 }
+    };
+    const NON_DAMAGE_STATUS_DEFINITIONS = [
+      { id: "frozen", name: "Frozen", bossApplicationPenalty: 10, note: "Bosses likely build up resistance against this status effect over time!" },
+      { id: "paralyzed", name: "Paralyzed", bossApplicationPenalty: 10, note: "Bosses likely build up resistance against this status effect over time!" },
+      { id: "weakened", name: "Weakened", bossApplicationPenalty: 2 },
+      { id: "breached", name: "Breached", bossApplicationPenalty: 2 }
+    ];
+    const DAMAGE_PLACEHOLDERS = {
+      uptime: 1
+    };
     const ARTIFACTS = [
       { id: "encrypted-archive", name: "Encrypted Archive", image: "Artifact_Encrypted_Archive.png", effect: "Utility Cooldown Rate +5%; Movement Speed +5%.", stats: { utilityCooldownRate: 5, movementSpeed: 5 } },
       { id: "goblet-sun", name: "Goblet of the Sun", image: "Artifact_Goblet_of_the_Sun.png", effect: "Luminous Damage +8%; Shadow Defense +8%.", stats: { luminousDamage: 8, shadowDefense: 8 } },
@@ -879,6 +1018,7 @@
     let selectedClass = CLASS_FAMILIES.includes(savedClass) ? savedClass : "Thaumaturge";
     const counts = loadCounts();
     const buildOptions = loadBuildOptions();
+    if (!buildOptions.twinmagePrimaryDamage && !buildOptions.twinmageSecondaryDamage) buildOptions.twinmagePrimaryDamage = true;
     let activeRuneSlot = Math.max(0, buildOptions.runes.findIndex(id => !id));
     const $ = selector => document.querySelector(selector);
 
@@ -902,9 +1042,13 @@
         return {
           artifacts: Object.fromEntries(ARTIFACTS.map(item => [item.id, Math.min(100, Math.max(0, Number(savedArtifacts[item.id]) || 0))]).filter(([, count]) => count)),
           runes: RUNE_SLOTS.map((_, index) => RUNES.some(item => item.id === saved.runes?.[index]) ? saved.runes[index] : null),
-          curses: RUNE_SLOTS.map((_, index) => CURSES.some(item => item.id === saved.curses?.[index]) ? saved.curses[index] : null)
+          curses: RUNE_SLOTS.map((_, index) => CURSES.some(item => item.id === saved.curses?.[index]) ? saved.curses[index] : null),
+          twinmagePrimary: TWINMAGE_ELEMENTS.some(item => item.id === saved.twinmagePrimary) ? saved.twinmagePrimary : "fire",
+          twinmageSecondary: TWINMAGE_ELEMENTS.some(item => item.id === saved.twinmageSecondary) ? saved.twinmageSecondary : "lightning",
+          twinmagePrimaryDamage: saved.twinmagePrimaryDamage !== false,
+          twinmageSecondaryDamage: saved.twinmageSecondaryDamage !== false
         };
-      } catch { return { artifacts: {}, runes: [null, null, null, null], curses: [null, null, null, null] }; }
+      } catch { return { artifacts: {}, runes: [null, null, null, null], curses: [null, null, null, null], twinmagePrimary: "fire", twinmageSecondary: "lightning", twinmagePrimaryDamage: true, twinmageSecondaryDamage: true }; }
     }
 
     function saveBuildOptions() {
@@ -1143,6 +1287,7 @@
 
     function formatStat(stat, value) {
       if (stat === "health" || stat === "extraJumps") return formatNumber(value);
+      if (stat === "attackSpeed") return `${Number(Number(value).toFixed(2))}%`;
       if (stat === "movementSpeed") return `${formatNumber(value)}% · ${formatNumber(7 * value / 100)} m/s`;
       return `${formatNumber(value)}%`;
     }
@@ -1250,6 +1395,90 @@
 
     function hideStatTooltip() {
       $("#stat-tooltip").classList.remove("visible");
+    }
+
+    function clearCalculationReferences() {
+      document.querySelectorAll(".calculation-reference").forEach(element => element.classList.remove("calculation-reference"));
+    }
+
+    function highlightCalculationReferences(refs) {
+      clearCalculationReferences();
+      refs.filter(Boolean).forEach(ref => {
+        const separator = ref.indexOf(":");
+        const type = ref.slice(0, separator);
+        const key = ref.slice(separator + 1);
+        const selector = type === "stat" ? `[data-stat="${CSS.escape(key)}"]`
+          : type === "upgrade" ? `[data-id="${CSS.escape(key)}"]`
+          : `[data-calculation-key="${CSS.escape(key)}"]`;
+        document.querySelectorAll(selector).forEach(element => element.classList.add("calculation-reference"));
+      });
+    }
+
+    function positionCalculationTooltip(clientX, clientY) {
+      const tooltip = $("#calculation-tooltip");
+      const gap = 14;
+      const box = tooltip.getBoundingClientRect();
+      let left = clientX + gap;
+      let top = clientY + gap;
+      if (left + box.width > window.innerWidth - 8) left = clientX - box.width - gap;
+      if (top + box.height > window.innerHeight - 8) top = clientY - box.height - gap;
+      tooltip.style.left = `${Math.max(8, left)}px`;
+      tooltip.style.top = `${Math.max(8, top)}px`;
+    }
+
+    function showCalculationTooltip(value, clientX, clientY) {
+      const tooltip = $("#calculation-tooltip");
+      const lines = value.dataset.calculationFormula.split("\n");
+      const isSource = value.dataset.calculationKey.startsWith("source:");
+      const accent = getComputedStyle(value).color;
+      const damageType = value.dataset.calculationDamageType;
+      const damageTypeId = value.dataset.calculationDamageId;
+      const sourceUpgradeId = value.dataset.calculationSourceUpgrade;
+      const sourceUpgrade = sourceUpgradeId ? upgradeIndex.get(sourceUpgradeId) : null;
+      const sourceIcon = value.dataset.calculationSourceIcon;
+      let damageBreakdown = [];
+      try { damageBreakdown = JSON.parse(value.dataset.calculationBreakdown || "[]"); } catch { damageBreakdown = []; }
+      const damageBadge = damageType
+        ? `<span class="calculation-damage-type damage-type-${escapeHtml(damageTypeId)}">${escapeHtml(damageType)}</span>`
+        : "";
+      const breakdownMarkup = damageBreakdown.length
+        ? `<div class="calculation-damage-breakdown">${damageBreakdown.map(item => `<div class="calculation-damage-breakdown-row damage-type-${escapeHtml(item.id)}"><span>${escapeHtml(item.name)}</span><strong>${escapeHtml(item.value)}</strong></div>`).join("")}</div>`
+        : "";
+      const upgradeMarkup = sourceUpgrade
+        ? `<div class="calculation-tooltip-upgrade">
+            <img class="calculation-tooltip-upgrade-icon" src="pictures/${encodeURIComponent(sourceUpgrade.icon)}" alt="">
+            <div class="calculation-tooltip-upgrade-name">${escapeHtml(sourceUpgrade.name)}</div>
+            <span class="calculation-tooltip-upgrade-stacks">${count(sourceUpgrade.id)} ${count(sourceUpgrade.id) === 1 ? "stack" : "stacks"}</span>
+            <div class="calculation-tooltip-upgrade-effect">${escapeHtml(sourceUpgrade.effect)}</div>
+          </div>`
+        : "";
+      const sourceDetailsMarkup = sourceIcon
+        ? `<div class="calculation-tooltip-source-with-icon">
+            <img class="calculation-tooltip-source-icon" src="pictures/${encodeURIComponent(sourceIcon)}" alt="">
+            <div><div class="calculation-tooltip-title">${escapeHtml(lines[0])}</div>
+              <div class="calculation-tooltip-lines">${lines.slice(1).map(line => `<span>${escapeHtml(line)}</span>`).join("")}</div></div>
+          </div>`
+        : `<div class="calculation-tooltip-title">${escapeHtml(lines[0])}</div>
+          <div class="calculation-tooltip-lines">${lines.slice(1).map(line => `<span>${escapeHtml(line)}</span>`).join("")}</div>`;
+      const formulaSourceIcon = sourceIcon
+        ? `<img class="calculation-tooltip-mini-source-icon" src="pictures/${encodeURIComponent(sourceIcon)}" alt="">`
+        : "";
+      tooltip.style.setProperty("--tooltip-accent", accent);
+      const contextMarkup = isSource
+        ? `<div class="calculation-tooltip-head"><span class="calculation-tooltip-icon">◆</span>Damage source${damageBadge}</div>
+          ${sourceDetailsMarkup}`
+        : `<div class="calculation-tooltip-head"><span class="calculation-tooltip-icon">ƒ</span>Formula${formulaSourceIcon}${damageBadge}</div>
+          <div class="calculation-tooltip-expression">${lines.map(line => `<span class="calculation-tooltip-expression-line">${escapeHtml(line)}</span>`).join("")}</div>${breakdownMarkup}`;
+      tooltip.innerHTML = `${upgradeMarkup}${contextMarkup}`;
+      tooltip.classList.add("visible");
+      highlightCalculationReferences((value.dataset.calculationRefs || "").split("|"));
+      const rect = value.getBoundingClientRect();
+      positionCalculationTooltip(clientX ?? rect.right, clientY ?? rect.bottom);
+    }
+
+    function hideCalculationTooltip() {
+      $("#calculation-tooltip").classList.remove("visible");
+      clearCalculationReferences();
     }
 
     let loadingSharedBuild = false;
@@ -1426,6 +1655,315 @@
         </article>`).join("");
     }
 
+    function renderConfiguration() {
+      const content = $("#configuration-content");
+      if (selectedClass !== "Twinmage") {
+        content.innerHTML = '<div class="configuration-empty">No configuration options are available for this class yet.</div>';
+        return;
+      }
+      const picker = (hand, label, selected, useForDamage) => `
+        <fieldset class="element-picker">
+          <legend><span class="element-picker-heading">
+            <span class="element-picker-title">${label}</span>
+            <label class="damage-calculation-toggle">
+              <input type="checkbox" name="twinmage-${hand}-damage" ${useForDamage ? "checked" : ""}>
+              <span>Use for damage calculations</span>
+            </label>
+          </span></legend>
+          <div class="element-options">
+            ${TWINMAGE_ELEMENTS.map(element => `
+              <label class="element-option">
+                <input type="radio" name="twinmage-${hand}" value="${element.id}" ${element.id === selected ? "checked" : ""}>
+                <img class="element-icon" src="pictures/${encodeURIComponent(element.image)}" alt="">
+                <span class="element-name">${element.name}</span>
+              </label>`).join("")}
+          </div>
+        </fieldset>`;
+      content.innerHTML = `<div class="twinmage-configuration">
+        ${picker("primary", "Primary element", buildOptions.twinmagePrimary, buildOptions.twinmagePrimaryDamage)}
+        ${picker("secondary", "Secondary element", buildOptions.twinmageSecondary, buildOptions.twinmageSecondaryDamage)}
+      </div>`;
+    }
+
+    function renderCalculations() {
+      const content = $("#calculation-content");
+      if (selectedClass !== "Twinmage") {
+        content.innerHTML = '<div class="calculation-empty">Damage calculations are currently available for Twinmage only.</div>';
+        return;
+      }
+
+      const hands = [
+        { position: "Primary hand", elementId: buildOptions.twinmagePrimary, enabled: buildOptions.twinmagePrimaryDamage },
+        { position: "Secondary hand", elementId: buildOptions.twinmageSecondary, enabled: buildOptions.twinmageSecondaryDamage }
+      ].filter(hand => hand.enabled).map(hand => ({
+        ...hand,
+        element: TWINMAGE_ELEMENTS.find(element => element.id === hand.elementId)
+      })).filter(hand => hand.element);
+
+      if (!hands.length) {
+        content.innerHTML = '<div class="calculation-empty">Enable at least one hand for damage calculations in Configuration.</div>';
+        return;
+      }
+
+      const twoDecimals = value => Number(value).toFixed(2);
+      const uptimePercent = value => {
+        const formatted = Number(value * 100).toFixed(2);
+        return `${formatted.endsWith(".00") ? formatted.slice(0, -3) : formatted}%`;
+      };
+      const criticalChancePercent = Number(latestCalculation.stats.criticalChance || 0);
+      const criticalDamagePercent = Number(latestCalculation.stats.criticalDamage || 0);
+      const criticalChance = Math.max(0, criticalChancePercent) / 100;
+      const appliedCriticalChancePercent = criticalChance * 100;
+      const criticalDamageMultiplier = criticalDamagePercent / 100;
+      const effectiveCriticalMultiplier = (criticalDamageMultiplier - 1) * criticalChance + 1;
+      const attackSpeedBase = hands.length === 1 ? 1.4 : 0.8;
+      const attackSpeedMultiplier = Number(latestCalculation.stats.attackSpeed || 0) / 100;
+      const calculatedHands = hands.map((hand, handIndex) => {
+        const overallMultiplier = Number(latestCalculation.stats.overallDamage || 0) / 100;
+        const elementalMultiplier = Number(latestCalculation.stats[hand.element.damageStat] || 0) / 100;
+        const criticalMultiplier = hand.element.canCrit ? effectiveCriticalMultiplier : 1;
+        const unroundedDamage = hand.element.baseDamage * overallMultiplier * elementalMultiplier * criticalMultiplier;
+        const totalDamage = Math.round(unroundedDamage);
+        const instancesPerSecond = attackSpeedBase * attackSpeedMultiplier;
+        const baseStatusChances = Object.fromEntries(Object.entries(hand.element.statusChances).map(([status, chance]) => {
+          const bonus = STATUS_CHANCE_BONUSES[status];
+          return [status, chance + (bonus ? count(bonus.upgradeId) * bonus.chancePerStack : 0)];
+        }));
+        const effectiveStatusChances = Object.fromEntries(Object.entries(baseStatusChances).map(([status, chance]) =>
+          [status, attackSpeedMultiplier > 0 ? chance / attackSpeedMultiplier : 0]
+        ));
+        const dps = totalDamage * instancesPerSecond;
+        const uptime = DAMAGE_PLACEHOLDERS.uptime;
+        const totalDps = dps * uptime;
+        return { ...hand, columnKey: `hand-${handIndex}`, sourceIcon: hand.element.image, baseStatusChances, effectiveStatusChances, damage: { overallMultiplier, elementalMultiplier, criticalMultiplier, unroundedDamage, totalDamage, instancesPerSecond, dps, uptime, totalDps } };
+      });
+      const masteryColumns = count("Twinmage_Mastery") > 0 ? calculatedHands.map((hand, handIndex) => {
+        const element = { ...hand.element, handName: `${hand.element.name} Blast`, baseDamage: hand.element.baseDamage * 0.25 };
+        const overallMultiplier = hand.damage.overallMultiplier;
+        const elementalMultiplier = hand.damage.elementalMultiplier;
+        const criticalMultiplier = hand.damage.criticalMultiplier;
+        const unroundedDamage = element.baseDamage * overallMultiplier * elementalMultiplier * criticalMultiplier;
+        const totalDamage = Math.round(unroundedDamage);
+        const instancesPerSecond = hand.damage.instancesPerSecond;
+        const dps = totalDamage * instancesPerSecond;
+        const uptime = DAMAGE_PLACEHOLDERS.uptime;
+        const totalDps = dps * uptime;
+        return { position: "Mastery explosion", columnKey: `mastery-${handIndex}`, linkedHandKey: hand.columnKey, originHandName: hand.element.handName, sourceBaseDamage: hand.element.baseDamage, sourceUpgradeId: "Twinmage_Mastery", element, isMasteryExplosion: true, baseStatusChances: { ...hand.baseStatusChances }, effectiveStatusChances: { ...hand.effectiveStatusChances }, damage: { overallMultiplier, elementalMultiplier, criticalMultiplier, unroundedDamage, totalDamage, instancesPerSecond, dps, uptime, totalDps } };
+      }) : [];
+      const attackSources = [...calculatedHands, ...masteryColumns];
+      const criticalInstanceRate = attackSources
+        .filter(hand => hand.element.canCrit)
+        .reduce((sum, hand) => sum + hand.damage.instancesPerSecond, 0);
+      const criticalHitsPerSecond = criticalInstanceRate * criticalChance;
+      const chargedStrikeStacks = count("Charged_Strike");
+      const chargedStrikeColumn = chargedStrikeStacks > 0 ? (() => {
+        const element = { id: "physical", name: "Physical", handName: "Charged Strike", baseDamage: 15 + Math.max(0, chargedStrikeStacks - 1) * 10, damageStat: "physicalDamage", canCrit: false, statusChances: {} };
+        const overallMultiplier = Number(latestCalculation.stats.overallDamage || 0) / 100;
+        const elementalMultiplier = Number(latestCalculation.stats.physicalDamage || 0) / 100;
+        const criticalMultiplier = 1;
+        const unroundedDamage = element.baseDamage * overallMultiplier * elementalMultiplier * criticalMultiplier;
+        const totalDamage = Math.round(unroundedDamage);
+        const instancesPerSecond = criticalHitsPerSecond;
+        const dps = totalDamage * instancesPerSecond;
+        const uptime = DAMAGE_PLACEHOLDERS.uptime;
+        const totalDps = dps * uptime;
+        return { position: "Upgrade effect", columnKey: "charged-strike", sourceUpgradeId: "Charged_Strike", element, isTriggeredEffect: true, chargedStrikeStacks, baseStatusChances: {}, effectiveStatusChances: {}, damage: { overallMultiplier, elementalMultiplier, criticalMultiplier, unroundedDamage, totalDamage, instancesPerSecond, dps, uptime, totalDps } };
+      })() : null;
+      const burningHands = attackSources.filter(hand => Number(hand.effectiveStatusChances.burning) > 0);
+      const bossAdjustedBurningRate = burningHands.reduce((sum, hand) =>
+        sum + hand.damage.instancesPerSecond * hand.effectiveStatusChances.burning, 0
+      ) / BURNING.bossApplicationPenalty;
+      const burningInterval = bossAdjustedBurningRate > 0 ? 1 / bossAdjustedBurningRate : Infinity;
+      const burningStacks = BURNING.baseStacks + count("Sticky") * BURNING.stacksPerSticky;
+      const burningDuration = burningStacks * BURNING.durationPerStack;
+      const burningRawUptime = bossAdjustedBurningRate > 0 ? burningDuration / burningInterval : 0;
+      const burningUptime = Math.min(1, burningRawUptime);
+      const bleedingHands = attackSources.filter(hand => Number(hand.effectiveStatusChances.bleeding) > 0);
+      const bossAdjustedBleedingRate = bleedingHands.reduce((sum, hand) =>
+        sum + hand.damage.instancesPerSecond * hand.effectiveStatusChances.bleeding, 0
+      ) / BLEEDING.bossApplicationPenalty;
+      const bleedingInterval = bossAdjustedBleedingRate > 0 ? 1 / bossAdjustedBleedingRate : Infinity;
+      const bleedingStacks = BLEEDING.baseStacks + count("Sticky") * BLEEDING.stacksPerSticky;
+      const bleedingDuration = bleedingStacks * BLEEDING.durationPerStack;
+      const bleedingRawUptime = bossAdjustedBleedingRate > 0 ? bleedingDuration / bleedingInterval : 0;
+      const bleedingUptime = Math.min(1, bleedingRawUptime);
+      const nonDamageStatuses = NON_DAMAGE_STATUS_DEFINITIONS.map(definition => {
+        const sources = attackSources.filter(hand => Number(hand.effectiveStatusChances[definition.id]) > 0);
+        const bossAdjustedApplicationRate = sources.reduce((sum, hand) =>
+          sum + hand.damage.instancesPerSecond * hand.effectiveStatusChances[definition.id], 0
+        ) / definition.bossApplicationPenalty;
+        const applicationInterval = bossAdjustedApplicationRate > 0 ? 1 / bossAdjustedApplicationRate : Infinity;
+        return { ...definition, sources, bossAdjustedApplicationRate, applicationInterval };
+      }).filter(status => status.sources.length);
+      const burningColumn = burningHands.length ? (() => {
+        const element = { id: "burning", handName: "Burning", baseDamage: 25, damageStat: "fireDamage", canCrit: false, statusChances: {} };
+        const overallMultiplier = Number(latestCalculation.stats.overallDamage || 0) / 100;
+        const elementalMultiplier = Number(latestCalculation.stats.fireDamage || 0) / 100;
+        const criticalMultiplier = 1;
+        const unroundedDamage = element.baseDamage * overallMultiplier * elementalMultiplier * criticalMultiplier;
+        const totalDamage = Math.round(unroundedDamage);
+        const instancesPerSecond = 0.5;
+        const dps = totalDamage * instancesPerSecond;
+        const uptime = burningUptime;
+        const totalDps = dps * uptime;
+        return { position: "Status effect", columnKey: "burning", statusId: "burning", statusDuration: burningDuration, statusInterval: burningInterval, element, isStatusEffect: true, effectiveStatusChances: {}, damage: { overallMultiplier, elementalMultiplier, criticalMultiplier, unroundedDamage, totalDamage, instancesPerSecond, dps, uptime, totalDps } };
+      })() : null;
+      const bleedingColumn = bleedingHands.length ? (() => {
+        const element = { id: "bleeding", name: "Physical", handName: "Bleeding", baseDamage: 25, damageStat: "physicalDamage", canCrit: false, statusChances: {} };
+        const overallMultiplier = Number(latestCalculation.stats.overallDamage || 0) / 100;
+        const elementalMultiplier = Number(latestCalculation.stats.physicalDamage || 0) / 100;
+        const criticalMultiplier = 1;
+        const unroundedDamage = element.baseDamage * overallMultiplier * elementalMultiplier * criticalMultiplier;
+        const totalDamage = Math.round(unroundedDamage);
+        const instancesPerSecond = 0.8;
+        const dps = totalDamage * instancesPerSecond;
+        const uptime = bleedingUptime;
+        const totalDps = dps * uptime;
+        return { position: "Status effect", columnKey: "bleeding", statusId: "bleeding", statusDuration: bleedingDuration, statusInterval: bleedingInterval, element, isStatusEffect: true, effectiveStatusChances: {}, damage: { overallMultiplier, elementalMultiplier, criticalMultiplier, unroundedDamage, totalDamage, instancesPerSecond, dps, uptime, totalDps } };
+      })() : null;
+      const statusColumns = [burningColumn, bleedingColumn].filter(Boolean).map((column, index) => ({ ...column, isStatusGroupStart: index === 0 }));
+      const triggeredColumns = [chargedStrikeColumn].filter(Boolean);
+      const damageColumns = [...attackSources, ...triggeredColumns, ...statusColumns];
+      const combinedTotalDps = damageColumns.reduce((sum, hand) => sum + hand.damage.totalDps, 0);
+      const damageTypeId = hand => hand.element.damageStat.replace(/Damage$/, "").toLowerCase();
+      const damageTypeName = hand => hand.element.name || `${damageTypeId(hand)[0].toUpperCase()}${damageTypeId(hand).slice(1)}`;
+      const combinedDpsBreakdown = Object.values(damageColumns.reduce((groups, hand) => {
+        const id = damageTypeId(hand);
+        groups[id] ||= { id, name: damageTypeName(hand), exact: 0 };
+        groups[id].exact += hand.damage.totalDps;
+        return groups;
+      }, {})).map(item => ({ ...item, value: twoDecimals(item.exact) }));
+      const calculationAttributes = (key, formula, refs = []) => `data-calculation-key="${escapeHtml(key)}" data-calculation-formula="${escapeHtml(formula)}" data-calculation-refs="${escapeHtml(refs.join("|"))}" tabindex="0"`;
+      const damageTypeAttributes = hand => `data-calculation-damage-type="${escapeHtml(damageTypeName(hand))}" data-calculation-damage-id="${escapeHtml(damageTypeId(hand))}"`;
+      const sourceUpgradeAttributes = hand => hand.sourceUpgradeId ? `data-calculation-source-upgrade="${escapeHtml(hand.sourceUpgradeId)}"` : "";
+      const sourceIconAttributes = hand => hand.sourceIcon ? `data-calculation-source-icon="${escapeHtml(hand.sourceIcon)}"` : "";
+      const damageKey = (hand, rowKey) => `damage:${hand.columnKey}:${rowKey}`;
+      const sourceFormula = hand => {
+        const statusLines = Object.entries(hand.baseStatusChances || {}).map(([status, chance]) =>
+          `${status[0].toUpperCase()}${status.slice(1)}: ${twoDecimals(chance * 100)}% ÷ ${twoDecimals(attackSpeedMultiplier * 100)}% AS = ${twoDecimals(hand.effectiveStatusChances[status] * 100)}%`
+        );
+        const masteryLine = hand.isMasteryExplosion ? `\n${hand.originHandName} × 25%` : "";
+        const triggerLine = hand.isTriggeredEffect ? `\nTriggers on crit · ${twoDecimals(hand.damage.instancesPerSecond)}/s` : "";
+        return `${hand.element.handName}\n${hand.element.name || "Fire"} · Base ${hand.element.baseDamage}${masteryLine}${triggerLine}\nCrit: ${hand.element.canCrit ? "Yes" : "No"}\n${statusLines.length ? statusLines.join("\n") : "Status chance: —"}`;
+      };
+      const rows = [
+        { key: "base", label: "Base Damage", value: hand => String(hand.element.baseDamage), exact: hand => hand.element.baseDamage, formula: hand => hand.isMasteryExplosion ? `${hand.sourceBaseDamage} × 25% = ${hand.element.baseDamage}` : hand.isTriggeredEffect ? `15 + (${Math.max(0, hand.chargedStrikeStacks - 1)} × 10) = ${hand.element.baseDamage}` : `Base = ${hand.element.baseDamage}`, refs: hand => hand.isMasteryExplosion ? [`calc:damage:${hand.linkedHandKey}:base`] : hand.isTriggeredEffect ? ["upgrade:Charged_Strike"] : [], damageValue: true },
+        { key: "overall", label: "Overall Damage", value: hand => twoDecimals(hand.damage.overallMultiplier), exact: hand => hand.damage.overallMultiplier, formula: hand => `${twoDecimals(hand.damage.overallMultiplier * 100)}% ÷ 100 = ${twoDecimals(hand.damage.overallMultiplier)}`, refs: () => ["stat:overallDamage"] },
+        { key: "elemental", label: "Elemental Damage", value: hand => twoDecimals(hand.damage.elementalMultiplier), exact: hand => hand.damage.elementalMultiplier, formula: hand => `${twoDecimals(hand.damage.elementalMultiplier * 100)}% ÷ 100 = ${twoDecimals(hand.damage.elementalMultiplier)}`, refs: hand => [`stat:${hand.element.damageStat}`] },
+        { key: "crit", label: "Eff. Crit Multiplier", value: hand => hand.element.canCrit ? twoDecimals(hand.damage.criticalMultiplier) : "-", exact: hand => hand.damage.criticalMultiplier, formula: hand => hand.element.canCrit ? `Crit box = ${twoDecimals(hand.damage.criticalMultiplier)}` : "Cannot crit = × 1", refs: hand => hand.element.canCrit ? ["calc:crit:effective"] : [] },
+        { key: "total", label: "Total Damage", value: hand => String(hand.damage.totalDamage), exact: hand => hand.damage.totalDamage, formula: hand => {
+          const bareDamage = hand.element.baseDamage * hand.damage.overallMultiplier * hand.damage.elementalMultiplier;
+          const nonCriticalDamage = Math.round(bareDamage);
+          const fullCriticalDamage = Math.round(bareDamage * criticalDamageMultiplier);
+          const averageLine = `Average: ${hand.element.baseDamage} × ${twoDecimals(hand.damage.overallMultiplier)} × ${twoDecimals(hand.damage.elementalMultiplier)} × ${twoDecimals(hand.damage.criticalMultiplier)} ≈ ${hand.damage.totalDamage}`;
+          return hand.element.canCrit
+            ? `${averageLine}\nNon-crit: ${hand.element.baseDamage} × ${twoDecimals(hand.damage.overallMultiplier)} × ${twoDecimals(hand.damage.elementalMultiplier)} ≈ ${nonCriticalDamage}\nCrit: ${twoDecimals(bareDamage)} × ${twoDecimals(criticalDamageMultiplier)} ≈ ${fullCriticalDamage}`
+            : `${hand.element.baseDamage} × ${twoDecimals(hand.damage.overallMultiplier)} × ${twoDecimals(hand.damage.elementalMultiplier)} ≈ ${hand.damage.totalDamage}`;
+        }, refs: hand => ["base", "overall", "elemental", "crit"].map(key => `calc:${damageKey(hand, key)}`).concat(hand.element.canCrit ? ["calc:crit:damage", "stat:criticalDamage"] : []), sectionBreak: true, damageValue: true },
+        { key: "rate", label: "Instance Rate", value: hand => twoDecimals(hand.damage.instancesPerSecond), exact: hand => hand.damage.instancesPerSecond, formula: hand => hand.isStatusEffect ? `Fixed = ${twoDecimals(hand.damage.instancesPerSecond)}/s` : hand.isMasteryExplosion ? `Matches ${hand.originHandName} = ${twoDecimals(hand.damage.instancesPerSecond)}/s` : hand.isTriggeredEffect ? `Crits per second = ${twoDecimals(hand.damage.instancesPerSecond)}/s` : `${twoDecimals(attackSpeedBase)} × ${twoDecimals(attackSpeedMultiplier)} = ${twoDecimals(hand.damage.instancesPerSecond)}/s`, refs: hand => hand.isStatusEffect ? [] : hand.isMasteryExplosion ? [`calc:damage:${hand.linkedHandKey}:rate`] : hand.isTriggeredEffect ? ["calc:crit:rate"] : ["stat:attackSpeed"] },
+        { key: "dps", label: "DPS", value: hand => twoDecimals(hand.damage.dps), exact: hand => hand.damage.dps, formula: hand => `${hand.damage.totalDamage} × ${twoDecimals(hand.damage.instancesPerSecond)} = ${twoDecimals(hand.damage.dps)}`, refs: hand => [`calc:${damageKey(hand, "total")}`, `calc:${damageKey(hand, "rate")}`], damageValue: true },
+        { key: "uptime", label: "Uptime", value: hand => uptimePercent(hand.damage.uptime), exact: hand => hand.damage.uptime, formula: hand => hand.isStatusEffect ? `${twoDecimals(hand.statusDuration)}s ÷ ${twoDecimals(hand.statusInterval)}s = ${twoDecimals(hand.damage.uptime * 100)}%` : hand.isTriggeredEffect ? "Matches primary/secondary attacks = 100%" : "Always active = 100%", refs: hand => hand.isStatusEffect ? [`calc:${hand.statusId}:duration`, `calc:${hand.statusId}:interval`] : hand.isTriggeredEffect ? calculatedHands.map(source => `calc:${damageKey(source, "uptime")}`) : [], },
+        { key: "total-dps", label: "Total DPS", value: hand => twoDecimals(hand.damage.totalDps), exact: hand => hand.damage.totalDps, formula: hand => `${twoDecimals(hand.damage.dps)} × ${twoDecimals(hand.damage.uptime * 100)}% = ${twoDecimals(hand.damage.totalDps)}`, refs: hand => [`calc:${damageKey(hand, "dps")}`, `calc:${damageKey(hand, "uptime")}`], sectionBreak: true, total: true, damageValue: true }
+      ];
+      const criticalRows = [
+        { key: "crit:chance", label: "Crit Chance", value: `${twoDecimals(criticalChancePercent)}%`, exact: criticalChancePercent, formula: criticalChancePercent < 0 ? `Stats = ${twoDecimals(criticalChancePercent)}% · used = 0.00%` : `Stats = ${twoDecimals(criticalChancePercent)}%`, refs: ["stat:criticalChance"] },
+        { key: "crit:damage", label: "Crit Damage", value: `${twoDecimals(criticalDamagePercent)}%`, exact: criticalDamagePercent, formula: `Stats = ${twoDecimals(criticalDamagePercent)}%`, refs: ["stat:criticalDamage"] },
+        { key: "crit:rate", label: "Crits per second", value: twoDecimals(criticalHitsPerSecond), exact: criticalHitsPerSecond, formula: `(${attackSources.filter(hand => hand.element.canCrit).map(hand => twoDecimals(hand.damage.instancesPerSecond)).join(" + ")}) × ${twoDecimals(appliedCriticalChancePercent)}% = ${twoDecimals(criticalHitsPerSecond)}`, refs: ["calc:crit:chance", ...attackSources.filter(hand => hand.element.canCrit).map(hand => `calc:${damageKey(hand, "rate")}`)] },
+        { key: "crit:effective", label: "Eff. Crit Multiplier", value: twoDecimals(effectiveCriticalMultiplier), exact: effectiveCriticalMultiplier, formula: `(${twoDecimals(criticalDamagePercent)}% − 100%) × ${twoDecimals(appliedCriticalChancePercent)}% + 100% = ${twoDecimals(effectiveCriticalMultiplier)}`, refs: ["calc:crit:chance", "calc:crit:damage"] }
+      ];
+      const burningRateTerms = burningHands.map(hand => `${twoDecimals(hand.damage.instancesPerSecond)} × (${twoDecimals(hand.baseStatusChances.burning * 100)}% ÷ ${twoDecimals(attackSpeedMultiplier * 100)}% AS)`);
+      const burningRows = [
+        { key: "burning:interval", label: "Average time between applications", value: `${twoDecimals(burningInterval)} s`, exact: burningInterval, formula: `1 ÷ ((${burningRateTerms.join(" + ")}) ÷ ${BURNING.bossApplicationPenalty}) = ${twoDecimals(burningInterval)}s`, refs: ["stat:attackSpeed", ...burningHands.map(hand => `calc:${damageKey(hand, "rate")}`)] },
+        { key: "burning:stacks", label: "Stacks per application", value: String(burningStacks), exact: burningStacks, formula: `${BURNING.baseStacks} + (${count("Sticky")} × ${BURNING.stacksPerSticky}) = ${burningStacks}`, refs: ["upgrade:Sticky"] },
+        { key: "burning:duration", label: "Burn duration", value: `${twoDecimals(burningDuration)} s`, exact: burningDuration, formula: `${burningStacks} × ${twoDecimals(BURNING.durationPerStack)}s = ${twoDecimals(burningDuration)}s`, refs: ["calc:burning:stacks"] },
+        { key: "burning:uptime", label: "Uptime", value: `${twoDecimals(burningUptime * 100)}%`, valueHtml: burningRawUptime > 1 ? `100% <span class="status-uncapped-uptime">(${twoDecimals(burningRawUptime * 100)}%)</span>` : null, exact: burningUptime, formula: burningRawUptime > 1 ? `${twoDecimals(burningDuration)}s ÷ ${twoDecimals(burningInterval)}s = ${twoDecimals(burningRawUptime * 100)}% → capped at 100%` : `${twoDecimals(burningDuration)}s ÷ ${twoDecimals(burningInterval)}s = ${twoDecimals(burningUptime * 100)}%`, refs: ["calc:burning:duration", "calc:burning:interval"] }
+      ];
+      const bleedingRateTerms = bleedingHands.map(hand => `${twoDecimals(hand.damage.instancesPerSecond)} × (${twoDecimals(hand.baseStatusChances.bleeding * 100)}% ÷ ${twoDecimals(attackSpeedMultiplier * 100)}% AS)`);
+      const bleedingRows = [
+        { key: "bleeding:interval", label: "Average time between applications", value: `${twoDecimals(bleedingInterval)} s`, exact: bleedingInterval, formula: `1 ÷ ((${bleedingRateTerms.join(" + ")}) ÷ ${BLEEDING.bossApplicationPenalty}) = ${twoDecimals(bleedingInterval)}s`, refs: ["stat:attackSpeed", ...bleedingHands.map(hand => `calc:${damageKey(hand, "rate")}`)] },
+        { key: "bleeding:stacks", label: "Stacks per application", value: String(bleedingStacks), exact: bleedingStacks, formula: `${BLEEDING.baseStacks} + (${count("Sticky")} × ${BLEEDING.stacksPerSticky}) = ${bleedingStacks}`, refs: ["upgrade:Sticky"] },
+        { key: "bleeding:duration", label: "Bleed duration", value: `${twoDecimals(bleedingDuration)} s`, exact: bleedingDuration, formula: `${bleedingStacks} × ${twoDecimals(BLEEDING.durationPerStack)}s = ${twoDecimals(bleedingDuration)}s`, refs: ["calc:bleeding:stacks"] },
+        { key: "bleeding:uptime", label: "Uptime", value: `${twoDecimals(bleedingUptime * 100)}%`, valueHtml: bleedingRawUptime > 1 ? `100% <span class="status-uncapped-uptime">(${twoDecimals(bleedingRawUptime * 100)}%)</span>` : null, exact: bleedingUptime, formula: bleedingRawUptime > 1 ? `${twoDecimals(bleedingDuration)}s ÷ ${twoDecimals(bleedingInterval)}s = ${twoDecimals(bleedingRawUptime * 100)}% → capped at 100%` : `${twoDecimals(bleedingDuration)}s ÷ ${twoDecimals(bleedingInterval)}s = ${twoDecimals(bleedingUptime * 100)}%`, refs: ["calc:bleeding:duration", "calc:bleeding:interval"] }
+      ];
+      const nonDamageStatusRows = status => {
+        const rateTerms = status.sources.map(hand => `${twoDecimals(hand.damage.instancesPerSecond)} × (${twoDecimals(hand.baseStatusChances[status.id] * 100)}% ÷ ${twoDecimals(attackSpeedMultiplier * 100)}% AS)`);
+        return [
+          { key: `${status.id}:interval`, label: "Average time between applications", value: `${twoDecimals(status.applicationInterval)} s`, exact: status.applicationInterval, formula: `1 ÷ ((${rateTerms.join(" + ")}) ÷ ${status.bossApplicationPenalty}) = ${twoDecimals(status.applicationInterval)}s`, refs: ["stat:attackSpeed", ...status.sources.map(hand => `calc:${damageKey(hand, "rate")}`)] },
+          { key: `${status.id}:stacks`, label: "Stacks per application", value: "?", exact: "unknown", formula: "Not configured yet", refs: [], unknown: true },
+          { key: `${status.id}:uptime`, label: "Uptime", value: "?", exact: "unknown", formula: "Not configured yet", refs: [], unknown: true }
+        ];
+      };
+
+      content.innerHTML = `<div class="calculation-stack">
+        <section class="damage-calculation">
+          <div class="damage-table-wrap">
+            <table class="damage-table ${calculatedHands.length === 1 ? "single-hand" : "dual-hand"}">
+              <colgroup><col class="damage-label-col"><col class="damage-data-col" span="${damageColumns.length}"></colgroup>
+              <thead><tr><th scope="col"><span class="damage-hand-position">Current build</span></th>${damageColumns.map(hand => `
+                <th scope="col" class="damage-column ${hand.isStatusEffect ? "status-effect-column" : ""} ${hand.isStatusGroupStart ? "status-group-start" : ""}" data-element="${hand.element.id}" ${calculationAttributes(`source:${hand.columnKey}`, sourceFormula(hand))} ${sourceUpgradeAttributes(hand)} ${sourceIconAttributes(hand)}>
+                  <span class="damage-hand-position">${escapeHtml(hand.position)}</span>
+                  <span class="damage-hand-title">${escapeHtml(hand.element.handName)}</span>
+                </th>`).join("")}</tr></thead>
+              <tbody>${rows.map(row => `<tr class="${row.sectionBreak ? "damage-section-break " : ""}${row.total ? "damage-total-row" : ""}">
+                <th scope="row" class="damage-label">${escapeHtml(row.label)}</th>
+                ${damageColumns.map(hand => `<td class="damage-column ${hand.isStatusEffect ? "status-effect-column" : ""} ${hand.isStatusGroupStart ? "status-group-start" : ""}" data-element="${hand.element.id}">
+                  <span class="damage-value" data-exact-value="${escapeHtml(String(row.exact(hand)))}" ${calculationAttributes(damageKey(hand, row.key), row.formula(hand), row.refs(hand))} ${row.damageValue ? damageTypeAttributes(hand) : ""} ${sourceUpgradeAttributes(hand)} ${sourceIconAttributes(hand)}>${escapeHtml(row.value(hand))}</span>
+                </td>`).join("")}
+              </tr>`).join("")}</tbody>
+              <tfoot><tr class="damage-combined-row">
+                <th scope="row" class="damage-combined-label">Combined DPS</th>
+                <td colspan="${damageColumns.length}" class="damage-column">
+                  <span class="damage-combined-value" data-exact-value="${escapeHtml(String(combinedTotalDps))}" data-calculation-breakdown="${escapeHtml(JSON.stringify(combinedDpsBreakdown))}" ${calculationAttributes("damage:combined:total-dps", `${damageColumns.map(hand => twoDecimals(hand.damage.totalDps)).join(" + ")} = ${twoDecimals(combinedTotalDps)}`, damageColumns.map(hand => `calc:${damageKey(hand, "total-dps")}`))}>${twoDecimals(combinedTotalDps)}</span>
+                </td>
+              </tr></tfoot>
+            </table>
+          </div>
+        </section>
+        <div class="calculation-secondary">
+          <section class="crit-table-wrap">
+            <table class="crit-table">
+              <thead><tr><th colspan="2">Critical hits</th></tr></thead>
+              <tbody>${criticalRows.map(row => `<tr>
+                <th scope="row" class="crit-label">${escapeHtml(row.label)}</th>
+                <td class="crit-value" data-exact-value="${escapeHtml(String(row.exact))}" ${calculationAttributes(row.key, row.formula, row.refs)}>${escapeHtml(row.value)}</td>
+              </tr>`).join("")}</tbody>
+            </table>
+          </section>
+          ${burningHands.length ? `<section class="status-table-wrap" data-status="burning">
+            <table class="status-table">
+              <thead><tr><th colspan="2">Status: Burning</th></tr></thead>
+              <tbody>${burningRows.map(row => `<tr>
+                <th scope="row" class="status-label">${escapeHtml(row.label)}</th>
+                <td class="status-value" data-exact-value="${escapeHtml(String(row.exact))}" ${calculationAttributes(row.key, row.formula, row.refs)}>${row.valueHtml || escapeHtml(row.value)}</td>
+              </tr>`).join("")}</tbody>
+            </table>
+          </section>` : ""}
+          ${bleedingHands.length ? `<section class="status-table-wrap" data-status="bleeding">
+            <table class="status-table">
+              <thead><tr><th colspan="2">Status: Bleeding</th></tr></thead>
+              <tbody>${bleedingRows.map(row => `<tr>
+                <th scope="row" class="status-label">${escapeHtml(row.label)}</th>
+                <td class="status-value" data-exact-value="${escapeHtml(String(row.exact))}" ${calculationAttributes(row.key, row.formula, row.refs)}>${row.valueHtml || escapeHtml(row.value)}</td>
+              </tr>`).join("")}</tbody>
+            </table>
+          </section>` : ""}
+          ${nonDamageStatuses.map(status => {
+            const statusRows = nonDamageStatusRows(status);
+            return `<section class="status-table-wrap" data-status="${escapeHtml(status.id)}">
+              <table class="status-table">
+                <thead><tr><th colspan="2">Status: ${escapeHtml(status.name)}</th></tr></thead>
+                <tbody>${statusRows.map(row => `<tr>
+                  <th scope="row" class="status-label">${escapeHtml(row.label)}</th>
+                  <td class="status-value ${row.unknown ? "status-value-unknown" : ""}" data-exact-value="${escapeHtml(String(row.exact))}" ${calculationAttributes(row.key, row.formula, row.refs)}>${escapeHtml(row.value)}</td>
+                </tr>`).join("")}</tbody>
+                ${status.note ? `<tfoot><tr><td class="status-note" colspan="2">${escapeHtml(status.note)}</td></tr></tfoot>` : ""}
+              </table>
+            </section>`;
+          }).join("")}
+        </div>
+      </div>`;
+    }
+
     function renderRunes() {
       const curseOptions = `<option value="">No curse selected</option>${CURSES.map(curse =>
         `<option value="${curse.id}">Runic Curse: ${escapeHtml(curse.name)}</option>`).join("")}`;
@@ -1459,6 +1997,8 @@
 
     function render() {
       renderStats();
+      renderConfiguration();
+      renderCalculations();
       renderPicked();
       renderCatalog();
       renderArtifacts();
@@ -1482,6 +2022,27 @@
     });
 
     $("#stats").addEventListener("focusout", hideStatTooltip);
+
+    $("#calculation-content").addEventListener("mouseover", event => {
+      const value = event.target.closest("[data-calculation-formula]");
+      if (value) showCalculationTooltip(value, event.clientX, event.clientY);
+    });
+
+    $("#calculation-content").addEventListener("mousemove", event => {
+      if (event.target.closest("[data-calculation-formula]")) positionCalculationTooltip(event.clientX, event.clientY);
+    });
+
+    $("#calculation-content").addEventListener("mouseout", event => {
+      const value = event.target.closest("[data-calculation-formula]");
+      if (value && !value.contains(event.relatedTarget)) hideCalculationTooltip();
+    });
+
+    $("#calculation-content").addEventListener("focusin", event => {
+      const value = event.target.closest("[data-calculation-formula]");
+      if (value) showCalculationTooltip(value);
+    });
+
+    $("#calculation-content").addEventListener("focusout", hideCalculationTooltip);
 
     $("#catalog").addEventListener("click", event => {
       const card = event.target.closest(".upgrade");
@@ -1521,6 +2082,31 @@
       if (!button) return;
       document.querySelectorAll("[data-tab]").forEach(tab => tab.setAttribute("aria-selected", String(tab === button)));
       document.querySelectorAll(".tab-pane").forEach(pane => { pane.hidden = pane.id !== `tab-${button.dataset.tab}`; });
+    });
+
+    $("#configuration-content").addEventListener("change", event => {
+      const damageToggle = event.target.closest('input[type="checkbox"][name$="-damage"]');
+      if (damageToggle) {
+        if (damageToggle.name === "twinmage-primary-damage") buildOptions.twinmagePrimaryDamage = damageToggle.checked;
+        else if (damageToggle.name === "twinmage-secondary-damage") buildOptions.twinmageSecondaryDamage = damageToggle.checked;
+        if (!buildOptions.twinmagePrimaryDamage && !buildOptions.twinmageSecondaryDamage) {
+          if (damageToggle.name === "twinmage-primary-damage") buildOptions.twinmageSecondaryDamage = true;
+          else buildOptions.twinmagePrimaryDamage = true;
+        }
+        saveBuildOptions();
+        renderConfiguration();
+        renderCalculations();
+        updateShareWidget();
+        return;
+      }
+      const choice = event.target.closest('input[type="radio"][name^="twinmage-"]');
+      if (!choice || !TWINMAGE_ELEMENTS.some(element => element.id === choice.value)) return;
+      if (choice.name === "twinmage-primary") buildOptions.twinmagePrimary = choice.value;
+      else if (choice.name === "twinmage-secondary") buildOptions.twinmageSecondary = choice.value;
+      saveBuildOptions();
+      renderConfiguration();
+      renderCalculations();
+      updateShareWidget();
     });
 
     $("#artifact-catalog").addEventListener("click", event => {
@@ -1592,6 +2178,10 @@
       buildOptions.artifacts = {};
       buildOptions.runes = RUNE_SLOTS.map(() => null);
       buildOptions.curses = RUNE_SLOTS.map(() => null);
+      buildOptions.twinmagePrimary = "fire";
+      buildOptions.twinmageSecondary = "lightning";
+      buildOptions.twinmagePrimaryDamage = true;
+      buildOptions.twinmageSecondaryDamage = true;
       activeRuneSlot = 0;
       saveCounts();
       saveBuildOptions();
