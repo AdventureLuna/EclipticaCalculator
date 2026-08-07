@@ -1,0 +1,223 @@
+[
+  {
+    "id": "CLAIM-USER-BERSERKER-MELEE-TOTAL",
+    "questionId": "question-upgrade-crystal-of-mobility-berserker-s-soul-melee-stack-scaling",
+    "text": "User hypothesis: Berserker's Soul (Melee) reaches approximately +45% Overall Damage, +90% Attack Speed, and -50% Health Regeneration at 70 stacks, divided linearly per stack.",
+    "type": "user hypothesis",
+    "status": "Unknown",
+    "evidenceIds": [
+      "EVID-USER-BERSERKER-MELEE-TOTAL"
+    ],
+    "sourceRefs": [],
+    "createdAt": "2026-08-07",
+    "updatedAt": "2026-08-07"
+  },
+  {
+    "id": "CLAIM-USER-BERSERKER-RANGED-TOTAL",
+    "questionId": "question-upgrade-crystal-of-mobility-berserker-s-soul-ranged-stack-scaling",
+    "text": "User hypothesis: Berserker's Soul (Ranged) reaches approximately +45% Overall Damage, +90% Attack Speed, and +2% Projectile Spread at 70 stacks, divided linearly per stack.",
+    "type": "user hypothesis",
+    "status": "Unknown",
+    "evidenceIds": [
+      "EVID-USER-BERSERKER-RANGED-TOTAL"
+    ],
+    "sourceRefs": [],
+    "createdAt": "2026-08-07",
+    "updatedAt": "2026-08-07"
+  },
+  {
+    "id": "CLAIM-USER-BIG-LAZY-STACKS",
+    "questionId": "Q-USER-BIG-LAZY-VITALITY",
+    "text": "User hypothesis: Big and Lazy may apply an effective regeneration multiplier of 3 at 1 stack, 3.5 at 2 stacks, and then continue linearly, after Vitality and other regeneration effects.",
+    "type": "user hypothesis",
+    "status": "Unknown",
+    "evidenceIds": [
+      "EVID-USER-BIG-LAZY-STACKS"
+    ],
+    "sourceRefs": [],
+    "createdAt": "2026-08-07",
+    "updatedAt": "2026-08-07"
+  },
+  {
+    "id": "CLAIM-USER-BIG-ROUND-STACKING",
+    "questionId": null,
+    "text": "User observation: Big and Round appears to stack linearly as its English description states.",
+    "type": "user observation",
+    "status": "Reported",
+    "evidenceIds": [
+      "EVID-USER-BIG-ROUND-STACKING"
+    ],
+    "sourceRefs": [],
+    "createdAt": "2026-08-07",
+    "updatedAt": "2026-08-07"
+  },
+  {
+    "id": "CLAIM-USER-BIG-WRATHFUL-STACKING",
+    "questionId": "Q-USER-BIG-WRATHFUL-STACKING",
+    "text": "User hypothesis: Big and Wrathful probably stacks linearly, but it remains unclear whether the LOW HP damage bonus is additive to Overall Damage or a separate multiplier.",
+    "type": "user hypothesis",
+    "status": "Unknown",
+    "evidenceIds": [
+      "EVID-USER-BIG-WRATHFUL-STACKING"
+    ],
+    "sourceRefs": [],
+    "createdAt": "2026-08-07",
+    "updatedAt": "2026-08-07"
+  },
+  {
+    "id": "CLAIM-SHEDDING-5",
+    "questionId": "Q-USER-SHEDDING",
+    "text": "Shedding may reduce Overall Defense by 5% per stack.",
+    "type": "reported interpretation",
+    "status": "Contradicted",
+    "evidenceIds": [
+      "EVID-USER-001"
+    ],
+    "sourceRefs": [],
+    "createdAt": "2026-08-07",
+    "updatedAt": "2026-08-07"
+  },
+  {
+    "id": "CLAIM-SHEDDING-7",
+    "questionId": "Q-USER-SHEDDING",
+    "text": "Shedding may reduce Overall Defense by approximately 7% per stack.",
+    "type": "hypothesis",
+    "status": "Unknown",
+    "evidenceIds": [
+      "EVID-USER-001"
+    ],
+    "sourceRefs": [],
+    "createdAt": "2026-08-07",
+    "updatedAt": "2026-08-07"
+  },
+  {
+    "id": "CLAIM-BIG-LAZY-VITALITY-MULT",
+    "questionId": "Q-USER-BIG-LAZY-VITALITY",
+    "text": "Big and Lazy and Vitality interact multiplicatively in some way.",
+    "type": "hypothesis",
+    "status": "Reported",
+    "evidenceIds": [
+      "EVID-USER-002"
+    ],
+    "sourceRefs": [],
+    "createdAt": "2026-08-07",
+    "updatedAt": "2026-08-07"
+  },
+  {
+    "id": "CLAIM-TWINMAGE-HAND-RATE",
+    "questionId": "Q-USER-TWINMAGE-HAND-RATE",
+    "text": "Each Twinmage elemental hand attacks at 0.8 attacks per second when both hands are active and 1.4 attacks per second when a single hand is active.",
+    "type": "reported wiki reading",
+    "status": "Reported",
+    "evidenceIds": [
+      "EVID-USER-TWINMAGE-RATE"
+    ],
+    "sourceRefs": [],
+    "createdAt": "2026-08-07",
+    "updatedAt": "2026-08-07"
+  },
+  {
+    "id": "CLAIM-JA-CHARGED-STRIKE-DAMAGE",
+    "questionId": "Q-USER-CHARGED-STRIKE-DAMAGE",
+    "text": "The Japanese wiki reports 25 base Physical explosion damage for Charged Strike.",
+    "type": "Japanese wiki claim",
+    "status": "Reported",
+    "evidenceIds": [
+      "EVID-JA-CHARGED-STRIKE"
+    ],
+    "sourceRefs": [],
+    "createdAt": "2026-08-07",
+    "updatedAt": "2026-08-07"
+  },
+  {
+    "id": "CLAIM-JA-CHARGED-STRIKE-STACK",
+    "questionId": "Q-USER-CHARGED-STRIKE-STACK",
+    "text": "The Japanese wiki reports +10 Physical explosion damage per Charged Strike stack.",
+    "type": "Japanese wiki claim",
+    "status": "Reported",
+    "evidenceIds": [
+      "EVID-JA-CHARGED-STRIKE"
+    ],
+    "sourceRefs": [],
+    "createdAt": "2026-08-07",
+    "updatedAt": "2026-08-07"
+  },
+  {
+    "id": "CLAIM-JA-CURSE-OF-WRATH",
+    "questionId": "question-upgrade-crystal-of-perseverance-curse-of-wrath-interval",
+    "text": "The Japanese wiki reports a 4-second base interval and 30 base damage for Curse of Wrath, with a critical-hit check and an unspecified BREACHED chance.",
+    "type": "Japanese wiki claim",
+    "status": "Reported",
+    "evidenceIds": [
+      "EVID-JA-CURSE-OF-WRATH"
+    ],
+    "sourceRefs": [],
+    "createdAt": "2026-08-07",
+    "updatedAt": "2026-08-07"
+  },
+  {
+    "id": "CLAIM-JA-THUNDER-AURA",
+    "questionId": "question-upgrade-crystal-of-mobility-thunder-aura-interval",
+    "text": "The Japanese wiki reports a one-second interval and 23 base Electric damage for Thunder Aura, with a 4 m base radius and a critical-hit check.",
+    "type": "Japanese wiki claim",
+    "status": "Reported",
+    "evidenceIds": [
+      "EVID-JA-THUNDER-AURA"
+    ],
+    "sourceRefs": [],
+    "createdAt": "2026-08-07",
+    "updatedAt": "2026-08-07"
+  },
+  {
+    "id": "CLAIM-JA-BERSERKER-MELEE",
+    "questionId": "question-upgrade-crystal-of-mobility-berserker-s-soul-melee-stack-scaling",
+    "text": "The Japanese wiki reports 70 maximum Berserker's Soul (Melee) stacks with +0.64% dealt damage, +1.28% Attack Speed, and -0.71% regeneration per stack.",
+    "type": "Japanese wiki claim",
+    "status": "Reported",
+    "evidenceIds": [
+      "EVID-JA-BERSERKER-MELEE"
+    ],
+    "sourceRefs": [],
+    "createdAt": "2026-08-07",
+    "updatedAt": "2026-08-07"
+  },
+  {
+    "id": "CLAIM-JA-BERSERKER-RANGED",
+    "questionId": "question-upgrade-crystal-of-mobility-berserker-s-soul-ranged-stack-scaling",
+    "text": "The Japanese wiki reports 70 maximum Berserker's Soul (Ranged) stacks with +0.32% dealt damage, +0.64% Attack Speed, and +0.0285% projectile spread per stack.",
+    "type": "Japanese wiki claim",
+    "status": "Reported",
+    "evidenceIds": [
+      "EVID-JA-BERSERKER-RANGED"
+    ],
+    "sourceRefs": [],
+    "createdAt": "2026-08-07",
+    "updatedAt": "2026-08-07"
+  },
+  {
+    "id": "CLAIM-JA-SPELLSWORD-PIERCING",
+    "questionId": "question-skill-spellsword-piercing-strike-unknown",
+    "text": "The Japanese wiki reports Piercing Strike charge time 0.170–5.075 seconds, damage 87–170, 1.5-second cooldown, and up to 50% Bleeding chance.",
+    "type": "Japanese wiki claim",
+    "status": "Reported",
+    "evidenceIds": [
+      "EVID-JA-SPELLSWORD-PIERCING"
+    ],
+    "sourceRefs": [],
+    "createdAt": "2026-08-07",
+    "updatedAt": "2026-08-07"
+  },
+  {
+    "id": "CLAIM-JA-SPELLSWORD-WHIRLWIND",
+    "questionId": "question-upgrade-spellsword-spellsword-whirlwind-damage",
+    "text": "The Japanese wiki reports that Spellsword: Whirlwind ticks approximately every 0.1 seconds, inherits Bleeding chance, and cannot critically strike.",
+    "type": "Japanese wiki claim",
+    "status": "Reported",
+    "evidenceIds": [
+      "EVID-JA-SPELLSWORD-WHIRLWIND"
+    ],
+    "sourceRefs": [],
+    "createdAt": "2026-08-07",
+    "updatedAt": "2026-08-07"
+  }
+]

@@ -1,0 +1,216 @@
+{
+  "generatedAt": "2026-08-07T17:27:03.772396+00:00",
+  "retrievalDate": "2026-08-07",
+  "sourcePolicy": "English Miraheze wiki remains the factual import boundary; Japanese Wiki* pages are stored as separate bilingual audit evidence and are not silently merged into English-derived fields.",
+  "pagesRequested": [
+    "Upgrades",
+    "Classes",
+    "Stats",
+    "Stack Types",
+    "Status Effects",
+    "Spellsword",
+    "Twinmage",
+    "Gunmancer",
+    "Fistmage",
+    "Spellhammer",
+    "Shield Mage",
+    "Thaumaturge",
+    "Nekomancer"
+  ],
+  "pagesRetrieved": [],
+  "failures": [
+    {
+      "title": "Upgrades",
+      "url": "https://ecliptica.miraheze.org/w/index.php?title=Upgrades&action=raw",
+      "error": "<urlopen error [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte>"
+    },
+    {
+      "title": "Classes",
+      "url": "https://ecliptica.miraheze.org/w/index.php?title=Classes&action=raw",
+      "error": "<urlopen error [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte>"
+    },
+    {
+      "title": "Stats",
+      "url": "https://ecliptica.miraheze.org/w/index.php?title=Stats&action=raw",
+      "error": "<urlopen error [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte>"
+    },
+    {
+      "title": "Stack Types",
+      "url": "https://ecliptica.miraheze.org/w/index.php?title=Stack%20Types&action=raw",
+      "error": "<urlopen error [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte>"
+    },
+    {
+      "title": "Status Effects",
+      "url": "https://ecliptica.miraheze.org/w/index.php?title=Status%20Effects&action=raw",
+      "error": "<urlopen error [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte>"
+    },
+    {
+      "title": "Spellsword",
+      "url": "https://ecliptica.miraheze.org/w/index.php?title=Spellsword&action=raw",
+      "error": "<urlopen error [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte>"
+    },
+    {
+      "title": "Twinmage",
+      "url": "https://ecliptica.miraheze.org/w/index.php?title=Twinmage&action=raw",
+      "error": "<urlopen error [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte>"
+    },
+    {
+      "title": "Gunmancer",
+      "url": "https://ecliptica.miraheze.org/w/index.php?title=Gunmancer&action=raw",
+      "error": "<urlopen error [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte>"
+    },
+    {
+      "title": "Fistmage",
+      "url": "https://ecliptica.miraheze.org/w/index.php?title=Fistmage&action=raw",
+      "error": "<urlopen error [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte>"
+    },
+    {
+      "title": "Spellhammer",
+      "url": "https://ecliptica.miraheze.org/w/index.php?title=Spellhammer&action=raw",
+      "error": "<urlopen error [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte>"
+    },
+    {
+      "title": "Shield Mage",
+      "url": "https://ecliptica.miraheze.org/w/index.php?title=Shield%20Mage&action=raw",
+      "error": "<urlopen error [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte>"
+    },
+    {
+      "title": "Thaumaturge",
+      "url": "https://ecliptica.miraheze.org/w/index.php?title=Thaumaturge&action=raw",
+      "error": "<urlopen error [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte>"
+    },
+    {
+      "title": "Nekomancer",
+      "url": "https://ecliptica.miraheze.org/w/index.php?title=Nekomancer&action=raw",
+      "error": "<urlopen error [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte>"
+    }
+  ],
+  "japanesePagesRequested": [
+    "アップグレード",
+    "クラス",
+    "ステータス",
+    "バフ・デバフ",
+    "スペルソード",
+    "ツインメイジ",
+    "ガンマンサー",
+    "フィストメイジ",
+    "スペルハンマー",
+    "シールドメイジ",
+    "サウマタージ",
+    "ネコマンサー"
+  ],
+  "japanesePagesRetrieved": [],
+  "japanesePagesBrowserReviewed": [
+    "アップグレード",
+    "クラス",
+    "ステータス",
+    "バフ・デバフ",
+    "スペルソード",
+    "ツインメイジ",
+    "ガンマンサー",
+    "フィストメイジ",
+    "スペルハンマー",
+    "シールドメイジ",
+    "サウマタージ",
+    "ネコマンサー"
+  ],
+  "japaneseFailures": [
+    {
+      "title": "アップグレード",
+      "url": "https://wikiwiki.jp/ecliptica/%E3%82%A2%E3%83%83%E3%83%97%E3%82%B0%E3%83%AC%E3%83%BC%E3%83%89",
+      "error": "<urlopen error [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte>"
+    },
+    {
+      "title": "クラス",
+      "url": "https://wikiwiki.jp/ecliptica/%E3%82%AF%E3%83%A9%E3%82%B9",
+      "error": "<urlopen error [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte>"
+    },
+    {
+      "title": "ステータス",
+      "url": "https://wikiwiki.jp/ecliptica/%E3%82%B9%E3%83%86%E3%83%BC%E3%82%BF%E3%82%B9",
+      "error": "<urlopen error [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte>"
+    },
+    {
+      "title": "バフ・デバフ",
+      "url": "https://wikiwiki.jp/ecliptica/%E3%83%90%E3%83%95%E3%83%BB%E3%83%87%E3%83%90%E3%83%95",
+      "error": "<urlopen error [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte>"
+    },
+    {
+      "title": "スペルソード",
+      "url": "https://wikiwiki.jp/ecliptica/%E3%82%B9%E3%83%9A%E3%83%AB%E3%82%BD%E3%83%BC%E3%83%89",
+      "error": "<urlopen error [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte>"
+    },
+    {
+      "title": "ツインメイジ",
+      "url": "https://wikiwiki.jp/ecliptica/%E3%83%84%E3%82%A4%E3%83%B3%E3%83%A1%E3%82%A4%E3%82%B8",
+      "error": "<urlopen error [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte>"
+    },
+    {
+      "title": "ガンマンサー",
+      "url": "https://wikiwiki.jp/ecliptica/%E3%82%AC%E3%83%B3%E3%83%9E%E3%83%B3%E3%82%B5%E3%83%BC",
+      "error": "<urlopen error [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte>"
+    },
+    {
+      "title": "フィストメイジ",
+      "url": "https://wikiwiki.jp/ecliptica/%E3%83%95%E3%82%A3%E3%82%B9%E3%83%88%E3%83%A1%E3%82%A4%E3%82%B8",
+      "error": "<urlopen error [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte>"
+    },
+    {
+      "title": "スペルハンマー",
+      "url": "https://wikiwiki.jp/ecliptica/%E3%82%B9%E3%83%9A%E3%83%AB%E3%83%8F%E3%83%B3%E3%83%9E%E3%83%BC",
+      "error": "<urlopen error [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte>"
+    },
+    {
+      "title": "シールドメイジ",
+      "url": "https://wikiwiki.jp/ecliptica/%E3%82%B7%E3%83%BC%E3%83%AB%E3%83%89%E3%83%A1%E3%82%A4%E3%82%B8",
+      "error": "<urlopen error [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte>"
+    },
+    {
+      "title": "サウマタージ",
+      "url": "https://wikiwiki.jp/ecliptica/%E3%82%B5%E3%82%A6%E3%83%9E%E3%82%BF%E3%83%BC%E3%82%B8",
+      "error": "<urlopen error [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte>"
+    },
+    {
+      "title": "ネコマンサー",
+      "url": "https://wikiwiki.jp/ecliptica/%E3%83%8D%E3%82%B3%E3%83%9E%E3%83%B3%E3%82%B5%E3%83%BC",
+      "error": "<urlopen error [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte>"
+    }
+  ],
+  "counts": {
+    "upgrades": 116,
+    "classes": 8,
+    "generatedResearchQuestions": 126,
+    "totalResearchQuestions": 152,
+    "sources": 25,
+    "japanesePages": 12
+  },
+  "placeholderRecords": [
+    "upgrade-crystal-of-perseverance-cold-blooded",
+    "upgrade-crystal-of-perseverance-conductive-armor",
+    "upgrade-crystal-of-perseverance-holy-blessing",
+    "upgrade-crystal-of-perseverance-last-stand",
+    "upgrade-crystal-of-perseverance-masochist",
+    "upgrade-crystal-of-perseverance-benison-of-purification",
+    "upgrade-crystal-of-perseverance-curse-of-wrath",
+    "upgrade-crystal-of-perseverance-healthy-guard",
+    "upgrade-crystal-of-mobility-leg-day",
+    "upgrade-crystal-of-mobility-thunder-aura",
+    "upgrade-crystal-of-mobility-berserker-s-soul-melee",
+    "upgrade-crystal-of-mobility-berserker-s-soul-ranged",
+    "upgrade-chrono-wizard-sticky",
+    "upgrade-chrono-wizard-charged-strike",
+    "upgrade-chrono-wizard-flaming-spirit",
+    "upgrade-chrono-wizard-frozen-heart",
+    "upgrade-spellsword-spellsword-proficiency",
+    "upgrade-spellsword-spellsword-shieldbreaker",
+    "upgrade-spellsword-spellsword-whirlwind",
+    "upgrade-twinmage-twinmage-mastery",
+    "upgrade-gunmancer-gunmancer-sidestep",
+    "upgrade-fistmage-fistmage-rage",
+    "upgrade-spellhammer-spellhammer-mastery-jump-smash",
+    "upgrade-shield-mage-shieldmage-proficiency",
+    "upgrade-shield-mage-shieldmage-mastery",
+    "upgrade-thaumaturge-thaumaturge-doping"
+  ],
+  "warning": "One or more pages failed; existing records from failed pages were preserved."
+}
