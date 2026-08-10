@@ -1,0 +1,845 @@
+[
+  {
+    "id": "class-spellsword",
+    "entityType": "class",
+    "name": "Spellsword",
+    "icon": "Class1.png",
+    "imageFile": "Class1.png",
+    "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Class1.png",
+    "description": "You may call yourself a Spellsword, but you were ever really strong enough to wield a sword skillfully. However, who said your magical abilities can't make up for that?",
+    "startingStats": null,
+    "statModifiers": [],
+    "reportedMechanics": null,
+    "skills": [
+      {
+        "id": "skill-spellsword-telekinetic-strike",
+        "name": "Telekinetic Strike",
+        "type": "Primary",
+        "icon": "Spellsword-Primary.png",
+        "imageFile": "Spellsword-Primary.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Spellsword-Primary.png",
+        "description": "Swing your sword, dealing 65 PHYSICAL damage.\n10% chance to inflict BLEEDING status effect.",
+        "mechanics": {
+          "sourceText": "Swing your sword, dealing 65 PHYSICAL damage.\n10% chance to inflict BLEEDING status effect.",
+          "signals": {
+            "unknownTokens": [],
+            "numericMentions": [
+              "10",
+              "65 "
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": false,
+            "hasDamage": true,
+            "hasDamageNumber": true,
+            "hasOutgoingDamage": true,
+            "hasChance": true,
+            "hasDuration": false,
+            "hasCooldown": false,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": false
+          },
+          "damageBehavior": {
+            "createsDamageInstance": true,
+            "canCrit": null,
+            "critChance": null,
+            "critNotes": "The English wiki does not state whether this damage instance can critically strike.",
+            "canApplyStatusEffects": true,
+            "statusEffectChance": "10% chance to inflict BLEEDING status effect",
+            "statusNotes": "Explicit status-effect chance wording retained from source."
+          },
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Spellsword: Telekinetic Strike: It appears to create a distinct damage instance when its stated trigger occurs. Whether that damage instance can critically strike is not stated. The source gives status-effect application wording or a chance.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": []
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-spellsword",
+            "sourcePage": "Spellsword",
+            "section": "Skills > Primary: Telekinetic Strike",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Swing your sword, dealing 65 PHYSICAL damage.\n10% chance to inflict BLEEDING status effect.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation",
+              "damageBehavior"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "10",
+            "65 "
+          ],
+          "findings": [],
+          "unresolved": [
+            "question-skill-spellsword-telekinetic-strike-attack-interval",
+            "question-skill-spellsword-telekinetic-strike-crit-behavior"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      },
+      {
+        "id": "skill-spellsword-piercing-strike",
+        "name": "Piercing Strike",
+        "type": "Secondary",
+        "icon": "Spellsword-Secondary.png",
+        "imageFile": "Spellsword-Secondary.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Spellsword-Secondary.png",
+        "description": "Charge for up to X seconds and then release a mid-range piercing attack, dealing 85-170 PHYSICAL damage.\nUp to 50% chance to inflict BLEEDING status effect.\n* Range, Damage, and Bleed chance increases with charge time.\n* Charge time is reduced by Attack Speed.",
+        "mechanics": {
+          "sourceText": "Charge for up to X seconds and then release a mid-range piercing attack, dealing 85-170 PHYSICAL damage.\nUp to 50% chance to inflict BLEEDING status effect.\n* Range, Damage, and Bleed chance increases with charge time.\n* Charge time is reduced by Attack Speed.",
+          "signals": {
+            "unknownTokens": [
+              "X"
+            ],
+            "numericMentions": [
+              "170 ",
+              "50",
+              "85"
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": false,
+            "hasDamage": true,
+            "hasDamageNumber": true,
+            "hasOutgoingDamage": true,
+            "hasChance": true,
+            "hasDuration": false,
+            "hasCooldown": false,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": true
+          },
+          "damageBehavior": {
+            "createsDamageInstance": true,
+            "canCrit": null,
+            "critChance": null,
+            "critNotes": "The English wiki does not state whether this damage instance can critically strike.",
+            "canApplyStatusEffects": true,
+            "statusEffectChance": "50% chance to inflict BLEEDING status effect",
+            "statusNotes": "Explicit status-effect chance wording retained from source."
+          },
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Spellsword: Piercing Strike: It appears to create a distinct damage instance when its stated trigger occurs. Whether that damage instance can critically strike is not stated. The source gives status-effect application wording or a chance. The working model remains incomplete because the source contains unknown or placeholder values.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": [
+              "X"
+            ]
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-spellsword",
+            "sourcePage": "Spellsword",
+            "section": "Skills > Secondary: Piercing Strike",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Charge for up to X seconds and then release a mid-range piercing attack, dealing 85-170 PHYSICAL damage.\nUp to 50% chance to inflict BLEEDING status effect.\n* Range, Damage, and Bleed chance increases with charge time.\n* Charge time is reduced by Attack Speed.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation",
+              "damageBehavior"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "170 ",
+            "50",
+            "85"
+          ],
+          "findings": [
+            {
+              "label": "Charge time",
+              "value": "0.170ƒ?"5.075 seconds",
+              "evidenceId": "EVID-JA-SPELLSWORD-PIERCING",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            },
+            {
+              "label": "Damage",
+              "value": "87ƒ?"170",
+              "evidenceId": "EVID-JA-SPELLSWORD-PIERCING",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            },
+            {
+              "label": "Cooldown",
+              "value": "1.5 seconds",
+              "evidenceId": "EVID-JA-SPELLSWORD-PIERCING",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            },
+            {
+              "label": "Bleeding chance",
+              "value": "Up to 50%",
+              "evidenceId": "EVID-JA-SPELLSWORD-PIERCING",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            },
+            {
+              "label": "Attack Speed scaling",
+              "value": "Approximately 1.5% shorter charge time per 1% Attack Speed",
+              "evidenceId": "EVID-JA-SPELLSWORD-PIERCING",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            }
+          ],
+          "unresolved": [
+            "X",
+            "question-skill-spellsword-piercing-strike-attack-interval",
+            "question-skill-spellsword-piercing-strike-crit-behavior"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            },
+            {
+              "category": "Japanese wiki",
+              "confidence": "Reported",
+              "evidenceId": "EVID-JA-SPELLSWORD-PIERCING"
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      },
+      {
+        "id": "skill-spellsword-quick-dash",
+        "name": "Quick Dash",
+        "type": "Utility",
+        "icon": "Spellsword-Dash.png",
+        "imageFile": "Spellsword-Dash.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Spellsword-Dash.png",
+        "description": "Perform a dash in your current movement direction.\n* Has a very short period of I-frames at the beginning of the dash.\n* Can dash through purple attacks.\n3 second cooldown.",
+        "mechanics": {
+          "sourceText": "Perform a dash in your current movement direction.\n* Has a very short period of I-frames at the beginning of the dash.\n* Can dash through purple attacks.\n3 second cooldown.",
+          "signals": {
+            "unknownTokens": [],
+            "numericMentions": [
+              "3 second"
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": true,
+            "hasDamage": false,
+            "hasDamageNumber": false,
+            "hasOutgoingDamage": false,
+            "hasChance": false,
+            "hasDuration": false,
+            "hasCooldown": true,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": false
+          },
+          "damageBehavior": null,
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Spellsword: Quick Dash: The description appears to function as a passive modifier, condition, or utility effect rather than a direct damage source. The source describes a cooldown-gated action.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": []
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-spellsword",
+            "sourcePage": "Spellsword",
+            "section": "Skills > Utility: Quick Dash",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Perform a dash in your current movement direction.\n* Has a very short period of I-frames at the beginning of the dash.\n* Can dash through purple attacks.\n3 second cooldown.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "3 second"
+          ],
+          "findings": [],
+          "unresolved": [],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      }
+    ],
+    "upgradeIds": [
+      "upgrade-spellsword-spellsword-proficiency",
+      "upgrade-spellsword-spellsword-mastery",
+      "upgrade-spellsword-spellsword-burst",
+      "upgrade-spellsword-spellsword-swift-stab",
+      "upgrade-spellsword-spellsword-shieldbreaker",
+      "upgrade-spellsword-spellsword-whirlwind"
+    ],
+    "unknownFields": [
+      "starting stats",
+      "movement characteristics not stated numerically"
+    ],
+    "researchStatus": "Needs Testing",
+    "sourceRefs": [
+      {
+        "sourceId": "wiki-spellsword",
+        "sourcePage": "Spellsword",
+        "section": "Class overview",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "You may call yourself a Spellsword, but you were ever really strong enough to wield a sword skillfully. However, who said your magical abilities can't make up for that?",
+        "derivedFields": [
+          "name",
+          "description",
+          "icon",
+          "skills",
+          "startingStats"
+        ]
+      }
+    ],
+    "importedAt": "2026-08-07",
+    "importedFrom": "English Ecliptica Wiki",
+    "researchAudit": {
+      "status": "Reviewed",
+      "explicitEnglishValues": [],
+      "findings": [],
+      "unresolved": [],
+      "sourceTags": [
+        {
+          "category": "English wiki",
+          "confidence": "Source-stated",
+          "evidenceId": null
+        }
+      ],
+      "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+    }
+  },
+  {
+    "id": "class-twinmage",
+    "entityType": "class",
+    "name": "Twinmage",
+    "icon": "Class2.png",
+    "imageFile": "Class2.png",
+    "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Class2.png",
+    "description": "As much as you've always wanted to become a powerful sorcerer, some people just do not have the necessary talent and innate ability. But, you could always just rely on a pair of Elemental Hands to make up for that.",
+    "startingStats": null,
+    "statModifiers": [],
+    "reportedMechanics": {
+      "elementalHandAttackRates": {
+        "status": "Reported",
+        "appliesTo": [
+          "Flaming Hand",
+          "Ice Hand",
+          "Electric Hand",
+          "Wind Blade",
+          "Divine Hand",
+          "Profane Hand"
+        ],
+        "bothHands": {
+          "attacksPerSecond": 0.8,
+          "perHand": true
+        },
+        "singleHand": {
+          "attacksPerSecond": 1.4,
+          "perHand": true
+        },
+        "rawUserStatement": "0.8 attack speed per hand when using both hands and 1.4 attacks per second when only using both hands.",
+        "interpretationNote": "Stored as the two-hands versus single-hand states; the user's wording repeats 'both hands' for the second state and should be verified.",
+        "sourceType": "User-reported reading of the English wiki",
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-twinmage",
+            "sourcePage": "Twinmage",
+            "section": "Skills",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Firing only one hand will increase your attack speed by 75%",
+            "derivedFields": [
+              "qualitative one-hand attack-speed rule"
+            ]
+          }
+        ]
+      }
+    },
+    "skills": [
+      {
+        "id": "skill-twinmage-flaming-hand",
+        "name": "Flaming Hand",
+        "type": "Hand",
+        "icon": "Twinmage-Fireball.png",
+        "imageFile": "Twinmage-Fireball.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Twinmage-Fireball.png",
+        "description": "Launch a fireball, dealing 30 FIRE damage.\n10% chance to inflict BURNING status effect.\nHas a projectile speed of 16m/s and a max distance of 50m.",
+        "mechanics": {
+          "sourceText": "Launch a fireball, dealing 30 FIRE damage.\n10% chance to inflict BURNING status effect.\nHas a projectile speed of 16m/s and a max distance of 50m.",
+          "signals": {
+            "unknownTokens": [],
+            "numericMentions": [
+              "10",
+              "16m/s",
+              "30 ",
+              "50m"
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": false,
+            "hasDamage": true,
+            "hasDamageNumber": true,
+            "hasOutgoingDamage": true,
+            "hasChance": true,
+            "hasDuration": false,
+            "hasCooldown": false,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": false
+          },
+          "damageBehavior": {
+            "createsDamageInstance": true,
+            "canCrit": null,
+            "critChance": null,
+            "critNotes": "The English wiki does not state whether this damage instance can critically strike.",
+            "canApplyStatusEffects": true,
+            "statusEffectChance": "10% chance to inflict BURNING status effect",
+            "statusNotes": "Explicit status-effect chance wording retained from source."
+          },
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Twinmage: Flaming Hand: It appears to create a distinct damage instance when its stated trigger occurs. Whether that damage instance can critically strike is not stated. The source gives status-effect application wording or a chance.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": []
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-twinmage",
+            "sourcePage": "Twinmage",
+            "section": "Skills > Hand: Flaming Hand",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Launch a fireball, dealing 30 FIRE damage.\n10% chance to inflict BURNING status effect.\nHas a projectile speed of 16m/s and a max distance of 50m.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation",
+              "damageBehavior"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "10",
+            "16m/s",
+            "30 ",
+            "50m"
+          ],
+          "findings": [
+            {
+              "label": "Both hands active rate",
+              "value": "0.8 attacks/s per hand",
+              "evidenceId": "EVID-JA-TWINMAGE-HANDS",
+              "status": "Reported",
+              "confidence": "Medium",
+        …32012 tokens truncated…            "unknownTokens": [
+              "X"
+            ],
+            "numericMentions": [],
+            "hasPeriodic": false,
+            "hasExplicitInterval": false,
+            "hasDamage": false,
+            "hasDamageNumber": false,
+            "hasOutgoingDamage": false,
+            "hasChance": true,
+            "hasDuration": false,
+            "hasCooldown": false,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": true
+          },
+          "damageBehavior": null,
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Nekomancer: Passive: The description appears to function as a passive modifier, condition, or utility effect rather than a direct damage source. The working model remains incomplete because the source contains unknown or placeholder values.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": [
+              "X"
+            ]
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-nekomancer",
+            "sourcePage": "Nekomancer",
+            "section": "Skills > Passive",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Collect SOULs which spawn around the stage every X seconds. Slain enemies have a X% chance to leave a SOUL behind.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [],
+          "findings": [],
+          "unresolved": [
+            "X",
+            "question-skill-nekomancer-passive-unknown"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      },
+      {
+        "id": "skill-nekomancer-staff-of-feline-mortality",
+        "name": "Staff of Feline Mortality",
+        "type": "Primary",
+        "icon": "Nekomancer-Primary-2.png",
+        "imageFile": "Nekomancer-Primary-2.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Nekomancer-Primary-2.png",
+        "description": "Launch a projectile which deals 20 SHADOW damage. Hit enemies will be marked as a target for Undead Kitties.\n10% chance to inflict BREACHED status effect.",
+        "mechanics": {
+          "sourceText": "Launch a projectile which deals 20 SHADOW damage. Hit enemies will be marked as a target for Undead Kitties.\n10% chance to inflict BREACHED status effect.",
+          "signals": {
+            "unknownTokens": [],
+            "numericMentions": [
+              "10",
+              "20 "
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": false,
+            "hasDamage": true,
+            "hasDamageNumber": true,
+            "hasOutgoingDamage": true,
+            "hasChance": true,
+            "hasDuration": false,
+            "hasCooldown": false,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": false
+          },
+          "damageBehavior": {
+            "createsDamageInstance": true,
+            "canCrit": null,
+            "critChance": null,
+            "critNotes": "The English wiki does not state whether this damage instance can critically strike.",
+            "canApplyStatusEffects": true,
+            "statusEffectChance": "10% chance to inflict BREACHED status effect",
+            "statusNotes": "Explicit status-effect chance wording retained from source."
+          },
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Nekomancer: Staff of Feline Mortality: It appears to create a distinct damage instance when its stated trigger occurs. Whether that damage instance can critically strike is not stated. The source gives status-effect application wording or a chance.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": []
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-nekomancer",
+            "sourcePage": "Nekomancer",
+            "section": "Skills > Primary: Staff of Feline Mortality",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Launch a projectile which deals 20 SHADOW damage. Hit enemies will be marked as a target for Undead Kitties.\n10% chance to inflict BREACHED status effect.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation",
+              "damageBehavior"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "10",
+            "20 "
+          ],
+          "findings": [],
+          "unresolved": [
+            "question-skill-nekomancer-staff-of-feline-mortality-attack-interval",
+            "question-skill-nekomancer-staff-of-feline-mortality-crit-behavior"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      },
+      {
+        "id": "skill-nekomancer-call-of-the-undead",
+        "name": "Call of the Undead",
+        "type": "Secondary",
+        "icon": "Nekomancer-Secondary.png",
+        "imageFile": "Nekomancer-Secondary.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Nekomancer-Secondary.png",
+        "description": "Spend 1 SOUL to summon one of many Undead Kitties.\nUsing the skill begins the summoning process. Pressing the skill during the summoning process allows you to select your summon, cycling through them.\nSummoned Undead Kitties do not inherit upgrades directly. However, they will gain an identical amount of the listed stats that the player gains from any upgrade; Elemental Damage, Overall Damage, Attack Speed, Projectile Speed, Projectile Distance, Crit Chance, Crit Damage, and Status Effect Chance..\n{| class=\"wikitable mw-collapsible\" style=\"background:#000000; border:1px solid #555; color:#ffffff; margin:0 auto;\"\n|+All Nekomancer Summons\n! style=\"background:#000000; color:#ffffff;\" | Picture\n! style=\"background:#000000; color:#ffffff;\" | Type\n! style=\"background:#000000; color:#ffffff;\" | Description\n|-\n|\n|Zombie Kitty\n|Grounded unit that deals 25 SHADOW Damage.\n5% chance to inflict the BREACHED status effect.\n|-\n|\n|Balloon Kitty\n|Airborne unit that deals 36 FIRE Damage.\n10% chance to inflict the BURNING status effect.\n|-\n|\n|Ballista Kitty\n|Airborne unit that deal 25 PHYSICAL Damage.\n10% chance to inflict the BLEEDING status effect.\n|-\n|\n|Totem Kitty\n|Heals you and your allies within a small radius. Will expire after some time.\nYou may only be healed by one Totem at a time.\n|}\nMaximum summons scales with Player count:\n{| class=\"wikitable\" style=\"background:#000000; border:1px solid #555; color:#ffffff; margin:0 auto;\"\n! style=\"background:#000000; color:#ffffff;\" | Nekomancer Playercount\n! style=\"background:#000000; color:#ffffff;\" | Maximum Summons Each\n|-\n|1-2 Nekomancers\n|3 Maximum Summons\n|-\n|3-6 Nekomancers\n|2 Maximum Summons\n|-\n|7+ Nekomancers\n|1 Maximum Summon\n|}\nThe Maximum amount of souls you can hold is 5, souls uncollected will expire after 30 seconds.",
+        "mechanics": {
+          "sourceText": "Spend 1 SOUL to summon one of many Undead Kitties.\nUsing the skill begins the summoning process. Pressing the skill during the summoning process allows you to select your summon, cycling through them.\nSummoned Undead Kitties do not inherit upgrades directly. However, they will gain an identical amount of the listed stats that the player gains from any upgrade; Elemental Damage, Overall Damage, Attack Speed, Projectile Speed, Projectile Distance, Crit Chance, Crit Damage, and Status Effect Chance..\n{| class=\"wikitable mw-collapsible\" style=\"background:#000000; border:1px solid #555; color:#ffffff; margin:0 auto;\"\n|+All Nekomancer Summons\n! style=\"background:#000000; color:#ffffff;\" | Picture\n! style=\"background:#000000; color:#ffffff;\" | Type\n! style=\"background:#000000; color:#ffffff;\" | Description\n|-\n|\n|Zombie Kitty\n|Grounded unit that deals 25 SHADOW Damage.\n5% chance to inflict the BREACHED status effect.\n|-\n|\n|Balloon Kitty\n|Airborne unit that deals 36 FIRE Damage.\n10% chance to inflict the BURNING status effect.\n|-\n|\n|Ballista Kitty\n|Airborne unit that deal 25 PHYSICAL Damage.\n10% chance to inflict the BLEEDING status effect.\n|-\n|\n|Totem Kitty\n|Heals you and your allies within a small radius. Will expire after some time.\nYou may only be healed by one Totem at a time.\n|}\nMaximum summons scales with Player count:\n{| class=\"wikitable\" style=\"background:#000000; border:1px solid #555; color:#ffffff; margin:0 auto;\"\n! style=\"background:#000000; color:#ffffff;\" | Nekomancer Playercount\n! style=\"background:#000000; color:#ffffff;\" | Maximum Summons Each\n|-\n|1-2 Nekomancers\n|3 Maximum Summons\n|-\n|3-6 Nekomancers\n|2 Maximum Summons\n|-\n|7+ Nekomancers\n|1 Maximum Summon\n|}\nThe Maximum amount of souls you can hold is 5, souls uncollected will expire after 30 seconds.",
+          "signals": {
+            "unknownTokens": [],
+            "numericMentions": [
+              "0 ",
+              "000000",
+              "1",
+              "1 ",
+              "10",
+              "2 ",
+              "25 ",
+              "3",
+              "3 ",
+              "30 seconds",
+              "36 ",
+              "5",
+              "555",
+              "6 ",
+              "7"
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": true,
+            "hasDamage": true,
+            "hasDamageNumber": true,
+            "hasOutgoingDamage": true,
+            "hasChance": true,
+            "hasDuration": false,
+            "hasCooldown": false,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": false
+          },
+          "damageBehavior": {
+            "createsDamageInstance": true,
+            "canCrit": null,
+            "critChance": null,
+            "critNotes": "The English wiki does not state whether this damage instance can critically strike.",
+            "canApplyStatusEffects": true,
+            "statusEffectChance": "Chance stated, magnitude not parsed",
+            "statusNotes": "Explicit status-effect chance wording retained from source."
+          },
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Nekomancer: Call of the Undead: It appears to create a distinct damage instance when its stated trigger occurs. Whether that damage instance can critically strike is not stated. The source gives status-effect application wording or a chance.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": []
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-nekomancer",
+            "sourcePage": "Nekomancer",
+            "section": "Skills > Secondary: Call of the Undead",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Spend 1 SOUL to summon one of many Undead Kitties.\nUsing the skill begins the summoning process. Pressing the skill during the summoning process allows you to select your summon, cycling through them.\nSummoned Undead Kitties do not inherit upgrades directly. However, they will gain an identical amount of the listed stats that the player gains from any upgrade; Elemental Damage, Overall Damage, Attack Speed, Projectile Speed, Projectile Distance, Crit Chance, Crit Damage, and Status Effect Chance..\n{| class=\"wikitable mw-collapsible\" style=\"background:#000000; border:1px solid #555; color:#ffffff; margin:0 auto;\"\n|+All Nekomancer Summons\n! style=\"background:#000000; color:#ffffff;\" | Picture\n! style=\"background:#000000; color:#ffffff;\" | Type\n! style=\"background:#000000; color:#ffffff;\" | Description\n|-\n|\n|Zombie Kitty\n|Grounded unit that deals 25 SHADOW Damage.\n5% chance to inflict the BREACHED status effect.\n|-\n|\n|Balloon Kitty\n|Airborne unit that deals 36 FIRE Damage.\n10% chance to inflict the BURNING status effect.\n|-\n|\n|Ballista Kitty\n|Airborne unit that deal 25 PHYSICAL Damage.\n10% chance to inflict the BLEEDING status effect.\n|-\n|\n|Totem Kitty\n|Heals you and your allies within a small radius. Will expire after some time.\nYou may only be healed by one Totem at a time.\n|}\nMaximum summons scales with Player count:\n{| class=\"wikitable\" style=\"background:#000000; border:1px solid #555; color:#ffffff; margin:0 auto;\"\n! style=\"background:#000000; color:#ffffff;\" | Nekomancer Playercount\n! style=\"background:#000000; color:#ffffff;\" | Maximum Summons Each\n|-\n|1-2 Nekomancers\n|3 Maximum Summons\n|-\n|3-6 Nekomancers\n|2 Maximum Summons\n|-\n|7+ Nekomancers\n|1 Maximum Summon\n|}\nThe Maximum amount of souls you can hold is 5, souls uncollected will expire after 30 seconds.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation",
+              "damageBehavior"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "0 ",
+            "000000",
+            "1",
+            "1 ",
+            "10",
+            "2 ",
+            "25 ",
+            "3",
+            "3 ",
+            "30 seconds",
+            "36 ",
+            "5",
+            "555",
+            "6 ",
+            "7"
+          ],
+          "findings": [],
+          "unresolved": [
+            "question-skill-nekomancer-call-of-the-undead-attack-interval",
+            "question-skill-nekomancer-call-of-the-undead-crit-behavior"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      },
+      {
+        "id": "skill-nekomancer-spirit-drift",
+        "name": "Spirit Drift",
+        "type": "Utility",
+        "icon": "Nekomancer-Utility.png",
+        "imageFile": "Nekomancer-Utility.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Nekomancer-Utility.png",
+        "description": "For 2 seconds, become invincible and drift forward.\n10 second cooldown.",
+        "mechanics": {
+          "sourceText": "For 2 seconds, become invincible and drift forward.\n10 second cooldown.",
+          "signals": {
+            "unknownTokens": [],
+            "numericMentions": [
+              "10 second",
+              "2 seconds"
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": true,
+            "hasDamage": false,
+            "hasDamageNumber": false,
+            "hasOutgoingDamage": false,
+            "hasChance": false,
+            "hasDuration": true,
+            "hasCooldown": true,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": false
+          },
+          "damageBehavior": null,
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Nekomancer: Spirit Drift: The description appears to function as a passive modifier, condition, or utility effect rather than a direct damage source. The effect appears to persist for a finite duration where stated. The source describes a cooldown-gated action.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": []
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-nekomancer",
+            "sourcePage": "Nekomancer",
+            "section": "Skills > Utility: Spirit Drift",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "For 2 seconds, become invincible and drift forward.\n10 second cooldown.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "10 second",
+            "2 seconds"
+          ],
+          "findings": [],
+          "unresolved": [],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      }
+    ],
+    "upgradeIds": [
+      "upgrade-nekomancer-nekomancer-proficiency",
+      "upgrade-nekomancer-nekomancer-death-blossom",
+      "upgrade-nekomancer-nekomancer-mastery",
+      "upgrade-nekomancer-nekomancer-soul-detonation",
+      "upgrade-nekomancer-nekomancer-necropact"
+    ],
+    "unknownFields": [
+      "starting stats",
+      "movement characteristics not stated numerically"
+    ],
+    "researchStatus": "Needs Testing",
+    "sourceRefs": [
+      {
+        "sourceId": "wiki-nekomancer",
+        "sourcePage": "Nekomancer",
+        "section": "Class overview",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "Just because your skeletal remains have been reborn as a magical Lich Necromancer doesn't mean you can't still have your hobbies and personality.\nCollect SOULs which periodically spawn around the stage. Slain enemies have chance to leave a SOUL behind.",
+        "derivedFields": [
+          "name",
+          "description",
+          "icon",
+          "skills",
+          "startingStats"
+        ]
+      }
+    ],
+    "importedAt": "2026-08-07",
+    "importedFrom": "English Ecliptica Wiki",
+    "researchAudit": {
+      "status": "Reviewed",
+      "explicitEnglishValues": [],
+      "findings": [],
+      "unresolved": [],
+      "sourceTags": [
+        {
+          "category": "English wiki",
+          "confidence": "Source-stated",
+          "evidenceId": null
+        }
+      ],
+      "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+    }
+  }
+]
