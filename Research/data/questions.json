@@ -1,0 +1,1009 @@
+[
+  {
+    "id": "Q-USER-SHEDDING",
+    "mechanicId": "external-shedding",
+    "mechanicType": "other",
+    "mechanicName": "Shedding",
+    "question": "What is the actual value/effect magnitude of Shedding?",
+    "status": "Contradicted",
+    "priority": "High",
+    "kind": "user-research",
+    "generated": false,
+    "manual": true,
+    "currentHypothesis": "Experimental observations may be closer to approximately 7%, but this is not established.",
+    "claimIds": [
+      "CLAIM-SHEDDING-5",
+      "CLAIM-SHEDDING-7"
+    ],
+    "evidenceIds": [
+      "EVID-USER-001"
+    ],
+    "sourceRefs": [],
+    "createdAt": "2026-08-07",
+    "updatedAt": "2026-08-07",
+    "mechanicIds": [
+      "external-shedding"
+    ],
+    "mechanicLinks": [
+      {
+        "id": "external-shedding",
+        "type": "other",
+        "name": "Shedding"
+      }
+    ],
+    "japaneseAudit": {
+      "status": "Checked",
+      "checkedAt": "2026-08-07",
+      "sourceIds": [
+        "ja-wiki-d500509ec61d",
+        "ja-wiki-8b27332ee07f",
+        "ja-wiki-0a409cee235c",
+        "ja-wiki-a419b6b2c039",
+        "ja-wiki-b3b5f1e7e1a0",
+        "ja-wiki-a7af6fa8bf26",
+        "ja-wiki-4362bd24411d",
+        "ja-wiki-091c1ff042cd",
+        "ja-wiki-4321f04234f2",
+        "ja-wiki-93a39099b538",
+        "ja-wiki-780d38b519e6",
+        "ja-wiki-ca8a7baa8df0"
+      ],
+      "findingStatus": "No direct answer found",
+      "evidenceIds": [],
+      "notes": "Japanese upgrade, class, and individual class pages were reviewed for a directly relevant statement. Japanese evidence is stored with the original text and an English translation. Some requested Japanese pages failed to load; see import-report.json."
+    },
+    "sourceHypothesis": "User observation/speculation (EVID-USER-001) suggests: Preliminary observation; not a confirmed value and not an English-wiki citation.",
+    "hypothesisEvidenceIds": [
+      "EVID-USER-001"
+    ],
+    "hypothesisSourceTags": [
+      {
+        "category": "User observation/speculation",
+        "confidence": "Reported",
+        "evidenceId": "EVID-USER-001"
+      }
+    ]
+  },
+  {
+    "id": "Q-USER-BIG-LAZY-VITALITY",
+    "mechanicId": "upgrade-crystal-of-perseverance-big-and-lazy",
+    "mechanicType": "upgrade",
+    "mechanicName": "Big and Lazy Ç- Vitality",
+    "question": "How exactly does Big and Lazy interact with Vitality?",
+    "status": "Unknown",
+    "priority": "High",
+    "kind": "user-research",
+    "generated": false,
+    "manual": true,
+    "currentHypothesis": "The interaction appears multiplicative in some way.",
+    "claimIds": [
+      "CLAIM-BIG-LAZY-VITALITY-MULT"
+    ],
+    "evidenceIds": [
+      "EVID-USER-002"
+    ],
+    "sourceRefs": [],
+    "createdAt": "2026-08-07",
+    "updatedAt": "2026-08-07",
+    "mechanicIds": [
+      "upgrade-crystal-of-perseverance-big-and-lazy",
+      "upgrade-crystal-of-perseverance-vitality"
+    ],
+    "mechanicLinks": [
+      {
+        "id": "upgrade-crystal-of-perseverance-big-and-lazy",
+        "type": "upgrade",
+        "name": "Big and Lazy"
+      },
+      {
+        "id": "upgrade-crystal-of-perseverance-vitality",
+        "type": "upgrade",
+        "name": "Vitality"
+      }
+    ],
+    "japaneseAudit": {
+      "status": "Checked",
+      "checkedAt": "2026-08-07",
+      "sourceIds": [
+        "ja-wiki-d500509ec61d",
+        "ja-wiki-8b27332ee07f",
+        "ja-wiki-0a409cee235c",
+        "ja-wiki-a419b6b2c039",
+        "ja-wiki-b3b5f1e7e1a0",
+        "ja-wiki-a7af6fa8bf26",
+        "ja-wiki-4362bd24411d",
+        "ja-wiki-091c1ff042cd",
+        "ja-wiki-4321f04234f2",
+        "ja-wiki-93a39099b538",
+        "ja-wiki-780d38b519e6",
+        "ja-wiki-ca8a7baa8df0"
+      ],
+      "findingStatus": "Relevant information found",
+      "evidenceIds": [
+        "EVID-USER-BIG-LAZY-STACKS",
+        "EVID-JA-BIG-LAZY"
+      ],
+      "notes": "Japanese upgrade, class, and individual class pages were reviewed for a directly relevant statement. Japanese evidence is stored with the original text and an English translation. Some requested Japanese pages failed to load; see import-report.json."
+    },
+    "sourceHypothesis": "User observation/speculation (EVID-USER-BIG-LAZY-STACKS) suggests: User hypothesis: the effective regeneration multiplier may be 2.5 + 0.5 Ç- stack count while stationary, applied after other regeneration modifiers. This needs an isolated comparison of displayed and observed regeneration. User observation/speculation (EVID-USER-002) suggests: Hypothesis only; the exact order and cap behavior remain unknown. Japanese wiki (EVID-JA-BIG-LAZY) suggests: Health regeneration is multiplied by (1 + the number of Big and Lazy stacks); Big and Lazy itself does not provide regeneration. Movement means movement input, so inertia and skill-based movement do not count.",
+    "hypothesisEvidenceIds": [
+      "EVID-USER-BIG-LAZY-STACKS",
+      "EVID-USER-002",
+      "EVID-JA-BIG-LAZY"
+    ],
+    "hypothesisSourceTags": [
+      {
+        "category": "User observation/speculation",
+        "confidence": "Reported",
+        "evidenceId": "EVID-USER-002"
+      },
+      {
+        "category": "Japanese wiki",
+        "confidence": "Reported",
+        "evidenceId": "EVID-JA-BIG-LAZY"
+      }
+    ]
+  },
+  {
+    "id": "Q-USER-BIG-WRATHFUL-STACKING",
+    "mechanicId": "upgrade-crystal-of-perseverance-big-and-wrathful",
+    "mechanicIds": [
+      "upgrade-crystal-of-perseverance-big-and-wrathful"
+    ],
+    "mechanicLinks": [
+      {
+        "id": "upgrade-crystal-of-perseverance-big-and-wrathful",
+        "type": "upgrade",
+        "name": "Big and Wrathful"
+      }
+    ],
+    "mechanicType": "upgrade",
+    "mechanicName": "Big and Wrathful",
+    "question": "Does Big and Wrathful's LOW HP damage bonus stack linearly, and is it additive to Overall Damage or a separate multiplier?",
+    "status": "Unknown",
+    "priority": "High",
+    "kind": "user-research",
+    "generated": false,
+    "manual": true,
+    "currentHypothesis": "The user note suggests linear stacking, but the operation relative to Overall Damage remains unresolved.",
+    "claimIds": [
+      "CLAIM-USER-BIG-WRATHFUL-STACKING"
+    ],
+    "evidenceIds": [
+      "EVID-USER-BIG-WRATHFUL-STACKING"
+    ],
+    "sourceRefs": [],
+    "createdAt": "2026-08-07",
+    "updatedAt": "2026-08-07",
+    "sourceHypothesis": "User observation/speculation (EVID-USER-BIG-WRATHFUL-STACKING) suggests: User hypothesis: the +50% LOW HP damage effect probably stacks linearly, but the operation may be additive to Overall Damage or a separate multiplier.",
+    "hypothesisEvidenceIds": [
+      "EVID-USER-BIG-WRATHFUL-STACKING"
+    ],
+    "hypothesisSourceTags": [
+      {
+        "category": "User observation/speculation",
+        "confidence": "Reported",
+        "evidenceId": "EVID-USER-BIG-WRATHFUL-STACKING"
+      }
+    ],
+    "japaneseAudit": {
+      "status": "Checked",
+      "checkedAt": "2026-08-07",
+      "sourceIds": [
+        "ja-wiki-d500509ec61d",
+        "ja-wiki-8b27332ee07f",
+        "ja-wiki-0a409cee235c",
+        "ja-wiki-a419b6b2c039",
+        "ja-wiki-b3b5f1e7e1a0",
+        "ja-wiki-a7af6fa8bf26",
+        "ja-wiki-4362bd24411d",
+        "ja-wiki-091c1ff042cd",
+        "ja-wiki-4321f04234f2",
+        "ja-wiki-93a39099b538",
+        "ja-wiki-780d38b519e6",
+        "ja-wiki-ca8a7baa8df0"
+      ],
+      "findingStatus": "Relevant information found",
+      "evidenceIds": [
+        "EVID-USER-BIG-WRATHFUL-STACKING"
+      ],
+      "notes": "Japanese upgrade, class, and individual class pages were reviewed for a directly relevant statement. Japanese evidence is stored with the original text and an English translation. Some requested Japanese pages failed to load; see import-report.json."
+    }
+  },
+  {
+    "id": "Q-USER-TWINMAGE-HAND-RATE",
+    "mechanicId": "class-twinmage",
+    "mechanicType": "class",
+    "mechanicName": "Twinmage",
+    "question": "What are Twinmage's exact per-hand attack rates when one versus two hands are active?",
+    "status": "Reported",
+    "priority": "High",
+    "kind": "user-research",
+    "generated": false,
+    "manual": true,
+    "currentHypothesis": "0.8 attacks per second per hand with both hands active; 1.4 attacks per second per hand with a single hand active, applying to all six elemental hands.",
+    "claimIds": [
+      "CLAIM-TWINMAGE-HAND-RATE"
+    ],
+    "evidenceIds": [
+      "EVID-USER-TWINMAGE-RATE"
+    ],
+    "sourceRefs": [],
+    "createdAt": "2026-08-07",
+    "updatedAt": "2026-08-07",
+    "mechanicIds": [
+      "class-twinmage"
+    ],
+    "mechanicLinks": [
+      {
+        "id": "class-twinmage",
+        "type": "class",
+        "name": "Twinmage"
+      }
+    ],
+    "japaneseAudit": {
+      "status": "Checked",
+      "checkedAt": "2026-08-07",
+      "sourceIds": [
+        "ja-wiki-d500509ec61d",
+        "ja-wiki-8b27332ee07f",
+        "ja-wiki-0a409cee235c",
+        "ja-wiki-a419b6b2c039",
+        "ja-wiki-b3b5f1e7e1a0",
+        "ja-wiki-a7af6fa8bf26",
+        "ja-wiki-4362bd24411d",
+        "ja-wiki-091c1ff042cd",
+        "ja-wiki-4321f04234f2",
+        "ja-wiki-93a39099b538",
+        "ja-wiki-780d38b519e6",
+        "ja-wiki-ca8a7baa8df0"
+      ],
+      "findingStatus": "Relevant information found",
+      "evidenceIds": [
+        "EVID-JA-TWINMAGE-HANDS"
+      ],
+      "notes": "Japanese upgrade, class, and individual class pages were reviewed for a directly relevant statement. Japanese evidence is stored with the original text and an English translation. Some requested Japanese pages failed to load; see import-report.json."
+    },
+    "sourceHypothesis": "English wiki (EVID-USER-TWINMAGE-RATE) suggests: Stored as 0.8 attacks per second per hand with both hands active and 1.4 attacks per second per hand with a single hand active. The second state wording needs confirmation. Japanese wiki (EVID-JA-TWINMAGE-HANDS) suggests: Fire rate: 0.8/s (1.4/s while attacking with one hand). While attacking with only one hand, attack speed increases by 75%. Each listed elemental hand attack has a 10% chance to apply its associated status effect.",
+    "hypothesisEvidenceIds": [
+      "EVID-USER-TWINMAGE-RATE",
+      "EVID-JA-TWINMAGE-HANDS"
+    ],
+    "hypothesisSourceTags": [
+      {
+        "category": "English wiki",
+        "confidence": "Source-stated",
+        "evidenceId": "EVID-USER-TWINMAGE-RATE"
+      },
+      {
+        "category": "Japanese wiki",
+        "confidence": "Reported",
+        "evidenceId": "EVID-JA-TWINMAGE-HANDS"
+      }
+    ]
+  },
+  {
+    "id": "Q-USER-CHARGED-STRIKE-DAMAGE",
+    "mechanicId": "upgrade-chrono-wizard-charged-strike",
+    "mechanicType": "upgrade",
+    "mechanicName": "Charged Strike",
+    "question": "How much physical damage does the Charged Strike explosion deal?",
+    "status": "Unknown",
+    "priority": "High",
+    "kind": "user-research",
+    "generated": false,
+    "manual": true,
+    "currentHypothesis": null,
+    "claimIds": [],
+    "evidenceIds": [],
+    "sourceRefs": [],
+    "createdAt": "2026-08-07",
+    "updatedAt": "2026-08-07",
+    "mechanicIds": [
+      "upgrade-chrono-wizard-charged-strike"
+    ],
+    "mechanicLinks": [
+      {
+        "id": "upgrade-chrono-wizard-charged-strike",
+        "type": "upgrade",
+        "name": "Charged Strike"
+      }
+    ],
+    "japaneseAudit": {
+      "status": "Checked",
+      "checkedAt": "2026-08-07",
+      "sourceIds": [
+        "ja-wiki-d500509ec61d",
+        "ja-wiki-8b27332ee07f",
+        "ja-wiki-0a409cee235c",
+        "ja-wiki-a419b6b2c039",
+        "ja-wiki-b3b5f1e7e1a0",
+        "ja-wiki-a7af6fa8bf26",
+        "ja-wiki-4362bd24411d",
+        "ja-wiki-091c1ff042cd",
+        "ja-wiki-4321f04234f2",
+        "ja-wiki-93a39099b538",
+        "ja-wiki-780d38b519e6",
+        "ja-wiki-ca8a7baa8df0"
+      ],
+      "findingStatus": "Relevant information found",
+      "evidenceIds": [
+        "EVID-JA-CHARGED-STRIKE"
+      ],
+      "notes": "Japanese upgrade, class, and individual class pages were reviewed for a directly relevant statement. Japanese evidence is stored with the original text and an English translation. Some requested Japanese pages failed to load; see import-report.json."
+    },
+    "sourceHypothesis": "Japanese wiki (EVID-JA-CHARGED-STRIKE) suggests: On a critical hit, an explosion dealing 25 (+10) Physical damage occurs. Critical-hit rate is -5% (-5%) per stack. Note: it is affected by dealt Physical Damage.",
+    "hypothesisEvidenceIds": [
+      "EVID-JA-CHARGED-STRIKE"
+    ],
+    "hypothesisSourceTags": [
+      {
+        "category": "Japanese wiki",
+        "confidence": "Reported",
+        "evidenceId": "EVID-JA-CHARGED-STRIKE"
+      }
+    ]
+  },
+  {
+    "id": "Q-USER-CHARGED-STRIKE-STACK",
+    "mechanicId": "upgrade-chrono-wizard-charged-strike",
+    "mechanicType": "upgrade",
+    "mechanicName": "Charged Strike",
+    "question": "How much additional damage is gained per stack?",
+    "status": "Unknown",
+    "priority": "High",
+    "kind": "user-research",
+    "generated": false,
+    "manual": true,
+    "currentHypothesis": null,
+    "claimIds": [],
+    "evidenceIds": [],
+    "sourceRefs": [],
+    "createdAt": "2026-08-07",
+    "updatedAt": "2026-08-07",
+    "mechanicIds": [
+      "upgrade-chrono-wizard-charged-strike"
+    ],
+    "mechanicLinks": [
+      {
+        "id": "upgrade-chrono-wizard-charged-strike",
+        "type": "upgrade",
+        "name": "Charged Strike"
+      }
+    ],
+    "japaneseAudit": {
+      "status": "Checked",
+      "checkedAt": "2026-08-07",
+      "sourceIds": [
+        "ja-wiki-d500509ec61d",
+        "ja-wiki-8b27332ee07f",
+        "ja-wiki-0a409cee235c",
+        "ja-wiki-a419b6b2c039",
+        "ja-wiki-b3b5f1e7e1a0",
+        "ja-wiki-a7af6fa8bf26",
+        "ja-wiki-4362bd24411d",
+        "ja-wiki-091c1ff042cd",
+        "ja-wiki-4321f04234f2",
+        "ja-wiki-93a39099b538",
+        "ja-wiki-780d38b519e6",
+        "ja-wiki-ca8a7baa8df0"
+      ],
+      "findingStatus": "Relevant information found",
+      "evidenceIds": [
+        "EVID-JA-CHARGED-STRIKE"
+      ],
+      "notes": "Japanese upgrade, class, and individual class pages were reviewed for a directly relevant statement. Japanese evidence is stored with the original text and an English translation. Some requested Japanese pages failed to load; see import-report.json."
+    },
+    "sourceHypothesis": "Japanese wiki (EVID-JA-CHARGED-STRIKE) suggests: On a critical hit, an explosion dealing 25 (+10) Physical damage occurs. Critical-hit rate is -5% (-5%) per stack. Note: it is affected by dealt Physical Damage.",
+    "hypothesisEvidenceIds": [
+      "EVID-JA-CHARGED-STRIKE"
+    ],
+    "hypothesisSourceTags": [
+      {
+        "category": "Japanese wiki",
+        "confidence": "Reported",
+        "evidenceId": "EVID-JA-CHARGED-STRIKE"
+      }
+    ]
+  },
+  {
+    "id": "Q-USER-CHARGED-STRIKE-OTHER",
+    "mechanicId": "upgrade-chrono-wizard-charged-strike",
+    "mechanicType": "upgrade",
+    "mechanicName": "Charged Strike",
+    "question": "Are there any other undocumented scaling rules for Charged Strike?",
+    "status": "Unknown",
+    "priority": "Medium",
+    "kind": "user-research",
+    "generated": false,
+    "manual": true,
+    "currentHypothesis": null,
+    "claimIds": [],
+    "evidenceIds": [],
+    "sourceRefs": [],
+    "createdAt": "2026-08-07",
+    "updatedAt": "2026-08-07",
+    "mechanicIds": [
+      "upgrade-chrono-wizard-charged-strike"
+    ],
+    "mechanicLinks": [
+      {
+        "id": "upgrade-chrono-wizard-charged-strike",
+        "type": "upgrade",
+        "name": "Charged Strike"
+      }
+    ],
+    "japaneseAudit": {
+      "status": "Checked",
+      "checkedAt": "2026-08-07",
+      "sourceIds": [
+        "ja-wiki-d500509ec61d",
+        "ja-wiki-8b27332ee07f",
+        "ja-wiki-0a409cee235c",
+        "ja-wiki-a419b6b2c039",
+        "ja-wiki-b3b5f1e7e1a0",
+        "ja-wiki-a7af6fa8bf26",
+        "ja-wiki-4362bd24411d",
+        "ja-wiki-091c1ff042cd",
+        "ja-wiki-4321f04234f2",
+        "ja-wiki-93a39099b538",
+        "ja-wiki-780d38b519e6",
+        "ja-wiki-ca8a7baa8df0"
+      ],
+      "findingStatus": "Relevant information found",
+      "evidenceIds": [
+        "EVID-JA-CHARGED-STRIKE"
+      ],
+      "notes": "Japanese upgrade, class, and individual class pages were reviewed for a directly relevant statement. Japanese evidence is stored with the original text and an English translation. Some requested Japanese pages failed to load; see import-report.json."
+    },
+    "sourceHypothesis": "Japanese wiki (EVID-JA-CHARGED-STRIKE) suggests: On a critical hit, an explosion dealing 25 (+10) Physical damage occurs. Critical-hit rate is -5% (-5%) per stack. Note: it is affected by dealt Physical Damage.",
+    "hypothesisEvidenceIds": [
+      "EVID-JA-CHARGED-STRIKE"
+    ],
+    "hypothesisSourceTags": [
+      {
+        "category": "Japanese wiki",
+        "confidence": "Reported",
+        "evidenceId": "EVID-JA-CHARGED-STRIKE"
+      }
+    ]
+  },
+  {
+    "id": "Q-USER-WAY-OF-LAW-STOP-MODIFIERS",
+    "mechanicId": "upgrade-crystal-of-mobility-way-of-the-law",
+    "mechanicType": "upgrade",
+    "mechanicName": "Way of the Law",
+    "question": "What are the exact STOP-state modifiers?",
+    "status": "Unknown",
+    "priority": "High",
+    "kind": "user-research",
+    "generated": false,
+    "manual": true,
+    "currentHypothesis": null,
+    "claimIds": [],
+    "evidenceIds": [],
+    "sourceRefs": [],
+    "createdAt": "2026-08-07",
+    "updatedAt": "2026-08-07",
+    "mechanicIds": [
+      "upgrade-crystal-of-mobility-way-of-the-law"
+    ],
+    "mechanicLinks": [
+      {
+        "id": "upgrade-crystal-of-mobility-way-of-the-law",
+        "type": "upgrade",
+        "name": "Way of the Law"
+      }
+    ],
+    "japaneseAudit": {
+      "status": "Checked",
+      "checkedAt": "2026-08-07",
+      "sourceIds": [
+        "ja-wiki-d500509ec61d",
+        "ja-wiki-8b27332ee07f",
+        "ja-wiki-0a409cee235c",
+        "ja-wiki-a419b6b2c039",
+        "ja-wiki-b3b5f1e7e1a0",
+        "ja-wiki-a7af6fa8bf26",
+        "ja-wiki-4362bd24411d",
+        "ja-wiki-091c1ff042cd",
+        "ja-wiki-4321f04234f2",
+        "ja-wiki-93a39099b538",
+        "ja-wiki-780d38b519e6",
+        "ja-wiki-ca8a7baa8df0"
+      ],
+      "findingStatus": "No direct answer found",
+      "evidenceIds": [],
+      "notes": "Japanese upgrade, class, and individual class pages were reviewed for a directly relevant statement. Japanese evidence is stored with the original text and an English translation. Some requested Japanese pages failed to load; see import-report.json."
+    }
+  },
+  {
+    "id": "Q-USER-WAY-OF-LAW-GO-MODIFIERS",
+    "mechanicId": "upgrade-crystal-of-mobility-way-of-the-law",
+    "mechanicType": "upgrade",
+    "mechanicName": "Way of the Law",
+    "question": "What are the exact GO-state modifiers?",
+    "status": "Unknown",
+    "priority": "High",
+    "kind": "user-research",
+    "generated": false,
+    "manual": true,
+    "currentHypothesis": null,
+    "claimIds": [],
+    "evidenceIds": [],
+    "sourceRefs": [],
+    "createdAt": "2026-08-07",
+    "updatedAt": "2026-08-07",
+    "mechanicIds": [
+      "upgrade-crystal-of-mobility-way-of-the-law"
+    ],
+    "mechanicLinks": [
+      {
+        "id": "upgrade-crystal-of-mobility-way-of-the-law",
+        "type": "upgrade",
+        "name": "Way of the Law"
+      }
+    ],
+    "japaneseAudit": {
+      "status": "Checked",
+      "checkedAt": "2026-08-07",
+      "sourceIds": [
+        "ja-wiki-d500509ec61d",
+        "ja-wiki-8b27332ee07f",
+        "ja-wiki-0a409cee235c",
+   …83438 tokens truncated…iki-0a409cee235c",
+        "ja-wiki-a419b6b2c039",
+        "ja-wiki-b3b5f1e7e1a0",
+        "ja-wiki-a7af6fa8bf26",
+        "ja-wiki-4362bd24411d",
+        "ja-wiki-091c1ff042cd",
+        "ja-wiki-4321f04234f2",
+        "ja-wiki-93a39099b538",
+        "ja-wiki-780d38b519e6",
+        "ja-wiki-ca8a7baa8df0"
+      ],
+      "findingStatus": "No direct answer found",
+      "evidenceIds": [],
+      "notes": "Japanese upgrade, class, and individual class pages were reviewed for a directly relevant statement. Japanese evidence is stored with the original text and an English translation. Some requested Japanese pages failed to load; see import-report.json."
+    }
+  },
+  {
+    "id": "question-skill-thaumaturge-soulborne-unknown",
+    "mechanicId": "skill-thaumaturge-soulborne",
+    "mechanicIds": [
+      "skill-thaumaturge-soulborne"
+    ],
+    "mechanicLinks": [
+      {
+        "id": "skill-thaumaturge-soulborne",
+        "type": "class",
+        "name": "Thaumaturge: Soulborne"
+      }
+    ],
+    "mechanicType": "class",
+    "mechanicName": "Thaumaturge: Soulborne",
+    "question": "What specific mechanic value is missing from Thaumaturge's Soulborne, and how should it be modeled?",
+    "status": "Unknown",
+    "priority": "High",
+    "kind": "missing-wiki-information",
+    "generated": true,
+    "manual": false,
+    "currentHypothesis": null,
+    "claimIds": [],
+    "evidenceIds": [],
+    "sourceRefs": [
+      {
+        "sourceId": "wiki-thaumaturge",
+        "sourcePage": "Thaumaturge",
+        "section": "Skills > Utility: Soulborne",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "For 4 seconds enter an absorption stance, increasing movement speed by X%, defense by X%, and converting any damage taken into LIFE ENERGY.\n10 second cooldown.",
+        "derivedFields": [
+          "name",
+          "type",
+          "description",
+          "icon",
+          "functionalInterpretation"
+        ]
+      }
+    ],
+    "createdAt": "2026-08-07",
+    "updatedAt": "2026-08-07",
+    "japaneseAudit": {
+      "status": "Checked",
+      "checkedAt": "2026-08-07",
+      "sourceIds": [
+        "ja-wiki-d500509ec61d",
+        "ja-wiki-8b27332ee07f",
+        "ja-wiki-0a409cee235c",
+        "ja-wiki-a419b6b2c039",
+        "ja-wiki-b3b5f1e7e1a0",
+        "ja-wiki-a7af6fa8bf26",
+        "ja-wiki-4362bd24411d",
+        "ja-wiki-091c1ff042cd",
+        "ja-wiki-4321f04234f2",
+        "ja-wiki-93a39099b538",
+        "ja-wiki-780d38b519e6",
+        "ja-wiki-ca8a7baa8df0"
+      ],
+      "findingStatus": "No direct answer found",
+      "evidenceIds": [],
+      "notes": "Japanese upgrade, class, and individual class pages were reviewed for a directly relevant statement. Japanese evidence is stored with the original text and an English translation. Some requested Japanese pages failed to load; see import-report.json."
+    }
+  },
+  {
+    "id": "question-skill-nekomancer-passive-unknown",
+    "mechanicId": "skill-nekomancer-passive",
+    "mechanicIds": [
+      "skill-nekomancer-passive"
+    ],
+    "mechanicLinks": [
+      {
+        "id": "skill-nekomancer-passive",
+        "type": "class",
+        "name": "Nekomancer: Passive"
+      }
+    ],
+    "mechanicType": "class",
+    "mechanicName": "Nekomancer: Passive",
+    "question": "What specific mechanic value is missing from Nekomancer's Passive, and how should it be modeled?",
+    "status": "Unknown",
+    "priority": "High",
+    "kind": "missing-wiki-information",
+    "generated": true,
+    "manual": false,
+    "currentHypothesis": null,
+    "claimIds": [],
+    "evidenceIds": [],
+    "sourceRefs": [
+      {
+        "sourceId": "wiki-nekomancer",
+        "sourcePage": "Nekomancer",
+        "section": "Skills > Passive",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "Collect SOULs which spawn around the stage every X seconds. Slain enemies have a X% chance to leave a SOUL behind.",
+        "derivedFields": [
+          "name",
+          "type",
+          "description",
+          "icon",
+          "functionalInterpretation"
+        ]
+      }
+    ],
+    "createdAt": "2026-08-07",
+    "updatedAt": "2026-08-07",
+    "japaneseAudit": {
+      "status": "Checked",
+      "checkedAt": "2026-08-07",
+      "sourceIds": [
+        "ja-wiki-d500509ec61d",
+        "ja-wiki-8b27332ee07f",
+        "ja-wiki-0a409cee235c",
+        "ja-wiki-a419b6b2c039",
+        "ja-wiki-b3b5f1e7e1a0",
+        "ja-wiki-a7af6fa8bf26",
+        "ja-wiki-4362bd24411d",
+        "ja-wiki-091c1ff042cd",
+        "ja-wiki-4321f04234f2",
+        "ja-wiki-93a39099b538",
+        "ja-wiki-780d38b519e6",
+        "ja-wiki-ca8a7baa8df0"
+      ],
+      "findingStatus": "No direct answer found",
+      "evidenceIds": [],
+      "notes": "Japanese upgrade, class, and individual class pages were reviewed for a directly relevant statement. Japanese evidence is stored with the original text and an English translation. Some requested Japanese pages failed to load; see import-report.json."
+    }
+  },
+  {
+    "id": "question-skill-nekomancer-staff-of-feline-mortality-attack-interval",
+    "mechanicId": "skill-nekomancer-staff-of-feline-mortality",
+    "mechanicIds": [
+      "skill-nekomancer-staff-of-feline-mortality"
+    ],
+    "mechanicLinks": [
+      {
+        "id": "skill-nekomancer-staff-of-feline-mortality",
+        "type": "class",
+        "name": "Nekomancer: Staff of Feline Mortality"
+      }
+    ],
+    "mechanicType": "class",
+    "mechanicName": "Nekomancer: Staff of Feline Mortality",
+    "question": "What is the repeat interval or attack speed behavior of Nekomancer's Staff of Feline Mortality?",
+    "status": "Unknown",
+    "priority": "Medium",
+    "kind": "missing-wiki-information",
+    "generated": true,
+    "manual": false,
+    "currentHypothesis": null,
+    "claimIds": [],
+    "evidenceIds": [],
+    "sourceRefs": [
+      {
+        "sourceId": "wiki-nekomancer",
+        "sourcePage": "Nekomancer",
+        "section": "Skills > Primary: Staff of Feline Mortality",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "Launch a projectile which deals 20 SHADOW damage. Hit enemies will be marked as a target for Undead Kitties.\n10% chance to inflict BREACHED status effect.",
+        "derivedFields": [
+          "name",
+          "type",
+          "description",
+          "icon",
+          "functionalInterpretation",
+          "damageBehavior"
+        ]
+      }
+    ],
+    "createdAt": "2026-08-07",
+    "updatedAt": "2026-08-07",
+    "japaneseAudit": {
+      "status": "Checked",
+      "checkedAt": "2026-08-07",
+      "sourceIds": [
+        "ja-wiki-d500509ec61d",
+        "ja-wiki-8b27332ee07f",
+        "ja-wiki-0a409cee235c",
+        "ja-wiki-a419b6b2c039",
+        "ja-wiki-b3b5f1e7e1a0",
+        "ja-wiki-a7af6fa8bf26",
+        "ja-wiki-4362bd24411d",
+        "ja-wiki-091c1ff042cd",
+        "ja-wiki-4321f04234f2",
+        "ja-wiki-93a39099b538",
+        "ja-wiki-780d38b519e6",
+        "ja-wiki-ca8a7baa8df0"
+      ],
+      "findingStatus": "No direct answer found",
+      "evidenceIds": [],
+      "notes": "Japanese upgrade, class, and individual class pages were reviewed for a directly relevant statement. Japanese evidence is stored with the original text and an English translation. Some requested Japanese pages failed to load; see import-report.json."
+    }
+  },
+  {
+    "id": "question-skill-nekomancer-staff-of-feline-mortality-crit-behavior",
+    "mechanicId": "skill-nekomancer-staff-of-feline-mortality",
+    "mechanicIds": [
+      "skill-nekomancer-staff-of-feline-mortality"
+    ],
+    "mechanicLinks": [
+      {
+        "id": "skill-nekomancer-staff-of-feline-mortality",
+        "type": "class",
+        "name": "Nekomancer: Staff of Feline Mortality"
+      }
+    ],
+    "mechanicType": "class",
+    "mechanicName": "Nekomancer: Staff of Feline Mortality",
+    "question": "Can Nekomancer's Staff of Feline Mortality critically strike, and what is the critical-hit rule for its damage instance?",
+    "status": "Unknown",
+    "priority": "Medium",
+    "kind": "missing-wiki-information",
+    "generated": true,
+    "manual": false,
+    "currentHypothesis": null,
+    "claimIds": [],
+    "evidenceIds": [],
+    "sourceRefs": [
+      {
+        "sourceId": "wiki-nekomancer",
+        "sourcePage": "Nekomancer",
+        "section": "Skills > Primary: Staff of Feline Mortality",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "Launch a projectile which deals 20 SHADOW damage. Hit enemies will be marked as a target for Undead Kitties.\n10% chance to inflict BREACHED status effect.",
+        "derivedFields": [
+          "name",
+          "type",
+          "description",
+          "icon",
+          "functionalInterpretation",
+          "damageBehavior"
+        ]
+      }
+    ],
+    "createdAt": "2026-08-07",
+    "updatedAt": "2026-08-07",
+    "japaneseAudit": {
+      "status": "Checked",
+      "checkedAt": "2026-08-07",
+      "sourceIds": [
+        "ja-wiki-d500509ec61d",
+        "ja-wiki-8b27332ee07f",
+        "ja-wiki-0a409cee235c",
+        "ja-wiki-a419b6b2c039",
+        "ja-wiki-b3b5f1e7e1a0",
+        "ja-wiki-a7af6fa8bf26",
+        "ja-wiki-4362bd24411d",
+        "ja-wiki-091c1ff042cd",
+        "ja-wiki-4321f04234f2",
+        "ja-wiki-93a39099b538",
+        "ja-wiki-780d38b519e6",
+        "ja-wiki-ca8a7baa8df0"
+      ],
+      "findingStatus": "No direct answer found",
+      "evidenceIds": [],
+      "notes": "Japanese upgrade, class, and individual class pages were reviewed for a directly relevant statement. Japanese evidence is stored with the original text and an English translation. Some requested Japanese pages failed to load; see import-report.json."
+    }
+  },
+  {
+    "id": "question-skill-nekomancer-call-of-the-undead-attack-interval",
+    "mechanicId": "skill-nekomancer-call-of-the-undead",
+    "mechanicIds": [
+      "skill-nekomancer-call-of-the-undead"
+    ],
+    "mechanicLinks": [
+      {
+        "id": "skill-nekomancer-call-of-the-undead",
+        "type": "class",
+        "name": "Nekomancer: Call of the Undead"
+      }
+    ],
+    "mechanicType": "class",
+    "mechanicName": "Nekomancer: Call of the Undead",
+    "question": "What is the repeat interval or attack speed behavior of Nekomancer's Call of the Undead?",
+    "status": "Unknown",
+    "priority": "Medium",
+    "kind": "missing-wiki-information",
+    "generated": true,
+    "manual": false,
+    "currentHypothesis": null,
+    "claimIds": [],
+    "evidenceIds": [],
+    "sourceRefs": [
+      {
+        "sourceId": "wiki-nekomancer",
+        "sourcePage": "Nekomancer",
+        "section": "Skills > Secondary: Call of the Undead",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "Spend 1 SOUL to summon one of many Undead Kitties.\nUsing the skill begins the summoning process. Pressing the skill during the summoning process allows you to select your summon, cycling through them.\nSummoned Undead Kitties do not inherit upgrades directly. However, they will gain an identical amount of the listed stats that the player gains from any upgrade; Elemental Damage, Overall Damage, Attack Speed, Projectile Speed, Projectile Distance, Crit Chance, Crit Damage, and Status Effect Chance..\n{| class=\"wikitable mw-collapsible\" style=\"background:#000000; border:1px solid #555; color:#ffffff; margin:0 auto;\"\n|+All Nekomancer Summons\n! style=\"background:#000000; color:#ffffff;\" | Picture\n! style=\"background:#000000; color:#ffffff;\" | Type\n! style=\"background:#000000; color:#ffffff;\" | Description\n|-\n|\n|Zombie Kitty\n|Grounded unit that deals 25 SHADOW Damage.\n5% chance to inflict the BREACHED status effect.\n|-\n|\n|Balloon Kitty\n|Airborne unit that deals 36 FIRE Damage.\n10% chance to inflict the BURNING status effect.\n|-\n|\n|Ballista Kitty\n|Airborne unit that deal 25 PHYSICAL Damage.\n10% chance to inflict the BLEEDING status effect.\n|-\n|\n|Totem Kitty\n|Heals you and your allies within a small radius. Will expire after some time.\nYou may only be healed by one Totem at a time.\n|}\nMaximum summons scales with Player count:\n{| class=\"wikitable\" style=\"background:#000000; border:1px solid #555; color:#ffffff; margin:0 auto;\"\n! style=\"background:#000000; color:#ffffff;\" | Nekomancer Playercount\n! style=\"background:#000000; color:#ffffff;\" | Maximum Summons Each\n|-\n|1-2 Nekomancers\n|3 Maximum Summons\n|-\n|3-6 Nekomancers\n|2 Maximum Summons\n|-\n|7+ Nekomancers\n|1 Maximum Summon\n|}\nThe Maximum amount of souls you can hold is 5, souls uncollected will expire after 30 seconds.",
+        "derivedFields": [
+          "name",
+          "type",
+          "description",
+          "icon",
+          "functionalInterpretation",
+          "damageBehavior"
+        ]
+      }
+    ],
+    "createdAt": "2026-08-07",
+    "updatedAt": "2026-08-07",
+    "japaneseAudit": {
+      "status": "Checked",
+      "checkedAt": "2026-08-07",
+      "sourceIds": [
+        "ja-wiki-d500509ec61d",
+        "ja-wiki-8b27332ee07f",
+        "ja-wiki-0a409cee235c",
+        "ja-wiki-a419b6b2c039",
+        "ja-wiki-b3b5f1e7e1a0",
+        "ja-wiki-a7af6fa8bf26",
+        "ja-wiki-4362bd24411d",
+        "ja-wiki-091c1ff042cd",
+        "ja-wiki-4321f04234f2",
+        "ja-wiki-93a39099b538",
+        "ja-wiki-780d38b519e6",
+        "ja-wiki-ca8a7baa8df0"
+      ],
+      "findingStatus": "No direct answer found",
+      "evidenceIds": [],
+      "notes": "Japanese upgrade, class, and individual class pages were reviewed for a directly relevant statement. Japanese evidence is stored with the original text and an English translation. Some requested Japanese pages failed to load; see import-report.json."
+    }
+  },
+  {
+    "id": "question-skill-nekomancer-call-of-the-undead-crit-behavior",
+    "mechanicId": "skill-nekomancer-call-of-the-undead",
+    "mechanicIds": [
+      "skill-nekomancer-call-of-the-undead"
+    ],
+    "mechanicLinks": [
+      {
+        "id": "skill-nekomancer-call-of-the-undead",
+        "type": "class",
+        "name": "Nekomancer: Call of the Undead"
+      }
+    ],
+    "mechanicType": "class",
+    "mechanicName": "Nekomancer: Call of the Undead",
+    "question": "Can Nekomancer's Call of the Undead critically strike, and what is the critical-hit rule for its damage instance?",
+    "status": "Unknown",
+    "priority": "Medium",
+    "kind": "missing-wiki-information",
+    "generated": true,
+    "manual": false,
+    "currentHypothesis": null,
+    "claimIds": [],
+    "evidenceIds": [],
+    "sourceRefs": [
+      {
+        "sourceId": "wiki-nekomancer",
+        "sourcePage": "Nekomancer",
+        "section": "Skills > Secondary: Call of the Undead",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "Spend 1 SOUL to summon one of many Undead Kitties.\nUsing the skill begins the summoning process. Pressing the skill during the summoning process allows you to select your summon, cycling through them.\nSummoned Undead Kitties do not inherit upgrades directly. However, they will gain an identical amount of the listed stats that the player gains from any upgrade; Elemental Damage, Overall Damage, Attack Speed, Projectile Speed, Projectile Distance, Crit Chance, Crit Damage, and Status Effect Chance..\n{| class=\"wikitable mw-collapsible\" style=\"background:#000000; border:1px solid #555; color:#ffffff; margin:0 auto;\"\n|+All Nekomancer Summons\n! style=\"background:#000000; color:#ffffff;\" | Picture\n! style=\"background:#000000; color:#ffffff;\" | Type\n! style=\"background:#000000; color:#ffffff;\" | Description\n|-\n|\n|Zombie Kitty\n|Grounded unit that deals 25 SHADOW Damage.\n5% chance to inflict the BREACHED status effect.\n|-\n|\n|Balloon Kitty\n|Airborne unit that deals 36 FIRE Damage.\n10% chance to inflict the BURNING status effect.\n|-\n|\n|Ballista Kitty\n|Airborne unit that deal 25 PHYSICAL Damage.\n10% chance to inflict the BLEEDING status effect.\n|-\n|\n|Totem Kitty\n|Heals you and your allies within a small radius. Will expire after some time.\nYou may only be healed by one Totem at a time.\n|}\nMaximum summons scales with Player count:\n{| class=\"wikitable\" style=\"background:#000000; border:1px solid #555; color:#ffffff; margin:0 auto;\"\n! style=\"background:#000000; color:#ffffff;\" | Nekomancer Playercount\n! style=\"background:#000000; color:#ffffff;\" | Maximum Summons Each\n|-\n|1-2 Nekomancers\n|3 Maximum Summons\n|-\n|3-6 Nekomancers\n|2 Maximum Summons\n|-\n|7+ Nekomancers\n|1 Maximum Summon\n|}\nThe Maximum amount of souls you can hold is 5, souls uncollected will expire after 30 seconds.",
+        "derivedFields": [
+          "name",
+          "type",
+          "description",
+          "icon",
+          "functionalInterpretation",
+          "damageBehavior"
+        ]
+      }
+    ],
+    "createdAt": "2026-08-07",
+    "updatedAt": "2026-08-07",
+    "japaneseAudit": {
+      "status": "Checked",
+      "checkedAt": "2026-08-07",
+      "sourceIds": [
+        "ja-wiki-d500509ec61d",
+        "ja-wiki-8b27332ee07f",
+        "ja-wiki-0a409cee235c",
+        "ja-wiki-a419b6b2c039",
+        "ja-wiki-b3b5f1e7e1a0",
+        "ja-wiki-a7af6fa8bf26",
+        "ja-wiki-4362bd24411d",
+        "ja-wiki-091c1ff042cd",
+        "ja-wiki-4321f04234f2",
+        "ja-wiki-93a39099b538",
+        "ja-wiki-780d38b519e6",
+        "ja-wiki-ca8a7baa8df0"
+      ],
+      "findingStatus": "No direct answer found",
+      "evidenceIds": [],
+      "notes": "Japanese upgrade, class, and individual class pages were reviewed for a directly relevant statement. Japanese evidence is stored with the original text and an English translation. Some requested Japanese pages failed to load; see import-report.json."
+    }
+  },
+  {
+    "id": "question-skill-gunmancer-kinetic-fletchette-attack-interval",
+    "mechanicType": "class ability",
+    "mechanicName": "Kinetic Fletchette",
+    "question": "What is Gunmancer's Kinetic Fletchette firing interval?",
+    "status": "Supported",
+    "priority": "Medium",
+    "kind": "missing-wiki-information",
+    "generated": true,
+    "manual": false,
+    "currentHypothesis": "The Japanese wiki reports 0.5 shots/s, equivalent to 2 seconds per shot.",
+    "claimIds": ["CLAIM-JA-GUNMANCER-KINETIC-INTERVAL"],
+    "evidenceIds": ["EVID-JA-GUNMANCER-KINETIC-INTERVAL"],
+    "sourceRefs": [],
+    "createdAt": "2026-08-10",
+    "updatedAt": "2026-08-10"
+  },
+  {
+    "id": "question-skill-gunmancer-firebomb-attack-interval",
+    "mechanicType": "class ability",
+    "mechanicName": "Firebomb",
+    "question": "What is Gunmancer's Firebomb firing interval?",
+    "status": "Supported",
+    "priority": "Medium",
+    "kind": "missing-wiki-information",
+    "generated": true,
+    "manual": false,
+    "currentHypothesis": "The Japanese wiki reports 0.33 shots/s, equivalent to approximately 3.03 seconds per shot.",
+    "claimIds": ["CLAIM-JA-GUNMANCER-FIREBOMB-INTERVAL"],
+    "evidenceIds": ["EVID-JA-GUNMANCER-FIREBOMB-INTERVAL"],
+    "sourceRefs": [],
+    "createdAt": "2026-08-10",
+    "updatedAt": "2026-08-10"
+  },
+  {
+    "id": "question-skill-gunmancer-antimatter-accelerator-attack-interval",
+    "mechanicType": "class ability",
+    "mechanicName": "Antimatter Accelerator",
+    "question": "What is Gunmancer's Antimatter Accelerator firing interval?",
+    "status": "Supported",
+    "priority": "Medium",
+    "kind": "missing-wiki-information",
+    "generated": true,
+    "manual": false,
+    "currentHypothesis": "The Japanese wiki reports 0.5 shots/s, equivalent to 2 seconds per shot.",
+    "claimIds": ["CLAIM-JA-GUNMANCER-ANTIMATTER-INTERVAL"],
+    "evidenceIds": ["EVID-JA-GUNMANCER-ANTIMATTER-INTERVAL"],
+    "sourceRefs": [],
+    "createdAt": "2026-08-10",
+    "updatedAt": "2026-08-10"
+  }
+]
