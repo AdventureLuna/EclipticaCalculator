@@ -1,0 +1,103 @@
+[
+  {
+    "id": "TEST-PLAN-SHEDDING-001",
+    "questionIds": [
+      "Q-USER-SHEDDING"
+    ],
+    "status": "Planned",
+    "date": null,
+    "gameVersion": null,
+    "setup": "Run identical observations with no defense modifiers, then add one Shedding stack at a time.",
+    "upgrades": [
+      "Shedding"
+    ],
+    "class": null,
+    "relevantStats": [
+      "Overall Defense"
+    ],
+    "enemyContext": null,
+    "controlledVariables": [
+      "class",
+      "difficulty",
+      "enemy",
+      "incoming attack",
+      "health state"
+    ],
+    "rawObservations": null,
+    "expectedResults": [
+      "5% per stack",
+      "approximately 7% per stack"
+    ],
+    "conclusion": null,
+    "limitations": "No result has been recorded yet."
+  },
+  {
+    "id": "TEST-PLAN-BIG-LAZY-VITALITY-001",
+    "questionIds": [
+      "Q-USER-BIG-LAZY-VITALITY"
+    ],
+    "status": "Planned",
+    "date": null,
+    "gameVersion": null,
+    "setup": "Measure regeneration with neither effect, Big and Lazy alone, Vitality alone, and both together while stationary and moving.",
+    "upgrades": [
+      "Big and Lazy",
+      "Vitality"
+    ],
+    "class": null,
+    "relevantStats": [
+      "Health Regeneration"
+    ],
+    "enemyContext": null,
+    "controlledVariables": [
+      "class",
+      "health",
+      "standing/moving state",
+      "time interval"
+    ],
+    "rawObservations": null,
+    "expectedResults": [
+      "additive interaction",
+      "multiplicative interaction",
+      "override or cap behavior"
+    ],
+    "conclusion": null,
+    "limitations": "Need a time-stamped health log."
+  },
+  {
+    "id": "TEST-PLAN-CHARGED-STRIKE-001",
+    "questionIds": [
+      "Q-USER-CHARGED-STRIKE-DAMAGE",
+      "Q-USER-CHARGED-STRIKE-STACK",
+      "Q-USER-CHARGED-STRIKE-OTHER"
+    ],
+    "status": "Planned",
+    "date": null,
+    "gameVersion": null,
+    "setup": "Trigger critical hits against a controlled target with zero, one, and multiple Charged Strike stacks; isolate explosion damage from base hit.",
+    "upgrades": [
+      "Charged Strike"
+    ],
+    "class": null,
+    "relevantStats": [
+      "Critical Strike Chance",
+      "Physical Damage"
+    ],
+    "enemyContext": "Controlled target with known defenses",
+    "controlledVariables": [
+      "attack",
+      "target",
+      "critical hit",
+      "distance",
+      "stack count"
+    ],
+    "rawObservations": null,
+    "expectedResults": [
+      "base explosion damage",
+      "per-stack increment",
+      "any hidden scaling"
+    ],
+    "conclusion": null,
+    "limitations": "Target mitigation and floating-point rounding may need to be controlled."
+  }
+]
