@@ -1,0 +1,1061 @@
+[
+  {
+    "id": "upgrade-crystal-of-perseverance-fluffy",
+    "entityType": "upgrade",
+    "name": "Fluffy",
+    "family": "Crystal of Perseverance",
+    "category": "Crystal of Perseverance",
+    "rarity": "Common",
+    "icon": "Fluffy.png",
+    "imageFile": "Fluffy.png",
+    "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Fluffy.png",
+    "description": "Max HP: +10 (+10 per stack)",
+    "mechanics": {
+      "stackType": "Linear",
+      "sourceText": "Max HP: +10 (+10 per stack)",
+      "signals": {
+        "unknownTokens": [],
+        "numericMentions": [
+          "10",
+          "10 "
+        ],
+        "hasPeriodic": false,
+        "hasExplicitInterval": false,
+        "hasDamage": false,
+        "hasDamageNumber": false,
+        "hasOutgoingDamage": false,
+        "hasChance": false,
+        "hasDuration": false,
+        "hasCooldown": false,
+        "hasStackScaling": true,
+        "hasFormulaLanguage": false,
+        "hasUnknown": false
+      },
+      "damageBehavior": null,
+      "functionalInterpretation": {
+        "status": "Working interpretation",
+        "summary": "Working interpretation for Fluffy: The description appears to function as a passive modifier, condition, or utility effect rather than a direct damage source. Additional stacks appear to change the effect, although the exact stacking operation must follow the source wording.",
+        "basis": "Conservative paraphrase of the English wiki description for this upgrade; it is not a confirmed in-game mechanic.",
+        "uncertainties": []
+      },
+      "arbitrary": []
+    },
+    "researchStatus": "Complete",
+    "sourceRefs": [
+      {
+        "sourceId": "wiki-upgrades",
+        "sourcePage": "Upgrades",
+        "section": "Crystal of Perseverance",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "Max HP: +10 (+10 per stack)",
+        "derivedFields": [
+          "name",
+          "rarity",
+          "description",
+          "stackType",
+          "category",
+          "functionalInterpretation",
+          "icon"
+        ]
+      }
+    ],
+    "importedAt": "2026-08-07",
+    "importedFrom": "English Ecliptica Wiki",
+    "confirmationStatus": "Unconfirmed by source alone",
+    "completionNote": "The imported English-wiki record has no detected missing value or linked open question. This does not by itself confirm in-game behavior.",
+    "researchAudit": {
+      "status": "Reviewed",
+      "explicitEnglishValues": [
+        "10",
+        "10 "
+      ],
+      "findings": [],
+      "unresolved": [],
+      "sourceTags": [
+        {
+          "category": "English wiki",
+          "confidence": "Source-stated",
+          "evidenceId": null
+        }
+      ],
+      "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+    }
+  },
+  {
+    "id": "upgrade-crystal-of-perseverance-gluttonous",
+    "entityType": "upgrade",
+    "name": "Gluttonous",
+    "family": "Crystal of Perseverance",
+    "category": "Crystal of Perseverance",
+    "rarity": "Common",
+    "icon": "Gluttonous.png",
+    "imageFile": "Gluttonous.png",
+    "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Gluttonous.png",
+    "description": "Received Healing +5% (+5% per stack)",
+    "mechanics": {
+      "stackType": "Linear",
+      "sourceText": "Received Healing +5% (+5% per stack)",
+      "signals": {
+        "unknownTokens": [],
+        "numericMentions": [
+          "5"
+        ],
+        "hasPeriodic": false,
+        "hasExplicitInterval": false,
+        "hasDamage": false,
+        "hasDamageNumber": false,
+        "hasOutgoingDamage": false,
+        "hasChance": false,
+        "hasDuration": false,
+        "hasCooldown": false,
+        "hasStackScaling": true,
+        "hasFormulaLanguage": false,
+        "hasUnknown": false
+      },
+      "damageBehavior": null,
+      "functionalInterpretation": {
+        "status": "Working interpretation",
+        "summary": "Working interpretation for Gluttonous: The description appears to function as a passive modifier, condition, or utility effect rather than a direct damage source. Additional stacks appear to change the effect, although the exact stacking operation must follow the source wording.",
+        "basis": "Conservative paraphrase of the English wiki description for this upgrade; it is not a confirmed in-game mechanic.",
+        "uncertainties": []
+      },
+      "arbitrary": []
+    },
+    "researchStatus": "Complete",
+    "sourceRefs": [
+      {
+        "sourceId": "wiki-upgrades",
+        "sourcePage": "Upgrades",
+        "section": "Crystal of Perseverance",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "Received Healing +5% (+5% per stack)",
+        "derivedFields": [
+          "name",
+          "rarity",
+          "description",
+          "stackType",
+          "category",
+          "functionalInterpretation",
+          "icon"
+        ]
+      }
+    ],
+    "importedAt": "2026-08-07",
+    "importedFrom": "English Ecliptica Wiki",
+    "confirmationStatus": "Unconfirmed by source alone",
+    "completionNote": "The imported English-wiki record has no detected missing value or linked open question. This does not by itself confirm in-game behavior.",
+    "researchAudit": {
+      "status": "Reviewed",
+      "explicitEnglishValues": [
+        "5"
+      ],
+      "findings": [],
+      "unresolved": [],
+      "sourceTags": [
+        {
+          "category": "English wiki",
+          "confidence": "Source-stated",
+          "evidenceId": null
+        }
+      ],
+      "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+    }
+  },
+  {
+    "id": "upgrade-crystal-of-perseverance-sacrificial-lamb",
+    "entityType": "upgrade",
+    "name": "Sacrificial Lamb",
+    "family": "Crystal of Perseverance",
+    "category": "Crystal of Perseverance",
+    "rarity": "Common",
+    "icon": "Sacrificial_Lamb.png",
+    "imageFile": "Sacrificial Lamb.png",
+    "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Sacrificial%20Lamb.png",
+    "description": "Upon dying, heal every other party member by 15 HP (+15 HP per stack)",
+    "mechanics": {
+      "stackType": "Linear",
+      "sourceText": "Upon dying, heal every other party member by 15 HP (+15 HP per stack)",
+      "signals": {
+        "unknownTokens": [],
+        "numericMentions": [
+          "15 HP"
+        ],
+        "hasPeriodic": false,
+        "hasExplicitInterval": false,
+        "hasDamage": false,
+        "hasDamageNumber": false,
+        "hasOutgoingDamage": false,
+        "hasChance": false,
+        "hasDuration": false,
+        "hasCooldown": false,
+        "hasStackScaling": true,
+        "hasFormulaLanguage": false,
+        "hasUnknown": false
+      },
+      "damageBehavior": null,
+      "functionalInterpretation": {
+        "status": "Working interpretation",
+        "summary": "Working interpretation for Sacrificial Lamb: The description appears to function as a passive modifier, condition, or utility effect rather than a direct damage source. Additional stacks appear to change the effect, although the exact stacking operation must follow the source wording.",
+        "basis": "Conservative paraphrase of the English wiki description for this upgrade; it is not a confirmed in-game mechanic.",
+        "uncertainties": []
+      },
+      "arbitrary": []
+    },
+    "researchStatus": "Complete",
+    "sourceRefs": [
+      {
+        "sourceId": "wiki-upgrades",
+        "sourcePage": "Upgrades",
+        "section": "Crystal of Perseverance",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "Upon dying, heal every other party member by 15 HP (+15 HP per stack)",
+        "derivedFields": [
+          "name",
+          "rarity",
+          "description",
+          "stackType",
+          "category",
+          "functionalInterpretation",
+          "icon"
+        ]
+      }
+    ],
+    "importedAt": "2026-08-07",
+    "importedFrom": "English Ecliptica Wiki",
+    "confirmationStatus": "Unconfirmed by source alone",
+    "completionNote": "The imported English-wiki record has no detected missing value or linked open question. This does not by itself confirm in-game behavior.",
+    "researchAudit": {
+      "status": "Reviewed",
+      "explicitEnglishValues": [
+        "15 HP"
+      ],
+      "findings": [],
+      "unresolved": [],
+      "sourceTags": [
+        {
+          "category": "English wiki",
+          "confidence": "Source-stated",
+          "evidenceId": null
+        }
+      ],
+      "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+    }
+  },
+  {
+    "id": "upgrade-crystal-of-perseverance-swarm-enforcer",
+    "entityType": "upgrade",
+    "name": "Swarm Enforcer",
+    "family": "Crystal of Perseverance",
+    "category": "Crystal of Perseverance",
+    "rarity": "Common",
+    "icon": "Swarm_Enforcer.png",
+    "imageFile": "Swarm Enforcer.png",
+    "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Swarm%20Enforcer.png",
+    "description": "Gain +1.5% Defense for each enemy within 32 meters of you. (+1.5% Defense per stack)",
+    "mechanics": {
+      "stackType": "Linear",
+      "sourceText": "Gain +1.5% Defense for each enemy within 32 meters of you. (+1.5% Defense per stack)",
+      "signals": {
+        "unknownTokens": [],
+        "numericMentions": [
+          "1.5",
+          "32 meters"
+        ],
+        "hasPeriodic": false,
+        "hasExplicitInterval": false,
+        "hasDamage": false,
+        "hasDamageNumber": false,
+        "hasOutgoingDamage": false,
+        "hasChance": false,
+        "hasDuration": false,
+        "hasCooldown": false,
+        "hasStackScaling": true,
+        "hasFormulaLanguage": false,
+        "hasUnknown": false
+      },
+      "damageBehavior": null,
+      "functionalInterpretation": {
+        "status": "Working interpretation",
+        "summary": "Working interpretation for Swarm Enforcer: The description appears to function as a passive modifier, condition, or utility effect rather than a direct damage source. Additional stacks appear to change the effect, although the exact stacking operation must follow the source wording.",
+        "basis": "Conservative paraphrase of the English wiki description for this upgrade; it is not a confirmed in-game mechanic.",
+        "uncertainties": []
+      },
+      "arbitrary": []
+    },
+    "researchStatus": "Complete",
+    "sourceRefs": [
+      {
+        "sourceId": "wiki-upgrades",
+        "sourcePage": "Upgrades",
+        "section": "Crystal of Perseverance",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "Gain +1.5% Defense for each enemy within 32 meters of you. (+1.5% Defense per stack)",
+        "derivedFields": [
+          "name",
+          "rarity",
+          "description",
+          "stackType",
+          "category",
+          "functionalInterpretation",
+          "icon"
+        ]
+      }
+    ],
+    "importedAt": "2026-08-07",
+    "importedFrom": "English Ecliptica Wiki",
+    "confirmationStatus": "Unconfirmed by source alone",
+    "completionNote": "The imported English-wiki record has no detected missing value or linked open question. This does not by itself confirm in-game behavior.",
+    "researchAudit": {
+      "status": "Reviewed",
+      "explicitEnglishValues": [
+        "1.5",
+        "32 meters"
+      ],
+      "findings": [],
+      "unresolved": [],
+      "sourceTags": [
+        {
+          "category": "English wiki",
+          "confidence": "Source-stated",
+          "evidenceId": null
+        }
+      ],
+      "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+    }
+  },
+  {
+    "id": "upgrade-crystal-of-perseverance-vitality",
+    "entityType": "upgrade",
+    "name": "Vitality",
+    "family": "Crystal of Perseverance",
+    "category": "Crystal of Perseverance",
+    "rarity": "Common",
+    "icon": "Vitality.png",
+    "imageFile": "Vitality.png",
+    "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Vitality.png",
+    "description": "Health Regeneration: +80% (+80% per stack)",
+    "mechanics": {
+      "stackType": "Linear",
+      "sourceText": "Health Regeneration: +80% (+80% per stack)",
+      "signals": {
+        "unknownTokens": [],
+        "numericMentions": [
+          "80"
+        ],
+        "hasPeriodic": false,
+        "hasExplicitInterval": false,
+        "hasDamage": false,
+        "hasDamageNumber": false,
+        "hasOutgoingDamage": false,
+        "hasChance": false,
+        "hasDuration": false,
+        "hasCooldown": false,
+        "hasStackScaling": true,
+        "hasFormulaLanguage": false,
+        "hasUnknown": false
+      },
+      "damageBehavior": null,
+      "functionalInterpretation": {
+        "status": "Working interpretation",
+        "summary": "Working interpretation for Vitality: The description appears to function as a passive modifier, condition, or utility effect rather than a direct damage source. Additional stacks appear to change the effect, although the exact stacking operation must follow the source wording.",
+        "basis": "Conservative paraphrase of the English wiki description for this upgrade; it is not a confirmed in-game mechanic.",
+        "uncertainties": []
+      },
+      "arbitrary": []
+    },
+    "researchStatus": "Needs Testing",
+    "sourceRefs": [
+      {
+        "sourceId": "wiki-upgrades",
+        "sourcePage": "Upgrades",
+        "section": "Crystal of Perseverance",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "Health Regeneration: +80% (+80% per stack)",
+        "derivedFields": [
+          "name",
+          "rarity",
+          "description",
+          "stackType",
+          "category",
+          "functionalInterpretation",
+          "icon"
+        ]
+      }
+    ],
+    "importedAt": "2026-08-07",
+    "importedFrom": "English Ecliptica Wiki",
+    "researchAudit": {
+      "status": "Reviewed",
+      "explicitEnglishValues": [
+        "80"
+      ],
+      "findings": [],
+      "unresolved": [
+        "Q-USER-BIG-LAZY-VITALITY"
+      ],
+      "sourceTags": [
+        {
+          "category": "English wiki",
+          "confidence": "Source-stated",
+          "evidenceId": null
+        },
+        {
+          "category": "User observation/speculation",
+          "confidence": "Reported",
+          "evidenceId": "EVID-USER-BIG-LAZY-STACKS"
+        },
+        {
+          "category": "Japanese wiki",
+          "confidence": "Reported",
+          "evidenceId": "EVID-JA-BIG-LAZY"
+        }
+      ],
+      "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+    }
+  },
+  {
+    "id": "upgrade-crystal-of-perseverance-vital-drain",
+    "entityType": "upgrade",
+    "name": "Vital Drain",
+    "family": "Crystal of Perseverance",
+    "category": "Crystal of Perseverance",
+    "rarity": "Common",
+    "icon": "Vital_Drain.png",
+    "imageFile": "Vital Drain.png",
+    "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Vital%20Drain.png",
+    "description": "Critical strikes recover 2 HP (+2 HP per stack)",
+    "mechanics": {
+      "stackType": "Linear",
+      "sourceText": "Critical strikes recover 2 HP (+2 HP per stack)",
+      "signals": {
+        "unknownTokens": [],
+        "numericMentions": [
+          "2 HP"
+        ],
+        "hasPeriodic": false,
+        "hasExplicitInterval": false,
+        "hasDamage": false,
+        "hasDamageNumber": false,
+        "hasOutgoingDamage": false,
+        "hasChance": false,
+        "hasDuration": false,
+        "hasCooldown": false,
+        "hasStackScaling": true,
+        "hasFormulaLanguage": false,
+        "hasUnknown": false
+      },
+      "damageBehavior": null,
+      "functionalInterpretation": {
+        "status": "Working interpretation",
+        "summary": "Working interpretation for Vital Drain: The description appears to function as a passive modifier, condition, or utility effect rather than a direct damage source. Additional stacks appear to change the effect, although the exact stacking operation must follow the source wording.",
+        "basis": "Conservative paraphrase of the English wiki description for this upgrade; it is not a confirmed in-game mechanic.",
+        "uncertainties": []
+      },
+      "arbitrary": []
+    },
+    "researchStatus": "Complete",
+    "sourceRefs": [
+      {
+        "sourceId": "wiki-upgrades",
+        "sourcePage": "Upgrades",
+        "section": "Crystal of Perseverance",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "Critical strikes recover 2 HP (+2 HP per stack)",
+        "derivedFields": [
+          "name",
+          "rarity",
+          "description",
+          "stackType",
+          "category",
+          "functionalInterpretation",
+          "icon"
+        ]
+      }
+    ],
+    "importedAt": "2026-08-07",
+    "importedFrom": "English Ecliptica Wiki",
+    "confirmationStatus": "Unconfirmed by source alone",
+    "completionNote": "The imported English-wiki record has no detected missing value or linked open question. This does not by itself confirm in-game behavior.",
+    "researchAudit": {
+      "status": "Reviewed",
+      "explicitEnglishValues": [
+        "2 HP"
+      ],
+      "findings": [],
+      "unresolved": [],
+      "sourceTags": [
+        {
+          "category": "English wiki",
+          "confidence": "Source-stated",
+          "evidenceId": null
+        }
+      ],
+      "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+    }
+  },
+  {
+    "id": "upgrade-crystal-of-perseverance-adrenaline-fiend",
+    "entityType": "upgrade",
+    "name": "Adrenaline Fiend",
+    "family": "Crystal of Perseverance",
+    "category": "Crystal of Perseverance",
+    "rarity": "Rare",
+    "icon": "Adrenaline_Fiend.png",
+    "imageFile": "Adrenaline Fiend.png",
+    "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Adrenaline%20Fiend.png",
+    "description": "Using your Utility skill recovers 6 (+6 per stack) HP\nUtility Cooldown Rate +7% (+7% per stack)\nReceived Healing -15% (-15% per stack)",
+    "mechanics": {
+      "stackType": "Linear",
+      "sourceText": "Using your Utility skill recovers 6 (+6 per stack) HP\nUtility Cooldown Rate +7% (+7% per stack)\nReceived Healing -15% (-15% per stack)",
+      "signals": {
+        "unknownTokens": [],
+        "numericMentions": [
+          "15",
+          "6",
+          "6 ",
+          "7"
+        ],
+        "hasPeriodic": false,
+        "hasExplicitInterval": false,
+        "hasDamage": false,
+        "hasDamageNumber": false,
+        "hasOutgoingDamage": false,
+        "hasChance": false,
+        "hasDuration": false,
+        "hasCooldown": true,
+        "hasStackScaling": true,
+        "hasFormulaLanguage": false,
+        "hasUnknown": false
+      },
+      "damageBehavior": null,
+      "functionalInterpretation": {
+        "status": "Working interpretation",
+        "summary": "Working interpretation for Adrenaline Fiend: The description appears to function as a passive modifier, condition, or utility effect rather than a direct damage source. Additional stacks appear to change the effect, although the exact stacking operation must follow the source wording. The source describes a cooldown-gated action.",
+        "basis": "Conservative paraphrase of the English wiki description for this upgrade; it is not a confirmed in-game mech…91052 tokens truncated…miraheze.org/wiki/Special:FilePath/Thaumaturge%20Splashback.png",
+    "description": "When healing yourself or an ally, cast an explosion on the target that deals 75 (+25 per stack) POISON damage in a 3 (+3 per stack) meter radius.",
+    "mechanics": {
+      "stackType": "Linear",
+      "sourceText": "When healing yourself or an ally, cast an explosion on the target that deals 75 (+25 per stack) POISON damage in a 3 (+3 per stack) meter radius.",
+      "signals": {
+        "unknownTokens": [],
+        "numericMentions": [
+          "25 ",
+          "3",
+          "3 ",
+          "75"
+        ],
+        "hasPeriodic": false,
+        "hasExplicitInterval": false,
+        "hasDamage": true,
+        "hasDamageNumber": true,
+        "hasOutgoingDamage": true,
+        "hasChance": false,
+        "hasDuration": false,
+        "hasCooldown": false,
+        "hasStackScaling": true,
+        "hasFormulaLanguage": false,
+        "hasUnknown": false
+      },
+      "damageBehavior": {
+        "createsDamageInstance": true,
+        "canCrit": null,
+        "critChance": null,
+        "critNotes": "The English wiki does not state whether this damage instance can critically strike.",
+        "canApplyStatusEffects": null,
+        "statusEffectChance": null,
+        "statusNotes": "The English wiki does not state whether this damage instance can apply status effects or what chance applies."
+      },
+      "functionalInterpretation": {
+        "status": "Working interpretation",
+        "summary": "Working interpretation for Thaumaturge: Splashback: It appears to create a distinct damage instance when its stated trigger occurs. Whether that damage instance can critically strike is not stated. Whether that damage instance can apply status effects is not stated. Additional stacks appear to change the effect, although the exact stacking operation must follow the source wording.",
+        "basis": "Conservative paraphrase of the English wiki description for this upgrade; it is not a confirmed in-game mechanic.",
+        "uncertainties": []
+      },
+      "arbitrary": []
+    },
+    "researchStatus": "Needs Testing",
+    "sourceRefs": [
+      {
+        "sourceId": "wiki-thaumaturge",
+        "sourcePage": "Thaumaturge",
+        "section": "Class Upgrades",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "When healing yourself or an ally, cast an explosion on the target that deals 75 (+25 per stack) POISON damage in a 3 (+3 per stack) meter radius.",
+        "derivedFields": [
+          "name",
+          "rarity",
+          "description",
+          "stackType",
+          "category",
+          "functionalInterpretation",
+          "icon",
+          "damageBehavior"
+        ]
+      }
+    ],
+    "importedAt": "2026-08-07",
+    "importedFrom": "English Ecliptica Wiki",
+    "researchAudit": {
+      "status": "Reviewed",
+      "explicitEnglishValues": [
+        "25 ",
+        "3",
+        "3 ",
+        "75"
+      ],
+      "findings": [],
+      "unresolved": [
+        "Q-USER-ATTACK-SPEED-STATUS-INTERACTION",
+        "question-upgrade-thaumaturge-thaumaturge-splashback-crit-behavior",
+        "question-upgrade-thaumaturge-thaumaturge-splashback-status-behavior"
+      ],
+      "sourceTags": [
+        {
+          "category": "English wiki",
+          "confidence": "Source-stated",
+          "evidenceId": null
+        },
+        {
+          "category": "Japanese wiki",
+          "confidence": "Reported",
+          "evidenceId": "EVID-JA-BENISON"
+        },
+        {
+          "category": "Japanese wiki",
+          "confidence": "Reported",
+          "evidenceId": "EVID-JA-CURSE-OF-WRATH"
+        },
+        {
+          "category": "Japanese wiki",
+          "confidence": "Reported",
+          "evidenceId": "EVID-JA-THUNDER-AURA"
+        }
+      ],
+      "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+    }
+  },
+  {
+    "id": "upgrade-nekomancer-nekomancer-proficiency",
+    "entityType": "upgrade",
+    "name": "Nekomancer: Proficiency",
+    "family": "Nekomancer",
+    "category": "Class Specific",
+    "rarity": "Common",
+    "icon": "Nekomancer_Proficiency.png",
+    "imageFile": "Nekomancer Proficiency.png",
+    "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Nekomancer%20Proficiency.png",
+    "description": "Chance for a slain enemy to leave a Soul: +5%\nRandom Soul spawn rate: +25%",
+    "mechanics": {
+      "stackType": "Linear",
+      "sourceText": "Chance for a slain enemy to leave a Soul: +5%\nRandom Soul spawn rate: +25%",
+      "signals": {
+        "unknownTokens": [],
+        "numericMentions": [
+          "25",
+          "5"
+        ],
+        "hasPeriodic": false,
+        "hasExplicitInterval": false,
+        "hasDamage": false,
+        "hasDamageNumber": false,
+        "hasOutgoingDamage": false,
+        "hasChance": true,
+        "hasDuration": false,
+        "hasCooldown": false,
+        "hasStackScaling": false,
+        "hasFormulaLanguage": false,
+        "hasUnknown": false
+      },
+      "damageBehavior": null,
+      "functionalInterpretation": {
+        "status": "Working interpretation",
+        "summary": "Working interpretation for Nekomancer: Proficiency: The description appears to function as a passive modifier, condition, or utility effect rather than a direct damage source.",
+        "basis": "Conservative paraphrase of the English wiki description for this upgrade; it is not a confirmed in-game mechanic.",
+        "uncertainties": []
+      },
+      "arbitrary": []
+    },
+    "researchStatus": "Complete",
+    "sourceRefs": [
+      {
+        "sourceId": "wiki-nekomancer",
+        "sourcePage": "Nekomancer",
+        "section": "Class Upgrades",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "Chance for a slain enemy to leave a Soul: +5%\nRandom Soul spawn rate: +25%",
+        "derivedFields": [
+          "name",
+          "rarity",
+          "description",
+          "stackType",
+          "category",
+          "functionalInterpretation",
+          "icon"
+        ]
+      }
+    ],
+    "importedAt": "2026-08-07",
+    "importedFrom": "English Ecliptica Wiki",
+    "confirmationStatus": "Unconfirmed by source alone",
+    "completionNote": "The imported English-wiki record has no detected missing value or linked open question. This does not by itself confirm in-game behavior.",
+    "researchAudit": {
+      "status": "Reviewed",
+      "explicitEnglishValues": [
+        "25",
+        "5"
+      ],
+      "findings": [],
+      "unresolved": [],
+      "sourceTags": [
+        {
+          "category": "English wiki",
+          "confidence": "Source-stated",
+          "evidenceId": null
+        }
+      ],
+      "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+    }
+  },
+  {
+    "id": "upgrade-nekomancer-nekomancer-death-blossom",
+    "entityType": "upgrade",
+    "name": "Nekomancer: Death Blossom",
+    "family": "Nekomancer",
+    "category": "Class Specific",
+    "rarity": "Rare",
+    "icon": "Nekomancer_Death_Blossom.png",
+    "imageFile": "Nekomancer Death Blossom.png",
+    "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Nekomancer%20Death%20Blossom.png",
+    "description": "Kitty Totem Healing Speed +10%\nKitty Totem Healing Range +1 M\nDamage -3%",
+    "mechanics": {
+      "stackType": "Linear",
+      "sourceText": "Kitty Totem Healing Speed +10%\nKitty Totem Healing Range +1 M\nDamage -3%",
+      "signals": {
+        "unknownTokens": [],
+        "numericMentions": [
+          "1 M",
+          "10",
+          "3"
+        ],
+        "hasPeriodic": false,
+        "hasExplicitInterval": false,
+        "hasDamage": true,
+        "hasDamageNumber": true,
+        "hasOutgoingDamage": false,
+        "hasChance": false,
+        "hasDuration": false,
+        "hasCooldown": false,
+        "hasStackScaling": false,
+        "hasFormulaLanguage": false,
+        "hasUnknown": false
+      },
+      "damageBehavior": null,
+      "functionalInterpretation": {
+        "status": "Working interpretation",
+        "summary": "Working interpretation for Nekomancer: Death Blossom: The description appears to modify or cause damage, but it is not parsed as a separate damage instance.",
+        "basis": "Conservative paraphrase of the English wiki description for this upgrade; it is not a confirmed in-game mechanic.",
+        "uncertainties": []
+      },
+      "arbitrary": []
+    },
+    "researchStatus": "Complete",
+    "sourceRefs": [
+      {
+        "sourceId": "wiki-nekomancer",
+        "sourcePage": "Nekomancer",
+        "section": "Class Upgrades",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "Kitty Totem Healing Speed +10%\nKitty Totem Healing Range +1 M\nDamage -3%",
+        "derivedFields": [
+          "name",
+          "rarity",
+          "description",
+          "stackType",
+          "category",
+          "functionalInterpretation",
+          "icon"
+        ]
+      }
+    ],
+    "importedAt": "2026-08-07",
+    "importedFrom": "English Ecliptica Wiki",
+    "confirmationStatus": "Unconfirmed by source alone",
+    "completionNote": "The imported English-wiki record has no detected missing value or linked open question. This does not by itself confirm in-game behavior.",
+    "researchAudit": {
+      "status": "Reviewed",
+      "explicitEnglishValues": [
+        "1 M",
+        "10",
+        "3"
+      ],
+      "findings": [],
+      "unresolved": [],
+      "sourceTags": [
+        {
+          "category": "English wiki",
+          "confidence": "Source-stated",
+          "evidenceId": null
+        }
+      ],
+      "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+    }
+  },
+  {
+    "id": "upgrade-nekomancer-nekomancer-mastery",
+    "entityType": "upgrade",
+    "name": "Nekomancer: Mastery",
+    "family": "Nekomancer",
+    "category": "Class Specific",
+    "rarity": "Rare",
+    "icon": "Nekomancer_Mastery.png",
+    "imageFile": "Nekomancer Mastery.png",
+    "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Nekomancer%20Mastery.png",
+    "description": "Overall Damage +2%\nHealth Regeneration +20%\n(For each Soul you are holding)",
+    "mechanics": {
+      "stackType": "Linear",
+      "sourceText": "Overall Damage +2%\nHealth Regeneration +20%\n(For each Soul you are holding)",
+      "signals": {
+        "unknownTokens": [],
+        "numericMentions": [
+          "2",
+          "20"
+        ],
+        "hasPeriodic": false,
+        "hasExplicitInterval": false,
+        "hasDamage": true,
+        "hasDamageNumber": true,
+        "hasOutgoingDamage": false,
+        "hasChance": false,
+        "hasDuration": false,
+        "hasCooldown": false,
+        "hasStackScaling": false,
+        "hasFormulaLanguage": false,
+        "hasUnknown": false
+      },
+      "damageBehavior": null,
+      "functionalInterpretation": {
+        "status": "Working interpretation",
+        "summary": "Working interpretation for Nekomancer: Mastery: The description appears to modify or cause damage, but it is not parsed as a separate damage instance.",
+        "basis": "Conservative paraphrase of the English wiki description for this upgrade; it is not a confirmed in-game mechanic.",
+        "uncertainties": []
+      },
+      "arbitrary": []
+    },
+    "researchStatus": "Complete",
+    "sourceRefs": [
+      {
+        "sourceId": "wiki-nekomancer",
+        "sourcePage": "Nekomancer",
+        "section": "Class Upgrades",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "Overall Damage +2%\nHealth Regeneration +20%\n(For each Soul you are holding)",
+        "derivedFields": [
+          "name",
+          "rarity",
+          "description",
+          "stackType",
+          "category",
+          "functionalInterpretation",
+          "icon"
+        ]
+      }
+    ],
+    "importedAt": "2026-08-07",
+    "importedFrom": "English Ecliptica Wiki",
+    "confirmationStatus": "Unconfirmed by source alone",
+    "completionNote": "The imported English-wiki record has no detected missing value or linked open question. This does not by itself confirm in-game behavior.",
+    "researchAudit": {
+      "status": "Reviewed",
+      "explicitEnglishValues": [
+        "2",
+        "20"
+      ],
+      "findings": [],
+      "unresolved": [],
+      "sourceTags": [
+        {
+          "category": "English wiki",
+          "confidence": "Source-stated",
+          "evidenceId": null
+        }
+      ],
+      "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+    }
+  },
+  {
+    "id": "upgrade-nekomancer-nekomancer-soul-detonation",
+    "entityType": "upgrade",
+    "name": "Nekomancer: Soul Detonation",
+    "family": "Nekomancer",
+    "category": "Class Specific",
+    "rarity": "Rare",
+    "icon": "Nekomancer_Soul_Detonation.png",
+    "imageFile": "Nekomancer Soul Detonation.png",
+    "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Nekomancer%20Soul%20Detonation.png",
+    "description": "Upon the death of a kitty:\nA large explosion of 2 meters (+1.5 meters per stack) dealing SHADOW Damage will be released with a 50% Chance to inflict the BREACHED status effect",
+    "mechanics": {
+      "stackType": "Linear",
+      "sourceText": "Upon the death of a kitty:\nA large explosion of 2 meters (+1.5 meters per stack) dealing SHADOW Damage will be released with a 50% Chance to inflict the BREACHED status effect",
+      "signals": {
+        "unknownTokens": [],
+        "numericMentions": [
+          "1.5 meters",
+          "2 meters",
+          "50"
+        ],
+        "hasPeriodic": false,
+        "hasExplicitInterval": false,
+        "hasDamage": true,
+        "hasDamageNumber": false,
+        "hasOutgoingDamage": true,
+        "hasChance": true,
+        "hasDuration": false,
+        "hasCooldown": false,
+        "hasStackScaling": true,
+        "hasFormulaLanguage": false,
+        "hasUnknown": false
+      },
+      "damageBehavior": {
+        "createsDamageInstance": true,
+        "canCrit": null,
+        "critChance": null,
+        "critNotes": "The English wiki does not state whether this damage instance can critically strike.",
+        "canApplyStatusEffects": true,
+        "statusEffectChance": "50% Chance to inflict the BREACHED status effect",
+        "statusNotes": "Explicit status-effect chance wording retained from source."
+      },
+      "functionalInterpretation": {
+        "status": "Working interpretation",
+        "summary": "Working interpretation for Nekomancer: Soul Detonation: It appears to create a distinct damage instance when its stated trigger occurs. Whether that damage instance can critically strike is not stated. The source gives status-effect application wording or a chance. Additional stacks appear to change the effect, although the exact stacking operation must follow the source wording.",
+        "basis": "Conservative paraphrase of the English wiki description for this upgrade; it is not a confirmed in-game mechanic.",
+        "uncertainties": []
+      },
+      "arbitrary": []
+    },
+    "researchStatus": "Needs Testing",
+    "sourceRefs": [
+      {
+        "sourceId": "wiki-nekomancer",
+        "sourcePage": "Nekomancer",
+        "section": "Class Upgrades",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "Upon the death of a kitty:\nA large explosion of 2 meters (+1.5 meters per stack) dealing SHADOW Damage will be released with a 50% Chance to inflict the BREACHED status effect",
+        "derivedFields": [
+          "name",
+          "rarity",
+          "description",
+          "stackType",
+          "category",
+          "functionalInterpretation",
+          "icon",
+          "damageBehavior"
+        ]
+      }
+    ],
+    "importedAt": "2026-08-07",
+    "importedFrom": "English Ecliptica Wiki",
+    "researchAudit": {
+      "status": "Reviewed",
+      "explicitEnglishValues": [
+        "1.5 meters",
+        "2 meters",
+        "50"
+      ],
+      "findings": [],
+      "unresolved": [
+        "question-upgrade-nekomancer-nekomancer-soul-detonation-damage",
+        "question-upgrade-nekomancer-nekomancer-soul-detonation-crit-behavior"
+      ],
+      "sourceTags": [
+        {
+          "category": "English wiki",
+          "confidence": "Source-stated",
+          "evidenceId": null
+        }
+      ],
+      "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+    }
+  },
+  {
+    "id": "upgrade-nekomancer-nekomancer-necropact",
+    "entityType": "upgrade",
+    "name": "Nekomancer: Necropact",
+    "family": "Nekomancer",
+    "category": "Class Specific",
+    "rarity": "Legendary",
+    "icon": "Nekomancer_Necropact.png",
+    "imageFile": "Nekomancer Necropact.png",
+    "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Nekomancer%20Necropact.png",
+    "description": "With at least 1 summoned kitty:\n600% of any Damage taken at low HP will be redirected towards 1 kitty",
+    "mechanics": {
+      "stackType": "Linear",
+      "sourceText": "With at least 1 summoned kitty:\n600% of any Damage taken at low HP will be redirected towards 1 kitty",
+      "signals": {
+        "unknownTokens": [],
+        "numericMentions": [
+          "1 ",
+          "600"
+        ],
+        "hasPeriodic": false,
+        "hasExplicitInterval": false,
+        "hasDamage": true,
+        "hasDamageNumber": true,
+        "hasOutgoingDamage": false,
+        "hasChance": false,
+        "hasDuration": false,
+        "hasCooldown": false,
+        "hasStackScaling": false,
+        "hasFormulaLanguage": false,
+        "hasUnknown": false
+      },
+      "damageBehavior": null,
+      "functionalInterpretation": {
+        "status": "Working interpretation",
+        "summary": "Working interpretation for Nekomancer: Necropact: The description appears to modify or cause damage, but it is not parsed as a separate damage instance.",
+        "basis": "Conservative paraphrase of the English wiki description for this upgrade; it is not a confirmed in-game mechanic.",
+        "uncertainties": []
+      },
+      "arbitrary": []
+    },
+    "researchStatus": "Complete",
+    "sourceRefs": [
+      {
+        "sourceId": "wiki-nekomancer",
+        "sourcePage": "Nekomancer",
+        "section": "Class Upgrades",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "With at least 1 summoned kitty:\n600% of any Damage taken at low HP will be redirected towards 1 kitty",
+        "derivedFields": [
+          "name",
+          "rarity",
+          "description",
+          "stackType",
+          "category",
+          "functionalInterpretation",
+          "icon"
+        ]
+      }
+    ],
+    "importedAt": "2026-08-07",
+    "importedFrom": "English Ecliptica Wiki",
+    "confirmationStatus": "Unconfirmed by source alone",
+    "completionNote": "The imported English-wiki record has no detected missing value or linked open question. This does not by itself confirm in-game behavior.",
+    "researchAudit": {
+      "status": "Reviewed",
+      "explicitEnglishValues": [
+        "1 ",
+        "600"
+      ],
+      "findings": [],
+      "unresolved": [],
+      "sourceTags": [
+        {
+          "category": "English wiki",
+          "confidence": "Source-stated",
+          "evidenceId": null
+        }
+      ],
+      "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+    }
+  }
+]
