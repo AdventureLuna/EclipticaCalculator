@@ -302,7 +302,47 @@
     .tab-pane[hidden] { display: none; }
     .placeholder-pane { min-height: 260px; display: grid; place-items: center; color: var(--muted); text-align: center; }
     .configuration-empty { min-height: 260px; display: grid; place-items: center; color: var(--muted); text-align: center; }
+    .configuration-stack { display: grid; gap: 24px; }
+    .berserker-stack-control { border: 1px solid rgba(var(--class-rgb), .34); border-radius: 12px; margin: 0; padding: 12px; background: rgba(var(--class-rgb), .06); }
+    .berserker-stack-control legend { padding: 0 6px; color: var(--ink); font-size: .78rem; font-weight: 850; }
+    .berserker-stack-inputs { display: grid; grid-template-columns: minmax(160px, 1fr) 92px; gap: 12px; align-items: center; }
+    .berserker-stack-inputs input[type="range"] { width: 100%; accent-color: rgb(var(--class-rgb)); }
+    .berserker-stack-inputs input[type="number"] { width: 100%; border: 1px solid var(--line); border-radius: 8px; color: var(--ink); background: rgba(0,0,0,.22); padding: 7px 8px; font: inherit; font-variant-numeric: tabular-nums; }
+    .berserker-stack-summary { display: block; margin-top: 8px; color: var(--muted); font-size: .68rem; }
     .twinmage-configuration { display: grid; gap: 24px; }
+    .gunmancer-configuration { display: grid; gap: 22px; }
+    .gunmancer-configuration-note { margin: 0; border: 1px solid rgba(var(--class-rgb), .28); border-radius: 10px; color: var(--muted); background: rgba(var(--class-rgb), .06); padding: 10px 12px; font-size: .72rem; line-height: 1.5; }
+    .gunmancer-configuration-note strong { color: var(--ink); }
+    .ability-picker { border: 0; margin: 0; padding: 0; }
+    .ability-picker legend { width: 100%; margin-bottom: 10px; color: var(--ink); }
+    .ability-picker-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; }
+    .ability-picker-title { font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; }
+    .ability-picker-subtitle { color: var(--muted); font-size: .68rem; }
+    .ability-options { display: grid; grid-template-columns: repeat(2, minmax(180px, 1fr)); gap: 10px; }
+    .ability-option { position: relative; display: grid; grid-template-columns: 58px minmax(0, 1fr); gap: 10px; align-items: center; min-width: 0; border: 1px solid var(--line); border-radius: 12px; color: var(--muted); background: rgba(255,255,255,.025); padding: 9px; cursor: pointer; transition: border-color .15s, background .15s, color .15s, transform .15s; }
+    .ability-option:hover { border-color: rgba(var(--class-rgb), .45); color: var(--ink); transform: translateY(-1px); }
+    .ability-option:has(input:focus-visible) { outline: 2px solid rgba(var(--class-rgb), .8); outline-offset: 2px; }
+    .ability-option:has(input:checked) { border-color: rgba(var(--class-rgb), .8); color: var(--ink); background: rgba(var(--class-rgb), .16); box-shadow: inset 0 0 0 1px rgba(var(--class-rgb), .3), 0 0 18px rgba(var(--class-rgb), .13); }
+    .ability-option input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+    .ability-icon { width: 58px; height: 58px; display: block; object-fit: contain; border-radius: 9px; background: rgba(0,0,0,.2); }
+    .ability-option:has(input:checked) .ability-icon { filter: saturate(1.16) drop-shadow(0 0 7px rgba(var(--class-rgb), .4)); }
+    .ability-copy { min-width: 0; }
+    .ability-name { display: block; overflow: hidden; color: inherit; font-size: .76rem; font-weight: 850; text-overflow: ellipsis; white-space: nowrap; }
+    .ability-effect { display: block; margin-top: 4px; color: var(--muted); font-size: .65rem; line-height: 1.35; }
+    .airblast-options { display: grid; grid-template-columns: repeat(3, minmax(130px, 1fr)); gap: 8px; }
+    .airblast-option { position: relative; display: flex; align-items: center; gap: 7px; border: 1px solid var(--line); border-radius: 9px; color: var(--muted); background: rgba(255,255,255,.025); padding: 8px 9px; font-size: .7rem; cursor: pointer; }
+    .airblast-option:has(input:checked) { border-color: rgba(var(--class-rgb), .75); color: var(--ink); background: rgba(var(--class-rgb), .13); }
+    .airblast-option input { accent-color: rgb(var(--class-rgb)); }
+    .gunmancer-unknown { color: #ffd36a; font-weight: 850; }
+    .gunmancer-source-note { color: var(--muted); font-size: .66rem; line-height: 1.4; }
+    .gunmancer-dps-picker { border: 1px solid rgba(var(--class-rgb), .28); border-radius: 10px; margin: 0; padding: 10px 12px 12px; }
+    .gunmancer-dps-picker legend { padding: 0 5px; color: var(--ink); font-size: .78rem; font-weight: 850; }
+    .gunmancer-dps-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+    .gunmancer-dps-option { display: flex; align-items: center; gap: 7px; border: 1px solid var(--line); border-radius: 8px; color: var(--muted); background: rgba(255,255,255,.025); padding: 8px 9px; font-size: .7rem; cursor: pointer; }
+    .gunmancer-dps-option:has(input:checked) { border-color: rgba(var(--class-rgb), .75); color: var(--ink); background: rgba(var(--class-rgb), .13); }
+    .gunmancer-dps-option:has(input:focus-visible) { outline: 2px solid rgba(var(--class-rgb), .8); outline-offset: 2px; }
+    .gunmancer-dps-option input { width: 16px; height: 16px; margin: 0; accent-color: rgb(var(--class-rgb)); }
+    .gunmancer-dps-help { margin: 8px 0 0; color: var(--muted); font-size: .65rem; line-height: 1.4; }
     .element-picker { border: 0; margin: 0; padding: 0; }
     .element-picker legend { width: 100%; margin-bottom: 10px; color: var(--ink); }
     .element-picker-heading { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
@@ -326,25 +366,31 @@
     .damage-table { width: auto; min-width: 0; border-collapse: collapse; table-layout: fixed; }
     .damage-table .damage-label-col { width: 120px; }
     .damage-table .damage-data-col { width: 72px; }
+    .damage-table.shared-ability-table .damage-data-col { width: 120px; }
     .damage-table th, .damage-table td { border-right: 1px solid rgba(255,255,255,.13); border-bottom: 1px solid rgba(255,255,255,.13); padding: 6px 9px; }
     .damage-table tr > :last-child { border-right: 0; }
     .damage-table tbody tr:last-child > * { border-bottom: 0; }
     .damage-table thead th { height: 42px; background: rgba(0,0,0,.18); }
     .damage-table .damage-label { width: 120px; min-width: 120px; color: #e8e8ec; font-size: .66rem; font-weight: 650; text-align: left; white-space: nowrap; }
     .damage-column { --damage-color: #d8dde5; width: 72px; min-width: 72px; color: var(--damage-color); text-align: center; }
+    .shared-ability-table .damage-column { width: 120px; min-width: 120px; }
+    .shared-ability-table .damage-hand-title { overflow-wrap: normal; word-break: normal; }
     .damage-column[data-element="fire"] { --damage-color: #ff8717; }
     .damage-column[data-element="frost"] { --damage-color: #59b8ff; }
     .damage-column[data-element="lightning"] { --damage-color: #ffe45e; }
+    .damage-column[data-element="electric"] { --damage-color: var(--electric); }
     .damage-column[data-element="physical"] { --damage-color: var(--physical); }
     .damage-column[data-element="luminous"] { --damage-color: #fff3a0; }
     .damage-column[data-element="shadow"] { --damage-color: #c77dff; }
+    .damage-column[data-element="poison"] { --damage-color: var(--poison); }
     .damage-column[data-element="burning"] { --damage-color: #ff8717; }
     .damage-column[data-element="bleeding"] { --damage-color: var(--physical); }
-    .damage-column.status-effect-column { background: rgba(255, 135, 23, .035); }
+    .damage-column.status-effect-column { background: color-mix(in srgb, var(--damage-color) 4%, transparent); }
     .damage-column.status-group-start { border-left: 3px solid rgba(var(--class-rgb), .72); }
     .damage-hand-position { display: block; margin-bottom: 2px; color: #9d93a4; font-size: .46rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
     .damage-hand-title { display: block; color: var(--damage-color); font-size: .7rem; font-weight: 900; line-height: 1.05; overflow-wrap: anywhere; }
     .damage-value { color: var(--damage-color); font-size: .72rem; font-variant-numeric: tabular-nums; font-weight: 800; }
+    .damage-value-unknown { color: #aaa6af; font-size: .82rem; }
     .damage-section-break > * { border-top: 3px solid rgba(255,255,255,.11); }
     .damage-total-row .damage-label, .damage-total-row .damage-value { font-size: .93rem; font-weight: 950; }
     .damage-combined-row > * { border-top: 4px solid rgba(var(--class-rgb), .5); border-bottom: 0; background: linear-gradient(90deg, rgba(var(--class-rgb), .14), rgba(var(--class-rgb), .045)); padding-top: 10px; padding-bottom: 10px; }
@@ -364,6 +410,7 @@
     .status-table-wrap[data-status="paralyzed"] { --status-color: #ffe45e; }
     .status-table-wrap[data-status="weakened"] { --status-color: #fff3a0; }
     .status-table-wrap[data-status="breached"] { --status-color: #c77dff; }
+    .status-table-wrap[data-status="poisoned"] { --status-color: var(--poison); }
     .status-table { width: 240px; border-collapse: collapse; table-layout: fixed; }
     .status-table th, .status-table td { border-right: 1px solid rgba(255,255,255,.13); border-bottom: 1px solid rgba(255,255,255,.13); padding: 6px 9px; }
     .status-table tr > :last-child { border-right: 0; }
@@ -405,8 +452,18 @@
     .calculation-damage-breakdown { display: grid; gap: 4px; margin-top: 8px; border-top: 1px solid rgba(255,255,255,.1); padding-top: 7px; }
     .calculation-damage-breakdown-row { display: flex; justify-content: space-between; gap: 18px; color: var(--type-color); }
     .calculation-damage-breakdown-row strong { color: inherit; font-size: .74rem; }
+    .application-breakdown { margin-top: 4px; border: 1px solid color-mix(in srgb, var(--tooltip-accent) 24%, transparent); border-radius: 8px; overflow: hidden; }
+    .application-breakdown table { width: 100%; border-collapse: collapse; font-size: .62rem; font-variant-numeric: tabular-nums; }
+    .application-breakdown th, .application-breakdown td { border-bottom: 1px solid color-mix(in srgb, var(--tooltip-accent) 16%, transparent); padding: 5px 6px; text-align: right; white-space: nowrap; }
+    .application-breakdown th:first-child, .application-breakdown td:first-child { text-align: left; white-space: normal; }
+    .application-breakdown thead th { color: #aaa5af; font-size: .52rem; letter-spacing: .05em; text-transform: uppercase; }
+    .application-breakdown tfoot th, .application-breakdown tfoot td { border-bottom: 0; color: color-mix(in srgb, var(--tooltip-accent) 78%, white); font-weight: 900; }
+    .application-breakdown-result { border-top: 1px solid color-mix(in srgb, var(--tooltip-accent) 24%, transparent); color: #fff; padding: 7px 6px; font-size: .68rem; font-weight: 900; text-align: right; }
     .item-placeholder { width: 58px; height: 58px; display: grid; place-items: center; flex: 0 0 auto; border: 1px dashed rgba(255,255,255,.22); border-radius: 10px; color: #8e8097; font-size: 1.35rem; overflow: hidden; }
     .item-art { width: 100%; height: 100%; display: block; object-fit: contain; }
+    .upgrade.conditional-unavailable { opacity: .42; filter: grayscale(.8); }
+    .upgrade.conditional-unavailable:hover { opacity: .58; }
+    .conditional-note { margin: 3px 0 2px; color: #d9b8ff; font-size: .61rem; font-weight: 800; line-height: 1.25; }
     .artifact-card.selected, .rune-card.selected { box-shadow: inset 0 0 0 2px rgba(205,147,255,.55); }
     .slot-grid { position: relative; width: min(100%, 690px); aspect-ratio: 2.12; margin: 12px auto 28px; }
     .slot-grid::before { content: ""; position: absolute; inset: 8% 5% 0; border: 7px solid #8d5627; border-bottom-width: 8px; border-radius: 50% 50% 0 0 / 100% 100% 0 0; background: conic-gradient(from 270deg at 50% 100%, #392276 0 25%, #7040bd 0 50%, #3d1d7c 0 75%, #7200ff 0 100%); clip-path: inset(0 0 0 round 50% 50% 0 0); box-shadow: inset 0 0 28px rgba(0,0,0,.45), 0 0 22px rgba(100,0,190,.22); }
@@ -434,6 +491,34 @@
       justify-content: space-between;
       gap: 12px;
     }
+
+    .dps-ranking { margin: 0 0 18px; }
+    .dps-ranking-toggle { border: 1px solid rgba(var(--class-rgb), .42); border-radius: 999px; color: var(--ink); background: rgba(var(--class-rgb), .08); padding: 5px 10px; font-size: .65rem; font-weight: 850; cursor: pointer; }
+    .dps-ranking-toggle:hover, .dps-ranking-toggle:focus-visible { border-color: rgba(var(--class-rgb), .82); background: rgba(var(--class-rgb), .16); outline: none; }
+    .dps-ranking-list { display: grid; gap: 6px; }
+    .dps-ranking-item {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 26px 34px minmax(0, 1fr) auto;
+      gap: 9px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--ink);
+      background: rgba(255,255,255,.025);
+      padding: 6px 9px;
+      text-align: left;
+      cursor: pointer;
+    }
+    .dps-ranking-item:hover, .dps-ranking-item:focus-visible { border-color: rgba(var(--class-rgb), .7); background: rgba(var(--class-rgb), .1); outline: none; }
+    .dps-ranking-item img { width: 34px; height: 34px; display: block; object-fit: contain; }
+    .dps-ranking-rank { color: var(--muted); font-size: .68rem; font-variant-numeric: tabular-nums; text-align: center; }
+    .dps-ranking-name { min-width: 0; overflow: hidden; color: var(--ink); font-size: .76rem; font-weight: 800; text-overflow: ellipsis; white-space: nowrap; }
+    .dps-ranking-increase { color: #9cffba; font-size: .78rem; font-variant-numeric: tabular-nums; font-weight: 950; white-space: nowrap; }
+    .dps-ranking-item.negative .dps-ranking-increase { color: #ff9da9; }
+    .dps-ranking-loading, .dps-ranking-empty { display: flex; align-items: center; gap: 9px; min-height: 46px; color: var(--muted); font-size: .75rem; }
+    .dps-ranking-spinner { width: 14px; height: 14px; flex: 0 0 auto; border: 2px solid rgba(255,255,255,.18); border-top-color: rgb(var(--class-rgb)); border-radius: 50%; animation: dps-ranking-spin .75s linear infinite; }
+    @keyframes dps-ranking-spin { to { transform: rotate(360deg); } }
 
     .section-title {
       margin: 0;
@@ -630,6 +715,7 @@
       .tools input { grid-column: auto; }
       .catalog { grid-template-columns: 1fr; }
       .element-options { grid-template-columns: repeat(3, minmax(76px, 1fr)); }
+      .ability-options, .airblast-options { grid-template-columns: 1fr; }
       .element-picker-heading { align-items: flex-start; flex-direction: column; gap: 7px; }
       .damage-table th, .damage-table td { padding: 6px 8px; }
       .slot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; aspect-ratio: auto; }
@@ -697,7 +783,10 @@
 
         <div class="catalog-head">
           <h2 class="section-title">Upgrade explorer</h2>
-          <span class="summary" id="result-summary"></span>
+          <div class="catalog-head">
+            <span class="summary" id="result-summary"></span>
+            <button class="dps-ranking-toggle" id="dps-ranking-toggle" type="button" aria-controls="dps-ranking-list" aria-expanded="false">Show sorted by DPS</button>
+          </div>
         </div>
         <div class="tools">
           <input class="control" id="search" type="search" placeholder="Search upgrades…" autocomplete="off">
@@ -715,6 +804,9 @@
             <option>Legendary</option>
           </select>
         </div>
+        <section class="dps-ranking" aria-label="DPS sorted upgrades" hidden>
+          <div class="dps-ranking-list" id="dps-ranking-list" hidden></div>
+        </section>
         <div class="catalog" id="catalog"></div>
         </div>
         <div class="tab-pane" id="tab-artifacts" role="tabpanel" hidden>
@@ -738,6 +830,7 @@
 
   <script src="share-build.js"></script>
   <script src="defense-calculation.js"></script>
+  <script src="calculation-engine.js"></script>
   <script>
     const U = [
       ["Thaumaturge","Common","Thaumaturge_Keen_Eye.png","Thaumaturge: Keen Eye","Pain Exchange range: +15 (+15 per stack) meters"],
@@ -836,7 +929,7 @@
       ["Mobility Crystal","Rare","Reactive_Panic.png","Reactive Panic","Taking damage will grant you 1 (+1 per stack) stack of the FRENZIED status effect"],
       ["Mobility Crystal","Rare","Smell_the_Roses.png","Smell the Roses","Falling to low HP will grant you 7 (+2 per stack) stacks of the HASTE status effect with a 30 second Cooldown"],
       ["Mobility Crystal","Rare","Thunder_Aura.png","Thunder Aura","Every second inflict 25 (+X per stack) ELECTRIC Damage to enemies in a radius around you.. Overall Damage: -10% (-X% per stack) Movement Speed: -5% (-X% per stack)"],
-      ["Mobility Crystal","Legendary","Berserker's_Soul.png","Berserker’s Soul","Dealing damage with your main attack grants you a stack of Berserker's Soul, up to X stacks. Each stack grants you +X% Overall Damage, +X% Attack Speed and -X% Health Regeneration. Taking damage sets your stacks to zero. Overall Damage: -20% (-20% per stack) Attack Speed: -40% (-40% per stack)"],
+      ["Mobility Crystal","Legendary","Berserker's_Soul.png","Berserker’s Soul (Melee)","Dealing damage with your main attack grants Berserker's Soul stacks, up to 70 per selected upgrade. Each stack adds 45/70% Overall Damage, 90/70% Attack Speed, and -50/70% Health Regeneration. Each selected upgrade initially gives -20% Overall Damage and -40% Attack Speed. Taking damage resets the in-run stacks.","Berserker's_Soul_Melee"],
       ["Mobility Crystal","Legendary","Big_and_Speedy.png","Big and Speedy","Utility Cooldown Rate: +50% (+50% per stack) Overall Defense: -20% (-20% per stack)"],
       ["Mobility Crystal","Legendary","Featherweight.png","Featherweight","Movement Speed: +30% (+30% per stack) Overall Defense: -20% (-20% per stack)"],
       ["Mobility Crystal","Legendary","Heavy_Hand.png","Heavy Hand","Damage +30% (+30% per stack) Attack Speed -40% (-40% per stack)"],
@@ -863,13 +956,14 @@
       ["Chronowizard","Legendary","Frozen_Heart.png","Frozen Heart","When at full HP, performing your primary skill fires an icicle dealing 18 (+X per stack) FROST damage Received Healing -5% (-5% per stack) Health Regeneration -20% (-20% per stack)"],
       ["Chronowizard","Legendary","Third_Law.png","Third Law","Upon taking Damage, deal 150% (+25% per stack) of its RAW value to enemies around you as PHYSICAL Damage On Fistmage's Parry, deal 50% of the Damage around you as PHYSICAL Damage"],
       ["Chronowizard","Legendary","Warrior's_Will.png","Warrior’s Will","Using your Utility Skill grants you 4 (+2 per stack) stacks of the EMPOWERED status effect Utility Cooldown Rate -15% (-15% per stack)"]
+      , ["Mobility Crystal","Legendary","Berserker's_Soul.png","Berserker’s Soul (Ranged)","Dealing damage with your main attack grants Berserker's Soul stacks, up to 70 per selected upgrade. Each stack adds 22.5/70% Overall Damage, 45/70% Attack Speed, and 2/70% Projectile Spread. Each selected upgrade initially gives -10% Overall Damage and -20% Attack Speed. Taking damage resets the in-run stacks.","Berserker's_Soul_Ranged"]
     ].map(([family, rarity, icon, name, effect, explicitId], globalId) => ({
       // Array position is the permanent global ID. Append new upgrades; never reorder or reuse removed IDs.
       family, rarity, icon, name, effect, id: explicitId || icon.replace(".png", ""), globalId
     }));
 
     const BASE = {
-      health: 100, attackSpeed: 100, projectileSpeed: 100, movementSpeed: 100,
+      health: 100, attackSpeed: 100, projectileSpeed: 100, projectileSpread: 0, movementSpeed: 100,
       jumpHeight: 100, extraJumps: 0, healthRegeneration: 100, healingReceived: 50,
       criticalChance: 2, criticalDamage: 150, knockbackResistance: 100, utilityCooldownRate: 100,
       overallDefense: 100, physicalDefense: 100, fireDefense: 100, frostDefense: 100,
@@ -917,11 +1011,15 @@
       ["physicalDamage","Physical Damage","physical"], ["fireDamage","Fire Damage","fire"],
       ["frostDamage","Frost Damage","frost"], ["electricDamage","Electric Damage","electric"],
       ["luminousDamage","Luminous Damage","luminous"], ["shadowDamage","Shadow Damage","shadow"],
-      ["poisonDamage","Poison Damage","poison"]
+      ["poisonDamage","Poison Damage","poison"], [null], ["projectileSpread","Projectile Spread"]
     ];
 
     const CLASS_FAMILIES = ["Spellsword","Twinmage","Gunmancer","Fistmage","Spellhammer","Shield Mage","Thaumaturge","Nekomancer"];
     const DEFAULT_FAMILIES = ["Endurance Crystal","Mobility Crystal","Chronowizard"];
+    const BERSERKER_SOUL = {
+      melee: { id: "Berserker's_Soul_Melee", classes: ["Spellsword", "Fistmage", "Spellhammer", "Shield Mage"], damagePenalty: -20, attackSpeedPenalty: -40, damageAt70: 45, attackSpeedAt70: 90, regenerationAt70: -50, spreadAt70: 0 },
+      ranged: { id: "Berserker's_Soul_Ranged", classes: ["Twinmage", "Gunmancer", "Thaumaturge", "Nekomancer"], damagePenalty: -10, attackSpeedPenalty: -20, damageAt70: 22.5, attackSpeedAt70: 45, regenerationAt70: 0, spreadAt70: 2 }
+    };
     const CLASS_BASE_HEALTH = {
       Spellsword: 150,
       Twinmage: 100,
@@ -950,14 +1048,127 @@
       { id: "luminous", name: "Luminous", handName: "Divine Hand", baseDamage: 35, damageStat: "luminousDamage", canCrit: true, statusChances: { weakened: 0.10 }, image: "Twinmage_Element_Luminous.png" },
       { id: "shadow", name: "Shadow", handName: "Profane Hand", baseDamage: 20, damageStat: "shadowDamage", canCrit: true, statusChances: { breached: 0.10 }, image: "Twinmage_Element_Shadow.png" }
     ];
+    const GUNMANCER_WIKI_URL = "https://ecliptica.miraheze.org/wiki/Gunmancer";
+    const gunmancerIconUrl = file => `https://ecliptica.miraheze.org/wiki/Special:FilePath/${encodeURIComponent(file)}`;
+    const GUNMANCER_ABILITIES = {
+      primary: [
+        {
+          id: "va11", name: "VA-11 Blast Cannon", iconFile: "Gunmancer-Primary.png", iconUrl: gunmancerIconUrl("Gunmancer-Primary.png"),
+          interval: 2, attackSpeedAffected: true, status: { id: "paralyzed", name: "Paralyzed", chance: .15 },
+          description: "Long-range hit-scan attack. The wiki also describes a small impact explosion for 50% of the projectile damage.",
+          components: [
+            { id: "beam", name: "Electric beam", element: "electric", damage: 50, projectiles: 1, canCrit: true },
+            { id: "explosion", name: "Impact explosion", element: "electric", damage: 25, projectiles: 1, canCrit: true }
+          ]
+        },
+        {
+          id: "kinetic", name: "Kinetic Fletchette", iconFile: "Gunmancer-Flechette.png", iconUrl: gunmancerIconUrl("Gunmancer-Flechette.png"),
+          interval: 2, attackSpeedAffected: true, status: { id: "bleeding", name: "Bleeding", chance: .15 },
+          description: "Long-range physical projectile that can pierce multiple enemies. The Japanese wiki reports 0.5 shots/s (2 seconds per shot).",
+          components: [{ id: "projectile", name: "Physical projectile", element: "physical", damage: 75, projectiles: 1, canCrit: true }]
+        }
+      ],
+      secondary: [
+        {
+          id: "firebomb", name: "Firebomb", iconFile: "Gunmancer-Firebomb.png", iconUrl: gunmancerIconUrl("Gunmancer-Firebomb.png"),
+          interval: 1 / 0.33, attackSpeedAffected: true, status: { id: "burning", name: "Burning", chance: null },
+          description: "High-gravity explosive projectile. The Japanese wiki reports 0.33 shots/s (~3.03 seconds per shot); its wide explosion deals 100% of the projectile damage.",
+          components: [
+            { id: "projectile", name: "Fire projectile", element: "fire", damage: 50, projectiles: 1, canCrit: true },
+            { id: "explosion", name: "Wide explosion", element: "fire", damage: 50, projectiles: 1, canCrit: true }
+          ]
+        },
+        {
+          id: "photon", name: "Photon Condenser", iconFile: "Gumancer-Photon-Cannon.png", iconUrl: gunmancerIconUrl("Gumancer-Photon-Cannon.png"),
+          interval: .25, attackSpeedAffected: true, status: { id: "weakened", name: "Weakened", chance: .05 },
+          description: "Fast luminous bullets fired every 0.25 seconds. Proficiency adds two projectiles per stack.",
+          components: [{ id: "projectile", name: "Luminous bullet", element: "luminous", damage: 10, projectiles: () => 1 + 2 * count("Gunmancer_Proficiency_Photon"), canCrit: true }]
+        },
+        {
+          id: "antimatter", name: "Antimatter Accelerator", iconFile: "Gunmancer-Dark-Rifle.png", iconUrl: gunmancerIconUrl("Gunmancer-Dark-Rifle.png"),
+          interval: 2, attackSpeedAffected: true, status: { id: "breached", name: "Breached", chance: .05 },
+          description: "Scattered blast of five shadow projectiles fired at 0.5 shots/s (2 seconds per shot), according to the Japanese wiki. Holding narrows the spread; Proficiency adds one projectile per stack.",
+          components: [{ id: "projectile", name: "Shadow projectiles", element: "shadow", damage: 8, projectiles: () => 5 + count("Gunmancer_Proficiency_Antimatter"), canCrit: true }]
+        }
+      ]
+    };
+    const GUNMANCER_AIRBLAST = {
+      id: "airblast", name: "Airblast", iconFile: "Gumancer-Airblast.png", iconUrl: gunmancerIconUrl("Gumancer-Airblast.png"),
+      cooldown: 12, chargedMultiplier: 2,
+      description: "Standing still charges the next skill for 200% damage; moving performs a dash with 75% reduced cooldown."
+    };
+    const THAUMATURGE_JP_WIKI_URL = "https://wikiwiki.jp/ecliptica/%E3%82%B5%E3%82%A6%E3%83%9E%E3%82%BF%E3%83%BC%E3%82%B8";
+    const THAUMATURGE_PRIMARY = {
+      id: "foul-pustule",
+      name: "Foul Pustule",
+      iconUrl: "pictures/Thaumaturge-Primary-c.png",
+      interval: 1 / .75,
+      attackSpeedAffected: true,
+      status: { id: "poisoned", name: "Poisoned", chance: .10 },
+      description: "Poison projectile dealing 30 damage at 0.75 attacks per second. The Japanese wiki also lists 26 m/s projectile speed and 50 m range.",
+      components: [{ id: "projectile", name: "Poison projectile", element: "poison", damage: 30, projectiles: () => 1 + count("Thaumaturge_Splitshot"), canCrit: true }]
+    };
+
+    const CLASS_DAMAGE_SOURCES = {
+      Spellsword: ["physical"],
+      Twinmage: [],
+      Gunmancer: [],
+      Fistmage: ["physical"],
+      Spellhammer: ["physical"],
+      "Shield Mage": ["physical", "frost"],
+      Thaumaturge: ["poison"],
+      Nekomancer: ["shadow", "fire", "physical"]
+    };
+    const PICKED_DAMAGE_SOURCES = {
+      Charged_Strike: ["physical"],
+      Spellsword_Shieldbreaker: ["physical"],
+      Spellsword_Whirlwind: ["physical"],
+      Gunmancer_Overcharged: ["electric"],
+      Gunmancer_Proficiency_Firebomb: ["fire"],
+      Gunmancer_Proficiency_Photon: ["luminous"],
+      Gunmancer_Proficiency_Antimatter: ["shadow"],
+      Spellhammer_Concussion_Jump: ["electric"],
+      Spellhammer_Concussion_Chuck: ["electric"],
+      Thaumaturge_Splashback: ["poison"],
+      Fistmage_Mach_Punch: ["physical"],
+      Fistmage_Apply_Force: ["physical"],
+      Nekomancer_Soul_Detonation: ["shadow"],
+      Benison_of_Purification: ["luminous"],
+      Curse_of_Wrath: ["shadow"],
+      Thunder_Aura: ["electric"],
+      Flaming_Spirit: ["fire"],
+      Frozen_Heart: ["frost"],
+      Third_Law: ["physical"]
+    };
+    const CONDITIONAL_UPGRADE_RULES = {
+      Flaming_Spirit: { blockedBy: "frost", reason: "a Frost damage source is present" },
+      Frozen_Heart: { blockedBy: "fire", reason: "a Fire damage source is present" },
+      Curse_of_Wrath: { blockedBy: "luminous", reason: "a Luminous damage source is present" },
+      Benison_of_Purification: { blockedBy: "shadow", reason: "a Shadow damage source is present" },
+      Gunmancer_Overcharged: { requiresAbility: { group: "primary", id: "va11" }, reason: "VA-11 Blast Cannon is selected" },
+      Gunmancer_Marksman: { requiresAbility: { group: "primary", id: "va11" }, reason: "VA-11 Blast Cannon is selected" },
+      Strength: { requires: "physical", reason: "a Physical damage source" },
+      Cutting_Edge: { requires: "physical", reason: "a Physical damage source" },
+      Fire_Aspect: { requires: "fire", reason: "a Fire damage source" },
+      Frost_Aspect: { requires: "frost", reason: "a Frost damage source" },
+      Luminous_Aspect: { requires: "luminous", reason: "a Luminous damage source" },
+      Shadow_Aspect: { requires: "shadow", reason: "a Shadow damage source" },
+      Poison_Aspect: { requires: "poison", reason: "a Poison damage source" }
+    };
     const BURNING = { baseStacks: 20, stacksPerSticky: 2, durationPerStack: 0.5, bossApplicationPenalty: 3 };
     const BLEEDING = { baseStacks: 16, stacksPerSticky: 2, durationPerStack: 0.8, bossApplicationPenalty: 3 };
+    const DAMAGE_STATUS_DEFINITIONS = {
+      burning: { id: "burning", name: "Burning", baseDamage: 25, damageStat: "fireDamage", tickInterval: .5, baseStacks: BURNING.baseStacks, stacksPerSticky: BURNING.stacksPerSticky, durationPerStack: BURNING.durationPerStack, bossApplicationPenalty: BURNING.bossApplicationPenalty, damageScaling: 1 },
+      bleeding: { id: "bleeding", name: "Bleeding", baseDamage: 25, damageStat: "physicalDamage", tickInterval: .8, baseStacks: BLEEDING.baseStacks, stacksPerSticky: BLEEDING.stacksPerSticky, durationPerStack: BLEEDING.durationPerStack, bossApplicationPenalty: BLEEDING.bossApplicationPenalty, damageScaling: 1 },
+      poisoned: { id: "poisoned", name: "Poison", baseDamage: 30, damageStat: "poisonDamage", tickInterval: .75, baseStacks: 8, stacksPerSticky: 2, durationPerStack: .75, bossApplicationPenalty: 1, damageScaling: .75 }
+    };
     const STATUS_CHANCE_BONUSES = {
       burning: { upgradeId: "Fire_Aspect", chancePerStack: 0.05 },
       bleeding: { upgradeId: "Cutting_Edge", chancePerStack: 0.10 },
       frozen: { upgradeId: "Frost_Aspect", chancePerStack: 0.05 },
       weakened: { upgradeId: "Luminous_Aspect", chancePerStack: 0.05 },
-      breached: { upgradeId: "Shadow_Aspect", chancePerStack: 0.05 }
+      breached: { upgradeId: "Shadow_Aspect", chancePerStack: 0.05 },
+      poisoned: { upgradeId: "Poison_Aspect", chancePerStack: 0.05 }
     };
     const NON_DAMAGE_STATUS_DEFINITIONS = [
       { id: "frozen", name: "Frozen", bossApplicationPenalty: 10, note: "Bosses likely build up resistance against this status effect over time!" },
@@ -1025,12 +1236,35 @@
     function loadCounts() {
       try {
         const saved = JSON.parse(localStorage.getItem("ecliptica-upgrade-explorer-v1") || "{}");
-        return saved && typeof saved === "object" ? saved : {};
+        if (!saved || typeof saved !== "object" || Array.isArray(saved)) return {};
+        const validIds = new Set(U.map(upgrade => upgrade.id));
+        const loaded = Object.fromEntries(Object.entries(saved)
+          .filter(([id, value]) => validIds.has(id) && Number.isInteger(Number(value)) && Number(value) > 0)
+          .map(([id, value]) => [id, Math.min(100, Number(value))]));
+        const legacyBerserkerCount = Math.min(100, Math.max(0, Number(saved["Berserker's_Soul"]) || 0));
+        if (legacyBerserkerCount) {
+          const legacyVariant = Object.values(BERSERKER_SOUL).find(variant => variant.classes.includes(selectedClass));
+          if (legacyVariant) loaded[legacyVariant.id] = legacyBerserkerCount;
+        }
+        return loaded;
       } catch { return {}; }
     }
 
+    function safeSetStorage(key, value) {
+      try {
+        localStorage.setItem(key, value);
+        return true;
+      } catch {
+        try {
+          localStorage.removeItem(key);
+          localStorage.setItem(key, value);
+          return true;
+        } catch { return false; }
+      }
+    }
+
     function saveCounts() {
-      localStorage.setItem("ecliptica-upgrade-explorer-v1", JSON.stringify(counts));
+      safeSetStorage("ecliptica-upgrade-explorer-v1", JSON.stringify(counts));
     }
 
     function loadBuildOptions() {
@@ -1039,6 +1273,9 @@
         const savedArtifacts = Array.isArray(saved.artifacts)
           ? Object.fromEntries(saved.artifacts.filter(id => ARTIFACTS.some(item => item.id === id)).map(id => [id, 1]))
           : saved.artifacts && typeof saved.artifacts === "object" ? saved.artifacts : {};
+        const savedGunmancerDps = saved.gunmancerSecondaryDamage === true && saved.gunmancerPrimaryDamage !== true ? "secondary" : "primary";
+        const savedBerserkerVariant = Object.values(BERSERKER_SOUL).find(variant => variant.classes.includes(selectedClass));
+        const defaultBerserkerStacks = (Number(counts[savedBerserkerVariant?.id]) || 0) * 70;
         return {
           artifacts: Object.fromEntries(ARTIFACTS.map(item => [item.id, Math.min(100, Math.max(0, Number(savedArtifacts[item.id]) || 0))]).filter(([, count]) => count)),
           runes: RUNE_SLOTS.map((_, index) => RUNES.some(item => item.id === saved.runes?.[index]) ? saved.runes[index] : null),
@@ -1046,23 +1283,81 @@
           twinmagePrimary: TWINMAGE_ELEMENTS.some(item => item.id === saved.twinmagePrimary) ? saved.twinmagePrimary : "fire",
           twinmageSecondary: TWINMAGE_ELEMENTS.some(item => item.id === saved.twinmageSecondary) ? saved.twinmageSecondary : "lightning",
           twinmagePrimaryDamage: saved.twinmagePrimaryDamage !== false,
-          twinmageSecondaryDamage: saved.twinmageSecondaryDamage !== false
+          twinmageSecondaryDamage: saved.twinmageSecondaryDamage !== false,
+          gunmancerPrimary: GUNMANCER_ABILITIES.primary.some(item => item.id === saved.gunmancerPrimary) ? saved.gunmancerPrimary : "va11",
+          gunmancerSecondary: GUNMANCER_ABILITIES.secondary.some(item => item.id === saved.gunmancerSecondary) ? saved.gunmancerSecondary : "photon",
+          gunmancerPrimaryDamage: savedGunmancerDps === "primary",
+          gunmancerSecondaryDamage: savedGunmancerDps === "secondary",
+          gunmancerAirblastTarget: ["none", "primary", "secondary"].includes(saved.gunmancerAirblastTarget) ? saved.gunmancerAirblastTarget : "none",
+          berserkerSoulStacks: saved.berserkerSoulStacks == null ? defaultBerserkerStacks : Math.max(0, Math.floor(Number(saved.berserkerSoulStacks) || 0))
         };
-      } catch { return { artifacts: {}, runes: [null, null, null, null], curses: [null, null, null, null], twinmagePrimary: "fire", twinmageSecondary: "lightning", twinmagePrimaryDamage: true, twinmageSecondaryDamage: true }; }
+      } catch { return { artifacts: {}, runes: [null, null, null, null], curses: [null, null, null, null], twinmagePrimary: "fire", twinmageSecondary: "lightning", twinmagePrimaryDamage: true, twinmageSecondaryDamage: true, gunmancerPrimary: "va11", gunmancerSecondary: "photon", gunmancerPrimaryDamage: true, gunmancerSecondaryDamage: false, gunmancerAirblastTarget: "none", berserkerSoulStacks: 0 }; }
     }
 
     function saveBuildOptions() {
-      localStorage.setItem("ecliptica-build-options-v1", JSON.stringify(buildOptions));
+      safeSetStorage("ecliptica-build-options-v1", JSON.stringify(buildOptions));
     }
 
     const upgradeIndex = new Map(U.map(upgrade => [upgrade.id, upgrade]));
+    function berserkerVariantForClass(className = selectedClass) {
+      return Object.values(BERSERKER_SOUL).find(variant => variant.classes.includes(className));
+    }
+    function berserkerUpgradeCount() {
+      return rawCount(berserkerVariantForClass()?.id);
+    }
+    function berserkerMaximumStacks(upgradeCount = berserkerUpgradeCount()) {
+      return Math.max(0, upgradeCount * 70);
+    }
+    function clampBerserkerStacks(upgradeCount = berserkerUpgradeCount()) {
+      const maximum = berserkerMaximumStacks(upgradeCount);
+      buildOptions.berserkerSoulStacks = Math.min(maximum, Math.max(0, Math.floor(Number(buildOptions.berserkerSoulStacks) || 0)));
+      return buildOptions.berserkerSoulStacks;
+    }
     function isUpgradeAvailable(upgrade) {
       return upgrade.family === selectedClass || DEFAULT_FAMILIES.includes(upgrade.family);
+    }
+    function rawCount(id) {
+      return Math.max(0, Number(counts[id]) || 0);
+    }
+    function getDamageSources() {
+      const sources = new Set(CLASS_DAMAGE_SOURCES[selectedClass] || []);
+      if (selectedClass === "Twinmage") {
+        if (buildOptions.twinmagePrimaryDamage) sources.add(buildOptions.twinmagePrimary);
+        if (buildOptions.twinmageSecondaryDamage) sources.add(buildOptions.twinmageSecondary);
+      }
+      if (selectedClass === "Gunmancer") {
+        [gunmancerAbility(buildOptions.gunmancerPrimary, "primary"), gunmancerAbility(buildOptions.gunmancerSecondary, "secondary")]
+          .flatMap(ability => ability.components.map(component => component.element))
+          .forEach(element => sources.add(element));
+      }
+      Object.entries(PICKED_DAMAGE_SOURCES).forEach(([upgradeId, elements]) => {
+        const upgrade = upgradeIndex.get(upgradeId);
+        if (upgrade && isUpgradeAvailable(upgrade) && rawCount(upgradeId) > 0) elements.forEach(element => sources.add(element));
+      });
+      return sources;
+    }
+    function conditionalAvailabilityReason(upgrade) {
+      const berserkerVariant = Object.values(BERSERKER_SOUL).find(variant => variant.id === upgrade.id);
+      if (berserkerVariant && !berserkerVariant.classes.includes(selectedClass)) return `Unavailable for ${selectedClass}.`;
+      const rule = CONDITIONAL_UPGRADE_RULES[upgrade.id];
+      if (!rule) return "";
+      const sources = getDamageSources();
+      if (rule.requiresAbility && selectedClass === "Gunmancer") {
+        const selectedAbility = gunmancerAbility(buildOptions[`gunmancer${rule.requiresAbility.group === "primary" ? "Primary" : "Secondary"}`], rule.requiresAbility.group);
+        if (selectedAbility.id !== rule.requiresAbility.id) return `Unavailable: ${rule.reason}.`;
+      }
+      if (rule.requires && !sources.has(rule.requires)) return `Unavailable: requires ${rule.reason}.`;
+      if (rule.blockedBy && sources.has(rule.blockedBy)) return `Unavailable: ${rule.reason}.`;
+      return "";
+    }
+    function isUpgradeConditionallyAvailable(upgrade) {
+      return !conditionalAvailabilityReason(upgrade);
     }
     function count(id) {
       const upgrade = upgradeIndex.get(id);
       if (upgrade && !isUpgradeAvailable(upgrade)) return 0;
-      return Math.max(0, Number(counts[id]) || 0);
+      if (upgrade && !isUpgradeConditionallyAvailable(upgrade)) return 0;
+      return rawCount(id);
     }
 
     function syncClassUi() {
@@ -1111,7 +1406,7 @@
       ["overallDamage", "Glass_Cannon", 30], ["overallDamage", "Heavy_Hand", 30],
       ["overallDamage", "Rapid_Fire", -20],
       ["overallDamage", "Thunder_Aura", -10, { once: true, notes: "This penalty only applies once." }],
-      ["overallDamage", "Holy_Blessing", -10], ["overallDamage", "Berserker's_Soul", -20],
+      ["overallDamage", "Holy_Blessing", -10],
       ["overallDamage", "Nekomancer_Death_Blossom", -3], ["overallDamage", "Pocket_Abacus", -10],
       ["physicalDamage", "Strength", 10],
       ...["fireDamage","frostDamage","electricDamage","luminousDamage","shadowDamage","poisonDamage"]
@@ -1126,8 +1421,8 @@
 
       ["attackSpeed", "Swift_Hands", 15], ["attackSpeed", "Heavy_Hand", -40],
       ["attackSpeed", "Rapid_Fire", 50], ["attackSpeed", "An_IQ_Too_High_", -10],
-      ["attackSpeed", "Berserker's_Soul", -40],
       ["projectileSpeed", "Eagle_Eye", 35], ["projectileSpeed", "An_IQ_Too_High_", -15],
+      ["projectileSpread", "Thaumaturge_Splitshot", 2.5], ["projectileSpread", "Hawkeye", -1],
       ["movementSpeed", "Big_and_Round", -10], ["movementSpeed", "Iron_Skin", -3],
       ["movementSpeed", "Mass_Aspect", -30], ["movementSpeed", "Athletic", 8],
       ["movementSpeed", "Leg_Day", 5],
@@ -1190,6 +1485,28 @@
           source: upgradeIndex.get(effect.id)?.name || effect.id,
           notes: [effect.notes, stackNote].filter(Boolean).join(" ")
         });
+      }
+
+      const berserkerVariant = berserkerVariantForClass();
+      const berserkerCopies = berserkerUpgradeCount();
+      const berserkerStacks = clampBerserkerStacks(berserkerCopies);
+      if (berserkerVariant && berserkerCopies > 0) {
+        const berserkerEffects = {
+          overallDamage: berserkerVariant.damagePenalty * berserkerCopies + berserkerVariant.damageAt70 * berserkerStacks / 70,
+          attackSpeed: berserkerVariant.attackSpeedPenalty * berserkerCopies + berserkerVariant.attackSpeedAt70 * berserkerStacks / 70,
+          healthRegeneration: berserkerVariant.regenerationAt70 * berserkerStacks / 70,
+          projectileSpread: berserkerVariant.spreadAt70 * berserkerStacks / 70
+        };
+        for (const [stat, value] of Object.entries(berserkerEffects)) {
+          if (!value) continue;
+          bonus[stat] += value;
+          breakdowns[stat].push({
+            value: formatContribution(stat, value, true),
+            type: "Additive",
+            source: upgradeIndex.get(berserkerVariant.id)?.name || berserkerVariant.id,
+            notes: `${berserkerCopies} upgrade stack${berserkerCopies === 1 ? "" : "s"}; ${berserkerStacks}/${berserkerMaximumStacks(berserkerCopies)} Berserker's Soul stacks.`
+          });
+        }
       }
 
       const addBuildStats = (stats, source, type = "Additive") => {
@@ -1271,6 +1588,7 @@
         result.utilityCooldownRate /= divisor;
       }
       if (result.health < 1) result.health = 1;
+      if (result.projectileSpread < 0) result.projectileSpread = 0;
       return { stats: result, base: activeBase, breakdowns, caps, defenseCalculations };
     }
 
@@ -1436,13 +1754,21 @@
       const sourceUpgradeId = value.dataset.calculationSourceUpgrade;
       const sourceUpgrade = sourceUpgradeId ? upgradeIndex.get(sourceUpgradeId) : null;
       const sourceIcon = value.dataset.calculationSourceIcon;
+      const sourceIconUrl = sourceIcon && /^(?:https?:|data:|\/|pictures\/)/i.test(sourceIcon)
+        ? sourceIcon
+        : sourceIcon ? `pictures/${encodeURIComponent(sourceIcon)}` : "";
       let damageBreakdown = [];
       try { damageBreakdown = JSON.parse(value.dataset.calculationBreakdown || "[]"); } catch { damageBreakdown = []; }
+      let applicationBreakdown = null;
+      try { applicationBreakdown = JSON.parse(value.dataset.applicationBreakdown || "null"); } catch { applicationBreakdown = null; }
       const damageBadge = damageType
         ? `<span class="calculation-damage-type damage-type-${escapeHtml(damageTypeId)}">${escapeHtml(damageType)}</span>`
         : "";
       const breakdownMarkup = damageBreakdown.length
         ? `<div class="calculation-damage-breakdown">${damageBreakdown.map(item => `<div class="calculation-damage-breakdown-row damage-type-${escapeHtml(item.id)}"><span>${escapeHtml(item.name)}</span><strong>${escapeHtml(item.value)}</strong></div>`).join("")}</div>`
+        : "";
+      const applicationBreakdownMarkup = applicationBreakdown?.sources?.length
+        ? `<div class="application-breakdown"><table><thead><tr><th>Source</th><th>Instances/s</th><th>Chance</th><th>Applications/s</th></tr></thead><tbody>${applicationBreakdown.sources.map(source => `<tr><td>${escapeHtml(source.name)}</td><td>${escapeHtml(source.instancesPerSecond)}</td><td>${escapeHtml(source.chance)}</td><td>${escapeHtml(source.applicationsPerSecond)}</td></tr>`).join("")}</tbody><tfoot><tr><th colspan="3">Total applications/s</th><td>${escapeHtml(applicationBreakdown.total)}</td></tr></tfoot></table><div class="application-breakdown-result">1 ÷ ${escapeHtml(applicationBreakdown.total)} = ${escapeHtml(applicationBreakdown.interval)} s</div></div>`
         : "";
       const upgradeMarkup = sourceUpgrade
         ? `<div class="calculation-tooltip-upgrade">
@@ -1454,21 +1780,21 @@
         : "";
       const sourceDetailsMarkup = sourceIcon
         ? `<div class="calculation-tooltip-source-with-icon">
-            <img class="calculation-tooltip-source-icon" src="pictures/${encodeURIComponent(sourceIcon)}" alt="">
+            <img class="calculation-tooltip-source-icon" src="${escapeHtml(sourceIconUrl)}" alt="" onerror="this.onerror=null;this.src='pictures/${escapeHtml(CLASS_LOGOS[selectedClass])}';">
             <div><div class="calculation-tooltip-title">${escapeHtml(lines[0])}</div>
               <div class="calculation-tooltip-lines">${lines.slice(1).map(line => `<span>${escapeHtml(line)}</span>`).join("")}</div></div>
           </div>`
         : `<div class="calculation-tooltip-title">${escapeHtml(lines[0])}</div>
           <div class="calculation-tooltip-lines">${lines.slice(1).map(line => `<span>${escapeHtml(line)}</span>`).join("")}</div>`;
       const formulaSourceIcon = sourceIcon
-        ? `<img class="calculation-tooltip-mini-source-icon" src="pictures/${encodeURIComponent(sourceIcon)}" alt="">`
+        ? `<img class="calculation-tooltip-mini-source-icon" src="${escapeHtml(sourceIconUrl)}" alt="" onerror="this.onerror=null;this.src='pictures/${escapeHtml(CLASS_LOGOS[selectedClass])}';">`
         : "";
       tooltip.style.setProperty("--tooltip-accent", accent);
       const contextMarkup = isSource
         ? `<div class="calculation-tooltip-head"><span class="calculation-tooltip-icon">◆</span>Damage source${damageBadge}</div>
           ${sourceDetailsMarkup}`
         : `<div class="calculation-tooltip-head"><span class="calculation-tooltip-icon">ƒ</span>Formula${formulaSourceIcon}${damageBadge}</div>
-          <div class="calculation-tooltip-expression">${lines.map(line => `<span class="calculation-tooltip-expression-line">${escapeHtml(line)}</span>`).join("")}</div>${breakdownMarkup}`;
+          <div class="calculation-tooltip-expression">${applicationBreakdownMarkup || lines.map(line => `<span class="calculation-tooltip-expression-line">${escapeHtml(line)}</span>`).join("")}</div>${breakdownMarkup}`;
       tooltip.innerHTML = `${upgradeMarkup}${contextMarkup}`;
       tooltip.classList.add("visible");
       highlightCalculationReferences((value.dataset.calculationRefs || "").split("|"));
@@ -1520,12 +1846,14 @@
       loadingSharedBuild = true;
       try {
         selectedClass = CLASS_FAMILIES[build.characterId];
-        localStorage.setItem("ecliptica-upgrade-explorer-class", selectedClass);
+        safeSetStorage("ecliptica-upgrade-explorer-class", selectedClass);
         Object.keys(counts).forEach(id => delete counts[id]);
         for (const entry of build.upgrades) {
           const upgrade = U[entry.id];
-          if (upgrade && Number.isInteger(entry.count) && entry.count >= 1 && entry.count <= 100)
-            counts[upgrade.id] = entry.count;
+          if (upgrade && Number.isInteger(entry.count) && entry.count >= 1 && entry.count <= 100) {
+            const importedId = upgrade.id === BERSERKER_SOUL.melee.id ? berserkerVariantForClass()?.id : upgrade.id;
+            if (importedId) counts[importedId] = entry.count;
+          }
         }
         buildOptions.artifacts = Object.fromEntries((build.artifacts || []).flatMap(entry => {
           const artifact = ARTIFACTS[entry.id];
@@ -1590,7 +1918,16 @@
     }
 
     function setCount(id, next) {
+      const previous = rawCount(id);
       next = Math.min(100, Math.max(0, Number(next) || 0));
+      const isActiveBerserker = id === berserkerVariantForClass()?.id;
+      if (isActiveBerserker && previous !== next) {
+        const previousMaximum = berserkerMaximumStacks(previous);
+        const nextMaximum = berserkerMaximumStacks(next);
+        const stackRatio = previousMaximum > 0 ? clampBerserkerStacks(previous) / previousMaximum : 1;
+        buildOptions.berserkerSoulStacks = nextMaximum > 0 ? Math.round(stackRatio * nextMaximum) : 0;
+        saveBuildOptions();
+      }
       if (next > 0) counts[id] = next;
       else delete counts[id];
       saveCounts();
@@ -1626,20 +1963,138 @@
     }
 
     function renderCatalog() {
-      const list = filteredUpgrades();
+      const list = filteredUpgrades().sort((a, b) => {
+        const availabilityOrder = Number(isUpgradeConditionallyAvailable(b)) - Number(isUpgradeConditionallyAvailable(a));
+        if (availabilityOrder) return availabilityOrder;
+        if (!isUpgradeConditionallyAvailable(a)) return a.globalId - b.globalId;
+        const familyOrder = family => family === "Mobility Crystal" ? 0 : family === "Endurance Crystal" ? 1 : 2;
+        return familyOrder(a.family) - familyOrder(b.family) || a.globalId - b.globalId;
+      });
       const availableTotal = U.filter(isUpgradeAvailable).length;
       $("#result-summary").textContent = `${list.length} of ${availableTotal}`;
       $("#catalog").innerHTML = list.length ? list.map(u => `
-        <article class="upgrade ${u.rarity.toLowerCase()} ${count(u.id) ? "selected" : ""}"
+        <article class="upgrade ${u.rarity.toLowerCase()} ${count(u.id) ? "selected" : ""} ${isUpgradeConditionallyAvailable(u) ? "" : "conditional-unavailable"}"
           data-id="${u.id}" title="Left-click to add · Right-click to remove">
           ${count(u.id) ? `<span class="count">×${count(u.id)}</span>` : ""}
           <img src="pictures/${encodeURIComponent(u.icon).replaceAll("%2F", "/")}" alt="">
           <div class="upgrade-copy">
             <h3 class="upgrade-name">${escapeHtml(u.name)}</h3>
             <div class="meta">${escapeHtml(u.rarity)} · ${escapeHtml(u.family)}</div>
+            ${conditionalAvailabilityReason(u) ? `<div class="conditional-note">${escapeHtml(conditionalAvailabilityReason(u))}</div>` : ""}
             <p class="effect">${escapeHtml(u.effect)}</p>
           </div>
         </article>`).join("") : '<div class="no-results">No upgrades match these filters.</div>';
+    }
+
+    let dpsRankingRun = 0;
+    let dpsRankingVisible = false;
+    let dpsRankingFrame = null;
+    let dpsRankingSnapshot = null;
+    let dpsRankingBuildOptionsSnapshot = null;
+
+    function restoreCounts(snapshot) {
+      Object.keys(counts).forEach(id => delete counts[id]);
+      Object.assign(counts, snapshot);
+    }
+
+    function restoreRankingBuildOptions(snapshot) {
+      if (!snapshot) return;
+      buildOptions.berserkerSoulStacks = snapshot.berserkerSoulStacks;
+    }
+
+    function renderDpsRanking() {
+      const listElement = $("#dps-ranking-list");
+      const toggleElement = $("#dps-ranking-toggle");
+      const rankingSection = listElement?.closest(".dps-ranking");
+      if (!listElement || !toggleElement) return;
+      if (dpsRankingFrame !== null) {
+        cancelAnimationFrame(dpsRankingFrame);
+        dpsRankingFrame = null;
+      }
+      const run = ++dpsRankingRun;
+      if (rankingSection) rankingSection.hidden = !dpsRankingVisible;
+      listElement.hidden = !dpsRankingVisible;
+      toggleElement.textContent = dpsRankingVisible ? "Hide sorted by DPS" : "Show sorted by DPS";
+      toggleElement.setAttribute("aria-expanded", String(dpsRankingVisible));
+
+      if (!dpsRankingVisible) {
+        if (dpsRankingSnapshot) {
+          restoreCounts(dpsRankingSnapshot);
+          restoreRankingBuildOptions(dpsRankingBuildOptionsSnapshot);
+          latestCalculation = calculateStats();
+          dpsRankingSnapshot = null;
+          dpsRankingBuildOptionsSnapshot = null;
+        }
+        listElement.innerHTML = "";
+        return;
+      }
+
+      if (!["Twinmage", "Gunmancer", "Thaumaturge"].includes(selectedClass)) {
+        dpsRankingSnapshot = null;
+        listElement.innerHTML = '<div class="dps-ranking-empty">DPS ranking is currently available for Twinmage, Gunmancer, and Thaumaturge.</div>';
+        return;
+      }
+
+      const snapshot = { ...counts };
+      const buildOptionsSnapshot = { berserkerSoulStacks: buildOptions.berserkerSoulStacks };
+      dpsRankingSnapshot = snapshot;
+      dpsRankingBuildOptionsSnapshot = buildOptionsSnapshot;
+      const results = [];
+      const candidates = U.filter(upgrade => isUpgradeAvailable(upgrade) && isUpgradeConditionallyAvailable(upgrade)).filter(upgrade => count(upgrade.id) < 100);
+      listElement.innerHTML = `<div class="dps-ranking-loading"><span class="dps-ranking-spinner" aria-hidden="true"></span><span class="dps-ranking-progress">Calculating 0 / ${candidates.length}…</span></div>`;
+      const progressElement = listElement.querySelector(".dps-ranking-progress");
+      latestCalculation = calculateStats();
+      const baseDps = renderCalculations({ render: false })?.combinedTotalDps || 0;
+      let index = 0;
+
+      const processChunk = () => {
+        dpsRankingFrame = null;
+        if (run !== dpsRankingRun || !dpsRankingVisible) {
+          restoreCounts(snapshot);
+          restoreRankingBuildOptions(buildOptionsSnapshot);
+          latestCalculation = calculateStats();
+          return;
+        }
+        const chunkEnd = Math.min(index + 10, candidates.length);
+        for (; index < chunkEnd; index += 1) {
+          const upgrade = candidates[index];
+          counts[upgrade.id] = (snapshot[upgrade.id] || 0) + 1;
+          if (upgrade.id === berserkerVariantForClass()?.id) {
+            const previousMaximum = berserkerMaximumStacks(snapshot[upgrade.id] || 0);
+            const nextMaximum = berserkerMaximumStacks(counts[upgrade.id]);
+            const stackRatio = previousMaximum > 0 ? Math.min(previousMaximum, Math.max(0, Number(buildOptionsSnapshot.berserkerSoulStacks) || 0)) / previousMaximum : 1;
+            buildOptions.berserkerSoulStacks = Math.round(stackRatio * nextMaximum);
+          }
+          latestCalculation = calculateStats();
+          const candidateDps = renderCalculations({ render: false })?.combinedTotalDps || 0;
+          results.push({ upgrade, delta: candidateDps - baseDps });
+          restoreCounts(snapshot);
+          restoreRankingBuildOptions(buildOptionsSnapshot);
+        }
+        if (progressElement) progressElement.textContent = `Calculating ${index} / ${candidates.length}…`;
+        if (index < candidates.length) {
+          dpsRankingFrame = requestAnimationFrame(processChunk);
+          return;
+        }
+
+        restoreCounts(snapshot);
+        restoreRankingBuildOptions(buildOptionsSnapshot);
+        latestCalculation = calculateStats();
+        if (run !== dpsRankingRun || !dpsRankingVisible) return;
+        results.sort((a, b) => b.delta - a.delta || a.upgrade.name.localeCompare(b.upgrade.name));
+        listElement.innerHTML = results.length ? results.map((result, resultIndex) => {
+          const sign = result.delta >= 0 ? "+" : "";
+          const state = result.delta < 0 ? " negative" : "";
+          return `<button class="dps-ranking-item${state}" type="button" data-dps-upgrade-id="${escapeHtml(result.upgrade.id)}" title="Add one stack of ${escapeHtml(result.upgrade.name)}">
+            <span class="dps-ranking-rank">${resultIndex + 1}</span>
+            <img src="pictures/${encodeURIComponent(result.upgrade.icon).replaceAll("%2F", "/")}" alt="">
+            <span class="dps-ranking-name">${escapeHtml(result.upgrade.name)}</span>
+            <span class="dps-ranking-increase">${sign}${Number(result.delta).toFixed(2)} DPS</span>
+          </button>`;
+        }).join("") : '<div class="dps-ranking-empty">No upgrades are available for another stack.</div>';
+      };
+
+      dpsRankingFrame = requestAnimationFrame(processChunk);
     }
 
     function renderArtifacts() {
@@ -1655,10 +2110,123 @@
         </article>`).join("");
     }
 
+    function gunmancerAbility(id, group) {
+      return GUNMANCER_ABILITIES[group].find(ability => ability.id === id) || GUNMANCER_ABILITIES[group][0];
+    }
+
+    function gunmancerAbilitySummary(ability) {
+      const damage = ability.components.map(component => `${component.damage} ${component.element}`).join(" + ");
+      const interval = ability.interval == null ? "X s" : `${ability.interval} s`;
+      return `${damage} damage per activation · ${interval} interval`;
+    }
+
+    function gunmancerDpsGroup() {
+      return buildOptions.gunmancerSecondaryDamage === true && buildOptions.gunmancerPrimaryDamage !== true ? "secondary" : "primary";
+    }
+
+    function gunmancerAbilityOption(ability, group, selected) {
+      return `<label class="ability-option">
+        <input type="radio" name="gunmancer-${group}" value="${escapeHtml(ability.id)}" ${ability.id === selected ? "checked" : ""}>
+        <img class="ability-icon" src="${escapeHtml(ability.iconUrl)}" alt="" onerror="this.onerror=null;this.src='pictures/Class3.png';">
+        <span class="ability-copy"><span class="ability-name">${escapeHtml(ability.name)}</span><span class="ability-effect">${escapeHtml(gunmancerAbilitySummary(ability))}<br>${escapeHtml(ability.description)}</span></span>
+      </label>`;
+    }
+
+    function renderGunmancerConfiguration(content) {
+      const primary = gunmancerAbility(buildOptions.gunmancerPrimary, "primary");
+      const secondary = gunmancerAbility(buildOptions.gunmancerSecondary, "secondary");
+      content.innerHTML = `<div class="gunmancer-configuration">
+        <p class="gunmancer-configuration-note"><strong>Gunmancer calculation setup.</strong> Choose one Primary and one Secondary skill. Values marked <span class="gunmancer-unknown">X / ?</span> are preserved from the English wiki and prevent a fabricated DPS result. Ability icons are loaded from the English wiki file names with a local class-icon fallback.</p>
+        <fieldset class="gunmancer-dps-picker">
+          <legend>Ability used for DPS calculation</legend>
+          <div class="gunmancer-dps-options">
+            <label class="gunmancer-dps-option"><input type="checkbox" name="gunmancer-dps" value="primary" ${gunmancerDpsGroup() === "primary" ? "checked" : ""}> Primary — ${escapeHtml(primary.name)}</label>
+            <label class="gunmancer-dps-option"><input type="checkbox" name="gunmancer-dps" value="secondary" ${gunmancerDpsGroup() === "secondary" ? "checked" : ""}> Secondary — ${escapeHtml(secondary.name)}</label>
+          </div>
+          <p class="gunmancer-dps-help">Only one ability can be used for DPS at a time. Selecting one automatically deselects the other.</p>
+        </fieldset>
+        <fieldset class="ability-picker">
+          <legend><span class="ability-picker-heading"><span class="ability-picker-title">Primary skill</span><span class="ability-picker-subtitle">Choose one</span></span></legend>
+          <div class="ability-options">${GUNMANCER_ABILITIES.primary.map(ability => gunmancerAbilityOption(ability, "primary", primary.id)).join("")}</div>
+        </fieldset>
+        <fieldset class="ability-picker">
+          <legend><span class="ability-picker-heading"><span class="ability-picker-title">Secondary skill</span><span class="ability-picker-subtitle">Choose one</span></span></legend>
+          <div class="ability-options">${GUNMANCER_ABILITIES.secondary.map(ability => gunmancerAbilityOption(ability, "secondary", secondary.id)).join("")}</div>
+        </fieldset>
+        <fieldset class="ability-picker">
+          <legend><span class="ability-picker-heading"><span class="ability-picker-title">Airblast charge</span><span class="ability-picker-subtitle">${GUNMANCER_AIRBLAST.cooldown}s cooldown</span></span></legend>
+          <div class="airblast-options">
+            <label class="airblast-option"><input type="radio" name="gunmancer-airblast" value="none" ${buildOptions.gunmancerAirblastTarget === "none" ? "checked" : ""}> Off</label>
+            <label class="airblast-option"><input type="radio" name="gunmancer-airblast" value="primary" ${buildOptions.gunmancerAirblastTarget === "primary" ? "checked" : ""}> Charge Primary</label>
+            <label class="airblast-option"><input type="radio" name="gunmancer-airblast" value="secondary" ${buildOptions.gunmancerAirblastTarget === "secondary" ? "checked" : ""}> Charge Secondary</label>
+          </div>
+          <p class="gunmancer-source-note">The selected target is modeled as one additional 100% damage instance every Airblast cooldown. Gunmancer: Mastery increases the charged-shot multiplier by 50% per stack. This is a calculator interpretation of the English-wiki wording.</p>
+        </fieldset>
+        <p class="gunmancer-source-note">Sources: <a href="${GUNMANCER_WIKI_URL}" target="_blank" rel="noreferrer">English Ecliptica Wiki</a> and <a href="https://wikiwiki.jp/ecliptica/%E3%82%AC%E3%83%B3%E3%83%9E%E3%83%B3%E3%82%B5%E3%83%BC" target="_blank" rel="noreferrer">Japanese Ecliptica Wiki</a>. The Japanese page gives 0.5/s for both primaries, but separate secondary rates: Firebomb 0.33/s, Photon Condenser 4/s, and Antimatter Accelerator 0.5/s. Attack Speed is applied to selected skills as a working model.</p>
+      </div>`;
+    }
+
+    function renderThaumaturgeConfiguration(content) {
+      const splitshotStacks = count("Thaumaturge_Splitshot");
+      const projectileCount = 1 + splitshotStacks;
+      content.innerHTML = `<div class="gunmancer-configuration">
+        <div class="ability-options">
+          <div class="ability-option"><img class="ability-icon" src="pictures/Thaumaturge-Life-Energy-a.png" alt=""><span class="ability-copy"><span class="ability-name">Life Energy</span><span class="ability-effect">Passive</span></span></div>
+          <div class="ability-option"><img class="ability-icon" src="pictures/Thaumaturge-Secondary.png" alt=""><span class="ability-copy"><span class="ability-name">Pain Exchange</span><span class="ability-effect">Secondary</span></span></div>
+          <div class="ability-option"><img class="ability-icon" src="pictures/Thaumaturge-Utility.png" alt=""><span class="ability-copy"><span class="ability-name">Soulborne</span><span class="ability-effect">Utility</span></span></div>
+        </div>
+        <fieldset class="ability-picker">
+          <legend><span class="ability-picker-heading"><span class="ability-picker-title">Primary skill</span><span class="ability-picker-subtitle">Foul Pustule</span></span></legend>
+          <div class="ability-options"><div class="ability-option">
+            <img class="ability-icon" src="${escapeHtml(THAUMATURGE_PRIMARY.iconUrl)}" alt="">
+            <span class="ability-copy"><span class="ability-name">${escapeHtml(THAUMATURGE_PRIMARY.name)}</span><span class="ability-effect">30 Poison damage · 0.75 attacks/s · 10% Poisoned chance<br>26 m/s projectile speed · 50 m range</span></span>
+          </div></div>
+        </fieldset>
+        ${splitshotStacks > 0 ? `<p class="gunmancer-source-note"><strong>Splitshot:</strong> ${projectileCount} projectiles per shot (${splitshotStacks} stack${splitshotStacks === 1 ? "" : "s"}). Its -30% Damage per stack is already represented by Overall Damage; the Japanese wiki says that penalty is additive and has an unspecified lower bound.</p>` : ""}
+      </div>`;
+    }
+
+    function berserkerStackControlMarkup() {
+      const variant = berserkerVariantForClass();
+      const upgradeCount = berserkerUpgradeCount();
+      if (!variant || upgradeCount <= 0) return "";
+      const maximum = berserkerMaximumStacks(upgradeCount);
+      const stacks = clampBerserkerStacks(upgradeCount);
+      const upgradeName = upgradeIndex.get(variant.id)?.name || "Berserker's Soul";
+      return `<fieldset class="berserker-stack-control">
+        <legend>${escapeHtml(upgradeName)} stacks</legend>
+        <div class="berserker-stack-inputs">
+          <input type="range" name="berserker-soul-stacks" min="0" max="${maximum}" step="1" value="${stacks}" aria-label="${escapeHtml(upgradeName)} stacks">
+          <input type="number" name="berserker-soul-stacks" min="0" max="${maximum}" step="1" value="${stacks}" aria-label="${escapeHtml(upgradeName)} stack count">
+        </div>
+        <span class="berserker-stack-summary">${stacks} / ${maximum}</span>
+      </fieldset>`;
+    }
+
+    function appendBerserkerStackControl(content) {
+      const markup = berserkerStackControlMarkup();
+      if (!markup) return;
+      content.classList.add("configuration-stack");
+      content.insertAdjacentHTML("beforeend", markup);
+    }
+
     function renderConfiguration() {
       const content = $("#configuration-content");
+      content.classList.remove("configuration-stack");
+      if (selectedClass === "Gunmancer") {
+        renderGunmancerConfiguration(content);
+        appendBerserkerStackControl(content);
+        return;
+      }
+      if (selectedClass === "Thaumaturge") {
+        renderThaumaturgeConfiguration(content);
+        appendBerserkerStackControl(content);
+        return;
+      }
       if (selectedClass !== "Twinmage") {
-        content.innerHTML = '<div class="configuration-empty">No configuration options are available for this class yet.</div>';
+        const stackControl = berserkerStackControlMarkup();
+        content.innerHTML = stackControl || '<div class="configuration-empty">No configuration options are available for this class yet.</div>';
+        if (stackControl) content.classList.add("configuration-stack");
         return;
       }
       const picker = (hand, label, selected, useForDamage) => `
@@ -1683,286 +2251,267 @@
         ${picker("primary", "Primary element", buildOptions.twinmagePrimary, buildOptions.twinmagePrimaryDamage)}
         ${picker("secondary", "Secondary element", buildOptions.twinmageSecondary, buildOptions.twinmageSecondaryDamage)}
       </div>`;
+      appendBerserkerStackControl(content);
     }
 
-    function renderCalculations() {
-      const content = $("#calculation-content");
-      if (selectedClass !== "Twinmage") {
-        content.innerHTML = '<div class="calculation-empty">Damage calculations are currently available for Twinmage only.</div>';
-        return;
-      }
+    function effectiveSourceStatusChance(statusId, baseChance, attackSpeedMultiplier) {
+      if (!Number.isFinite(baseChance) || attackSpeedMultiplier <= 0) return null;
+      const bonus = STATUS_CHANCE_BONUSES[statusId];
+      return (baseChance + (bonus ? count(bonus.upgradeId) * bonus.chancePerStack : 0)) / attackSpeedMultiplier;
+    }
 
-      const hands = [
+    function calculationElementMultipliers(stats) {
+      return Object.fromEntries(["physical", "fire", "frost", "electric", "luminous", "shadow", "poison"]
+        .map(element => [element, Number(stats[`${element}Damage`] || 0) / 100]));
+    }
+
+    function abilityDamageSourceSpecs(classKey, ability, group, attackSpeedMultiplier) {
+      const activationRate = ability.interval > 0 ? attackSpeedMultiplier / ability.interval : 0;
+      return ability.components.map((component, index) => {
+        const projectiles = Math.max(1, Number(typeof component.projectiles === "function" ? component.projectiles() : component.projectiles) || 1);
+        const statusChance = index === 0 && ability.status
+          ? effectiveSourceStatusChance(ability.status.id, ability.status.chance, attackSpeedMultiplier)
+          : null;
+        return {
+          id: `${classKey}-${ability.id}-${component.id || index}`,
+          name: ability.components.length === 1 ? ability.name : component.name,
+          position: group,
+          sourceIcon: ability.iconUrl,
+          element: component.element,
+          baseDamage: component.damage,
+          canCrit: component.canCrit !== false,
+          activationRate,
+          instancesPerActivation: projectiles,
+          projectiles,
+          statuses: statusChance == null ? [] : [{ id: ability.status.id, name: ability.status.name, chance: statusChance }]
+        };
+      });
+    }
+
+    function sharedUpgradeSourceSpecs(classKey, primaryActivationRate, attackSpeedMultiplier) {
+      const sources = [];
+      const flamingSpiritStacks = count("Flaming_Spirit");
+      if (flamingSpiritStacks > 0 && primaryActivationRate > 0) {
+        const burningChance = effectiveSourceStatusChance("burning", .10, attackSpeedMultiplier);
+        sources.push({
+          id: `${classKey}-flaming-spirit`, name: "Flaming Spirit", position: "Upgrade effect",
+          sourceIcon: "Flaming_Spirit.png", sourceUpgradeId: "Flaming_Spirit",
+          element: "fire", baseDamage: 16 + 16 * Math.max(0, flamingSpiritStacks - 1), canCrit: true,
+          activationRate: primaryActivationRate, instancesPerActivation: 1, projectiles: 1,
+          overallDamageApplies: false, statuses: burningChance == null ? [] : [{ id: "burning", name: "Burning", chance: burningChance }],
+          trigger: { type: "primaryActivation" }
+        });
+      }
+      const chargedStrikeStacks = count("Charged_Strike");
+      if (chargedStrikeStacks > 0) sources.push({
+        id: `${classKey}-charged-strike`, name: "Charged Strike", position: "Upgrade effect",
+        sourceIcon: "Charged_Strike.png", sourceUpgradeId: "Charged_Strike",
+        element: "physical", baseDamage: 25 + 10 * Math.max(0, chargedStrikeStacks - 1), canCrit: false,
+        trigger: { type: "onCrit", instancesPerTrigger: 1 }, sourceMultiplierStrategy: "weightedCritSources", statuses: []
+      });
+      return sources;
+    }
+
+    function buildGunmancerSourceModel(stats) {
+      const attackSpeedMultiplier = Number(stats.attackSpeed || 0) / 100;
+      const group = gunmancerDpsGroup();
+      const ability = gunmancerAbility(group === "primary" ? buildOptions.gunmancerPrimary : buildOptions.gunmancerSecondary, group);
+      const primary = gunmancerAbility(buildOptions.gunmancerPrimary, "primary");
+      const sources = abilityDamageSourceSpecs("gunmancer", ability, group === "primary" ? "Primary" : "Secondary", attackSpeedMultiplier);
+      if (buildOptions.gunmancerAirblastTarget === group) {
+        const chargedMultiplier = GUNMANCER_AIRBLAST.chargedMultiplier + count("Gunmancer_Mastery") * .5;
+        const additionalDamage = ability.components.reduce((sum, component) => sum + component.damage * (Number(typeof component.projectiles === "function" ? component.projectiles() : component.projectiles) || 1), 0) * (chargedMultiplier - 1);
+        sources.push({
+          id: "gunmancer-airblast", name: `Charged ${ability.name}`, position: "Airblast charge",
+          sourceIcon: GUNMANCER_AIRBLAST.iconUrl, element: ability.components[0].element,
+          baseDamage: additionalDamage, canCrit: true, instanceRate: 1 / GUNMANCER_AIRBLAST.cooldown,
+          statuses: [], trigger: { type: "cooldown" }
+        });
+      }
+      const primaryActivationRate = primary.interval > 0 ? attackSpeedMultiplier / primary.interval : 0;
+      sources.push(...sharedUpgradeSourceSpecs("gunmancer", primaryActivationRate, attackSpeedMultiplier));
+      return { className: "Gunmancer", classKey: "gunmancer", sources };
+    }
+
+    function buildThaumaturgeSourceModel(stats) {
+      const attackSpeedMultiplier = Number(stats.attackSpeed || 0) / 100;
+      const primaryActivationRate = THAUMATURGE_PRIMARY.interval > 0 ? attackSpeedMultiplier / THAUMATURGE_PRIMARY.interval : 0;
+      return {
+        className: "Thaumaturge", classKey: "thaumaturge",
+        sources: [
+          ...abilityDamageSourceSpecs("thaumaturge", THAUMATURGE_PRIMARY, "Primary", attackSpeedMultiplier),
+          ...sharedUpgradeSourceSpecs("thaumaturge", primaryActivationRate, attackSpeedMultiplier)
+        ]
+      };
+    }
+
+    function buildTwinmageSourceModel(stats) {
+      const selectedHands = [
         { position: "Primary hand", elementId: buildOptions.twinmagePrimary, enabled: buildOptions.twinmagePrimaryDamage },
         { position: "Secondary hand", elementId: buildOptions.twinmageSecondary, enabled: buildOptions.twinmageSecondaryDamage }
-      ].filter(hand => hand.enabled).map(hand => ({
-        ...hand,
-        element: TWINMAGE_ELEMENTS.find(element => element.id === hand.elementId)
-      })).filter(hand => hand.element);
-
-      if (!hands.length) {
-        content.innerHTML = '<div class="calculation-empty">Enable at least one hand for damage calculations in Configuration.</div>';
-        return;
-      }
-
-      const twoDecimals = value => Number(value).toFixed(2);
-      const uptimePercent = value => {
-        const formatted = Number(value * 100).toFixed(2);
-        return `${formatted.endsWith(".00") ? formatted.slice(0, -3) : formatted}%`;
+      ].filter(hand => hand.enabled).map(hand => ({ ...hand, element: TWINMAGE_ELEMENTS.find(element => element.id === hand.elementId) })).filter(hand => hand.element);
+      if (!selectedHands.length) return { className: "Twinmage", classKey: "twinmage", sources: [], emptyMessage: "Enable at least one hand for damage calculations in Configuration." };
+      const attackSpeedMultiplier = Number(stats.attackSpeed || 0) / 100;
+      const baseActivationRate = selectedHands.length === 1 ? 1.4 : .8;
+      const sinistraStacks = count("Twinmage-Hand-Boost-L");
+      const dextraStacks = count("Twinmage-Hand-Boost-R");
+      const handMultiplier = position => {
+        const positive = position === "Primary hand" ? sinistraStacks : dextraStacks;
+        const negative = position === "Primary hand" ? dextraStacks : sinistraStacks;
+        return 1 + (positive * 5 - negative * 3) / 100;
       };
-      const criticalChancePercent = Number(latestCalculation.stats.criticalChance || 0);
-      const criticalDamagePercent = Number(latestCalculation.stats.criticalDamage || 0);
-      const criticalChance = Math.max(0, criticalChancePercent) / 100;
-      const appliedCriticalChancePercent = criticalChance * 100;
-      const criticalDamageMultiplier = criticalDamagePercent / 100;
-      const effectiveCriticalMultiplier = (criticalDamageMultiplier - 1) * criticalChance + 1;
-      const attackSpeedBase = hands.length === 1 ? 1.4 : 0.8;
-      const attackSpeedMultiplier = Number(latestCalculation.stats.attackSpeed || 0) / 100;
-      const calculatedHands = hands.map((hand, handIndex) => {
-        const overallMultiplier = Number(latestCalculation.stats.overallDamage || 0) / 100;
-        const elementalMultiplier = Number(latestCalculation.stats[hand.element.damageStat] || 0) / 100;
-        const criticalMultiplier = hand.element.canCrit ? effectiveCriticalMultiplier : 1;
-        const unroundedDamage = hand.element.baseDamage * overallMultiplier * elementalMultiplier * criticalMultiplier;
-        const totalDamage = Math.round(unroundedDamage);
-        const instancesPerSecond = attackSpeedBase * attackSpeedMultiplier;
-        const baseStatusChances = Object.fromEntries(Object.entries(hand.element.statusChances).map(([status, chance]) => {
-          const bonus = STATUS_CHANCE_BONUSES[status];
-          return [status, chance + (bonus ? count(bonus.upgradeId) * bonus.chancePerStack : 0)];
-        }));
-        const effectiveStatusChances = Object.fromEntries(Object.entries(baseStatusChances).map(([status, chance]) =>
-          [status, attackSpeedMultiplier > 0 ? chance / attackSpeedMultiplier : 0]
-        ));
-        const dps = totalDamage * instancesPerSecond;
-        const uptime = DAMAGE_PLACEHOLDERS.uptime;
-        const totalDps = dps * uptime;
-        return { ...hand, columnKey: `hand-${handIndex}`, sourceIcon: hand.element.image, baseStatusChances, effectiveStatusChances, damage: { overallMultiplier, elementalMultiplier, criticalMultiplier, unroundedDamage, totalDamage, instancesPerSecond, dps, uptime, totalDps } };
+      const handSources = selectedHands.map((hand, index) => {
+        const sourceMultiplier = handMultiplier(hand.position);
+        const statuses = Object.entries(hand.element.statusChances).flatMap(([statusId, chance]) => {
+          const effective = effectiveSourceStatusChance(statusId, chance, attackSpeedMultiplier);
+          return effective == null ? [] : [{ id: statusId, chance: effective }];
+        });
+        return {
+          id: `twinmage-hand-${index}`, name: hand.element.handName, position: hand.position,
+          sourceIcon: hand.element.image, element: hand.element.id, baseDamage: hand.element.baseDamage, canCrit: true,
+          activationRate: baseActivationRate * attackSpeedMultiplier * sourceMultiplier,
+          instancesPerActivation: 1, projectiles: 1, sourceMultiplier, statuses,
+          handAttackSpeedMultiplier: sourceMultiplier, baseActivationRate
+        };
       });
-      const masteryColumns = count("Twinmage_Mastery") > 0 ? calculatedHands.map((hand, handIndex) => {
-        const element = { ...hand.element, handName: `${hand.element.name} Blast`, baseDamage: hand.element.baseDamage * 0.25 };
-        const overallMultiplier = hand.damage.overallMultiplier;
-        const elementalMultiplier = hand.damage.elementalMultiplier;
-        const criticalMultiplier = hand.damage.criticalMultiplier;
-        const unroundedDamage = element.baseDamage * overallMultiplier * elementalMultiplier * criticalMultiplier;
-        const totalDamage = Math.round(unroundedDamage);
-        const instancesPerSecond = hand.damage.instancesPerSecond;
-        const dps = totalDamage * instancesPerSecond;
-        const uptime = DAMAGE_PLACEHOLDERS.uptime;
-        const totalDps = dps * uptime;
-        return { position: "Mastery explosion", columnKey: `mastery-${handIndex}`, linkedHandKey: hand.columnKey, originHandName: hand.element.handName, sourceBaseDamage: hand.element.baseDamage, sourceUpgradeId: "Twinmage_Mastery", element, isMasteryExplosion: true, baseStatusChances: { ...hand.baseStatusChances }, effectiveStatusChances: { ...hand.effectiveStatusChances }, damage: { overallMultiplier, elementalMultiplier, criticalMultiplier, unroundedDamage, totalDamage, instancesPerSecond, dps, uptime, totalDps } };
-      }) : [];
-      const attackSources = [...calculatedHands, ...masteryColumns];
-      const criticalInstanceRate = attackSources
-        .filter(hand => hand.element.canCrit)
-        .reduce((sum, hand) => sum + hand.damage.instancesPerSecond, 0);
-      const criticalHitsPerSecond = criticalInstanceRate * criticalChance;
-      const chargedStrikeStacks = count("Charged_Strike");
-      const chargedStrikeColumn = chargedStrikeStacks > 0 ? (() => {
-        const element = { id: "physical", name: "Physical", handName: "Charged Strike", baseDamage: 15 + Math.max(0, chargedStrikeStacks - 1) * 10, damageStat: "physicalDamage", canCrit: false, statusChances: {} };
-        const overallMultiplier = Number(latestCalculation.stats.overallDamage || 0) / 100;
-        const elementalMultiplier = Number(latestCalculation.stats.physicalDamage || 0) / 100;
-        const criticalMultiplier = 1;
-        const unroundedDamage = element.baseDamage * overallMultiplier * elementalMultiplier * criticalMultiplier;
-        const totalDamage = Math.round(unroundedDamage);
-        const instancesPerSecond = criticalHitsPerSecond;
-        const dps = totalDamage * instancesPerSecond;
-        const uptime = DAMAGE_PLACEHOLDERS.uptime;
-        const totalDps = dps * uptime;
-        return { position: "Upgrade effect", columnKey: "charged-strike", sourceUpgradeId: "Charged_Strike", element, isTriggeredEffect: true, chargedStrikeStacks, baseStatusChances: {}, effectiveStatusChances: {}, damage: { overallMultiplier, elementalMultiplier, criticalMultiplier, unroundedDamage, totalDamage, instancesPerSecond, dps, uptime, totalDps } };
-      })() : null;
-      const burningHands = attackSources.filter(hand => Number(hand.effectiveStatusChances.burning) > 0);
-      const bossAdjustedBurningRate = burningHands.reduce((sum, hand) =>
-        sum + hand.damage.instancesPerSecond * hand.effectiveStatusChances.burning, 0
-      ) / BURNING.bossApplicationPenalty;
-      const burningInterval = bossAdjustedBurningRate > 0 ? 1 / bossAdjustedBurningRate : Infinity;
-      const burningStacks = BURNING.baseStacks + count("Sticky") * BURNING.stacksPerSticky;
-      const burningDuration = burningStacks * BURNING.durationPerStack;
-      const burningRawUptime = bossAdjustedBurningRate > 0 ? burningDuration / burningInterval : 0;
-      const burningUptime = Math.min(1, burningRawUptime);
-      const bleedingHands = attackSources.filter(hand => Number(hand.effectiveStatusChances.bleeding) > 0);
-      const bossAdjustedBleedingRate = bleedingHands.reduce((sum, hand) =>
-        sum + hand.damage.instancesPerSecond * hand.effectiveStatusChances.bleeding, 0
-      ) / BLEEDING.bossApplicationPenalty;
-      const bleedingInterval = bossAdjustedBleedingRate > 0 ? 1 / bossAdjustedBleedingRate : Infinity;
-      const bleedingStacks = BLEEDING.baseStacks + count("Sticky") * BLEEDING.stacksPerSticky;
-      const bleedingDuration = bleedingStacks * BLEEDING.durationPerStack;
-      const bleedingRawUptime = bossAdjustedBleedingRate > 0 ? bleedingDuration / bleedingInterval : 0;
-      const bleedingUptime = Math.min(1, bleedingRawUptime);
-      const nonDamageStatuses = NON_DAMAGE_STATUS_DEFINITIONS.map(definition => {
-        const sources = attackSources.filter(hand => Number(hand.effectiveStatusChances[definition.id]) > 0);
-        const bossAdjustedApplicationRate = sources.reduce((sum, hand) =>
-          sum + hand.damage.instancesPerSecond * hand.effectiveStatusChances[definition.id], 0
-        ) / definition.bossApplicationPenalty;
-        const applicationInterval = bossAdjustedApplicationRate > 0 ? 1 / bossAdjustedApplicationRate : Infinity;
-        return { ...definition, sources, bossAdjustedApplicationRate, applicationInterval };
-      }).filter(status => status.sources.length);
-      const burningColumn = burningHands.length ? (() => {
-        const element = { id: "burning", handName: "Burning", baseDamage: 25, damageStat: "fireDamage", canCrit: false, statusChances: {} };
-        const overallMultiplier = Number(latestCalculation.stats.overallDamage || 0) / 100;
-        const elementalMultiplier = Number(latestCalculation.stats.fireDamage || 0) / 100;
-        const criticalMultiplier = 1;
-        const unroundedDamage = element.baseDamage * overallMultiplier * elementalMultiplier * criticalMultiplier;
-        const totalDamage = Math.round(unroundedDamage);
-        const instancesPerSecond = 0.5;
-        const dps = totalDamage * instancesPerSecond;
-        const uptime = burningUptime;
-        const totalDps = dps * uptime;
-        return { position: "Status effect", columnKey: "burning", statusId: "burning", statusDuration: burningDuration, statusInterval: burningInterval, element, isStatusEffect: true, effectiveStatusChances: {}, damage: { overallMultiplier, elementalMultiplier, criticalMultiplier, unroundedDamage, totalDamage, instancesPerSecond, dps, uptime, totalDps } };
-      })() : null;
-      const bleedingColumn = bleedingHands.length ? (() => {
-        const element = { id: "bleeding", name: "Physical", handName: "Bleeding", baseDamage: 25, damageStat: "physicalDamage", canCrit: false, statusChances: {} };
-        const overallMultiplier = Number(latestCalculation.stats.overallDamage || 0) / 100;
-        const elementalMultiplier = Number(latestCalculation.stats.physicalDamage || 0) / 100;
-        const criticalMultiplier = 1;
-        const unroundedDamage = element.baseDamage * overallMultiplier * elementalMultiplier * criticalMultiplier;
-        const totalDamage = Math.round(unroundedDamage);
-        const instancesPerSecond = 0.8;
-        const dps = totalDamage * instancesPerSecond;
-        const uptime = bleedingUptime;
-        const totalDps = dps * uptime;
-        return { position: "Status effect", columnKey: "bleeding", statusId: "bleeding", statusDuration: bleedingDuration, statusInterval: bleedingInterval, element, isStatusEffect: true, effectiveStatusChances: {}, damage: { overallMultiplier, elementalMultiplier, criticalMultiplier, unroundedDamage, totalDamage, instancesPerSecond, dps, uptime, totalDps } };
-      })() : null;
-      const statusColumns = [burningColumn, bleedingColumn].filter(Boolean).map((column, index) => ({ ...column, isStatusGroupStart: index === 0 }));
-      const triggeredColumns = [chargedStrikeColumn].filter(Boolean);
-      const damageColumns = [...attackSources, ...triggeredColumns, ...statusColumns];
-      const combinedTotalDps = damageColumns.reduce((sum, hand) => sum + hand.damage.totalDps, 0);
-      const damageTypeId = hand => hand.element.damageStat.replace(/Damage$/, "").toLowerCase();
-      const damageTypeName = hand => hand.element.name || `${damageTypeId(hand)[0].toUpperCase()}${damageTypeId(hand).slice(1)}`;
-      const combinedDpsBreakdown = Object.values(damageColumns.reduce((groups, hand) => {
-        const id = damageTypeId(hand);
-        groups[id] ||= { id, name: damageTypeName(hand), exact: 0 };
-        groups[id].exact += hand.damage.totalDps;
-        return groups;
-      }, {})).map(item => ({ ...item, value: twoDecimals(item.exact) }));
+      const masterySources = count("Twinmage_Mastery") > 0 ? handSources.map((source, index) => ({
+        ...source, id: `twinmage-mastery-${index}`, name: `${TWINMAGE_ELEMENTS.find(element => element.id === source.element)?.name || source.name} Blast`,
+        position: "Mastery explosion", sourceUpgradeId: "Twinmage_Mastery", baseDamage: source.baseDamage * .25,
+        trigger: { type: "sourceActivation", sourceId: source.id }, linkedSourceId: source.id
+      })) : [];
+      const primarySource = handSources.find(source => source.position === "Primary hand");
+      const sharedSources = primarySource
+        ? sharedUpgradeSourceSpecs("twinmage", primarySource.activationRate, attackSpeedMultiplier).map(source => source.id.endsWith("flaming-spirit") ? { ...source, sourceMultiplier: primarySource.sourceMultiplier } : source)
+        : sharedUpgradeSourceSpecs("twinmage", 0, attackSpeedMultiplier);
+      return { className: "Twinmage", classKey: "twinmage", sources: [...handSources, ...masterySources, ...sharedSources] };
+    }
+
+    function buildUnifiedCalculationModel() {
+      const stats = latestCalculation.stats;
+      const sourceModel = selectedClass === "Twinmage" ? buildTwinmageSourceModel(stats)
+        : selectedClass === "Gunmancer" ? buildGunmancerSourceModel(stats)
+          : selectedClass === "Thaumaturge" ? buildThaumaturgeSourceModel(stats)
+            : null;
+      if (!sourceModel) return null;
+      const criticalChancePercent = count("Pocket_Abacus") > 0 ? 20 : Number(stats.criticalChance || 0);
+      const elementalMultipliers = calculationElementMultipliers(stats);
+      const sources = sourceModel.sources.map(source => ({
+        ...source,
+        overallMultiplier: Number(stats.overallDamage || 0) / 100,
+        elementalMultiplier: elementalMultipliers[source.element] || 1
+      }));
+      const calculation = EclipticaCalculationEngine.calculate({
+        sources,
+        criticalChance: Math.max(0, criticalChancePercent) / 100,
+        criticalDamageMultiplier: Number(stats.criticalDamage || 0) / 100,
+        overallMultiplier: Number(stats.overallDamage || 0) / 100,
+        elementalMultipliers,
+        statusDefinitions: { ...DAMAGE_STATUS_DEFINITIONS, ...Object.fromEntries(NON_DAMAGE_STATUS_DEFINITIONS.map(status => [status.id, status])) },
+        stickyStacks: count("Sticky")
+      });
+      return { ...sourceModel, ...calculation, criticalChancePercent, criticalDamagePercent: Number(stats.criticalDamage || 0) };
+    }
+
+    function renderUnifiedCalculations(options = {}) {
+      const { render = true } = options;
+      const content = $("#calculation-content");
+      const model = buildUnifiedCalculationModel();
+      if (!model) {
+        if (render) content.innerHTML = '<div class="calculation-empty">Damage calculations are currently available for Twinmage, Gunmancer, and Thaumaturge.</div>';
+        return { combinedTotalDps: 0 };
+      }
+      if (model.emptyMessage) {
+        if (render) content.innerHTML = `<div class="calculation-empty">${escapeHtml(model.emptyMessage)}</div>`;
+        return { combinedTotalDps: 0 };
+      }
+      if (!render) return { combinedTotalDps: model.combinedTotalDps };
+
+      const number = value => Number(value).toFixed(2);
+      const rateNumber = value => Number(value).toFixed(4).replace(/0+$/, "").replace(/\.$/, "");
+      const percent = value => `${Number(value * 100).toFixed(2).replace(/\.00$/, "")}%`;
       const calculationAttributes = (key, formula, refs = []) => `data-calculation-key="${escapeHtml(key)}" data-calculation-formula="${escapeHtml(formula)}" data-calculation-refs="${escapeHtml(refs.join("|"))}" tabindex="0"`;
-      const damageTypeAttributes = hand => `data-calculation-damage-type="${escapeHtml(damageTypeName(hand))}" data-calculation-damage-id="${escapeHtml(damageTypeId(hand))}"`;
-      const sourceUpgradeAttributes = hand => hand.sourceUpgradeId ? `data-calculation-source-upgrade="${escapeHtml(hand.sourceUpgradeId)}"` : "";
-      const sourceIconAttributes = hand => hand.sourceIcon ? `data-calculation-source-icon="${escapeHtml(hand.sourceIcon)}"` : "";
-      const damageKey = (hand, rowKey) => `damage:${hand.columnKey}:${rowKey}`;
-      const sourceFormula = hand => {
-        const statusLines = Object.entries(hand.baseStatusChances || {}).map(([status, chance]) =>
-          `${status[0].toUpperCase()}${status.slice(1)}: ${twoDecimals(chance * 100)}% ÷ ${twoDecimals(attackSpeedMultiplier * 100)}% AS = ${twoDecimals(hand.effectiveStatusChances[status] * 100)}%`
-        );
-        const masteryLine = hand.isMasteryExplosion ? `\n${hand.originHandName} × 25%` : "";
-        const triggerLine = hand.isTriggeredEffect ? `\nTriggers on crit · ${twoDecimals(hand.damage.instancesPerSecond)}/s` : "";
-        return `${hand.element.handName}\n${hand.element.name || "Fire"} · Base ${hand.element.baseDamage}${masteryLine}${triggerLine}\nCrit: ${hand.element.canCrit ? "Yes" : "No"}\n${statusLines.length ? statusLines.join("\n") : "Status chance: —"}`;
+      const damageKey = (source, rowKey) => `damage:${source.id}:${rowKey}`;
+      const sourceIconAttributes = source => source.sourceIcon ? `data-calculation-source-icon="${escapeHtml(source.sourceIcon)}"` : "";
+      const sourceUpgradeAttributes = source => source.sourceUpgradeId ? `data-calculation-source-upgrade="${escapeHtml(source.sourceUpgradeId)}"` : "";
+      const damageTypeAttributes = source => `data-calculation-damage-type="${escapeHtml(source.element)}" data-calculation-damage-id="${escapeHtml(source.element)}"`;
+      const hasSourceMultiplier = model.damageSources.some(source => !source.isStatusEffect && Math.abs(source.damage.sourceMultiplier - 1) > .0001);
+      const hasMultipleProjectiles = model.attackSources.some(source => source.projectiles > 1);
+      const sourceStatusLines = source => source.statuses.map(status => `${status.name || model.statuses.find(item => item.id === status.id)?.name || status.id} chance: ${percent(status.chance)} per instance`);
+      const sourceFormula = source => [
+        source.name,
+        `${source.element[0].toUpperCase()}${source.element.slice(1)} · Base ${source.baseDamage}`,
+        `Crit: ${source.canCrit ? "Yes" : "No"}`,
+        ...(source.projectiles > 1 ? [`Projectiles: ${source.projectiles}`] : []),
+        ...sourceStatusLines(source)
+      ].join("\n");
+      const rateFormula = source => {
+        if (source.isStatusEffect) return `1 ÷ ${number(1 / source.damage.instancesPerSecond)}s = ${number(source.damage.instancesPerSecond)}/s`;
+        if (source.trigger?.type === "onCrit") return `Crits per second = ${number(model.criticalHitsPerSecond)}/s`;
+        if (source.trigger?.type === "primaryActivation") return `Matches primary activations = ${number(source.damage.instancesPerSecond)}/s`;
+        if (source.trigger?.type === "cooldown") return `Cooldown trigger = ${number(source.damage.instancesPerSecond)}/s`;
+        if (source.trigger?.type === "sourceActivation") return `Matches source activations = ${number(source.damage.instancesPerSecond)}/s`;
+        return `${number(source.activationRate || 0)} activations/s × ${source.instancesPerActivation} instances = ${number(source.damage.instancesPerSecond)}/s`;
       };
       const rows = [
-        { key: "base", label: "Base Damage", value: hand => String(hand.element.baseDamage), exact: hand => hand.element.baseDamage, formula: hand => hand.isMasteryExplosion ? `${hand.sourceBaseDamage} × 25% = ${hand.element.baseDamage}` : hand.isTriggeredEffect ? `15 + (${Math.max(0, hand.chargedStrikeStacks - 1)} × 10) = ${hand.element.baseDamage}` : `Base = ${hand.element.baseDamage}`, refs: hand => hand.isMasteryExplosion ? [`calc:damage:${hand.linkedHandKey}:base`] : hand.isTriggeredEffect ? ["upgrade:Charged_Strike"] : [], damageValue: true },
-        { key: "overall", label: "Overall Damage", value: hand => twoDecimals(hand.damage.overallMultiplier), exact: hand => hand.damage.overallMultiplier, formula: hand => `${twoDecimals(hand.damage.overallMultiplier * 100)}% ÷ 100 = ${twoDecimals(hand.damage.overallMultiplier)}`, refs: () => ["stat:overallDamage"] },
-        { key: "elemental", label: "Elemental Damage", value: hand => twoDecimals(hand.damage.elementalMultiplier), exact: hand => hand.damage.elementalMultiplier, formula: hand => `${twoDecimals(hand.damage.elementalMultiplier * 100)}% ÷ 100 = ${twoDecimals(hand.damage.elementalMultiplier)}`, refs: hand => [`stat:${hand.element.damageStat}`] },
-        { key: "crit", label: "Eff. Crit Multiplier", value: hand => hand.element.canCrit ? twoDecimals(hand.damage.criticalMultiplier) : "-", exact: hand => hand.damage.criticalMultiplier, formula: hand => hand.element.canCrit ? `Crit box = ${twoDecimals(hand.damage.criticalMultiplier)}` : "Cannot crit = × 1", refs: hand => hand.element.canCrit ? ["calc:crit:effective"] : [] },
-        { key: "total", label: "Total Damage", value: hand => String(hand.damage.totalDamage), exact: hand => hand.damage.totalDamage, formula: hand => {
-          const bareDamage = hand.element.baseDamage * hand.damage.overallMultiplier * hand.damage.elementalMultiplier;
-          const nonCriticalDamage = Math.round(bareDamage);
-          const fullCriticalDamage = Math.round(bareDamage * criticalDamageMultiplier);
-          const averageLine = `Average: ${hand.element.baseDamage} × ${twoDecimals(hand.damage.overallMultiplier)} × ${twoDecimals(hand.damage.elementalMultiplier)} × ${twoDecimals(hand.damage.criticalMultiplier)} ≈ ${hand.damage.totalDamage}`;
-          return hand.element.canCrit
-            ? `${averageLine}\nNon-crit: ${hand.element.baseDamage} × ${twoDecimals(hand.damage.overallMultiplier)} × ${twoDecimals(hand.damage.elementalMultiplier)} ≈ ${nonCriticalDamage}\nCrit: ${twoDecimals(bareDamage)} × ${twoDecimals(criticalDamageMultiplier)} ≈ ${fullCriticalDamage}`
-            : `${hand.element.baseDamage} × ${twoDecimals(hand.damage.overallMultiplier)} × ${twoDecimals(hand.damage.elementalMultiplier)} ≈ ${hand.damage.totalDamage}`;
-        }, refs: hand => ["base", "overall", "elemental", "crit"].map(key => `calc:${damageKey(hand, key)}`).concat(hand.element.canCrit ? ["calc:crit:damage", "stat:criticalDamage"] : []), sectionBreak: true, damageValue: true },
-        { key: "rate", label: "Instance Rate", value: hand => twoDecimals(hand.damage.instancesPerSecond), exact: hand => hand.damage.instancesPerSecond, formula: hand => hand.isStatusEffect ? `Fixed = ${twoDecimals(hand.damage.instancesPerSecond)}/s` : hand.isMasteryExplosion ? `Matches ${hand.originHandName} = ${twoDecimals(hand.damage.instancesPerSecond)}/s` : hand.isTriggeredEffect ? `Crits per second = ${twoDecimals(hand.damage.instancesPerSecond)}/s` : `${twoDecimals(attackSpeedBase)} × ${twoDecimals(attackSpeedMultiplier)} = ${twoDecimals(hand.damage.instancesPerSecond)}/s`, refs: hand => hand.isStatusEffect ? [] : hand.isMasteryExplosion ? [`calc:damage:${hand.linkedHandKey}:rate`] : hand.isTriggeredEffect ? ["calc:crit:rate"] : ["stat:attackSpeed"] },
-        { key: "dps", label: "DPS", value: hand => twoDecimals(hand.damage.dps), exact: hand => hand.damage.dps, formula: hand => `${hand.damage.totalDamage} × ${twoDecimals(hand.damage.instancesPerSecond)} = ${twoDecimals(hand.damage.dps)}`, refs: hand => [`calc:${damageKey(hand, "total")}`, `calc:${damageKey(hand, "rate")}`], damageValue: true },
-        { key: "uptime", label: "Uptime", value: hand => uptimePercent(hand.damage.uptime), exact: hand => hand.damage.uptime, formula: hand => hand.isStatusEffect ? `${twoDecimals(hand.statusDuration)}s ÷ ${twoDecimals(hand.statusInterval)}s = ${twoDecimals(hand.damage.uptime * 100)}%` : hand.isTriggeredEffect ? "Matches primary/secondary attacks = 100%" : "Always active = 100%", refs: hand => hand.isStatusEffect ? [`calc:${hand.statusId}:duration`, `calc:${hand.statusId}:interval`] : hand.isTriggeredEffect ? calculatedHands.map(source => `calc:${damageKey(source, "uptime")}`) : [], },
-        { key: "total-dps", label: "Total DPS", value: hand => twoDecimals(hand.damage.totalDps), exact: hand => hand.damage.totalDps, formula: hand => `${twoDecimals(hand.damage.dps)} × ${twoDecimals(hand.damage.uptime * 100)}% = ${twoDecimals(hand.damage.totalDps)}`, refs: hand => [`calc:${damageKey(hand, "dps")}`, `calc:${damageKey(hand, "uptime")}`], sectionBreak: true, total: true, damageValue: true }
+        { key: "base", label: "Base Damage", value: source => String(source.baseDamage), exact: source => source.baseDamage, formula: source => `Base damage per instance = ${source.baseDamage}`, damageValue: true },
+        { key: "overall", label: "Overall Damage", value: source => source.damage.overallDamageApplies ? number(source.damage.overallMultiplier) : "-", exact: source => source.damage.overallDamageApplies ? source.damage.overallMultiplier : null, formula: source => source.damage.overallDamageApplies ? `${number(source.damage.overallMultiplier * 100)}% ÷ 100` : "Does not apply to this damage source", refs: source => source.damage.overallDamageApplies ? ["stat:overallDamage"] : [] },
+        { key: "elemental", label: "Elemental Damage", value: source => number(source.damage.elementalMultiplier), exact: source => source.damage.elementalMultiplier, formula: source => source.damageScaling === .75 ? `1 + (elemental multiplier - 1) × 75% = ${number(source.damage.elementalMultiplier)}` : `${number(source.damage.elementalMultiplier * 100)}% ÷ 100`, refs: source => [`stat:${source.element}Damage`] },
+        { key: "crit", label: "Eff. Crit Multiplier", value: source => source.canCrit ? number(source.damage.effectiveCriticalMultiplier) : "-", exact: source => source.damage.effectiveCriticalMultiplier, formula: source => source.canCrit ? `Effective crit multiplier = ${number(source.damage.effectiveCriticalMultiplier)}` : "This damage cannot crit", refs: source => source.canCrit ? ["calc:crit:effective"] : [] },
+        ...(hasSourceMultiplier ? [{ key: "source-multiplier", label: "Hand Damage", value: source => source.isStatusEffect || Math.abs(source.damage.sourceMultiplier - 1) < .0001 ? "-" : number(source.damage.sourceMultiplier), exact: source => source.damage.sourceMultiplier, formula: source => source.isStatusEffect || Math.abs(source.damage.sourceMultiplier - 1) < .0001 ? "Does not apply to this damage source" : `Source multiplier = ${number(source.damage.sourceMultiplier)}` }] : []),
+        ...(hasMultipleProjectiles ? [{ key: "projectiles", label: "Projectiles / Shot", value: source => source.isStatusEffect || source.trigger ? "-" : String(source.projectiles), exact: source => source.projectiles, formula: source => source.isStatusEffect || source.trigger ? "Not projectile-count based" : `${source.projectiles} damage instances per activation` }] : []),
+        { key: "average", label: "Average Damage", value: source => number(source.damage.averageDamage), exact: source => source.damage.averageDamage, formula: source => source.canCrit ? `Non-crit: ${source.damage.nonCriticalDamage}\nCrit: ${source.damage.criticalDamage}\nAverage: ${source.damage.nonCriticalDamage} × ${number((1 - model.context.criticalChance) * 100)}% + ${source.damage.criticalDamage} × ${number(model.context.criticalChance * 100)}% = ${number(source.damage.averageDamage)}` : `Average: ${number(source.damage.averageDamage)}`, refs: source => ["base", "overall", "elemental", "crit"].map(key => `calc:${damageKey(source, key)}`), sectionBreak: true, damageValue: true },
+        { key: "rate", label: "Instance Rate", value: source => number(source.damage.instancesPerSecond), exact: source => source.damage.instancesPerSecond, formula: rateFormula, refs: source => source.trigger?.type === "onCrit" ? ["calc:crit:rate"] : source.isStatusEffect ? [] : ["stat:attackSpeed"] },
+        { key: "dps", label: "DPS", value: source => number(source.damage.dps), exact: source => source.damage.dps, formula: source => `${number(source.damage.averageDamage)} × ${number(source.damage.instancesPerSecond)} = ${number(source.damage.dps)}`, refs: source => [`calc:${damageKey(source, "average")}`, `calc:${damageKey(source, "rate")}`], damageValue: true },
+        { key: "uptime", label: "Uptime", value: source => percent(source.damage.uptime), exact: source => source.damage.uptime, formula: source => source.isStatusEffect ? `${number(source.statusDuration)}s duration ÷ ${number(source.statusInterval)}s interval = ${percent(source.damage.uptime)}` : "Always active = 100%" },
+        { key: "total-dps", label: "Total DPS", value: source => number(source.damage.totalDps), exact: source => source.damage.totalDps, formula: source => `${number(source.damage.dps)} × ${percent(source.damage.uptime)} = ${number(source.damage.totalDps)}`, refs: source => [`calc:${damageKey(source, "dps")}`, `calc:${damageKey(source, "uptime")}`], sectionBreak: true, total: true, damageValue: true }
       ];
-      const criticalRows = [
-        { key: "crit:chance", label: "Crit Chance", value: `${twoDecimals(criticalChancePercent)}%`, exact: criticalChancePercent, formula: criticalChancePercent < 0 ? `Stats = ${twoDecimals(criticalChancePercent)}% · used = 0.00%` : `Stats = ${twoDecimals(criticalChancePercent)}%`, refs: ["stat:criticalChance"] },
-        { key: "crit:damage", label: "Crit Damage", value: `${twoDecimals(criticalDamagePercent)}%`, exact: criticalDamagePercent, formula: `Stats = ${twoDecimals(criticalDamagePercent)}%`, refs: ["stat:criticalDamage"] },
-        { key: "crit:rate", label: "Crits per second", value: twoDecimals(criticalHitsPerSecond), exact: criticalHitsPerSecond, formula: `(${attackSources.filter(hand => hand.element.canCrit).map(hand => twoDecimals(hand.damage.instancesPerSecond)).join(" + ")}) × ${twoDecimals(appliedCriticalChancePercent)}% = ${twoDecimals(criticalHitsPerSecond)}`, refs: ["calc:crit:chance", ...attackSources.filter(hand => hand.element.canCrit).map(hand => `calc:${damageKey(hand, "rate")}`)] },
-        { key: "crit:effective", label: "Eff. Crit Multiplier", value: twoDecimals(effectiveCriticalMultiplier), exact: effectiveCriticalMultiplier, formula: `(${twoDecimals(criticalDamagePercent)}% − 100%) × ${twoDecimals(appliedCriticalChancePercent)}% + 100% = ${twoDecimals(effectiveCriticalMultiplier)}`, refs: ["calc:crit:chance", "calc:crit:damage"] }
-      ];
-      const burningRateTerms = burningHands.map(hand => `${twoDecimals(hand.damage.instancesPerSecond)} × (${twoDecimals(hand.baseStatusChances.burning * 100)}% ÷ ${twoDecimals(attackSpeedMultiplier * 100)}% AS)`);
-      const burningRows = [
-        { key: "burning:interval", label: "Average time between applications", value: `${twoDecimals(burningInterval)} s`, exact: burningInterval, formula: `1 ÷ ((${burningRateTerms.join(" + ")}) ÷ ${BURNING.bossApplicationPenalty}) = ${twoDecimals(burningInterval)}s`, refs: ["stat:attackSpeed", ...burningHands.map(hand => `calc:${damageKey(hand, "rate")}`)] },
-        { key: "burning:stacks", label: "Stacks per application", value: String(burningStacks), exact: burningStacks, formula: `${BURNING.baseStacks} + (${count("Sticky")} × ${BURNING.stacksPerSticky}) = ${burningStacks}`, refs: ["upgrade:Sticky"] },
-        { key: "burning:duration", label: "Burn duration", value: `${twoDecimals(burningDuration)} s`, exact: burningDuration, formula: `${burningStacks} × ${twoDecimals(BURNING.durationPerStack)}s = ${twoDecimals(burningDuration)}s`, refs: ["calc:burning:stacks"] },
-        { key: "burning:uptime", label: "Uptime", value: `${twoDecimals(burningUptime * 100)}%`, valueHtml: burningRawUptime > 1 ? `100% <span class="status-uncapped-uptime">(${twoDecimals(burningRawUptime * 100)}%)</span>` : null, exact: burningUptime, formula: burningRawUptime > 1 ? `${twoDecimals(burningDuration)}s ÷ ${twoDecimals(burningInterval)}s = ${twoDecimals(burningRawUptime * 100)}% → capped at 100%` : `${twoDecimals(burningDuration)}s ÷ ${twoDecimals(burningInterval)}s = ${twoDecimals(burningUptime * 100)}%`, refs: ["calc:burning:duration", "calc:burning:interval"] }
-      ];
-      const bleedingRateTerms = bleedingHands.map(hand => `${twoDecimals(hand.damage.instancesPerSecond)} × (${twoDecimals(hand.baseStatusChances.bleeding * 100)}% ÷ ${twoDecimals(attackSpeedMultiplier * 100)}% AS)`);
-      const bleedingRows = [
-        { key: "bleeding:interval", label: "Average time between applications", value: `${twoDecimals(bleedingInterval)} s`, exact: bleedingInterval, formula: `1 ÷ ((${bleedingRateTerms.join(" + ")}) ÷ ${BLEEDING.bossApplicationPenalty}) = ${twoDecimals(bleedingInterval)}s`, refs: ["stat:attackSpeed", ...bleedingHands.map(hand => `calc:${damageKey(hand, "rate")}`)] },
-        { key: "bleeding:stacks", label: "Stacks per application", value: String(bleedingStacks), exact: bleedingStacks, formula: `${BLEEDING.baseStacks} + (${count("Sticky")} × ${BLEEDING.stacksPerSticky}) = ${bleedingStacks}`, refs: ["upgrade:Sticky"] },
-        { key: "bleeding:duration", label: "Bleed duration", value: `${twoDecimals(bleedingDuration)} s`, exact: bleedingDuration, formula: `${bleedingStacks} × ${twoDecimals(BLEEDING.durationPerStack)}s = ${twoDecimals(bleedingDuration)}s`, refs: ["calc:bleeding:stacks"] },
-        { key: "bleeding:uptime", label: "Uptime", value: `${twoDecimals(bleedingUptime * 100)}%`, valueHtml: bleedingRawUptime > 1 ? `100% <span class="status-uncapped-uptime">(${twoDecimals(bleedingRawUptime * 100)}%)</span>` : null, exact: bleedingUptime, formula: bleedingRawUptime > 1 ? `${twoDecimals(bleedingDuration)}s ÷ ${twoDecimals(bleedingInterval)}s = ${twoDecimals(bleedingRawUptime * 100)}% → capped at 100%` : `${twoDecimals(bleedingDuration)}s ÷ ${twoDecimals(bleedingInterval)}s = ${twoDecimals(bleedingUptime * 100)}%`, refs: ["calc:bleeding:duration", "calc:bleeding:interval"] }
-      ];
-      const nonDamageStatusRows = status => {
-        const rateTerms = status.sources.map(hand => `${twoDecimals(hand.damage.instancesPerSecond)} × (${twoDecimals(hand.baseStatusChances[status.id] * 100)}% ÷ ${twoDecimals(attackSpeedMultiplier * 100)}% AS)`);
-        return [
-          { key: `${status.id}:interval`, label: "Average time between applications", value: `${twoDecimals(status.applicationInterval)} s`, exact: status.applicationInterval, formula: `1 ÷ ((${rateTerms.join(" + ")}) ÷ ${status.bossApplicationPenalty}) = ${twoDecimals(status.applicationInterval)}s`, refs: ["stat:attackSpeed", ...status.sources.map(hand => `calc:${damageKey(hand, "rate")}`)] },
-          { key: `${status.id}:stacks`, label: "Stacks per application", value: "?", exact: "unknown", formula: "Not configured yet", refs: [], unknown: true },
-          { key: `${status.id}:uptime`, label: "Uptime", value: "?", exact: "unknown", formula: "Not configured yet", refs: [], unknown: true }
-        ];
+      const statusRows = status => {
+        const breakdown = {
+          sources: status.sources.map(source => ({ name: source.name, instancesPerSecond: rateNumber(source.instancesPerSecond), chance: percent(source.applicationChance), applicationsPerSecond: rateNumber(source.applicationsPerSecond) })),
+          total: rateNumber(status.applicationsPerSecond), interval: number(status.applicationInterval)
+        };
+        const rowsForStatus = [{
+          key: `${status.id}:interval`, label: "Average time between applications", value: `${number(status.applicationInterval)} s`, exact: status.applicationInterval,
+          formula: `1 ÷ ${rateNumber(status.applicationsPerSecond)} applications/s = ${number(status.applicationInterval)}s`, applicationBreakdown: breakdown
+        }];
+        if (status.stacksPerApplication == null) {
+          rowsForStatus.push({ key: `${status.id}:stacks`, label: "Stacks per application", value: "?", exact: "unknown", formula: "Not configured yet", unknown: true });
+          rowsForStatus.push({ key: `${status.id}:uptime`, label: "Uptime", value: "?", exact: "unknown", formula: "Not configured yet", unknown: true });
+        } else {
+          rowsForStatus.push({ key: `${status.id}:stacks`, label: "Stacks per application", value: String(status.stacksPerApplication), exact: status.stacksPerApplication, formula: `${status.baseStacks} base + Sticky` });
+          rowsForStatus.push({ key: `${status.id}:duration`, label: `${status.name} duration`, value: `${number(status.duration)} s`, exact: status.duration, formula: `${status.stacksPerApplication} stacks × ${number(status.durationPerStack)}s` });
+          rowsForStatus.push({ key: `${status.id}:uptime`, label: "Uptime", value: percent(status.uptime), valueHtml: status.rawUptime > 1 ? `100% <span class="status-uncapped-uptime">(${percent(status.rawUptime)})</span>` : null, exact: status.uptime, formula: `${number(status.duration)}s ÷ ${number(status.applicationInterval)}s = ${percent(status.rawUptime)}${status.rawUptime > 1 ? "; capped at 100%" : ""}` });
+        }
+        return rowsForStatus;
       };
-
-      content.innerHTML = `<div class="calculation-stack">
-        <section class="damage-calculation">
-          <div class="damage-table-wrap">
-            <table class="damage-table ${calculatedHands.length === 1 ? "single-hand" : "dual-hand"}">
-              <colgroup><col class="damage-label-col"><col class="damage-data-col" span="${damageColumns.length}"></colgroup>
-              <thead><tr><th scope="col"><span class="damage-hand-position">Current build</span></th>${damageColumns.map(hand => `
-                <th scope="col" class="damage-column ${hand.isStatusEffect ? "status-effect-column" : ""} ${hand.isStatusGroupStart ? "status-group-start" : ""}" data-element="${hand.element.id}" ${calculationAttributes(`source:${hand.columnKey}`, sourceFormula(hand))} ${sourceUpgradeAttributes(hand)} ${sourceIconAttributes(hand)}>
-                  <span class="damage-hand-position">${escapeHtml(hand.position)}</span>
-                  <span class="damage-hand-title">${escapeHtml(hand.element.handName)}</span>
-                </th>`).join("")}</tr></thead>
-              <tbody>${rows.map(row => `<tr class="${row.sectionBreak ? "damage-section-break " : ""}${row.total ? "damage-total-row" : ""}">
-                <th scope="row" class="damage-label">${escapeHtml(row.label)}</th>
-                ${damageColumns.map(hand => `<td class="damage-column ${hand.isStatusEffect ? "status-effect-column" : ""} ${hand.isStatusGroupStart ? "status-group-start" : ""}" data-element="${hand.element.id}">
-                  <span class="damage-value" data-exact-value="${escapeHtml(String(row.exact(hand)))}" ${calculationAttributes(damageKey(hand, row.key), row.formula(hand), row.refs(hand))} ${row.damageValue ? damageTypeAttributes(hand) : ""} ${sourceUpgradeAttributes(hand)} ${sourceIconAttributes(hand)}>${escapeHtml(row.value(hand))}</span>
-                </td>`).join("")}
-              </tr>`).join("")}</tbody>
-              <tfoot><tr class="damage-combined-row">
-                <th scope="row" class="damage-combined-label">Combined DPS</th>
-                <td colspan="${damageColumns.length}" class="damage-column">
-                  <span class="damage-combined-value" data-exact-value="${escapeHtml(String(combinedTotalDps))}" data-calculation-breakdown="${escapeHtml(JSON.stringify(combinedDpsBreakdown))}" ${calculationAttributes("damage:combined:total-dps", `${damageColumns.map(hand => twoDecimals(hand.damage.totalDps)).join(" + ")} = ${twoDecimals(combinedTotalDps)}`, damageColumns.map(hand => `calc:${damageKey(hand, "total-dps")}`))}>${twoDecimals(combinedTotalDps)}</span>
-                </td>
-              </tr></tfoot>
-            </table>
-          </div>
-        </section>
-        <div class="calculation-secondary">
-          <section class="crit-table-wrap">
-            <table class="crit-table">
-              <thead><tr><th colspan="2">Critical hits</th></tr></thead>
-              <tbody>${criticalRows.map(row => `<tr>
-                <th scope="row" class="crit-label">${escapeHtml(row.label)}</th>
-                <td class="crit-value" data-exact-value="${escapeHtml(String(row.exact))}" ${calculationAttributes(row.key, row.formula, row.refs)}>${escapeHtml(row.value)}</td>
-              </tr>`).join("")}</tbody>
-            </table>
-          </section>
-          ${burningHands.length ? `<section class="status-table-wrap" data-status="burning">
-            <table class="status-table">
-              <thead><tr><th colspan="2">Status: Burning</th></tr></thead>
-              <tbody>${burningRows.map(row => `<tr>
-                <th scope="row" class="status-label">${escapeHtml(row.label)}</th>
-                <td class="status-value" data-exact-value="${escapeHtml(String(row.exact))}" ${calculationAttributes(row.key, row.formula, row.refs)}>${row.valueHtml || escapeHtml(row.value)}</td>
-              </tr>`).join("")}</tbody>
-            </table>
-          </section>` : ""}
-          ${bleedingHands.length ? `<section class="status-table-wrap" data-status="bleeding">
-            <table class="status-table">
-              <thead><tr><th colspan="2">Status: Bleeding</th></tr></thead>
-              <tbody>${bleedingRows.map(row => `<tr>
-                <th scope="row" class="status-label">${escapeHtml(row.label)}</th>
-                <td class="status-value" data-exact-value="${escapeHtml(String(row.exact))}" ${calculationAttributes(row.key, row.formula, row.refs)}>${row.valueHtml || escapeHtml(row.value)}</td>
-              </tr>`).join("")}</tbody>
-            </table>
-          </section>` : ""}
-          ${nonDamageStatuses.map(status => {
-            const statusRows = nonDamageStatusRows(status);
-            return `<section class="status-table-wrap" data-status="${escapeHtml(status.id)}">
-              <table class="status-table">
-                <thead><tr><th colspan="2">Status: ${escapeHtml(status.name)}</th></tr></thead>
-                <tbody>${statusRows.map(row => `<tr>
-                  <th scope="row" class="status-label">${escapeHtml(row.label)}</th>
-                  <td class="status-value ${row.unknown ? "status-value-unknown" : ""}" data-exact-value="${escapeHtml(String(row.exact))}" ${calculationAttributes(row.key, row.formula, row.refs)}>${escapeHtml(row.value)}</td>
-                </tr>`).join("")}</tbody>
-                ${status.note ? `<tfoot><tr><td class="status-note" colspan="2">${escapeHtml(status.note)}</td></tr></tfoot>` : ""}
-              </table>
-            </section>`;
-          }).join("")}
-        </div>
-      </div>`;
+      const statusMarkup = model.statuses.map(status => {
+        const rowsForStatus = statusRows(status);
+        return `<section class="status-table-wrap" data-status="${escapeHtml(status.id)}"><table class="status-table"><thead><tr><th colspan="2">Status: ${escapeHtml(status.name)}</th></tr></thead><tbody>${rowsForStatus.map(row => `<tr><th scope="row" class="status-label">${escapeHtml(row.label)}</th><td class="status-value ${row.unknown ? "status-value-unknown" : ""}" data-exact-value="${escapeHtml(String(row.exact))}" ${row.applicationBreakdown ? `data-application-breakdown="${escapeHtml(JSON.stringify(row.applicationBreakdown))}"` : ""} ${calculationAttributes(row.key, row.formula)}>${row.valueHtml || escapeHtml(row.value)}</td></tr>`).join("")}</tbody>${status.note ? `<tfoot><tr><td class="status-note" colspan="2">${escapeHtml(status.note)}</td></tr></tfoot>` : ""}</table></section>`;
+      }).join("");
+      const criticalRows = [
+        ["crit:chance", "Crit Chance", `${number(model.criticalChancePercent)}%`, count("Pocket_Abacus") > 0 ? "Pocket Abacus guarantees every fifth damage instance: effective 20%" : `Stats = ${number(model.criticalChancePercent)}%`],
+        ["crit:damage", "Crit Damage", `${number(model.criticalDamagePercent)}%`, `Stats = ${number(model.criticalDamagePercent)}%`],
+        ["crit:rate", "Crits per second", number(model.criticalHitsPerSecond), `(${number(model.criticalInstanceRate)}) × ${number(model.context.criticalChance * 100)}% = ${number(model.criticalHitsPerSecond)}`],
+        ["crit:effective", "Eff. Crit Multiplier", number(1 + (model.context.criticalDamageMultiplier - 1) * model.context.criticalChance), "Weighted critical multiplier"]
+      ];
+      const combinedBreakdown = Object.values(model.damageSources.reduce((groups, source) => {
+        groups[source.element] ||= { id: source.element, name: source.element[0].toUpperCase() + source.element.slice(1), exact: 0 };
+        groups[source.element].exact += source.damage.totalDps;
+        return groups;
+      }, {})).map(item => ({ ...item, value: number(item.exact) }));
+      const columns = model.damageSources;
+      content.innerHTML = `<div class="calculation-stack"><section class="damage-calculation"><div class="damage-table-wrap"><table class="damage-table ${model.classKey === "twinmage" && model.attackSources.filter(source => source.position?.includes("hand")).length > 1 ? "dual-hand" : "single-hand"} shared-ability-table"><colgroup><col class="damage-label-col"><col class="damage-data-col" span="${columns.length}"></colgroup><thead><tr><th scope="col"><span class="damage-hand-position">Current build</span><span class="damage-hand-title">${escapeHtml(model.className)}</span></th>${columns.map(source => `<th scope="col" class="damage-column ${source.isStatusEffect ? "status-effect-column" : ""} ${source.isStatusGroupStart ? "status-group-start" : ""}" data-element="${escapeHtml(source.element)}" ${calculationAttributes(`source:${source.id}`, sourceFormula(source))} ${sourceIconAttributes(source)} ${sourceUpgradeAttributes(source)}><span class="damage-hand-position">${escapeHtml(source.position)}</span><span class="damage-hand-title">${escapeHtml(source.name)}</span></th>`).join("")}</tr></thead><tbody>${rows.map(row => `<tr class="${row.sectionBreak ? "damage-section-break " : ""}${row.total ? "damage-total-row" : ""}"><th scope="row" class="damage-label">${escapeHtml(row.label)}</th>${columns.map(source => `<td class="damage-column ${source.isStatusEffect ? "status-effect-column" : ""} ${source.isStatusGroupStart ? "status-group-start" : ""}" data-element="${escapeHtml(source.element)}"><span class="damage-value ${row.value(source) === "-" ? "damage-value-unknown" : ""}" data-exact-value="${escapeHtml(String(row.exact(source)))}" ${calculationAttributes(damageKey(source, row.key), row.formula(source), row.refs ? row.refs(source) : [])} ${row.damageValue ? damageTypeAttributes(source) : ""} ${sourceIconAttributes(source)} ${sourceUpgradeAttributes(source)}>${escapeHtml(row.value(source))}</span></td>`).join("")}</tr>`).join("")}</tbody><tfoot><tr class="damage-combined-row"><th scope="row" class="damage-combined-label">Combined DPS</th><td colspan="${columns.length}" class="damage-column"><span class="damage-combined-value" data-exact-value="${escapeHtml(String(model.combinedTotalDps))}" data-calculation-breakdown="${escapeHtml(JSON.stringify(combinedBreakdown))}" ${calculationAttributes("damage:combined:total-dps", `${columns.map(source => number(source.damage.totalDps)).join(" + ")} = ${number(model.combinedTotalDps)}`)}>${number(model.combinedTotalDps)}</span></td></tr></tfoot></table></div></section><div class="calculation-secondary"><section class="crit-table-wrap"><table class="crit-table"><thead><tr><th colspan="2">Critical hits</th></tr></thead><tbody>${criticalRows.map(row => `<tr><th scope="row" class="crit-label">${escapeHtml(row[1])}</th><td class="crit-value" ${calculationAttributes(row[0], row[3])}>${escapeHtml(row[2])}</td></tr>`).join("")}</tbody></table></section>${statusMarkup}</div></div>`;
+      return { combinedTotalDps: model.combinedTotalDps };
     }
+
+    function renderCalculations(options = {}) {
+      return renderUnifiedCalculations(options);
+    }
+
+    window.EclipticaBuildForge = {
+      buildUnifiedCalculationModel,
+      renderCalculations
+    };
 
     function renderRunes() {
       const curseOptions = `<option value="">No curse selected</option>${CURSES.map(curse =>
@@ -2001,6 +2550,39 @@
       renderCalculations();
       renderPicked();
       renderCatalog();
+      renderDpsRanking();
+      renderArtifacts();
+      renderRunes();
+      updateShareWidget();
+    }
+
+    function changeClass(nextClass) {
+      if (!CLASS_FAMILIES.includes(nextClass) || nextClass === selectedClass) return;
+      dpsRankingRun += 1;
+      if (dpsRankingFrame !== null) {
+        cancelAnimationFrame(dpsRankingFrame);
+        dpsRankingFrame = null;
+      }
+      if (dpsRankingSnapshot) {
+        restoreCounts(dpsRankingSnapshot);
+        restoreRankingBuildOptions(dpsRankingBuildOptionsSnapshot);
+        dpsRankingSnapshot = null;
+        dpsRankingBuildOptionsSnapshot = null;
+      }
+      hideCalculationTooltip();
+      selectedClass = nextClass;
+      buildOptions.berserkerSoulStacks = berserkerMaximumStacks(rawCount(berserkerVariantForClass()?.id));
+      safeSetStorage("ecliptica-upgrade-explorer-class", selectedClass);
+      saveBuildOptions();
+      syncClassUi();
+      $("#configuration-content").replaceChildren();
+      $("#calculation-content").replaceChildren();
+      renderStats();
+      renderConfiguration();
+      renderCalculations();
+      renderPicked();
+      renderCatalog();
+      renderDpsRanking();
       renderArtifacts();
       renderRunes();
       updateShareWidget();
@@ -2046,12 +2628,24 @@
 
     $("#catalog").addEventListener("click", event => {
       const card = event.target.closest(".upgrade");
-      if (card) setCount(card.dataset.id, count(card.dataset.id) + 1);
+      const upgrade = card && upgradeIndex.get(card.dataset.id);
+      if (upgrade && isUpgradeConditionallyAvailable(upgrade)) setCount(card.dataset.id, count(card.dataset.id) + 1);
+    });
+
+    $("#dps-ranking-list").addEventListener("click", event => {
+      const row = event.target.closest("[data-dps-upgrade-id]");
+      if (row) setCount(row.dataset.dpsUpgradeId, count(row.dataset.dpsUpgradeId) + 1);
+    });
+
+    $("#dps-ranking-toggle").addEventListener("click", () => {
+      dpsRankingVisible = !dpsRankingVisible;
+      renderDpsRanking();
     });
 
     $("#catalog").addEventListener("contextmenu", event => {
       const card = event.target.closest(".upgrade");
-      if (!card) return;
+      const upgrade = card && upgradeIndex.get(card.dataset.id);
+      if (!upgrade || !isUpgradeConditionallyAvailable(upgrade)) return;
       event.preventDefault();
       setCount(card.dataset.id, count(card.dataset.id) - 1);
     });
@@ -2085,6 +2679,31 @@
     });
 
     $("#configuration-content").addEventListener("change", event => {
+      const berserkerStacksInput = event.target.closest('input[name="berserker-soul-stacks"]');
+      if (berserkerStacksInput) {
+        buildOptions.berserkerSoulStacks = Math.min(berserkerMaximumStacks(), Math.max(0, Math.floor(Number(berserkerStacksInput.value) || 0)));
+        saveBuildOptions();
+        render();
+        return;
+      }
+      const gunmancerDpsToggle = event.target.closest('input[type="checkbox"][name="gunmancer-dps"]');
+      if (gunmancerDpsToggle) {
+        const group = gunmancerDpsToggle.value;
+        if (group !== "primary" && group !== "secondary") return;
+        if (gunmancerDpsToggle.checked) {
+          buildOptions.gunmancerPrimaryDamage = group === "primary";
+          buildOptions.gunmancerSecondaryDamage = group === "secondary";
+        } else {
+          gunmancerDpsToggle.checked = true;
+        }
+        saveBuildOptions();
+        renderConfiguration();
+        renderCalculations();
+        renderCatalog();
+        renderDpsRanking();
+        updateShareWidget();
+        return;
+      }
       const damageToggle = event.target.closest('input[type="checkbox"][name$="-damage"]');
       if (damageToggle) {
         if (damageToggle.name === "twinmage-primary-damage") buildOptions.twinmagePrimaryDamage = damageToggle.checked;
@@ -2096,6 +2715,22 @@
         saveBuildOptions();
         renderConfiguration();
         renderCalculations();
+        renderCatalog();
+        renderDpsRanking();
+        updateShareWidget();
+        return;
+      }
+      const gunmancerChoice = event.target.closest('input[type="radio"][name^="gunmancer-"]');
+      if (gunmancerChoice) {
+        if (gunmancerChoice.name === "gunmancer-primary" && GUNMANCER_ABILITIES.primary.some(ability => ability.id === gunmancerChoice.value)) buildOptions.gunmancerPrimary = gunmancerChoice.value;
+        else if (gunmancerChoice.name === "gunmancer-secondary" && GUNMANCER_ABILITIES.secondary.some(ability => ability.id === gunmancerChoice.value)) buildOptions.gunmancerSecondary = gunmancerChoice.value;
+        else if (gunmancerChoice.name === "gunmancer-airblast" && ["none", "primary", "secondary"].includes(gunmancerChoice.value)) buildOptions.gunmancerAirblastTarget = gunmancerChoice.value;
+        else return;
+        saveBuildOptions();
+        renderConfiguration();
+        renderCalculations();
+        renderCatalog();
+        renderDpsRanking();
         updateShareWidget();
         return;
       }
@@ -2106,6 +2741,22 @@
       saveBuildOptions();
       renderConfiguration();
       renderCalculations();
+      renderCatalog();
+      renderDpsRanking();
+      updateShareWidget();
+    });
+
+    $("#configuration-content").addEventListener("input", event => {
+      const berserkerStacksInput = event.target.closest('input[name="berserker-soul-stacks"]');
+      if (!berserkerStacksInput) return;
+      buildOptions.berserkerSoulStacks = Math.min(berserkerMaximumStacks(), Math.max(0, Math.floor(Number(berserkerStacksInput.value) || 0)));
+      $("#configuration-content").querySelectorAll('input[name="berserker-soul-stacks"]').forEach(input => { input.value = buildOptions.berserkerSoulStacks; });
+      const summary = $("#configuration-content").querySelector(".berserker-stack-summary");
+      if (summary) summary.textContent = `${buildOptions.berserkerSoulStacks} / ${berserkerMaximumStacks()}`;
+      saveBuildOptions();
+      renderStats();
+      renderCalculations();
+      renderDpsRanking();
       updateShareWidget();
     });
 
@@ -2167,10 +2818,7 @@
     });
 
     $("#class-select").addEventListener("change", event => {
-      selectedClass = CLASS_FAMILIES.includes(event.target.value) ? event.target.value : "Thaumaturge";
-      localStorage.setItem("ecliptica-upgrade-explorer-class", selectedClass);
-      syncClassUi();
-      render();
+      changeClass(event.target.value);
     });
 
     $("#reset-build").addEventListener("click", () => {
@@ -2182,6 +2830,12 @@
       buildOptions.twinmageSecondary = "lightning";
       buildOptions.twinmagePrimaryDamage = true;
       buildOptions.twinmageSecondaryDamage = true;
+      buildOptions.gunmancerPrimary = "va11";
+      buildOptions.gunmancerSecondary = "photon";
+      buildOptions.gunmancerPrimaryDamage = true;
+      buildOptions.gunmancerSecondaryDamage = false;
+      buildOptions.gunmancerAirblastTarget = "none";
+      buildOptions.berserkerSoulStacks = 0;
       activeRuneSlot = 0;
       saveCounts();
       saveBuildOptions();
