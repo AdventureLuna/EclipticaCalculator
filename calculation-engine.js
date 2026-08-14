@@ -15,7 +15,7 @@
     const bareDamage = finite(source.baseDamage) * overallMultiplier * elementalMultiplier * sourceMultiplier;
     const nonCriticalDamage = Math.round(bareDamage);
     const criticalDamage = source.canCrit ? Math.round(bareDamage * criticalDamageMultiplier) : nonCriticalDamage;
-    const averageDamage = source.canCrit
+    const averageDamagePerHit = source.canCrit
       ? nonCriticalDamage * (1 - criticalChance) + criticalDamage * criticalChance
       : nonCriticalDamage;
     const effectiveCriticalMultiplier = source.canCrit ? 1 + (criticalDamageMultiplier - 1) * criticalChance : 1;
@@ -23,7 +23,7 @@
       bareDamage,
       nonCriticalDamage,
       criticalDamage,
-      averageDamage,
+      averageDamagePerHit,
       effectiveCriticalMultiplier,
       overallMultiplier,
       elementalMultiplier,
@@ -31,25 +31,35 @@
     };
   }
 
-  function resolveRate(spec, criticalHitsPerSecond = 0) {
-    if (spec.trigger?.type === "onCrit") return criticalHitsPerSecond * finite(spec.trigger.instancesPerTrigger, 1);
+  function resolveActivationRate(spec, criticalHitsPerSecond = 0) {
+    if (spec.trigger?.type === "onCrit") return criticalHitsPerSecond;
     if (spec.instanceRate != null) return Math.max(0, finite(spec.instanceRate));
-    return Math.max(0, finite(spec.activationRate) * Math.max(0, finite(spec.instancesPerActivation, 1)));
+    return Math.max(0, finite(spec.activationRate));
   }
 
   function resolveSource(spec, context, criticalHitsPerSecond = 0) {
-    const instancesPerSecond = resolveRate(spec, criticalHitsPerSecond);
+    const activationRate = resolveActivationRate(spec, criticalHitsPerSecond);
+    const configuredHits = spec.hitsPerActivation
+      ?? (spec.trigger?.type === "onCrit" ? spec.trigger.instancesPerTrigger : null)
+      ?? spec.instancesPerActivation
+      ?? 1;
+    const hitsPerActivation = Math.max(0, finite(configuredHits, 1));
+    const hitsPerSecond = activationRate * hitsPerActivation;
     const damage = calculateDamage(spec, context.criticalChance, context.criticalDamageMultiplier);
-    const dps = damage.averageDamage * instancesPerSecond;
+    const averageDamage = damage.averageDamagePerHit * hitsPerActivation;
+    const dps = averageDamage * activationRate;
     const uptime = spec.uptime == null ? 1 : Math.max(0, Math.min(1, finite(spec.uptime, 1)));
     return {
       ...spec,
-      instancesPerActivation: Math.max(0, finite(spec.instancesPerActivation, 1)),
-      projectiles: Math.max(1, finite(spec.projectiles, spec.instancesPerActivation || 1)),
+      hitsPerActivation,
+      instancesPerActivation: hitsPerActivation,
+      projectiles: Math.max(1, finite(spec.projectiles, hitsPerActivation || 1)),
       statuses: Array.isArray(spec.statuses) ? spec.statuses.filter(status => Number.isFinite(status.chance) && status.chance > 0) : [],
       damage: {
         ...damage,
-        instancesPerSecond,
+        averageDamage,
+        activationRate,
+        hitsPerSecond,
         dps,
         uptime,
         totalDps: dps * uptime,
@@ -61,11 +71,11 @@
   function weightedSourceMultiplier(sources, statusId) {
     const weighted = sources.reduce((total, source) => {
       const status = source.statuses.find(item => item.id === statusId);
-      return total + source.damage.instancesPerSecond * finite(status?.chance) * finite(source.damage.sourceMultiplier, 1);
+      return total + source.damage.hitsPerSecond * finite(status?.chance) * finite(source.damage.sourceMultiplier, 1);
     }, 0);
     const weight = sources.reduce((total, source) => {
       const status = source.statuses.find(item => item.id === statusId);
-      return total + source.damage.instancesPerSecond * finite(status?.chance);
+      return total + source.damage.hitsPerSecond * finite(status?.chance);
     }, 0);
     return weight > 0 ? weighted / weight : 1;
   }
@@ -78,13 +88,16 @@
       const sources = attackSources.flatMap(source => {
         const status = source.statuses.find(item => item.id === statusId);
         if (!status) return [];
-        const applicationChance = finite(status.chance) / penalty;
+        const baseApplicationChance = finite(status.chance);
+        const applicationChance = baseApplicationChance / penalty;
         return [{
           sourceId: source.id,
           name: source.name,
-          instancesPerSecond: source.damage.instancesPerSecond,
+          hitsPerSecond: source.damage.hitsPerSecond,
+          baseApplicationChance,
+          bossApplicationPenalty: penalty,
           applicationChance,
-          applicationsPerSecond: source.damage.instancesPerSecond * applicationChance
+          applicationsPerSecond: source.damage.hitsPerSecond * applicationChance
         }];
       });
       const applicationsPerSecond = sources.reduce((sum, source) => sum + source.applicationsPerSecond, 0);
@@ -131,6 +144,8 @@
       uptime: status.uptime == null ? 1 : status.uptime,
       isStatusEffect: true,
       statusId: status.id,
+      rateInterval: status.tickInterval,
+      rateIntervalLabel: "tick interval",
       statusDuration: status.duration,
       statusInterval: status.applicationInterval,
       damageScaling: magnitude,
@@ -151,10 +166,10 @@
     const onCritSpecs = input.sources.filter(source => source.trigger?.type === "onCrit");
     const directSources = directSpecs.map(source => resolveSource(source, context));
     const criticalSources = directSources.filter(source => source.canCrit);
-    const criticalInstanceRate = criticalSources.reduce((sum, source) => sum + source.damage.instancesPerSecond, 0);
-    const criticalHitsPerSecond = criticalInstanceRate * context.criticalChance;
-    const weightedCriticalSourceMultiplier = criticalInstanceRate > 0
-      ? criticalSources.reduce((sum, source) => sum + source.damage.instancesPerSecond * source.damage.sourceMultiplier, 0) / criticalInstanceRate
+    const criticalHitEligibleRate = criticalSources.reduce((sum, source) => sum + source.damage.hitsPerSecond, 0);
+    const criticalHitsPerSecond = criticalHitEligibleRate * context.criticalChance;
+    const weightedCriticalSourceMultiplier = criticalHitEligibleRate > 0
+      ? criticalSources.reduce((sum, source) => sum + source.damage.hitsPerSecond * source.damage.sourceMultiplier, 0) / criticalHitEligibleRate
       : 1;
     const triggeredSources = onCritSpecs.map(source => resolveSource({
       ...source,
@@ -173,12 +188,13 @@
       damageSources,
       statuses,
       criticalSources,
-      criticalInstanceRate,
+      criticalHitEligibleRate,
+      criticalInstanceRate: criticalHitEligibleRate,
       criticalHitsPerSecond,
       weightedCriticalSourceMultiplier,
       combinedTotalDps
     };
   }
 
-  return { calculate, calculateDamage, resolveRate, attenuate };
+  return { calculate, calculateDamage, resolveRate: resolveActivationRate, resolveActivationRate, attenuate };
 });
