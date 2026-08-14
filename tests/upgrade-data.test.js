@@ -8,7 +8,7 @@ assert.match(page, /"Thaumaturge: Proficiency","[^"]*Cooldown: -10% \(-10% per s
 assert.match(page, /"Spellsword: Proficiency","Piercing Strike range: \+4/);
 assert.match(page, /"Spellsword: Mastery","Restore 2 \(\+2 per stack\) HP/);
 assert.match(page, /"Spellsword: Whirlwind","[^"]*Charge Time \+30% \(\+30% per stack\)"/);
-assert.match(page, /"Gunmancer: Proficiency \(Photon Condenser\)","Photon Condenser Projectile Count \+2/);
+assert.match(page, /"Gunmancer: Proficiency \(Photon Condenser\)","Charged Photon Condenser Projectile Count \+2/);
 assert.match(page, /"Thunder Aura","Every second inflict 25/);
 assert.match(page, /"Big and Wrathful","[^"]*Defense at LOW HP -25%"/);
 assert.match(page, /\["healingReceived", "Poison_Aspect", -5\]/);
