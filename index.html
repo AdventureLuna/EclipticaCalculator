@@ -435,6 +435,37 @@
       gap: 12px;
     }
 
+    .dps-ranking {
+      margin: 22px 0 24px;
+      border-top: 1px solid var(--line);
+      padding-top: 18px;
+    }
+    .dps-ranking-help { margin: 5px 0 12px; color: var(--muted); font-size: .72rem; line-height: 1.45; }
+    .dps-ranking-list { display: grid; gap: 6px; }
+    .dps-ranking-item {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 26px 34px minmax(0, 1fr) auto;
+      gap: 9px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--ink);
+      background: rgba(255,255,255,.025);
+      padding: 6px 9px;
+      text-align: left;
+      cursor: pointer;
+    }
+    .dps-ranking-item:hover, .dps-ranking-item:focus-visible { border-color: rgba(var(--class-rgb), .7); background: rgba(var(--class-rgb), .1); outline: none; }
+    .dps-ranking-item img { width: 34px; height: 34px; display: block; object-fit: contain; }
+    .dps-ranking-rank { color: var(--muted); font-size: .68rem; font-variant-numeric: tabular-nums; text-align: center; }
+    .dps-ranking-name { min-width: 0; overflow: hidden; color: var(--ink); font-size: .76rem; font-weight: 800; text-overflow: ellipsis; white-space: nowrap; }
+    .dps-ranking-increase { color: #9cffba; font-size: .78rem; font-variant-numeric: tabular-nums; font-weight: 950; white-space: nowrap; }
+    .dps-ranking-item.negative .dps-ranking-increase { color: #ff9da9; }
+    .dps-ranking-loading, .dps-ranking-empty { display: flex; align-items: center; gap: 9px; min-height: 46px; color: var(--muted); font-size: .75rem; }
+    .dps-ranking-spinner { width: 14px; height: 14px; flex: 0 0 auto; border: 2px solid rgba(255,255,255,.18); border-top-color: rgb(var(--class-rgb)); border-radius: 50%; animation: dps-ranking-spin .75s linear infinite; }
+    @keyframes dps-ranking-spin { to { transform: rotate(360deg); } }
+
     .section-title {
       margin: 0;
       font-size: 1rem;
@@ -700,7 +731,7 @@
           <span class="summary" id="result-summary"></span>
         </div>
         <div class="tools">
-          <input class="control" id="search" type="search" placeholder="Search upgrades…" autocomplete="off">
+          <input class="control" id="search" type="search" placeholder="Search upgradesƒ?İ" autocomplete="off">
           <select class="control" id="family-filter" aria-label="Filter by family">
             <option value="">All families</option>
             <option>Thaumaturge</option>
@@ -715,6 +746,14 @@
             <option>Legendary</option>
           </select>
         </div>
+        <section class="dps-ranking" aria-labelledby="dps-ranking-title">
+          <div class="catalog-head">
+            <h2 class="section-title" id="dps-ranking-title">DPS upgrade ranking</h2>
+            <span class="summary" id="dps-ranking-summary"></span>
+          </div>
+          <p class="dps-ranking-help">Estimated DPS change from adding one stack to the current Twinmage build. Select a row to add that stack.</p>
+          <div class="dps-ranking-list" id="dps-ranking-list"></div>
+        </section>
         <div class="catalog" id="catalog"></div>
         </div>
         <div class="tab-pane" id="tab-artifacts" role="tabpanel" hidden>
@@ -818,7 +857,7 @@
       ["Endurance Crystal","Rare","Last_Stand.png","Last Stand","Upon taking damage which leaves you at 1 HP, receive X stacks of the INVINCIBLE status effect"],
       ["Endurance Crystal","Rare","Life_Leech.png","Life Leech","Restore 1 (+1 per stack) HP upon dealing damage. Overall Damage: -10% (-10% per stack) Health Regeneration: -50% (-50% per stack) Received Healing -20% (-20% per stack)"],
       ["Endurance Crystal","Rare","Masochist.png","Masochist","Reduce number of stacks taken of the PARALYZED status effect by X (X per stack) ELECTRIC Defense: +15% (+15% per stack) PHYSICAL Defense: -10% (-15% per stack)"],
-      ["Endurance Crystal","Rare","Nature's_Gift.png","Nature’s Gift","Spawn up to 3 (+1 per level) personal Healing Auras at a random location on the stage every 10 seconds which heals you for 20 HP."],
+      ["Endurance Crystal","Rare","Nature's_Gift.png","Natureƒ?Ts Gift","Spawn up to 3 (+1 per level) personal Healing Auras at a random location on the stage every 10 seconds which heals you for 20 HP."],
       ["Endurance Crystal","Legendary","Benison_of_Purification.png","Benison of Purification","Periodically fire a projectile dealing 25 (+X per stack) LUMINOUS damage at the closest enemy within 64 meters. SHADOW Defense +10% (+10% per stack) Overall Defense -5% (-5% per stack)"],
       ["Endurance Crystal","Legendary","Curse_of_Wrath.png","Curse of Wrath","Periodically fire a projectile dealing 25 (+X per stack) SHADOW damage at the closest enemy within 32 meters. LUMINOUS Defense -20% (-20% per stack)"],
       ["Endurance Crystal","Legendary","Glass_Cannon.png","Glass Cannon","Damage +30% (+30% per stack) Health -50 (-50 per stack)"],
@@ -836,7 +875,7 @@
       ["Mobility Crystal","Rare","Reactive_Panic.png","Reactive Panic","Taking damage will grant you 1 (+1 per stack) stack of the FRENZIED status effect"],
       ["Mobility Crystal","Rare","Smell_the_Roses.png","Smell the Roses","Falling to low HP will grant you 7 (+2 per stack) stacks of the HASTE status effect with a 30 second Cooldown"],
       ["Mobility Crystal","Rare","Thunder_Aura.png","Thunder Aura","Every second inflict 25 (+X per stack) ELECTRIC Damage to enemies in a radius around you.. Overall Damage: -10% (-X% per stack) Movement Speed: -5% (-X% per stack)"],
-      ["Mobility Crystal","Legendary","Berserker's_Soul.png","Berserker’s Soul","Dealing damage with your main attack grants you a stack of Berserker's Soul, up to X stacks. Each stack grants you +X% Overall Damage, +X% Attack Speed and -X% Health Regeneration. Taking damage sets your stacks to zero. Overall Damage: -20% (-20% per stack) Attack Speed: -40% (-40% per stack)"],
+      ["Mobility Crystal","Legendary","Berserker's_Soul.png","Berserkerƒ?Ts Soul","Dealing damage with your main attack grants you a stack of Berserker's Soul, up to X stacks. Each stack grants you +X% Overall Damage, +X% Attack Speed and -X% Health Regeneration. Taking damage sets your stacks to zero. Overall Damage: -20% (-20% per stack) Attack Speed: -40% (-40% per stack)"],
       ["Mobility Crystal","Legendary","Big_and_Speedy.png","Big and Speedy","Utility Cooldown Rate: +50% (+50% per stack) Overall Defense: -20% (-20% per stack)"],
       ["Mobility Crystal","Legendary","Featherweight.png","Featherweight","Movement Speed: +30% (+30% per stack) Overall Defense: -20% (-20% per stack)"],
       ["Mobility Crystal","Legendary","Heavy_Hand.png","Heavy Hand","Damage +30% (+30% per stack) Attack Speed -40% (-40% per stack)"],
@@ -845,7 +884,7 @@
       ["Mobility Crystal","Legendary","Way_of_the_Law.png","Way of the Law","Periodically switch between the STOP and GO status effects. STOP reduces Movement and Attack Speed, but increases Damage. GO increases Movement and Attack Speed, but decreases Damage"],
       ["Chronowizard","Common","Full_Focus.png","Full Focus","Critical Strike Chance +5% (+5% per stack) Critical Strike Damage +5% (+5% per stack)"],
       ["Chronowizard","Common","Potent_Strike.png","Potent Strike","Critical Strikes have a 6% (+6% per stack) higher chance to inflict a status effect."],
-      ["Chronowizard","Common","Sorcerer's_Mastery.png","Sorcerer’s Mastery","ELEMENTAL Damage +8% (+8% per stack)"],
+      ["Chronowizard","Common","Sorcerer's_Mastery.png","Sorcererƒ?Ts Mastery","ELEMENTAL Damage +8% (+8% per stack)"],
       ["Chronowizard","Common","Strength.png","Strength","PHYSICAL Damage +10% (+10% per stack)"],
       ["Chronowizard","Rare","Clutch_or_Kick.png","Clutch or Kick","Gain +7% (+7% per stack) Overall Damage for every dead player in the party"],
       ["Chronowizard","Rare","Greater_Focus.png","Greater Focus","Critical Strike Chance at low HP +10% (+10% per stack) Critical Strike Damage +3% (+3% per stack)"],
@@ -862,7 +901,7 @@
       ["Chronowizard","Legendary","Flaming_Spirit.png","Flaming Spirit","When at full HP, performing your primary skill fires a fireball dealing 16 (+X per stack) FIRE Damage Received Healing -5% (-5% per stack) Health Regeneration -20% (-20% per stack)"],
       ["Chronowizard","Legendary","Frozen_Heart.png","Frozen Heart","When at full HP, performing your primary skill fires an icicle dealing 18 (+X per stack) FROST damage Received Healing -5% (-5% per stack) Health Regeneration -20% (-20% per stack)"],
       ["Chronowizard","Legendary","Third_Law.png","Third Law","Upon taking Damage, deal 150% (+25% per stack) of its RAW value to enemies around you as PHYSICAL Damage On Fistmage's Parry, deal 50% of the Damage around you as PHYSICAL Damage"],
-      ["Chronowizard","Legendary","Warrior's_Will.png","Warrior’s Will","Using your Utility Skill grants you 4 (+2 per stack) stacks of the EMPOWERED status effect Utility Cooldown Rate -15% (-15% per stack)"]
+      ["Chronowizard","Legendary","Warrior's_Will.png","Warriorƒ?Ts Will","Using your Utility Skill grants you 4 (+2 per stack) stacks of the EMPOWERED status effect Utility Cooldown Rate -15% (-15% per stack)"]
     ].map(([family, rarity, icon, name, effect, explicitId], globalId) => ({
       // Array position is the permanent global ID. Append new upgrades; never reorder or reuse removed IDs.
       family, rarity, icon, name, effect, id: explicitId || icon.replace(".png", ""), globalId
@@ -1025,12 +1064,29 @@
     function loadCounts() {
       try {
         const saved = JSON.parse(localStorage.getItem("ecliptica-upgrade-explorer-v1") || "{}");
-        return saved && typeof saved === "object" ? saved : {};
+        if (!saved || typeof saved !== "object" || Array.isArray(saved)) return {};
+        const validIds = new Set(U.map(upgrade => upgrade.id));
+        return Object.fromEntries(Object.entries(saved)
+          .filter(([id, value]) => validIds.has(id) && Number.isInteger(Number(value)) && Number(value) > 0)
+          .map(([id, value]) => [id, Math.min(100, Number(value))]));
       } catch { return {}; }
     }
 
+    function safeSetStorage(key, value) {
+      try {
+        localStorage.setItem(key, value);
+        return true;
+      } catch {
+        try {
+          localStorage.removeItem(key);
+          localStorage.setItem(key, value);
+          return true;
+        } catch { return false; }
+      }
+    }
+
     function saveCounts() {
-      localStorage.setItem("ecliptica-upgrade-explorer-v1", JSON.stringify(counts));
+      safeSetStorage("ecliptica-upgrade-explorer-v1", JSON.stringify(counts));
     }
 
     function loadBuildOptions() {
@@ -1052,7 +1108,7 @@
     }
 
     function saveBuildOptions() {
-      localStorage.setItem("ecliptica-build-options-v1", JSON.stringify(buildOptions));
+      safeSetStorage("ecliptica-build-options-v1", JSON.stringify(buildOptions));
     }
 
     const upgradeIndex = new Map(U.map(upgrade => [upgrade.id, upgrade]));
@@ -1094,7 +1150,7 @@
       ["overallDefense", "Iron_Skin", 8], ["overallDefense", "Big_and_Speedy", -20],
       ["overallDefense", "Featherweight", -20], ["overallDefense", "Benison_of_Purification", -5],
       ["physicalDefense", "Conductive_Armor", 20], ["physicalDefense", "Cutting_Edge", -5],
-      ["physicalDefense", "Masochist", n => -10 - 15 * (n - 1), { notes: "First stack: −10%. Each additional stack: −15%." }],
+      ["physicalDefense", "Masochist", n => -10 - 15 * (n - 1), { notes: "First stack: ƒ^'10%. Each additional stack: ƒ^'15%." }],
       ...["fireDefense","frostDefense","electricDefense","luminousDefense","shadowDefense","poisonDefense"]
         .map(stat => [stat, "Conductive_Armor", -5]),
       ["frostDefense", "Cold_Blooded", 15], ["fireDefense", "Cold_Blooded", -15],
@@ -1103,7 +1159,7 @@
       ["electricDefense", "Masochist", 15], ["poisonDefense", "Poison_Aspect", 15],
       ["luminousDefense", "Holy_Blessing", 15], ["shadowDefense", "Holy_Blessing", 15],
       ["shadowDefense", "Benison_of_Purification", 10], ["luminousDefense", "Curse_of_Wrath", -20],
-      ["shadowDefense", "Luminous_Aspect", 10, { notes: "Net result of the listed +15% and −5% Shadow Defence modifiers." }],
+      ["shadowDefense", "Luminous_Aspect", 10, { notes: "Net result of the listed +15% and ƒ^'5% Shadow Defence modifiers." }],
       ["luminousDefense", "Shadow_Aspect", -10],
 
       ["overallDamage", "Thaumaturge_Splitshot", -30], ["overallDamage", "Iron_Skin", -2],
@@ -1180,7 +1236,7 @@
         bonus[effect.stat] += total;
 
         const stackNote = typeof effect.value === "number" && selected > 1
-          ? `${selected} stacks × ${formatContribution(effect.stat, effect.value)}.`
+          ? `${selected} stacks Ç- ${formatContribution(effect.stat, effect.value)}.`
           : effect.once && selected > 1
             ? `${selected} selected; the modifier is only applied once.`
             : "";
@@ -1207,13 +1263,13 @@
         if (!artifact) continue;
         const totalMultiplier = artifactCount;
         addBuildStats(Object.fromEntries(Object.entries(artifact.stats).map(([stat, value]) => [stat, value * totalMultiplier])),
-          artifact.name, `Artifact ×${artifactCount}`);
+          artifact.name, `Artifact ַ-${artifactCount}`);
       }
       buildOptions.runes.forEach((runeId, index) => {
         const rune = RUNES.find(item => item.id === runeId);
-        if (rune?.stats) addBuildStats(rune.stats(index + 1), `${RUNE_SLOTS[index]} · ${rune.name}`, "Rune");
+        if (rune?.stats) addBuildStats(rune.stats(index + 1), `${RUNE_SLOTS[index]} ¶ת ${rune.name}`, "Rune");
         const curse = rune && CURSES.find(item => item.id === buildOptions.curses[index]);
-        if (curse?.stats) addBuildStats(curse.stats(index + 1), `${RUNE_SLOTS[index]} · Runic Curse: ${curse.name}`, "Curse");
+        if (curse?.stats) addBuildStats(curse.stats(index + 1), `${RUNE_SLOTS[index]} ¶ת Runic Curse: ${curse.name}`, "Curse");
       });
 
       const caps = {};
@@ -1263,10 +1319,10 @@
       if (wardenStacks) {
         const divisor = 1 + wardenStacks;
         breakdowns.utilityCooldownRate.push({
-          value: `÷${formatNumber(divisor)}`,
+          value: `ַת${formatNumber(divisor)}`,
           type: "Multiplicative",
           source: upgradeIndex.get("Shieldmage_Warden")?.name || "Shieldmage: Warden",
-          notes: `+100% cooldown per stack is converted to recovery rate; ${formatNumber(result.utilityCooldownRate)}% ÷ ${formatNumber(divisor)}.`
+          notes: `+100% cooldown per stack is converted to recovery rate; ${formatNumber(result.utilityCooldownRate)}% ַת ${formatNumber(divisor)}.`
         });
         result.utilityCooldownRate /= divisor;
       }
@@ -1288,7 +1344,7 @@
     function formatStat(stat, value) {
       if (stat === "health" || stat === "extraJumps") return formatNumber(value);
       if (stat === "attackSpeed") return `${Number(Number(value).toFixed(2))}%`;
-      if (stat === "movementSpeed") return `${formatNumber(value)}% · ${formatNumber(7 * value / 100)} m/s`;
+      if (stat === "movementSpeed") return `${formatNumber(value)}% ¶ת ${formatNumber(7 * value / 100)} m/s`;
       return `${formatNumber(value)}%`;
     }
 
@@ -1320,9 +1376,9 @@
       if (cap.kind === "lower") {
         return `<div class="cap-calculation">
           <strong>Lower soft-cap calculation</strong><br>
-          Raw additive sum: <span class="cap-formula">${n(cap.base)} ${cap.bonus < 0 ? "−" : "+"} ${n(Math.abs(cap.bonus))} = ${n(cap.raw)}</span><br>
+          Raw additive sum: <span class="cap-formula">${n(cap.base)} ${cap.bonus < 0 ? "ƒ^'" : "+"} ${n(Math.abs(cap.bonus))} = ${n(cap.raw)}</span><br>
           Negative modifier exceeds the ${n(cap.soft)} lower soft cap.<br>
-          <span class="cap-formula">${formatNumber(cap.soft)}² ÷ |${n(cap.bonus)}| = ${formatNumber(cap.numerator)} ÷ ${n(cap.divisor)} = ${n(cap.effective)}</span>
+          <span class="cap-formula">${formatNumber(cap.soft)}¶‎ ַת |${n(cap.bonus)}| = ${formatNumber(cap.numerator)} ַת ${n(cap.divisor)} = ${n(cap.effective)}</span>
         </div>`;
       }
       if (cap.kind === "hard") {
@@ -1337,9 +1393,9 @@
         <strong>Upper soft-cap calculation</strong><br>
         <em>Warning: the game's exact approaching-hard-cap formula is not yet known; this is an estimate.</em><br>
         Raw additive sum: <span class="cap-formula">${n(cap.base)} + ${n(cap.bonus)} = ${n(cap.raw)}</span><br>
-        Soft cap ${n(cap.soft)} · hard-cap limit ${n(cap.hard)}<br>
-        <span class="cap-formula">${n(cap.soft)} + (${n(cap.range)} × ${n(cap.overflow)} ÷ (${n(cap.range)} + ${n(cap.overflow)})) = ${n(cap.cappedRaw)}</span><br>
-        Effective result: <span class="cap-formula">${n(cap.base)} + ${n(cap.cappedRaw)} − ${n(cap.cappedBase)} = ${n(cap.effective)}</span>
+        Soft cap ${n(cap.soft)} ¶ת hard-cap limit ${n(cap.hard)}<br>
+        <span class="cap-formula">${n(cap.soft)} + (${n(cap.range)} ַ- ${n(cap.overflow)} ַת (${n(cap.range)} + ${n(cap.overflow)})) = ${n(cap.cappedRaw)}</span><br>
+        Effective result: <span class="cap-formula">${n(cap.base)} + ${n(cap.cappedRaw)} ƒ^' ${n(cap.cappedBase)} = ${n(cap.effective)}</span>
       </div>`;
     }
 
@@ -1350,16 +1406,16 @@
       const modifier = calculation.defenseModifier;
       const modifierFormula = modifier === 0
         ? n(calculation.rawDamageTaken)
-        : `${n(DefenseCalculation.BASE_DAMAGE_TAKEN)} ${modifier > 0 ? "−" : "+"} ${n(Math.abs(modifier))} = ${n(calculation.rawDamageTaken)}`;
+        : `${n(DefenseCalculation.BASE_DAMAGE_TAKEN)} ${modifier > 0 ? "ƒ^'" : "+"} ${n(Math.abs(modifier))} = ${n(calculation.rawDamageTaken)}`;
       const capMarkup = calculation.isSoftCapped
         ? `<br>Reduction exceeds the ${n(calculation.softCap)} damage-taken lower soft cap.<br>
-          <span class="cap-formula">${formatNumber(calculation.softCap)}² ÷ ${n(modifier)} = ${formatNumber(calculation.numerator)} ÷ ${n(modifier)} = ${n(calculation.damageTaken)}</span>`
+          <span class="cap-formula">${formatNumber(calculation.softCap)}¶‎ ַת ${n(modifier)} = ${formatNumber(calculation.numerator)} ַת ${n(modifier)} = ${n(calculation.damageTaken)}</span>`
         : "";
       return `<div class="cap-calculation">
         <strong>Defense derived from damage taken</strong><br>
         Defense modifiers apply inversely to damage taken.<br>
         Damage taken: <span class="cap-formula">${modifierFormula}</span>${capMarkup}<br>
-        Shown defense: <span class="cap-formula">100% ÷ ${n(calculation.damageTaken)} = ${n(calculation.defense)}</span>
+        Shown defense: <span class="cap-formula">100% ַת ${n(calculation.damageTaken)} = ${n(calculation.defense)}</span>
       </div>`;
     }
 
@@ -1368,14 +1424,14 @@
       const label = row.dataset.label;
       const entries = latestCalculation?.breakdowns?.[stat] || [];
       const tooltip = $("#stat-tooltip");
-      tooltip.innerHTML = `<h3>${escapeHtml(label)} · ${formatStat(stat, latestCalculation.stats[stat])}</h3>
+      tooltip.innerHTML = `<h3>${escapeHtml(label)} ¶ת ${formatStat(stat, latestCalculation.stats[stat])}</h3>
         <table>
           <thead><tr><th>Value</th><th>Type</th><th>Source</th><th>Notes</th></tr></thead>
           <tbody>${entries.map(entry => `<tr>
             <td class="source-value">${escapeHtml(entry.value)}</td>
             <td class="source-type">${escapeHtml(entry.type)}</td>
             <td>${escapeHtml(entry.source)}</td>
-            <td>${escapeHtml(entry.notes || "—")}</td>
+            <td>${escapeHtml(entry.notes || "ƒ?"")}</td>
           </tr>`).join("")}</tbody>
         </table>
         ${defenseCalculationMarkup(stat)}
@@ -1465,9 +1521,9 @@
         : "";
       tooltip.style.setProperty("--tooltip-accent", accent);
       const contextMarkup = isSource
-        ? `<div class="calculation-tooltip-head"><span class="calculation-tooltip-icon">◆</span>Damage source${damageBadge}</div>
+        ? `<div class="calculation-tooltip-head"><span class="calculation-tooltip-icon">ƒ-Å</span>Damage source${damageBadge}</div>
           ${sourceDetailsMarkup}`
-        : `<div class="calculation-tooltip-head"><span class="calculation-tooltip-icon">ƒ</span>Formula${formulaSourceIcon}${damageBadge}</div>
+        : `<div class="calculation-tooltip-head"><span class="calculation-tooltip-icon">’'</span>Formula${formulaSourceIcon}${damageBadge}</div>
           <div class="calculation-tooltip-expression">${lines.map(line => `<span class="calculation-tooltip-expression-line">${escapeHtml(line)}</span>`).join("")}</div>${breakdownMarkup}`;
       tooltip.innerHTML = `${upgradeMarkup}${contextMarkup}`;
       tooltip.classList.add("visible");
@@ -1520,7 +1576,7 @@
       loadingSharedBuild = true;
       try {
         selectedClass = CLASS_FAMILIES[build.characterId];
-        localStorage.setItem("ecliptica-upgrade-explorer-class", selectedClass);
+        safeSetStorage("ecliptica-upgrade-explorer-class", selectedClass);
         Object.keys(counts).forEach(id => delete counts[id]);
         for (const entry of build.upgrades) {
           const upgrade = U[entry.id];
@@ -1585,7 +1641,7 @@
         }
         $("#copy-status").textContent = "Copied!";
       } catch {
-        $("#copy-status").textContent = "Copy failed — select the link manually.";
+        $("#copy-status").textContent = "Copy failed ƒ?" select the link manually.";
       }
     }
 
@@ -1600,13 +1656,13 @@
     function renderPicked() {
       const selected = U.filter(u => count(u.id));
       const total = selected.reduce((sum, u) => sum + count(u.id), 0);
-      $("#picked-summary").textContent = `${total} upgrade${total === 1 ? "" : "s"} · ${selected.length} unique`;
+      $("#picked-summary").textContent = `${total} upgrade${total === 1 ? "" : "s"} ¶ú ${selected.length} unique`;
       $("#picked-list").innerHTML = selected.length ? selected.map(u => `
         <div class="picked-item ${u.rarity.toLowerCase()}" title="${escapeHtml(u.effect)}">
           <img src="pictures/${encodeURIComponent(u.icon).replaceAll("%2F", "/")}" alt="">
           <span class="picked-name">${escapeHtml(u.name)}</span>
           <span class="picked-stepper">
-            <button type="button" data-action="minus" data-id="${u.id}" aria-label="Remove one ${escapeHtml(u.name)}">−</button>
+            <button type="button" data-action="minus" data-id="${u.id}" aria-label="Remove one ${escapeHtml(u.name)}">ƒ^'</button>
             <span>${count(u.id)}</span>
             <button type="button" data-action="plus" data-id="${u.id}" aria-label="Add one ${escapeHtml(u.name)}">+</button>
           </span>
@@ -1631,24 +1687,89 @@
       $("#result-summary").textContent = `${list.length} of ${availableTotal}`;
       $("#catalog").innerHTML = list.length ? list.map(u => `
         <article class="upgrade ${u.rarity.toLowerCase()} ${count(u.id) ? "selected" : ""}"
-          data-id="${u.id}" title="Left-click to add · Right-click to remove">
-          ${count(u.id) ? `<span class="count">×${count(u.id)}</span>` : ""}
+          data-id="${u.id}" title="Left-click to add ¶ú Right-click to remove">
+          ${count(u.id) ? `<span class="count">Ç-${count(u.id)}</span>` : ""}
           <img src="pictures/${encodeURIComponent(u.icon).replaceAll("%2F", "/")}" alt="">
           <div class="upgrade-copy">
             <h3 class="upgrade-name">${escapeHtml(u.name)}</h3>
-            <div class="meta">${escapeHtml(u.rarity)} · ${escapeHtml(u.family)}</div>
+            <div class="meta">${escapeHtml(u.rarity)} ¶ú ${escapeHtml(u.family)}</div>
             <p class="effect">${escapeHtml(u.effect)}</p>
           </div>
         </article>`).join("") : '<div class="no-results">No upgrades match these filters.</div>';
     }
 
+    let dpsRankingRun = 0;
+
+    function restoreCounts(snapshot) {
+      Object.keys(counts).forEach(id => delete counts[id]);
+      Object.assign(counts, snapshot);
+    }
+
+    function renderDpsRanking() {
+      const listElement = $("#dps-ranking-list");
+      const summaryElement = $("#dps-ranking-summary");
+      if (!listElement || !summaryElement) return;
+      const run = ++dpsRankingRun;
+
+      if (selectedClass !== "Twinmage") {
+        summaryElement.textContent = "Twinmage only";
+        listElement.innerHTML = '<div class="dps-ranking-empty">DPS ranking is currently available for Twinmage only.</div>';
+        return;
+      }
+
+      listElement.innerHTML = '<div class="dps-ranking-loading"><span class="dps-ranking-spinner" aria-hidden="true"></span><span>Calculating upgrade impactƒ?Ý</span></div>';
+      const snapshot = { ...counts };
+      const results = [];
+      const candidates = U.filter(isUpgradeAvailable).filter(upgrade => count(upgrade.id) < 100);
+      summaryElement.textContent = `0 / ${candidates.length} calculated`;
+      latestCalculation = calculateStats();
+      const baseDps = renderCalculations({ render: false })?.combinedTotalDps || 0;
+      let index = 0;
+
+      const processChunk = () => {
+        if (run !== dpsRankingRun) return;
+        const chunkEnd = Math.min(index + 10, candidates.length);
+        for (; index < chunkEnd; index += 1) {
+          const upgrade = candidates[index];
+          counts[upgrade.id] = (snapshot[upgrade.id] || 0) + 1;
+          latestCalculation = calculateStats();
+          const candidateDps = renderCalculations({ render: false })?.combinedTotalDps || 0;
+          results.push({ upgrade, delta: candidateDps - baseDps });
+          restoreCounts(snapshot);
+        }
+        summaryElement.textContent = `${index} / ${candidates.length} calculated`;
+        if (index < candidates.length) {
+          requestAnimationFrame(processChunk);
+          return;
+        }
+
+        restoreCounts(snapshot);
+        latestCalculation = calculateStats();
+        if (run !== dpsRankingRun) return;
+        results.sort((a, b) => b.delta - a.delta || a.upgrade.name.localeCompare(b.upgrade.name));
+        summaryElement.textContent = `${results.length} available upgrades`;
+        listElement.innerHTML = results.length ? results.map((result, resultIndex) => {
+          const sign = result.delta >= 0 ? "+" : "";
+          const state = result.delta < 0 ? " negative" : "";
+          return `<button class="dps-ranking-item${state}" type="button" data-dps-upgrade-id="${escapeHtml(result.upgrade.id)}" title="Add one stack of ${escapeHtml(result.upgrade.name)}">
+            <span class="dps-ranking-rank">${resultIndex + 1}</span>
+            <img src="pictures/${encodeURIComponent(result.upgrade.icon).replaceAll("%2F", "/")}" alt="">
+            <span class="dps-ranking-name">${escapeHtml(result.upgrade.name)}</span>
+            <span class="dps-ranking-increase">${sign}${Number(result.delta).toFixed(2)} DPS</span>
+          </button>`;
+        }).join("") : '<div class="dps-ranking-empty">No upgrades are available for another stack.</div>';
+      };
+
+      requestAnimationFrame(processChunk);
+    }
+
     function renderArtifacts() {
       const total = Object.values(buildOptions.artifacts).reduce((sum, value) => sum + value, 0);
       const unique = Object.keys(buildOptions.artifacts).length;
-      $("#artifact-summary").textContent = `${total} artifact${total === 1 ? "" : "s"} · ${unique} unique`;
+      $("#artifact-summary").textContent = `${total} artifact${total === 1 ? "" : "s"} ¶ْ ${unique} unique`;
       $("#artifact-catalog").innerHTML = ARTIFACTS.map(item => `
-        <article class="upgrade artifact-card ${buildOptions.artifacts[item.id] ? "selected" : ""}" data-id="${item.id}" title="Left-click to add · Right-click to remove">
-          ${buildOptions.artifacts[item.id] ? `<span class="count">×${buildOptions.artifacts[item.id]}</span>` : ""}
+        <article class="upgrade artifact-card ${buildOptions.artifacts[item.id] ? "selected" : ""}" data-id="${item.id}" title="Left-click to add ¶ْ Right-click to remove">
+          ${buildOptions.artifacts[item.id] ? `<span class="count">ا-${buildOptions.artifacts[item.id]}</span>` : ""}
           <div class="item-placeholder"><img class="item-art" src="pictures/${encodeURIComponent(item.image)}" alt="${escapeHtml(item.name)}"></div>
           <div class="upgrade-copy"><h3 class="upgrade-name">${escapeHtml(item.name)}</h3>
             <div class="meta">Party artifact</div><p class="effect">${escapeHtml(item.effect)}</p></div>
@@ -1685,7 +1806,8 @@
       </div>`;
     }
 
-    function renderCalculations() {
+    function renderCalculations(options = {}) {
+      const { render = true } = options;
       const content = $("#calculation-content");
       if (selectedClass !== "Twinmage") {
         content.innerHTML = '<div class="calculation-empty">Damage calculations are currently available for Twinmage only.</div>';
@@ -1710,7 +1832,9 @@
         const formatted = Number(value * 100).toFixed(2);
         return `${formatted.endsWith(".00") ? formatted.slice(0, -3) : formatted}%`;
       };
-      const criticalChancePercent = Number(latestCalculation.stats.criticalChance || 0);
+      const pocketAbacusStacks = count("Pocket_Abacus");
+      const rawCriticalChancePercent = Number(latestCalculation.stats.criticalChance || 0);
+      const criticalChancePercent = pocketAbacusStacks > 0 ? 20 : rawCriticalChancePercent;
       const criticalDamagePercent = Number(latestCalculation.stats.criticalDamage || 0);
       const criticalChance = Math.max(0, criticalChancePercent) / 100;
       const appliedCriticalChancePercent = criticalChance * 100;
@@ -1718,13 +1842,25 @@
       const effectiveCriticalMultiplier = (criticalDamageMultiplier - 1) * criticalChance + 1;
       const attackSpeedBase = hands.length === 1 ? 1.4 : 0.8;
       const attackSpeedMultiplier = Number(latestCalculation.stats.attackSpeed || 0) / 100;
+      const sinistraStacks = count("Twinmage-Hand-Boost-L");
+      const dextraStacks = count("Twinmage-Hand-Boost-R");
+      const handDamageUpgradeActive = sinistraStacks > 0 || dextraStacks > 0;
+      const handModifiers = position => {
+        const positiveStacks = position === "Primary hand" ? sinistraStacks : dextraStacks;
+        const negativeStacks = position === "Primary hand" ? dextraStacks : sinistraStacks;
+        const bonusPercent = positiveStacks * 5 - negativeStacks * 3;
+        return { bonusPercent, multiplier: 1 + bonusPercent / 100 };
+      };
       const calculatedHands = hands.map((hand, handIndex) => {
         const overallMultiplier = Number(latestCalculation.stats.overallDamage || 0) / 100;
         const elementalMultiplier = Number(latestCalculation.stats[hand.element.damageStat] || 0) / 100;
+        const handModifiersForHand = handModifiers(hand.position);
+        const handDamageMultiplier = handModifiersForHand.multiplier;
+        const handAttackSpeedMultiplier = handModifiersForHand.multiplier;
         const criticalMultiplier = hand.element.canCrit ? effectiveCriticalMultiplier : 1;
-        const unroundedDamage = hand.element.baseDamage * overallMultiplier * elementalMultiplier * criticalMultiplier;
+        const unroundedDamage = hand.element.baseDamage * overallMultiplier * elementalMultiplier * handDamageMultiplier * criticalMultiplier;
         const totalDamage = Math.round(unroundedDamage);
-        const instancesPerSecond = attackSpeedBase * attackSpeedMultiplier;
+        const instancesPerSecond = attackSpeedBase * attackSpeedMultiplier * handAttackSpeedMultiplier;
         const baseStatusChances = Object.fromEntries(Object.entries(hand.element.statusChances).map(([status, chance]) => {
           const bonus = STATUS_CHANCE_BONUSES[status];
           return [status, chance + (bonus ? count(bonus.upgradeId) * bonus.chancePerStack : 0)];
@@ -1735,39 +1871,46 @@
         const dps = totalDamage * instancesPerSecond;
         const uptime = DAMAGE_PLACEHOLDERS.uptime;
         const totalDps = dps * uptime;
-        return { ...hand, columnKey: `hand-${handIndex}`, sourceIcon: hand.element.image, baseStatusChances, effectiveStatusChances, damage: { overallMultiplier, elementalMultiplier, criticalMultiplier, unroundedDamage, totalDamage, instancesPerSecond, dps, uptime, totalDps } };
+        return { ...hand, columnKey: `hand-${handIndex}`, sourceIcon: hand.element.image, handDamageBonusPercent: handModifiersForHand.bonusPercent, handDamageMultiplier, handAttackSpeedMultiplier, baseStatusChances, effectiveStatusChances, damage: { overallMultiplier, elementalMultiplier, handDamageMultiplier, criticalMultiplier, unroundedDamage, totalDamage, instancesPerSecond, dps, uptime, totalDps } };
       });
       const masteryColumns = count("Twinmage_Mastery") > 0 ? calculatedHands.map((hand, handIndex) => {
         const element = { ...hand.element, handName: `${hand.element.name} Blast`, baseDamage: hand.element.baseDamage * 0.25 };
         const overallMultiplier = hand.damage.overallMultiplier;
         const elementalMultiplier = hand.damage.elementalMultiplier;
+        const handDamageMultiplier = hand.damage.handDamageMultiplier;
         const criticalMultiplier = hand.damage.criticalMultiplier;
-        const unroundedDamage = element.baseDamage * overallMultiplier * elementalMultiplier * criticalMultiplier;
+        const unroundedDamage = element.baseDamage * overallMultiplier * elementalMultiplier * handDamageMultiplier * criticalMultiplier;
         const totalDamage = Math.round(unroundedDamage);
         const instancesPerSecond = hand.damage.instancesPerSecond;
         const dps = totalDamage * instancesPerSecond;
         const uptime = DAMAGE_PLACEHOLDERS.uptime;
         const totalDps = dps * uptime;
-        return { position: "Mastery explosion", columnKey: `mastery-${handIndex}`, linkedHandKey: hand.columnKey, originHandName: hand.element.handName, sourceBaseDamage: hand.element.baseDamage, sourceUpgradeId: "Twinmage_Mastery", element, isMasteryExplosion: true, baseStatusChances: { ...hand.baseStatusChances }, effectiveStatusChances: { ...hand.effectiveStatusChances }, damage: { overallMultiplier, elementalMultiplier, criticalMultiplier, unroundedDamage, totalDamage, instancesPerSecond, dps, uptime, totalDps } };
+        return { position: "Mastery explosion", columnKey: `mastery-${handIndex}`, linkedHandKey: hand.columnKey, originHandName: hand.element.handName, sourceBaseDamage: hand.element.baseDamage, sourceUpgradeId: "Twinmage_Mastery", element, isMasteryExplosion: true, handDamageBonusPercent: hand.handDamageBonusPercent, handDamageMultiplier, handAttackSpeedMultiplier: hand.handAttackSpeedMultiplier, baseStatusChances: { ...hand.baseStatusChances }, effectiveStatusChances: { ...hand.effectiveStatusChances }, damage: { overallMultiplier, elementalMultiplier, handDamageMultiplier, criticalMultiplier, unroundedDamage, totalDamage, instancesPerSecond, dps, uptime, totalDps } };
       }) : [];
       const attackSources = [...calculatedHands, ...masteryColumns];
       const criticalInstanceRate = attackSources
         .filter(hand => hand.element.canCrit)
         .reduce((sum, hand) => sum + hand.damage.instancesPerSecond, 0);
       const criticalHitsPerSecond = criticalInstanceRate * criticalChance;
+      const weightedHandDamageMultiplier = (sources, weight = hand => hand.damage.instancesPerSecond) => {
+        const weightedTotal = sources.reduce((sum, hand) => sum + weight(hand) * hand.handDamageMultiplier, 0);
+        const totalWeight = sources.reduce((sum, hand) => sum + weight(hand), 0);
+        return totalWeight > 0 ? weightedTotal / totalWeight : 1;
+      };
       const chargedStrikeStacks = count("Charged_Strike");
       const chargedStrikeColumn = chargedStrikeStacks > 0 ? (() => {
-        const element = { id: "physical", name: "Physical", handName: "Charged Strike", baseDamage: 15 + Math.max(0, chargedStrikeStacks - 1) * 10, damageStat: "physicalDamage", canCrit: false, statusChances: {} };
+        const element = { id: "physical", name: "Physical", handName: "Charged Strike", baseDamage: 25 + Math.max(0, chargedStrikeStacks - 1) * 10, damageStat: "physicalDamage", canCrit: false, statusChances: {} };
         const overallMultiplier = Number(latestCalculation.stats.overallDamage || 0) / 100;
         const elementalMultiplier = Number(latestCalculation.stats.physicalDamage || 0) / 100;
+        const handDamageMultiplier = weightedHandDamageMultiplier(attackSources.filter(hand => hand.element.canCrit));
         const criticalMultiplier = 1;
-        const unroundedDamage = element.baseDamage * overallMultiplier * elementalMultiplier * criticalMultiplier;
+        const unroundedDamage = element.baseDamage * overallMultiplier * elementalMultiplier * handDamageMultiplier * criticalMultiplier;
         const totalDamage = Math.round(unroundedDamage);
         const instancesPerSecond = criticalHitsPerSecond;
         const dps = totalDamage * instancesPerSecond;
         const uptime = DAMAGE_PLACEHOLDERS.uptime;
         const totalDps = dps * uptime;
-        return { position: "Upgrade effect", columnKey: "charged-strike", sourceUpgradeId: "Charged_Strike", element, isTriggeredEffect: true, chargedStrikeStacks, baseStatusChances: {}, effectiveStatusChances: {}, damage: { overallMultiplier, elementalMultiplier, criticalMultiplier, unroundedDamage, totalDamage, instancesPerSecond, dps, uptime, totalDps } };
+        return { position: "Upgrade effect", columnKey: "charged-strike", sourceUpgradeId: "Charged_Strike", element, isTriggeredEffect: true, chargedStrikeStacks, handDamageBonusPercent: (handDamageMultiplier - 1) * 100, handDamageMultiplier, handAttackSpeedMultiplier: 1, baseStatusChances: {}, effectiveStatusChances: {}, damage: { overallMultiplier, elementalMultiplier, handDamageMultiplier, criticalMultiplier, unroundedDamage, totalDamage, instancesPerSecond, dps, uptime, totalDps } };
       })() : null;
       const burningHands = attackSources.filter(hand => Number(hand.effectiveStatusChances.burning) > 0);
       const bossAdjustedBurningRate = burningHands.reduce((sum, hand) =>
@@ -1799,27 +1942,29 @@
         const element = { id: "burning", handName: "Burning", baseDamage: 25, damageStat: "fireDamage", canCrit: false, statusChances: {} };
         const overallMultiplier = Number(latestCalculation.stats.overallDamage || 0) / 100;
         const elementalMultiplier = Number(latestCalculation.stats.fireDamage || 0) / 100;
+        const handDamageMultiplier = weightedHandDamageMultiplier(burningHands, hand => hand.damage.instancesPerSecond * hand.effectiveStatusChances.burning);
         const criticalMultiplier = 1;
-        const unroundedDamage = element.baseDamage * overallMultiplier * elementalMultiplier * criticalMultiplier;
+        const unroundedDamage = element.baseDamage * overallMultiplier * elementalMultiplier * handDamageMultiplier * criticalMultiplier;
         const totalDamage = Math.round(unroundedDamage);
         const instancesPerSecond = 0.5;
         const dps = totalDamage * instancesPerSecond;
         const uptime = burningUptime;
         const totalDps = dps * uptime;
-        return { position: "Status effect", columnKey: "burning", statusId: "burning", statusDuration: burningDuration, statusInterval: burningInterval, element, isStatusEffect: true, effectiveStatusChances: {}, damage: { overallMultiplier, elementalMultiplier, criticalMultiplier, unroundedDamage, totalDamage, instancesPerSecond, dps, uptime, totalDps } };
+        return { position: "Status effect", columnKey: "burning", statusId: "burning", statusDuration: burningDuration, statusInterval: burningInterval, element, isStatusEffect: true, handDamageBonusPercent: (handDamageMultiplier - 1) * 100, handDamageMultiplier, handAttackSpeedMultiplier: 1, effectiveStatusChances: {}, damage: { overallMultiplier, elementalMultiplier, handDamageMultiplier, criticalMultiplier, unroundedDamage, totalDamage, instancesPerSecond, dps, uptime, totalDps } };
       })() : null;
       const bleedingColumn = bleedingHands.length ? (() => {
         const element = { id: "bleeding", name: "Physical", handName: "Bleeding", baseDamage: 25, damageStat: "physicalDamage", canCrit: false, statusChances: {} };
         const overallMultiplier = Number(latestCalculation.stats.overallDamage || 0) / 100;
         const elementalMultiplier = Number(latestCalculation.stats.physicalDamage || 0) / 100;
+        const handDamageMultiplier = weightedHandDamageMultiplier(bleedingHands, hand => hand.damage.instancesPerSecond * hand.effectiveStatusChances.bleeding);
         const criticalMultiplier = 1;
-        const unroundedDamage = element.baseDamage * overallMultiplier * elementalMultiplier * criticalMultiplier;
+        const unroundedDamage = element.baseDamage * overallMultiplier * elementalMultiplier * handDamageMultiplier * criticalMultiplier;
         const totalDamage = Math.round(unroundedDamage);
-        const instancesPerSecond = 0.8;
+        const instancesPerSecond = 1 / 0.8;
         const dps = totalDamage * instancesPerSecond;
         const uptime = bleedingUptime;
         const totalDps = dps * uptime;
-        return { position: "Status effect", columnKey: "bleeding", statusId: "bleeding", statusDuration: bleedingDuration, statusInterval: bleedingInterval, element, isStatusEffect: true, effectiveStatusChances: {}, damage: { overallMultiplier, elementalMultiplier, criticalMultiplier, unroundedDamage, totalDamage, instancesPerSecond, dps, uptime, totalDps } };
+        return { position: "Status effect", columnKey: "bleeding", statusId: "bleeding", statusDuration: bleedingDuration, statusInterval: bleedingInterval, element, isStatusEffect: true, handDamageBonusPercent: (handDamageMultiplier - 1) * 100, handDamageMultiplier, handAttackSpeedMultiplier: 1, effectiveStatusChances: {}, damage: { overallMultiplier, elementalMultiplier, handDamageMultiplier, criticalMultiplier, unroundedDamage, totalDamage, instancesPerSecond, dps, uptime, totalDps } };
       })() : null;
       const statusColumns = [burningColumn, bleedingColumn].filter(Boolean).map((column, index) => ({ ...column, isStatusGroupStart: index === 0 }));
       const triggeredColumns = [chargedStrikeColumn].filter(Boolean);
@@ -1833,6 +1978,7 @@
         groups[id].exact += hand.damage.totalDps;
         return groups;
       }, {})).map(item => ({ ...item, value: twoDecimals(item.exact) }));
+      if (!render) return { combinedTotalDps };
       const calculationAttributes = (key, formula, refs = []) => `data-calculation-key="${escapeHtml(key)}" data-calculation-formula="${escapeHtml(formula)}" data-calculation-refs="${escapeHtml(refs.join("|"))}" tabindex="0"`;
       const damageTypeAttributes = hand => `data-calculation-damage-type="${escapeHtml(damageTypeName(hand))}" data-calculation-damage-id="${escapeHtml(damageTypeId(hand))}"`;
       const sourceUpgradeAttributes = hand => hand.sourceUpgradeId ? `data-calculation-source-upgrade="${escapeHtml(hand.sourceUpgradeId)}"` : "";
@@ -1840,55 +1986,58 @@
       const damageKey = (hand, rowKey) => `damage:${hand.columnKey}:${rowKey}`;
       const sourceFormula = hand => {
         const statusLines = Object.entries(hand.baseStatusChances || {}).map(([status, chance]) =>
-          `${status[0].toUpperCase()}${status.slice(1)}: ${twoDecimals(chance * 100)}% ÷ ${twoDecimals(attackSpeedMultiplier * 100)}% AS = ${twoDecimals(hand.effectiveStatusChances[status] * 100)}%`
+          `${status[0].toUpperCase()}${status.slice(1)}: ${twoDecimals(chance * 100)}% اْ ${twoDecimals(attackSpeedMultiplier * 100)}% AS = ${twoDecimals(hand.effectiveStatusChances[status] * 100)}%`
         );
-        const masteryLine = hand.isMasteryExplosion ? `\n${hand.originHandName} × 25%` : "";
-        const triggerLine = hand.isTriggeredEffect ? `\nTriggers on crit · ${twoDecimals(hand.damage.instancesPerSecond)}/s` : "";
-        return `${hand.element.handName}\n${hand.element.name || "Fire"} · Base ${hand.element.baseDamage}${masteryLine}${triggerLine}\nCrit: ${hand.element.canCrit ? "Yes" : "No"}\n${statusLines.length ? statusLines.join("\n") : "Status chance: —"}`;
+        const handDamageLine = handDamageUpgradeActive ? `\nHand Damage: ${twoDecimals(hand.damage.handDamageMultiplier)}` : "";
+        const handAttackSpeedLine = handDamageUpgradeActive ? `\nHand Attack Speed: ${twoDecimals(hand.handAttackSpeedMultiplier)}` : "";
+        const masteryLine = hand.isMasteryExplosion ? `\n${hand.originHandName} ا- 25%` : "";
+        const triggerLine = hand.isTriggeredEffect ? `\nTriggers on crit ¶ْ ${twoDecimals(hand.damage.instancesPerSecond)}/s` : "";
+        return `${hand.element.handName}\n${hand.element.name || "Fire"} ¶ْ Base ${hand.element.baseDamage}${masteryLine}${triggerLine}${handDamageLine}${handAttackSpeedLine}\nCrit: ${hand.element.canCrit ? "Yes" : "No"}\n${statusLines.length ? statusLines.join("\n") : "Status chance: ƒ?""}`;
       };
       const rows = [
-        { key: "base", label: "Base Damage", value: hand => String(hand.element.baseDamage), exact: hand => hand.element.baseDamage, formula: hand => hand.isMasteryExplosion ? `${hand.sourceBaseDamage} × 25% = ${hand.element.baseDamage}` : hand.isTriggeredEffect ? `15 + (${Math.max(0, hand.chargedStrikeStacks - 1)} × 10) = ${hand.element.baseDamage}` : `Base = ${hand.element.baseDamage}`, refs: hand => hand.isMasteryExplosion ? [`calc:damage:${hand.linkedHandKey}:base`] : hand.isTriggeredEffect ? ["upgrade:Charged_Strike"] : [], damageValue: true },
-        { key: "overall", label: "Overall Damage", value: hand => twoDecimals(hand.damage.overallMultiplier), exact: hand => hand.damage.overallMultiplier, formula: hand => `${twoDecimals(hand.damage.overallMultiplier * 100)}% ÷ 100 = ${twoDecimals(hand.damage.overallMultiplier)}`, refs: () => ["stat:overallDamage"] },
-        { key: "elemental", label: "Elemental Damage", value: hand => twoDecimals(hand.damage.elementalMultiplier), exact: hand => hand.damage.elementalMultiplier, formula: hand => `${twoDecimals(hand.damage.elementalMultiplier * 100)}% ÷ 100 = ${twoDecimals(hand.damage.elementalMultiplier)}`, refs: hand => [`stat:${hand.element.damageStat}`] },
-        { key: "crit", label: "Eff. Crit Multiplier", value: hand => hand.element.canCrit ? twoDecimals(hand.damage.criticalMultiplier) : "-", exact: hand => hand.damage.criticalMultiplier, formula: hand => hand.element.canCrit ? `Crit box = ${twoDecimals(hand.damage.criticalMultiplier)}` : "Cannot crit = × 1", refs: hand => hand.element.canCrit ? ["calc:crit:effective"] : [] },
+        { key: "base", label: "Base Damage", value: hand => String(hand.element.baseDamage), exact: hand => hand.element.baseDamage, formula: hand => hand.isMasteryExplosion ? `${hand.sourceBaseDamage} ا- 25% = ${hand.element.baseDamage}` : hand.isTriggeredEffect ? `25 + (${Math.max(0, hand.chargedStrikeStacks - 1)} ا- 10) = ${hand.element.baseDamage}` : `Base = ${hand.element.baseDamage}`, refs: hand => hand.isMasteryExplosion ? [`calc:damage:${hand.linkedHandKey}:base`] : hand.isTriggeredEffect ? ["upgrade:Charged_Strike"] : [], damageValue: true },
+        { key: "overall", label: "Overall Damage", value: hand => twoDecimals(hand.damage.overallMultiplier), exact: hand => hand.damage.overallMultiplier, formula: hand => `${twoDecimals(hand.damage.overallMultiplier * 100)}% اْ 100 = ${twoDecimals(hand.damage.overallMultiplier)}`, refs: () => ["stat:overallDamage"] },
+        { key: "elemental", label: "Elemental Damage", value: hand => twoDecimals(hand.damage.elementalMultiplier), exact: hand => hand.damage.elementalMultiplier, formula: hand => `${twoDecimals(hand.damage.elementalMultiplier * 100)}% اْ 100 = ${twoDecimals(hand.damage.elementalMultiplier)}`, refs: hand => [`stat:${hand.element.damageStat}`] },
+        { key: "crit", label: "Eff. Crit Multiplier", value: hand => hand.element.canCrit ? twoDecimals(hand.damage.criticalMultiplier) : "-", exact: hand => hand.damage.criticalMultiplier, formula: hand => hand.element.canCrit ? `Crit box = ${twoDecimals(hand.damage.criticalMultiplier)}` : "Cannot crit = ا- 1", refs: hand => hand.element.canCrit ? ["calc:crit:effective"] : [] },
+        ...(handDamageUpgradeActive ? [{ key: "hand-damage", label: "Hand Damage", value: hand => twoDecimals(hand.damage.handDamageMultiplier), exact: hand => hand.damage.handDamageMultiplier, formula: hand => hand.isMasteryExplosion ? `Inherited from ${hand.originHandName} = ${twoDecimals(hand.damage.handDamageMultiplier)}` : hand.isTriggeredEffect ? `Weighted triggering hand multiplier = ${twoDecimals(hand.damage.handDamageMultiplier)}` : `${twoDecimals(100 + hand.handDamageBonusPercent)}% اْ 100 = ${twoDecimals(hand.damage.handDamageMultiplier)}`, refs: hand => hand.isMasteryExplosion ? [`calc:damage:${hand.linkedHandKey}:hand-damage`] : hand.isTriggeredEffect ? calculatedHands.filter(source => source.element.canCrit).map(source => `calc:${damageKey(source, "hand-damage")}`) : ["upgrade:Twinmage-Hand-Boost-L", "upgrade:Twinmage-Hand-Boost-R"] } ] : []),
         { key: "total", label: "Total Damage", value: hand => String(hand.damage.totalDamage), exact: hand => hand.damage.totalDamage, formula: hand => {
-          const bareDamage = hand.element.baseDamage * hand.damage.overallMultiplier * hand.damage.elementalMultiplier;
+          const bareDamage = hand.element.baseDamage * hand.damage.overallMultiplier * hand.damage.elementalMultiplier * hand.damage.handDamageMultiplier;
           const nonCriticalDamage = Math.round(bareDamage);
           const fullCriticalDamage = Math.round(bareDamage * criticalDamageMultiplier);
-          const averageLine = `Average: ${hand.element.baseDamage} × ${twoDecimals(hand.damage.overallMultiplier)} × ${twoDecimals(hand.damage.elementalMultiplier)} × ${twoDecimals(hand.damage.criticalMultiplier)} ≈ ${hand.damage.totalDamage}`;
+          const averageLine = `Average: ${hand.element.baseDamage} ا- ${twoDecimals(hand.damage.overallMultiplier)} ا- ${twoDecimals(hand.damage.elementalMultiplier)} ا- ${twoDecimals(hand.damage.handDamageMultiplier)} ا- ${twoDecimals(hand.damage.criticalMultiplier)} ƒ%^ ${hand.damage.totalDamage}`;
           return hand.element.canCrit
-            ? `${averageLine}\nNon-crit: ${hand.element.baseDamage} × ${twoDecimals(hand.damage.overallMultiplier)} × ${twoDecimals(hand.damage.elementalMultiplier)} ≈ ${nonCriticalDamage}\nCrit: ${twoDecimals(bareDamage)} × ${twoDecimals(criticalDamageMultiplier)} ≈ ${fullCriticalDamage}`
-            : `${hand.element.baseDamage} × ${twoDecimals(hand.damage.overallMultiplier)} × ${twoDecimals(hand.damage.elementalMultiplier)} ≈ ${hand.damage.totalDamage}`;
-        }, refs: hand => ["base", "overall", "elemental", "crit"].map(key => `calc:${damageKey(hand, key)}`).concat(hand.element.canCrit ? ["calc:crit:damage", "stat:criticalDamage"] : []), sectionBreak: true, damageValue: true },
-        { key: "rate", label: "Instance Rate", value: hand => twoDecimals(hand.damage.instancesPerSecond), exact: hand => hand.damage.instancesPerSecond, formula: hand => hand.isStatusEffect ? `Fixed = ${twoDecimals(hand.damage.instancesPerSecond)}/s` : hand.isMasteryExplosion ? `Matches ${hand.originHandName} = ${twoDecimals(hand.damage.instancesPerSecond)}/s` : hand.isTriggeredEffect ? `Crits per second = ${twoDecimals(hand.damage.instancesPerSecond)}/s` : `${twoDecimals(attackSpeedBase)} × ${twoDecimals(attackSpeedMultiplier)} = ${twoDecimals(hand.damage.instancesPerSecond)}/s`, refs: hand => hand.isStatusEffect ? [] : hand.isMasteryExplosion ? [`calc:damage:${hand.linkedHandKey}:rate`] : hand.isTriggeredEffect ? ["calc:crit:rate"] : ["stat:attackSpeed"] },
-        { key: "dps", label: "DPS", value: hand => twoDecimals(hand.damage.dps), exact: hand => hand.damage.dps, formula: hand => `${hand.damage.totalDamage} × ${twoDecimals(hand.damage.instancesPerSecond)} = ${twoDecimals(hand.damage.dps)}`, refs: hand => [`calc:${damageKey(hand, "total")}`, `calc:${damageKey(hand, "rate")}`], damageValue: true },
-        { key: "uptime", label: "Uptime", value: hand => uptimePercent(hand.damage.uptime), exact: hand => hand.damage.uptime, formula: hand => hand.isStatusEffect ? `${twoDecimals(hand.statusDuration)}s ÷ ${twoDecimals(hand.statusInterval)}s = ${twoDecimals(hand.damage.uptime * 100)}%` : hand.isTriggeredEffect ? "Matches primary/secondary attacks = 100%" : "Always active = 100%", refs: hand => hand.isStatusEffect ? [`calc:${hand.statusId}:duration`, `calc:${hand.statusId}:interval`] : hand.isTriggeredEffect ? calculatedHands.map(source => `calc:${damageKey(source, "uptime")}`) : [], },
-        { key: "total-dps", label: "Total DPS", value: hand => twoDecimals(hand.damage.totalDps), exact: hand => hand.damage.totalDps, formula: hand => `${twoDecimals(hand.damage.dps)} × ${twoDecimals(hand.damage.uptime * 100)}% = ${twoDecimals(hand.damage.totalDps)}`, refs: hand => [`calc:${damageKey(hand, "dps")}`, `calc:${damageKey(hand, "uptime")}`], sectionBreak: true, total: true, damageValue: true }
+            ? `${averageLine}\nNon-crit: ${hand.element.baseDamage} ا- ${twoDecimals(hand.damage.overallMultiplier)} ا- ${twoDecimals(hand.damage.elementalMultiplier)} ƒ%^ ${nonCriticalDamage}\nCrit: ${twoDecimals(bareDamage)} ا- ${twoDecimals(criticalDamageMultiplier)} ƒ%^ ${fullCriticalDamage}`
+            : `${hand.element.baseDamage} ا- ${twoDecimals(hand.damage.overallMultiplier)} ا- ${twoDecimals(hand.damage.elementalMultiplier)} ƒ%^ ${hand.damage.totalDamage}`;
+        }, refs: hand => ["base", "overall", "elemental", ...(handDamageUpgradeActive ? ["hand-damage"] : []), "crit"].map(key => `calc:${damageKey(hand, key)}`).concat(hand.element.canCrit ? ["calc:crit:damage", "stat:criticalDamage"] : []), sectionBreak: true, damageValue: true },
+        { key: "rate", label: "Instance Rate", value: hand => twoDecimals(hand.damage.instancesPerSecond), exact: hand => hand.damage.instancesPerSecond, formula: hand => hand.isStatusEffect ? `Fixed = ${twoDecimals(hand.damage.instancesPerSecond)}/s` : hand.isMasteryExplosion ? `Matches ${hand.originHandName} = ${twoDecimals(hand.damage.instancesPerSecond)}/s` : hand.isTriggeredEffect ? `Crits per second = ${twoDecimals(hand.damage.instancesPerSecond)}/s` : `${twoDecimals(attackSpeedBase)} ا- ${twoDecimals(attackSpeedMultiplier)} ا- ${twoDecimals(hand.handAttackSpeedMultiplier)} = ${twoDecimals(hand.damage.instancesPerSecond)}/s`, refs: hand => hand.isStatusEffect ? [] : hand.isMasteryExplosion ? [`calc:damage:${hand.linkedHandKey}:rate`] : hand.isTriggeredEffect ? ["calc:crit:rate"] : ["stat:attackSpeed"] },
+        { key: "dps", label: "DPS", value: hand => twoDecimals(hand.damage.dps), exact: hand => hand.damage.dps, formula: hand => `${hand.damage.totalDamage} ا- ${twoDecimals(hand.damage.instancesPerSecond)} = ${twoDecimals(hand.damage.dps)}`, refs: hand => [`calc:${damageKey(hand, "total")}`, `calc:${damageKey(hand, "rate")}`], damageValue: true },
+        { key: "uptime", label: "Uptime", value: hand => uptimePercent(hand.damage.uptime), exact: hand => hand.damage.uptime, formula: hand => hand.isStatusEffect ? `${twoDecimals(hand.statusDuration)}s اْ ${twoDecimals(hand.statusInterval)}s = ${twoDecimals(hand.damage.uptime * 100)}%` : hand.isTriggeredEffect ? "Matches primary/secondary attacks = 100%" : "Always active = 100%", refs: hand => hand.isStatusEffect ? [`calc:${hand.statusId}:duration`, `calc:${hand.statusId}:interval`] : hand.isTriggeredEffect ? calculatedHands.map(source => `calc:${damageKey(source, "uptime")}`) : [], },
+        { key: "total-dps", label: "Total DPS", value: hand => twoDecimals(hand.damage.totalDps), exact: hand => hand.damage.totalDps, formula: hand => `${twoDecimals(hand.damage.dps)} ا- ${twoDecimals(hand.damage.uptime * 100)}% = ${twoDecimals(hand.damage.totalDps)}`, refs: hand => [`calc:${damageKey(hand, "dps")}`, `calc:${damageKey(hand, "uptime")}`], sectionBreak: true, total: true, damageValue: true }
       ];
       const criticalRows = [
-        { key: "crit:chance", label: "Crit Chance", value: `${twoDecimals(criticalChancePercent)}%`, exact: criticalChancePercent, formula: criticalChancePercent < 0 ? `Stats = ${twoDecimals(criticalChancePercent)}% · used = 0.00%` : `Stats = ${twoDecimals(criticalChancePercent)}%`, refs: ["stat:criticalChance"] },
+        { key: "crit:chance", label: "Crit Chance", value: `${twoDecimals(criticalChancePercent)}%`, exact: criticalChancePercent, formula: pocketAbacusStacks > 0 ? `Pocket Abacus: every fifth damage instance is guaranteed critical -> effective chance = 20.00% (other crit chance modifiers ignored)` : criticalChancePercent < 0 ? `Stats = ${twoDecimals(criticalChancePercent)}% ¶ْ used = 0.00%` : `Stats = ${twoDecimals(criticalChancePercent)}%`, refs: pocketAbacusStacks > 0 ? ["upgrade:Pocket_Abacus"] : ["stat:criticalChance"] },
         { key: "crit:damage", label: "Crit Damage", value: `${twoDecimals(criticalDamagePercent)}%`, exact: criticalDamagePercent, formula: `Stats = ${twoDecimals(criticalDamagePercent)}%`, refs: ["stat:criticalDamage"] },
-        { key: "crit:rate", label: "Crits per second", value: twoDecimals(criticalHitsPerSecond), exact: criticalHitsPerSecond, formula: `(${attackSources.filter(hand => hand.element.canCrit).map(hand => twoDecimals(hand.damage.instancesPerSecond)).join(" + ")}) × ${twoDecimals(appliedCriticalChancePercent)}% = ${twoDecimals(criticalHitsPerSecond)}`, refs: ["calc:crit:chance", ...attackSources.filter(hand => hand.element.canCrit).map(hand => `calc:${damageKey(hand, "rate")}`)] },
-        { key: "crit:effective", label: "Eff. Crit Multiplier", value: twoDecimals(effectiveCriticalMultiplier), exact: effectiveCriticalMultiplier, formula: `(${twoDecimals(criticalDamagePercent)}% − 100%) × ${twoDecimals(appliedCriticalChancePercent)}% + 100% = ${twoDecimals(effectiveCriticalMultiplier)}`, refs: ["calc:crit:chance", "calc:crit:damage"] }
+        { key: "crit:rate", label: "Crits per second", value: twoDecimals(criticalHitsPerSecond), exact: criticalHitsPerSecond, formula: `(${attackSources.filter(hand => hand.element.canCrit).map(hand => twoDecimals(hand.damage.instancesPerSecond)).join(" + ")}) ا- ${twoDecimals(appliedCriticalChancePercent)}% = ${twoDecimals(criticalHitsPerSecond)}`, refs: ["calc:crit:chance", ...attackSources.filter(hand => hand.element.canCrit).map(hand => `calc:${damageKey(hand, "rate")}`)] },
+        { key: "crit:effective", label: "Eff. Crit Multiplier", value: twoDecimals(effectiveCriticalMultiplier), exact: effectiveCriticalMultiplier, formula: `(${twoDecimals(criticalDamagePercent)}% ƒ^' 100%) ا- ${twoDecimals(appliedCriticalChancePercent)}% + 100% = ${twoDecimals(effectiveCriticalMultiplier)}`, refs: ["calc:crit:chance", "calc:crit:damage"] }
       ];
-      const burningRateTerms = burningHands.map(hand => `${twoDecimals(hand.damage.instancesPerSecond)} × (${twoDecimals(hand.baseStatusChances.burning * 100)}% ÷ ${twoDecimals(attackSpeedMultiplier * 100)}% AS)`);
+      const burningRateTerms = burningHands.map(hand => `${twoDecimals(hand.damage.instancesPerSecond)} ا- (${twoDecimals(hand.baseStatusChances.burning * 100)}% اْ ${twoDecimals(attackSpeedMultiplier * 100)}% AS)`);
       const burningRows = [
-        { key: "burning:interval", label: "Average time between applications", value: `${twoDecimals(burningInterval)} s`, exact: burningInterval, formula: `1 ÷ ((${burningRateTerms.join(" + ")}) ÷ ${BURNING.bossApplicationPenalty}) = ${twoDecimals(burningInterval)}s`, refs: ["stat:attackSpeed", ...burningHands.map(hand => `calc:${damageKey(hand, "rate")}`)] },
-        { key: "burning:stacks", label: "Stacks per application", value: String(burningStacks), exact: burningStacks, formula: `${BURNING.baseStacks} + (${count("Sticky")} × ${BURNING.stacksPerSticky}) = ${burningStacks}`, refs: ["upgrade:Sticky"] },
-        { key: "burning:duration", label: "Burn duration", value: `${twoDecimals(burningDuration)} s`, exact: burningDuration, formula: `${burningStacks} × ${twoDecimals(BURNING.durationPerStack)}s = ${twoDecimals(burningDuration)}s`, refs: ["calc:burning:stacks"] },
-        { key: "burning:uptime", label: "Uptime", value: `${twoDecimals(burningUptime * 100)}%`, valueHtml: burningRawUptime > 1 ? `100% <span class="status-uncapped-uptime">(${twoDecimals(burningRawUptime * 100)}%)</span>` : null, exact: burningUptime, formula: burningRawUptime > 1 ? `${twoDecimals(burningDuration)}s ÷ ${twoDecimals(burningInterval)}s = ${twoDecimals(burningRawUptime * 100)}% → capped at 100%` : `${twoDecimals(burningDuration)}s ÷ ${twoDecimals(burningInterval)}s = ${twoDecimals(burningUptime * 100)}%`, refs: ["calc:burning:duration", "calc:burning:interval"] }
+        { key: "burning:interval", label: "Average time between applications", value: `${twoDecimals(burningInterval)} s`, exact: burningInterval, formula: `1 اْ ((${burningRateTerms.join(" + ")}) اْ ${BURNING.bossApplicationPenalty}) = ${twoDecimals(burningInterval)}s`, refs: ["stat:attackSpeed", ...burningHands.map(hand => `calc:${damageKey(hand, "rate")}`)] },
+        { key: "burning:stacks", label: "Stacks per application", value: String(burningStacks), exact: burningStacks, formula: `${BURNING.baseStacks} + (${count("Sticky")} ا- ${BURNING.stacksPerSticky}) = ${burningStacks}`, refs: ["upgrade:Sticky"] },
+        { key: "burning:duration", label: "Burn duration", value: `${twoDecimals(burningDuration)} s`, exact: burningDuration, formula: `${burningStacks} ا- ${twoDecimals(BURNING.durationPerStack)}s = ${twoDecimals(burningDuration)}s`, refs: ["calc:burning:stacks"] },
+        { key: "burning:uptime", label: "Uptime", value: `${twoDecimals(burningUptime * 100)}%`, valueHtml: burningRawUptime > 1 ? `100% <span class="status-uncapped-uptime">(${twoDecimals(burningRawUptime * 100)}%)</span>` : null, exact: burningUptime, formula: burningRawUptime > 1 ? `${twoDecimals(burningDuration)}s اْ ${twoDecimals(burningInterval)}s = ${twoDecimals(burningRawUptime * 100)}% ƒإ' capped at 100%` : `${twoDecimals(burningDuration)}s اْ ${twoDecimals(burningInterval)}s = ${twoDecimals(burningUptime * 100)}%`, refs: ["calc:burning:duration", "calc:burning:interval"] }
       ];
-      const bleedingRateTerms = bleedingHands.map(hand => `${twoDecimals(hand.damage.instancesPerSecond)} × (${twoDecimals(hand.baseStatusChances.bleeding * 100)}% ÷ ${twoDecimals(attackSpeedMultiplier * 100)}% AS)`);
+      const bleedingRateTerms = bleedingHands.map(hand => `${twoDecimals(hand.damage.instancesPerSecond)} ا- (${twoDecimals(hand.baseStatusChances.bleeding * 100)}% اْ ${twoDecimals(attackSpeedMultiplier * 100)}% AS)`);
       const bleedingRows = [
-        { key: "bleeding:interval", label: "Average time between applications", value: `${twoDecimals(bleedingInterval)} s`, exact: bleedingInterval, formula: `1 ÷ ((${bleedingRateTerms.join(" + ")}) ÷ ${BLEEDING.bossApplicationPenalty}) = ${twoDecimals(bleedingInterval)}s`, refs: ["stat:attackSpeed", ...bleedingHands.map(hand => `calc:${damageKey(hand, "rate")}`)] },
-        { key: "bleeding:stacks", label: "Stacks per application", value: String(bleedingStacks), exact: bleedingStacks, formula: `${BLEEDING.baseStacks} + (${count("Sticky")} × ${BLEEDING.stacksPerSticky}) = ${bleedingStacks}`, refs: ["upgrade:Sticky"] },
-        { key: "bleeding:duration", label: "Bleed duration", value: `${twoDecimals(bleedingDuration)} s`, exact: bleedingDuration, formula: `${bleedingStacks} × ${twoDecimals(BLEEDING.durationPerStack)}s = ${twoDecimals(bleedingDuration)}s`, refs: ["calc:bleeding:stacks"] },
-        { key: "bleeding:uptime", label: "Uptime", value: `${twoDecimals(bleedingUptime * 100)}%`, valueHtml: bleedingRawUptime > 1 ? `100% <span class="status-uncapped-uptime">(${twoDecimals(bleedingRawUptime * 100)}%)</span>` : null, exact: bleedingUptime, formula: bleedingRawUptime > 1 ? `${twoDecimals(bleedingDuration)}s ÷ ${twoDecimals(bleedingInterval)}s = ${twoDecimals(bleedingRawUptime * 100)}% → capped at 100%` : `${twoDecimals(bleedingDuration)}s ÷ ${twoDecimals(bleedingInterval)}s = ${twoDecimals(bleedingUptime * 100)}%`, refs: ["calc:bleeding:duration", "calc:bleeding:interval"] }
+        { key: "bleeding:interval", label: "Average time between applications", value: `${twoDecimals(bleedingInterval)} s`, exact: bleedingInterval, formula: `1 اْ ((${bleedingRateTerms.join(" + ")}) اْ ${BLEEDING.bossApplicationPenalty}) = ${twoDecimals(bleedingInterval)}s`, refs: ["stat:attackSpeed", ...bleedingHands.map(hand => `calc:${damageKey(hand, "rate")}`)] },
+        { key: "bleeding:stacks", label: "Stacks per application", value: String(bleedingStacks), exact: bleedingStacks, formula: `${BLEEDING.baseStacks} + (${count("Sticky")} ا- ${BLEEDING.stacksPerSticky}) = ${bleedingStacks}`, refs: ["upgrade:Sticky"] },
+        { key: "bleeding:duration", label: "Bleed duration", value: `${twoDecimals(bleedingDuration)} s`, exact: bleedingDuration, formula: `${bleedingStacks} ا- ${twoDecimals(BLEEDING.durationPerStack)}s = ${twoDecimals(bleedingDuration)}s`, refs: ["calc:bleeding:stacks"] },
+        { key: "bleeding:uptime", label: "Uptime", value: `${twoDecimals(bleedingUptime * 100)}%`, valueHtml: bleedingRawUptime > 1 ? `100% <span class="status-uncapped-uptime">(${twoDecimals(bleedingRawUptime * 100)}%)</span>` : null, exact: bleedingUptime, formula: bleedingRawUptime > 1 ? `${twoDecimals(bleedingDuration)}s اْ ${twoDecimals(bleedingInterval)}s = ${twoDecimals(bleedingRawUptime * 100)}% ƒإ' capped at 100%` : `${twoDecimals(bleedingDuration)}s اْ ${twoDecimals(bleedingInterval)}s = ${twoDecimals(bleedingUptime * 100)}%`, refs: ["calc:bleeding:duration", "calc:bleeding:interval"] }
       ];
       const nonDamageStatusRows = status => {
-        const rateTerms = status.sources.map(hand => `${twoDecimals(hand.damage.instancesPerSecond)} × (${twoDecimals(hand.baseStatusChances[status.id] * 100)}% ÷ ${twoDecimals(attackSpeedMultiplier * 100)}% AS)`);
+        const rateTerms = status.sources.map(hand => `${twoDecimals(hand.damage.instancesPerSecond)} ا- (${twoDecimals(hand.baseStatusChances[status.id] * 100)}% اْ ${twoDecimals(attackSpeedMultiplier * 100)}% AS)`);
         return [
-          { key: `${status.id}:interval`, label: "Average time between applications", value: `${twoDecimals(status.applicationInterval)} s`, exact: status.applicationInterval, formula: `1 ÷ ((${rateTerms.join(" + ")}) ÷ ${status.bossApplicationPenalty}) = ${twoDecimals(status.applicationInterval)}s`, refs: ["stat:attackSpeed", ...status.sources.map(hand => `calc:${damageKey(hand, "rate")}`)] },
+          { key: `${status.id}:interval`, label: "Average time between applications", value: `${twoDecimals(status.applicationInterval)} s`, exact: status.applicationInterval, formula: `1 اْ ((${rateTerms.join(" + ")}) اْ ${status.bossApplicationPenalty}) = ${twoDecimals(status.applicationInterval)}s`, refs: ["stat:attackSpeed", ...status.sources.map(hand => `calc:${damageKey(hand, "rate")}`)] },
           { key: `${status.id}:stacks`, label: "Stacks per application", value: "?", exact: "unknown", formula: "Not configured yet", refs: [], unknown: true },
           { key: `${status.id}:uptime`, label: "Uptime", value: "?", exact: "unknown", formula: "Not configured yet", refs: [], unknown: true }
         ];
@@ -1971,9 +2120,9 @@
         const rune = RUNES.find(item => item.id === buildOptions.runes[index]);
         return `<div class="rune-slot ${activeRuneSlot === index ? "active" : ""}" data-slot="${index}" role="button" tabindex="0">
           <span class="slot-name">${slot}</span>
-          ${rune ? `<button class="remove-rune" type="button" data-remove-rune="${index}" aria-label="Remove ${escapeHtml(rune.name)} from ${slot}">×</button>` : ""}
-          ${rune ? `<img class="slot-rune-art" src="pictures/${encodeURIComponent(rune.image)}" alt="">` : `<span class="slot-rune-empty" aria-hidden="true">◇</span>`}
-          <span class="slot-rune">${rune ? escapeHtml(rune.name) : "Choose a rune…"}</span>
+          ${rune ? `<button class="remove-rune" type="button" data-remove-rune="${index}" aria-label="Remove ${escapeHtml(rune.name)} from ${slot}">ا-</button>` : ""}
+          ${rune ? `<img class="slot-rune-art" src="pictures/${encodeURIComponent(rune.image)}" alt="">` : `<span class="slot-rune-empty" aria-hidden="true">ƒ-خ</span>`}
+          <span class="slot-rune">${rune ? escapeHtml(rune.name) : "Choose a runeƒ?ف"}</span>
           <div class="curse-row">${buildOptions.curses[index] ? `<img class="curse-art" src="pictures/Runic_Curse.png" alt="Runic Curse">` : ""}<select class="curse-select" data-curse-slot="${index}" aria-label="${slot} Runic Curse">${curseOptions}</select></div>
         </div>`;
       }).join("");
@@ -2001,6 +2150,7 @@
       renderCalculations();
       renderPicked();
       renderCatalog();
+      renderDpsRanking();
       renderArtifacts();
       renderRunes();
       updateShareWidget();
@@ -2049,6 +2199,11 @@
       if (card) setCount(card.dataset.id, count(card.dataset.id) + 1);
     });
 
+    $("#dps-ranking-list").addEventListener("click", event => {
+      const row = event.target.closest("[data-dps-upgrade-id]");
+      if (row) setCount(row.dataset.dpsUpgradeId, count(row.dataset.dpsUpgradeId) + 1);
+    });
+
     $("#catalog").addEventListener("contextmenu", event => {
       const card = event.target.closest(".upgrade");
       if (!card) return;
@@ -2093,107 +2248,3 @@
           if (damageToggle.name === "twinmage-primary-damage") buildOptions.twinmageSecondaryDamage = true;
           else buildOptions.twinmagePrimaryDamage = true;
         }
-        saveBuildOptions();
-        renderConfiguration();
-        renderCalculations();
-        updateShareWidget();
-        return;
-      }
-      const choice = event.target.closest('input[type="radio"][name^="twinmage-"]');
-      if (!choice || !TWINMAGE_ELEMENTS.some(element => element.id === choice.value)) return;
-      if (choice.name === "twinmage-primary") buildOptions.twinmagePrimary = choice.value;
-      else if (choice.name === "twinmage-secondary") buildOptions.twinmageSecondary = choice.value;
-      saveBuildOptions();
-      renderConfiguration();
-      renderCalculations();
-      updateShareWidget();
-    });
-
-    $("#artifact-catalog").addEventListener("click", event => {
-      const card = event.target.closest("[data-id]");
-      if (!card) return;
-      buildOptions.artifacts[card.dataset.id] = Math.min(100, (buildOptions.artifacts[card.dataset.id] || 0) + 1);
-      saveBuildOptions();
-      render();
-    });
-    $("#artifact-catalog").addEventListener("contextmenu", event => {
-      const card = event.target.closest("[data-id]");
-      if (!card) return;
-      event.preventDefault();
-      const next = (buildOptions.artifacts[card.dataset.id] || 0) - 1;
-      if (next > 0) buildOptions.artifacts[card.dataset.id] = next;
-      else delete buildOptions.artifacts[card.dataset.id];
-      saveBuildOptions();
-      render();
-    });
-
-    $("#rune-slots").addEventListener("click", event => {
-      if (event.target.closest("select")) return;
-      const remove = event.target.closest("[data-remove-rune]");
-      if (remove) {
-        activeRuneSlot = Number(remove.dataset.removeRune);
-        buildOptions.runes[activeRuneSlot] = null;
-        saveBuildOptions();
-        render();
-        return;
-      }
-      const slot = event.target.closest("[data-slot]");
-      if (!slot) return;
-      activeRuneSlot = Number(slot.dataset.slot);
-      renderRunes();
-    });
-    $("#rune-slots").addEventListener("change", event => {
-      const select = event.target.closest("[data-curse-slot]");
-      if (!select) return;
-      buildOptions.curses[Number(select.dataset.curseSlot)] = select.value || null;
-      saveBuildOptions();
-      render();
-    });
-    $("#rune-catalog").addEventListener("click", event => {
-      const card = event.target.closest("[data-id]");
-      if (!card) return;
-      const existing = buildOptions.runes.indexOf(card.dataset.id);
-      if (existing >= 0) {
-        buildOptions.runes[existing] = null;
-        activeRuneSlot = existing;
-      } else {
-        buildOptions.runes[activeRuneSlot] = card.dataset.id;
-        const next = buildOptions.runes.findIndex((id, index) => !id && index > activeRuneSlot);
-        const wrapped = buildOptions.runes.findIndex(id => !id);
-        if (next >= 0 || wrapped >= 0) activeRuneSlot = next >= 0 ? next : wrapped;
-      }
-      saveBuildOptions();
-      render();
-    });
-
-    $("#class-select").addEventListener("change", event => {
-      selectedClass = CLASS_FAMILIES.includes(event.target.value) ? event.target.value : "Thaumaturge";
-      localStorage.setItem("ecliptica-upgrade-explorer-class", selectedClass);
-      syncClassUi();
-      render();
-    });
-
-    $("#reset-build").addEventListener("click", () => {
-      Object.keys(counts).forEach(id => delete counts[id]);
-      buildOptions.artifacts = {};
-      buildOptions.runes = RUNE_SLOTS.map(() => null);
-      buildOptions.curses = RUNE_SLOTS.map(() => null);
-      buildOptions.twinmagePrimary = "fire";
-      buildOptions.twinmageSecondary = "lightning";
-      buildOptions.twinmagePrimaryDamage = true;
-      buildOptions.twinmageSecondaryDamage = true;
-      activeRuneSlot = 0;
-      saveCounts();
-      saveBuildOptions();
-      render();
-    });
-
-    $("#copy-link").addEventListener("click", copyShareUrl);
-    window.addEventListener("hashchange", loadBuildFromHash);
-
-    syncClassUi();
-    if (new URLSearchParams(location.hash.slice(1)).has("b")) loadBuildFromHash();
-    else render();
-  </script>
-</body>
-</html>
