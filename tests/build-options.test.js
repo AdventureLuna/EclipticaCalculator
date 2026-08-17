@@ -2,6 +2,9 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs");
 
 const page = fs.readFileSync(`${__dirname}/../index.html`, "utf8");
+for (const icon of ["Nekomancer-Primary-2.png", "Neko_Zombie.png", "Neko_Balloon.png", "Neko_Ballista.png"]) {
+  assert.ok(fs.existsSync(`${__dirname}/../pictures/${icon}`), `Missing Nekomancer icon: ${icon}`);
+}
 
 assert.match(page, /if \(result\.health < 1\) result\.health = 1/);
 assert.match(page, /exact approaching-hard-cap formula is not yet known/);
@@ -43,7 +46,7 @@ assert.match(page, /buildOptions\.twinmagePrimary = "fire";[\s\S]*buildOptions\.
 assert.match(page, /Berserker’s Soul \(Melee\)/);
 assert.match(page, /Berserker’s Soul \(Ranged\)/);
 assert.match(page, /melee: \{ id: "Berserker's_Soul_Melee", classes: \["Spellsword", "Fistmage", "Spellhammer", "Shield Mage"\]/);
-assert.match(page, /ranged: \{ id: "Berserker's_Soul_Ranged", classes: \["Twinmage", "Gunmancer", "Thaumaturge", "Nekomancer"\]/);
+assert.match(page, /ranged: \{ id: "Berserker's_Soul_Ranged", classes: \["Twinmage", "Gunmancer", "Thaumaturge"\]/);
 assert.match(page, /damagePenalty: -20, attackSpeedPenalty: -40, damageAt70: 45, attackSpeedAt70: 90, regenerationAt70: -50/);
 assert.match(page, /damagePenalty: -10, attackSpeedPenalty: -20, damageAt70: 22\.5, attackSpeedAt70: 45, regenerationAt70: 0, spreadAt70: 2/);
 assert.match(page, /\["projectileSpread","Projectile Spread"\]/);
@@ -109,6 +112,27 @@ assert.match(page, /function renderThaumaturgeConfiguration/);
 assert.match(page, /function abilityDamageSourceSpecs/);
 assert.match(page, /function buildThaumaturgeSourceModel/);
 assert.match(page, /selectedClass === "Thaumaturge" \? buildThaumaturgeSourceModel\(stats\)/);
+assert.match(page, /const NEKOMANCER_PRIMARY = \{/);
+assert.match(page, /name: "Staff of Feline Mortality"/);
+assert.match(page, /iconUrl: "pictures\/Nekomancer-Primary-2\.png"/);
+assert.match(page, /interval: 1 \/ \.6/);
+assert.match(page, /status: \{ id: "breached", name: "Breached", chance: \.10 \}/);
+assert.match(page, /element: "shadow", damage: 20, projectiles: 1, canCrit: true/);
+assert.match(page, /const NEKOMANCER_MINION_LIMIT = 3/);
+assert.match(page, /name: "Zombie Kitty"[^\n]*damage: 25[^\n]*baseActivationRate: \.6[^\n]*chance: \.05/);
+assert.match(page, /name: "Balloon Kitty"[^\n]*damage: 36[^\n]*baseActivationRate: \.4[^\n]*chance: \.10/);
+assert.match(page, /name: "Ballista Kitty"[^\n]*damage: 25[^\n]*baseActivationRate: \.5[^\n]*chance: \.10/);
+assert.match(page, /function normalizeNekomancerMinions\(value\)/);
+assert.match(page, /nekomancerMinions: normalizeNekomancerMinions\(saved\.nekomancerMinions\)/);
+assert.match(page, /nekomancerSouls: Math\.min\(5/);
+assert.match(page, /function renderNekomancerConfiguration\(content\)/);
+assert.match(page, /data-nekomancer-minion-action="add"/);
+assert.match(page, /name="nekomancer-souls" min="0" max="5"/);
+assert.match(page, /function buildNekomancerSourceModel\(stats\)/);
+assert.match(page, /minion\.baseActivationRate \* selected \* attackSpeedMultiplier/);
+assert.match(page, /selectedClass === "Nekomancer" \? buildNekomancerSourceModel\(stats\)/);
+assert.match(page, /2 \* nekomancerMasteryStacks \* nekomancerSouls/);
+assert.match(page, /20 \* nekomancerMasteryStacks \* nekomancerSouls/);
 assert.match(page, /function changeClass\(nextClass\)/);
 assert.match(page, /dpsRankingRun \+= 1;/);
 assert.match(page, /restoreCounts\(dpsRankingSnapshot\);/);
