@@ -22,6 +22,50 @@ with sync_playwright() as playwright:
     page.on("pageerror", lambda error: errors.append(str(error)))
     page.goto(URL)
 
+    codec_checks = page.evaluate("""() => {
+      const base = ShareBuildCodec.encodeBuild({ version: 3, characterId: 1, upgrades: [], configuration: {} });
+      const baseBytes = ShareBuildCodec.base64UrlToBytes(base);
+      const configured = ShareBuildCodec.encodeBuild({
+        version: 3, characterId: 1, upgrades: [],
+        configuration: { twinmage: { primary: 5, secondary: 1, primaryDamage: true, secondaryDamage: false } }
+      });
+      const configuredBytes = ShareBuildCodec.base64UrlToBytes(configured);
+      const payload = configuredBytes[configuredBytes.length - 1];
+      const makeCode = bytes => ShareBuildCodec.bytesToBase64Url(Uint8Array.from(bytes));
+      const unknown = ShareBuildCodec.decodeBuild(makeCode([
+        ...configuredBytes.slice(0, -4), 6, 2, 1, payload, 99, 1, 7
+      ]));
+      const duplicate = ShareBuildCodec.decodeBuild(makeCode([
+        ...configuredBytes.slice(0, -4), 6, 2, 1, payload, 2, 1, 0
+      ]));
+      const rejected = [];
+      for (const bytes of [
+        [...baseBytes.slice(0, -1), 2, 2, 1],
+        [...baseBytes.slice(0, -1), 3, 2, 1, 0],
+        [...baseBytes, 0]
+      ]) {
+        try { ShareBuildCodec.decodeBuild(makeCode(bytes)); rejected.push(false); }
+        catch { rejected.push(true); }
+      }
+      const v2 = ShareBuildCodec.encodeBuild({ version: 2, characterId: 1, upgrades: [] });
+      return {
+        unknownConfiguration: unknown.configuration,
+        unknownWarning: unknown.warnings[0],
+        duplicateConfiguration: duplicate.configuration,
+        duplicateWarning: duplicate.warnings[0],
+        rejected,
+        defaultGrowth: baseBytes.length - ShareBuildCodec.base64UrlToBytes(v2).length,
+        configuredGrowth: configured.length - base.length
+      };
+    }""")
+    assert codec_checks["unknownConfiguration"] == {"twinmage": {"primary": 5, "secondary": 1, "primaryDamage": True, "secondaryDamage": False}}
+    assert "unknown configuration field 99" in codec_checks["unknownWarning"]
+    assert codec_checks["duplicateConfiguration"] == codec_checks["unknownConfiguration"]
+    assert "duplicate configuration field 2" in codec_checks["duplicateWarning"]
+    assert codec_checks["rejected"] == [True, True, True]
+    assert codec_checks["defaultGrowth"] == 1
+    assert codec_checks["configuredGrowth"] <= 6
+
     # Shared engine: volley damage is per activation, while crit/status chances
     # still use every hit in the volley.
     volley = page.evaluate("""() => {
@@ -48,6 +92,27 @@ with sync_playwright() as playwright:
       };
     }""")
     assert volley == {"nonCrit": 10, "crit": 15, "averagePerHit": 11, "average": 55, "activationRate": .2, "hitsPerSecond": 1, "dps": 11, "critsPerSecond": .2, "applicationsPerSecond": .1}
+
+    # Health Regeneration keeps its visible percentage while showing derived
+    # HP/s beneath it. Big and Lazy is a separate hidden multiplier.
+    regeneration_row = page.locator('[data-stat="healthRegeneration"]')
+    assert regeneration_row.locator('.value').inner_text().splitlines() == ["100%", "(0.5 hp/s)"]
+    assert regeneration_row.locator('[data-health-regeneration-rate]').get_attribute('data-health-regeneration-rate') == "0.5"
+    upgrade(page, "Vitality")
+    assert regeneration_row.locator('.value').inner_text().splitlines() == ["180%+80", "(0.9 hp/s)"]
+    upgrade(page, "Big_and_Lazy")
+    assert regeneration_row.locator('.value').inner_text().splitlines() == ["180%+80", "(2.7 hp/s)"]
+    regeneration_row.hover()
+    regeneration_tooltip = page.locator('#stat-tooltip').inner_text()
+    assert "Base regeneration: 0.5 hp/s" in regeneration_tooltip
+    assert "100% + 200% = 300% = ×3" in regeneration_tooltip
+    assert "0.5 × 1.8 × 3 = 2.7 hp/s" in regeneration_tooltip
+    upgrade(page, "Big_and_Lazy", 2)
+    assert regeneration_row.locator('[data-health-regeneration-rate]').inner_text() == "(3.15 hp/s)"
+    regeneration_row.hover()
+    assert "100% + 200% + (1 × 50%) = 350% = ×3.5" in page.locator('#stat-tooltip').inner_text()
+    upgrade(page, "Vitality", 0)
+    upgrade(page, "Big_and_Lazy", 0)
 
     # Thaumaturge: splitshot multiplies only Foul Pustule projectiles. Flaming Spirit
     # follows primary activations once and contributes Burning on the same shared path.
@@ -78,6 +143,44 @@ with sync_playwright() as playwright:
     assert page.locator('[data-status="poisoned"]').count() == 1
     assert page.locator('[data-calculation-key="crit:rate"]').inner_text() == "0.45"
     assert source_rate(page, "thaumaturge-charged-strike") == "0.45"
+
+    # Excluded columns stay visible but no longer contribute to Combined DPS.
+    # Their underlying crit and status mechanics continue to operate normally.
+    page.locator('[data-tab="calculations"]').click()
+    spirit_toggle = page.locator('[data-source-exclusion="thaumaturge-flaming-spirit"]')
+    assert page.locator('.source-inclusion-toggle').count() == 0
+    assert spirit_toggle.get_attribute('class') == 'source-column-toggle'
+    assert "✓" not in spirit_toggle.inner_text()
+    combined_before = float(page.locator('[data-calculation-key="damage:combined:total-dps"]').get_attribute("data-exact-value"))
+    spirit_total = float(page.locator('[data-calculation-key="damage:thaumaturge-flaming-spirit:total-dps"]').get_attribute("data-exact-value"))
+    crit_rate_before = page.locator('[data-calculation-key="crit:rate"]').get_attribute("data-exact-value")
+    burning_rate_before = page.evaluate("EclipticaBuildForge.buildUnifiedCalculationModel().statuses.find(status => status.id === 'burning').applicationsPerSecond")
+    spirit_toggle.click()
+    combined_after = float(page.locator('[data-calculation-key="damage:combined:total-dps"]').get_attribute("data-exact-value"))
+    assert abs(combined_after - (combined_before - spirit_total)) < 1e-9
+    assert page.locator('th.source-excluded [data-source-exclusion="thaumaturge-flaming-spirit"]').count() == 1
+    assert page.locator('[data-source-exclusion="thaumaturge-flaming-spirit"]').get_attribute("aria-pressed") == "false"
+    assert page.locator('td.source-excluded [data-calculation-key="damage:thaumaturge-flaming-spirit:total-dps"]').count() == 1
+    assert page.locator('[data-calculation-key="crit:rate"]').get_attribute("data-exact-value") == crit_rate_before
+    assert page.evaluate("EclipticaBuildForge.buildUnifiedCalculationModel().statuses.find(status => status.id === 'burning').applicationsPerSecond") == burning_rate_before
+    exclusion_code = page.evaluate("new URLSearchParams(location.hash.slice(1)).get('b')")
+    excluded_share_id = page.evaluate("DAMAGE_SOURCE_SHARE_ID.get('thaumaturge-flaming-spirit')")
+    assert excluded_share_id in page.evaluate("code => decodeBuild(code).configuration.excludedDamageSources", exclusion_code)
+    page.locator('[data-source-exclusion="thaumaturge-flaming-spirit"]').click()
+    page.goto(f"{URL}#b={exclusion_code}")
+    page.reload()
+    page.locator('[data-tab="calculations"]').click()
+    assert page.locator('th.source-excluded [data-source-exclusion="thaumaturge-flaming-spirit"]').count() == 1
+    page.locator('[data-source-exclusion="thaumaturge-flaming-spirit"]').click()
+
+    burning_toggle = page.locator('[data-source-exclusion="status-burning"]')
+    burning_combined_before = float(page.locator('[data-calculation-key="damage:combined:total-dps"]').get_attribute("data-exact-value"))
+    burning_total = float(page.locator('[data-calculation-key="damage:status-burning:total-dps"]').get_attribute("data-exact-value"))
+    burning_toggle.click()
+    burning_combined_after = float(page.locator('[data-calculation-key="damage:combined:total-dps"]').get_attribute("data-exact-value"))
+    assert abs(burning_combined_after - (burning_combined_before - burning_total)) < 1e-9
+    assert page.locator('[data-status="burning"]').count() == 1
+    page.locator('[data-source-exclusion="status-burning"]').click()
 
     # Switching classes must replace—not merely recolor—the configuration and table.
     page.select_option("#class-select", "Gunmancer")
@@ -162,6 +265,100 @@ with sync_playwright() as playwright:
     assert page.locator('[data-calculation-source-upgrade="Flaming_Spirit"]').count() > 0
     assert page.locator('[data-status="burning"]').count() == 1
 
+    # Nekomancer always uses its staff and aggregates independently attacking
+    # minions by type without turning them into a projectile volley.
+    page.locator("#reset-build").click()
+    page.select_option("#class-select", "Nekomancer")
+    page.locator('[data-tab="configuration"]').click()
+    assert page.locator("#configuration-content").inner_text().find("Staff of Feline Mortality") >= 0
+    assert page.locator('#configuration-content input[name="nekomancer-souls"]').input_value() == "5"
+    assert page.locator("#configuration-content .ability-effect").count() == 0
+    assert page.locator("#configuration-content p").count() == 0
+    assert page.locator("#configuration-content img").evaluate_all("images => images.every(image => image.complete && image.naturalWidth > 0)")
+    assert page.evaluate("buildOptions.nekomancerMinions") == {"zombie": 0, "balloon": 0, "ballista": 0}
+    assert "conditional-unavailable" in page.locator("[data-id=\"Berserker's_Soul_Melee\"]").get_attribute("class")
+    assert "conditional-unavailable" in page.locator("[data-id=\"Berserker's_Soul_Ranged\"]").get_attribute("class")
+    assert not page.evaluate("isUpgradeConditionallyAvailable(upgradeIndex.get(\"Berserker's_Soul_Melee\"))")
+    assert not page.evaluate("isUpgradeConditionallyAvailable(upgradeIndex.get(\"Berserker's_Soul_Ranged\"))")
+
+    zombie_add = page.locator('[data-nekomancer-minion-action="add"][data-minion-id="zombie"]')
+    zombie_add.click()
+    zombie_add.click()
+    page.locator('[data-nekomancer-minion-action="add"][data-minion-id="balloon"]').click()
+    assert page.evaluate("buildOptions.nekomancerMinions") == {"zombie": 2, "balloon": 1, "ballista": 0}
+    assert page.locator('[data-nekomancer-minion-action="add"][data-minion-id="ballista"]').is_disabled()
+    neko_model = page.evaluate("window.EclipticaBuildForge.buildUnifiedCalculationModel()")
+    neko_sources = {source["id"]: source for source in neko_model["attackSources"]}
+    assert set(neko_sources) == {"nekomancer-staff-projectile", "nekomancer-minion-zombie", "nekomancer-minion-balloon"}
+    assert neko_sources["nekomancer-staff-projectile"]["baseDamage"] == 20
+    assert neko_sources["nekomancer-staff-projectile"]["damage"]["activationRate"] == .6
+    assert neko_sources["nekomancer-minion-zombie"]["baseDamage"] == 25
+    assert neko_sources["nekomancer-minion-zombie"]["damage"]["activationRate"] == 1.2
+    assert neko_sources["nekomancer-minion-zombie"]["hitsPerActivation"] == 1
+    assert neko_sources["nekomancer-minion-zombie"]["damage"]["averageDamage"] == neko_sources["nekomancer-minion-zombie"]["damage"]["averageDamagePerHit"]
+    assert neko_sources["nekomancer-minion-balloon"]["baseDamage"] == 36
+    assert neko_sources["nekomancer-minion-balloon"]["damage"]["activationRate"] == .4
+    assert abs(neko_model["criticalHitEligibleRate"] - 2.2) < 1e-12
+    ballista = page.evaluate("NEKOMANCER_MINIONS.find(minion => minion.id === 'ballista')")
+    assert ballista["damage"] == 25
+    assert ballista["baseActivationRate"] == .5
+    assert ballista["element"] == "physical"
+    assert ballista["status"]["id"] == "bleeding"
+    assert ballista["status"]["chance"] == .1
+    assert page.locator('[data-calculation-key="source:nekomancer-minion-zombie"]').inner_text().find("×2") >= 0
+    zombie_rate_formula = page.locator('[data-calculation-key="damage:nekomancer-minion-zombie:rate"]').get_attribute("data-calculation-formula")
+    assert "0.60 base activations/s" in zombie_rate_formula
+    assert "x2.00 Minions" in zombie_rate_formula
+    assert "x1.00 Attack Speed" in zombie_rate_formula
+    assert page.locator('[data-calculation-key="source:nekomancer-minion-zombie"]').get_attribute("data-calculation-source-icon") == "pictures/Neko_Zombie.png"
+    assert page.locator('[data-status="breached"]').count() == 1
+    assert page.locator('[data-status="burning"]').count() == 1
+
+    upgrade(page, "Swift_Hands")
+    assert abs(float(source_rate(page, "nekomancer-minion-zombie")) - 1.38) < 1e-12
+    upgrade(page, "Swift_Hands", 0)
+
+    upgrade(page, "Flaming_Spirit")
+    upgrade(page, "Charged_Strike")
+    neko_model = page.evaluate("window.EclipticaBuildForge.buildUnifiedCalculationModel()")
+    neko_sources = {source["id"]: source for source in neko_model["attackSources"]}
+    assert neko_sources["nekomancer-flaming-spirit"]["damage"]["activationRate"] == .6
+    assert neko_sources["nekomancer-charged-strike"]["damage"]["activationRate"] == neko_model["criticalHitsPerSecond"]
+    assert neko_model["criticalHitEligibleRate"] > .6
+
+    upgrade(page, "Nekomancer_Soul_Detonation")
+    assert not any("detonation" in source["id"] for source in page.evaluate("window.EclipticaBuildForge.buildUnifiedCalculationModel().attackSources"))
+    page.locator("#reset-build").click()
+    upgrade(page, "Nekomancer_Mastery", 2)
+    assert page.evaluate("latestCalculation.stats.overallDamage") == 120
+    assert page.evaluate("latestCalculation.stats.healthRegeneration") == 300
+    page.evaluate("buildOptions.nekomancerSouls = 0; saveBuildOptions(); render();")
+    assert page.evaluate("latestCalculation.stats.overallDamage") == 100
+    assert page.evaluate("latestCalculation.stats.healthRegeneration") == 100
+
+    page.evaluate("buildOptions.nekomancerMinions = { zombie: 1, balloon: 1, ballista: 1 }; buildOptions.nekomancerSouls = 3; saveBuildOptions(); render();")
+    mixed_model = page.evaluate("window.EclipticaBuildForge.buildUnifiedCalculationModel()")
+    assert {source["id"] for source in mixed_model["attackSources"]} == {
+        "nekomancer-staff-projectile", "nekomancer-minion-zombie", "nekomancer-minion-balloon", "nekomancer-minion-ballista"
+    }
+    assert {status["id"] for status in mixed_model["statuses"]} == {"breached", "burning", "bleeding"}
+    page.reload()
+    assert page.evaluate("buildOptions.nekomancerMinions") == {"zombie": 1, "balloon": 1, "ballista": 1}
+    assert page.evaluate("buildOptions.nekomancerSouls") == 3
+    page.locator('[data-tab="configuration"]').click()
+    page.locator("#reset-configuration").click()
+    assert page.evaluate("buildOptions.nekomancerMinions") == {"zombie": 0, "balloon": 0, "ballista": 0}
+    assert page.evaluate("buildOptions.nekomancerSouls") == 5
+
+    page.locator('[data-tab="upgrades"]').click()
+    page.locator("#dps-ranking-toggle").click()
+    page.locator(".dps-ranking-loading").wait_for(state="detached", timeout=15000)
+    assert page.locator('[data-dps-upgrade-id="Nekomancer_Mastery"]').count() == 1
+    assert page.locator('[data-dps-upgrade-id="Berserker\'s_Soul_Melee"]').count() == 0
+    assert page.locator('[data-dps-upgrade-id="Berserker\'s_Soul_Ranged"]').count() == 0
+    page.locator("#dps-ranking-toggle").click()
+
+    upgrade(page, "Flaming_Spirit")
     page.select_option("#class-select", "Twinmage")
     assert page.locator("#calculation-content").inner_text().find("Twinmage") >= 0
     twinmage_configuration_text = page.locator("#configuration-content").inner_text()
@@ -195,6 +392,94 @@ with sync_playwright() as playwright:
     assert page.evaluate("buildOptions.twinmageSecondary") == "lightning"
     assert page.evaluate("buildOptions.twinmagePrimaryDamage")
     assert page.evaluate("buildOptions.twinmageSecondaryDamage")
+
+    # V3 share links carry active class configuration and non-default
+    # Berserker stacks, then reproduce it independently of local settings.
+    page.evaluate("""() => {
+      counts["Berserker's_Soul_Ranged"] = 2;
+      buildOptions.twinmagePrimary = 'shadow';
+      buildOptions.twinmageSecondary = 'frost';
+      buildOptions.twinmagePrimaryDamage = false;
+      buildOptions.twinmageSecondaryDamage = true;
+      buildOptions.berserkerSoulStacks = 35;
+      saveCounts(); saveBuildOptions(); render();
+    }""")
+    twin_code = page.evaluate("new URLSearchParams(location.hash.slice(1)).get('b')")
+    twin_decoded = page.evaluate("code => decodeBuild(code)", twin_code)
+    assert twin_decoded["version"] == 3
+    assert twin_decoded["configuration"] == {
+        "berserkerSoulStacks": 35,
+        "twinmage": {"primary": 5, "secondary": 1, "primaryDamage": False, "secondaryDamage": True}
+    }
+    page.evaluate("""() => {
+      buildOptions.twinmagePrimary = 'fire';
+      buildOptions.twinmageSecondary = 'lightning';
+      buildOptions.twinmagePrimaryDamage = true;
+      buildOptions.twinmageSecondaryDamage = true;
+      buildOptions.berserkerSoulStacks = 140;
+      saveBuildOptions();
+    }""")
+    page.goto(f"{URL}#b={twin_code}")
+    page.reload()
+    twin_loaded_state = page.evaluate("({ selectedClass, primary: buildOptions.twinmagePrimary, stacks: buildOptions.berserkerSoulStacks, status: document.querySelector('#copy-status').textContent })")
+    assert twin_loaded_state["selectedClass"] == "Twinmage", twin_loaded_state
+    assert twin_loaded_state["primary"] == "shadow", twin_loaded_state
+    assert twin_loaded_state["stacks"] == 35, twin_loaded_state
+    assert page.evaluate("buildOptions.twinmageSecondary") == "frost"
+    assert not page.evaluate("buildOptions.twinmagePrimaryDamage")
+    assert page.evaluate("buildOptions.twinmageSecondaryDamage")
+
+    page.select_option("#class-select", "Gunmancer")
+    page.evaluate("""() => {
+      buildOptions.gunmancerPrimary = 'kinetic';
+      buildOptions.gunmancerSecondary = 'antimatter';
+      buildOptions.gunmancerPrimaryDamage = false;
+      buildOptions.gunmancerSecondaryDamage = true;
+      buildOptions.gunmancerAirblastTarget = 'secondary';
+      saveBuildOptions(); render();
+    }""")
+    gun_code = page.evaluate("new URLSearchParams(location.hash.slice(1)).get('b')")
+    assert page.evaluate("code => decodeBuild(code).configuration.gunmancer", gun_code) == {
+        "primary": 1, "secondary": 2, "damageGroup": 1, "airblastTarget": 2
+    }
+    page.evaluate("() => { buildOptions.gunmancerPrimary = 'va11'; buildOptions.gunmancerSecondary = 'photon'; buildOptions.gunmancerPrimaryDamage = true; buildOptions.gunmancerSecondaryDamage = false; buildOptions.gunmancerAirblastTarget = 'none'; saveBuildOptions(); }")
+    page.goto(f"{URL}#b={gun_code}")
+    page.reload()
+    page.wait_for_function("buildOptions.gunmancerPrimary === 'kinetic' && buildOptions.gunmancerAirblastTarget === 'secondary'")
+    assert page.evaluate("buildOptions.gunmancerSecondary") == "antimatter"
+    assert page.evaluate("buildOptions.gunmancerSecondaryDamage")
+
+    page.select_option("#class-select", "Nekomancer")
+    page.evaluate("""() => {
+      buildOptions.nekomancerMinions = { zombie: 2, balloon: 0, ballista: 1 };
+      buildOptions.nekomancerSouls = 2;
+      saveBuildOptions(); render();
+    }""")
+    neko_code = page.evaluate("new URLSearchParams(location.hash.slice(1)).get('b')")
+    assert page.evaluate("code => decodeBuild(code).configuration.nekomancer", neko_code) == {
+        "zombie": 2, "balloon": 0, "ballista": 1, "souls": 2
+    }
+    page.evaluate("() => { buildOptions.nekomancerMinions = { zombie: 0, balloon: 3, ballista: 0 }; buildOptions.nekomancerSouls = 5; saveBuildOptions(); }")
+    page.goto(f"{URL}#b={neko_code}")
+    page.reload()
+    page.wait_for_function("buildOptions.nekomancerMinions.zombie === 2 && buildOptions.nekomancerSouls === 2")
+    assert page.evaluate("buildOptions.nekomancerMinions") == {"zombie": 2, "balloon": 0, "ballista": 1}
+
+    # Older links deterministically reset the active class instead of inheriting
+    # non-default configuration from local storage.
+    legacy_v2 = page.evaluate("ShareBuildCodec.encodeBuild({ version: 2, characterId: 1, upgrades: [{ id: upgradeIndex.get(\"Berserker's_Soul_Ranged\").globalId, count: 2 }], artifacts: [], runes: [null, null, null, null], curses: [null, null, null, null] })")
+    page.evaluate("code => { buildOptions.twinmagePrimary = 'shadow'; buildOptions.twinmageSecondary = 'frost'; buildOptions.twinmagePrimaryDamage = false; buildOptions.twinmageSecondaryDamage = true; buildOptions.berserkerSoulStacks = 7; saveBuildOptions(); location.hash = `b=${code}`; }", legacy_v2)
+    page.wait_for_function("selectedClass === 'Twinmage' && buildOptions.twinmagePrimary === 'fire'")
+    assert page.evaluate("buildOptions.twinmageSecondary") == "lightning"
+    assert page.evaluate("buildOptions.twinmagePrimaryDamage && buildOptions.twinmageSecondaryDamage")
+    assert page.evaluate("buildOptions.berserkerSoulStacks") == 140
+
+    legacy_v1 = page.evaluate("ShareBuildCodec.encodeBuild({ version: 1, characterId: 2, upgrades: [] })")
+    page.evaluate("code => { buildOptions.gunmancerPrimary = 'kinetic'; buildOptions.gunmancerSecondary = 'antimatter'; buildOptions.gunmancerPrimaryDamage = false; buildOptions.gunmancerSecondaryDamage = true; buildOptions.gunmancerAirblastTarget = 'secondary'; saveBuildOptions(); location.hash = `b=${code}`; }", legacy_v1)
+    page.wait_for_function("selectedClass === 'Gunmancer' && buildOptions.gunmancerPrimary === 'va11'")
+    assert page.evaluate("buildOptions.gunmancerSecondary") == "photon"
+    assert page.evaluate("buildOptions.gunmancerPrimaryDamage && !buildOptions.gunmancerSecondaryDamage")
+    assert page.evaluate("buildOptions.gunmancerAirblastTarget") == "none"
 
     assert not errors, errors
     browser.close()

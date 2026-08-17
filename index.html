@@ -223,6 +223,7 @@
     .stat-row.element { padding-left: 28px; }
     .stat-row.changed { background: rgba(255,255,255,.045); }
     .stat-row .value { color: #fff; white-space: nowrap; }
+    .stat-row .health-regeneration-rate { display: block; margin-top: 1px; color: #aaa8af; font-size: .68rem; font-weight: 650; line-height: 1.05; text-align: right; }
     .stat-row .delta { margin-left: 4px; font-size: .7rem; font-style: normal; }
     .delta.up { color: var(--positive); }
     .delta.down { color: var(--negative); }
@@ -289,6 +290,8 @@
       line-height: 1.5;
     }
     .cap-calculation strong { color: #ffe66c; }
+    .health-regeneration-calculation { margin-top: 10px; border: 1px solid rgba(184, 221, 190, .22); border-radius: 9px; color: #cfced3; background: rgba(184, 221, 190, .045); padding: 8px 9px; line-height: 1.5; }
+    .health-regeneration-calculation strong { color: #d9f0dd; }
     .cap-formula { color: #f6effa; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
 
     .explorer {
@@ -335,6 +338,20 @@
     .airblast-option:has(input:checked) { border-color: rgba(var(--class-rgb), .75); color: var(--ink); background: rgba(var(--class-rgb), .13); }
     .airblast-option input { accent-color: rgb(var(--class-rgb)); }
     .gunmancer-source-note { color: var(--muted); font-size: .66rem; line-height: 1.4; }
+    .nekomancer-configuration { display: grid; gap: 22px; }
+    .nekomancer-configuration .ability-options { grid-template-columns: minmax(180px, 360px); }
+    .nekomancer-configuration .ability-option { cursor: default; }
+    .nekomancer-configuration .ability-option:hover { transform: none; }
+    .nekomancer-minion-options { display: grid; grid-template-columns: repeat(3, minmax(150px, 1fr)); gap: 10px; }
+    .nekomancer-minion-card { display: grid; grid-template-columns: 58px minmax(0, 1fr); gap: 10px; align-items: center; border: 1px solid var(--line); border-radius: 12px; color: var(--muted); background: rgba(255,255,255,.025); padding: 9px; }
+    .nekomancer-minion-card[data-count]:not([data-count="0"]) { border-color: rgba(var(--class-rgb), .7); color: var(--ink); background: rgba(var(--class-rgb), .12); }
+    .nekomancer-minion-controls { display: grid; grid-template-columns: 30px minmax(24px, 1fr) 30px; gap: 5px; align-items: center; margin-top: 8px; }
+    .nekomancer-minion-controls button { width: 30px; height: 28px; border: 1px solid var(--line); border-radius: 7px; color: var(--ink); background: rgba(255,255,255,.045); cursor: pointer; font: inherit; font-weight: 900; }
+    .nekomancer-minion-controls button:hover:not(:disabled), .nekomancer-minion-controls button:focus-visible { border-color: rgba(var(--class-rgb), .72); background: rgba(var(--class-rgb), .18); outline: none; }
+    .nekomancer-minion-controls button:disabled { opacity: .32; cursor: default; }
+    .nekomancer-minion-count { color: var(--ink); font-size: .78rem; font-weight: 900; text-align: center; font-variant-numeric: tabular-nums; }
+    .nekomancer-souls-control { display: flex; align-items: center; gap: 10px; }
+    .nekomancer-souls-control input { width: 82px; border: 1px solid var(--line); border-radius: 8px; color: var(--ink); background: rgba(0,0,0,.22); padding: 7px 8px; font: inherit; font-variant-numeric: tabular-nums; }
     .element-picker { border: 0; margin: 0; padding: 0; }
     .element-picker legend { width: 100%; margin-bottom: 10px; color: var(--ink); }
     .element-picker-heading { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
@@ -362,7 +379,7 @@
     .damage-table th, .damage-table td { border-right: 1px solid rgba(255,255,255,.13); border-bottom: 1px solid rgba(255,255,255,.13); padding: 6px 9px; }
     .damage-table tr > :last-child { border-right: 0; }
     .damage-table tbody tr:last-child > * { border-bottom: 0; }
-    .damage-table thead th { height: 42px; background: rgba(0,0,0,.18); }
+    .damage-table thead th { position: relative; height: 42px; background: rgba(0,0,0,.18); }
     .damage-table .damage-label { width: 120px; min-width: 120px; color: #e8e8ec; font-size: .66rem; font-weight: 650; text-align: left; white-space: nowrap; }
     .damage-column { --damage-color: #d8dde5; width: 72px; min-width: 72px; color: var(--damage-color); text-align: center; }
     .shared-ability-table .damage-column { width: 120px; min-width: 120px; }
@@ -382,6 +399,13 @@
     .damage-hand-position { display: block; margin-bottom: 2px; color: #9d93a4; font-size: .46rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
     .damage-hand-title { display: block; color: var(--damage-color); font-size: .7rem; font-weight: 900; line-height: 1.05; overflow-wrap: anywhere; }
     .damage-value { color: var(--damage-color); font-size: .72rem; font-variant-numeric: tabular-nums; font-weight: 800; }
+    .damage-table thead th.damage-column { padding: 0; }
+    .source-column-toggle { width: 100%; min-height: 54px; display: grid; align-content: center; border: 0; color: inherit; background: transparent; padding: 6px 9px; font: inherit; cursor: pointer; }
+    .source-column-toggle:hover { background: color-mix(in srgb, var(--damage-color) 6%, transparent); }
+    .source-column-toggle:focus-visible { outline: 2px solid color-mix(in srgb, var(--damage-color) 82%, white); outline-offset: -3px; }
+    .damage-column.source-excluded { background: rgba(255,255,255,.018); }
+    .damage-column.source-excluded .damage-hand-position, .damage-column.source-excluded .damage-hand-title, .damage-column.source-excluded .damage-value { color: #77757c; opacity: .48; text-shadow: none; }
+    .damage-column.source-excluded .source-column-toggle:hover { background: rgba(255,255,255,.035); }
     .damage-value-unknown { color: #aaa6af; font-size: .82rem; }
     .damage-section-break > * { border-top: 3px solid rgba(255,255,255,.11); }
     .damage-total-row .damage-label, .damage-total-row .damage-value { font-size: .93rem; font-weight: 950; }
@@ -707,7 +731,7 @@
       .tools input { grid-column: auto; }
       .catalog { grid-template-columns: 1fr; }
       .element-options { grid-template-columns: repeat(3, minmax(76px, 1fr)); }
-      .ability-options, .airblast-options { grid-template-columns: 1fr; }
+      .ability-options, .airblast-options, .nekomancer-minion-options { grid-template-columns: 1fr; }
       .element-picker-heading { align-items: flex-start; flex-direction: column; gap: 7px; }
       .damage-table th, .damage-table td { padding: 6px 8px; }
       .slot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; aspect-ratio: auto; }
@@ -964,6 +988,7 @@
       overallDamage: 100, physicalDamage: 100, fireDamage: 100, frostDamage: 100,
       electricDamage: 100, luminousDamage: 100, shadowDamage: 100, poisonDamage: 100
     };
+    const BASE_HEALTH_REGENERATION_PER_SECOND = .5;
 
     const CAPS = {
       attackSpeed: [250, 400], projectileSpeed: [250, 400], movementSpeed: [150, 200],
@@ -1011,7 +1036,7 @@
     const DEFAULT_FAMILIES = ["Endurance Crystal","Mobility Crystal","Chronowizard"];
     const BERSERKER_SOUL = {
       melee: { id: "Berserker's_Soul_Melee", classes: ["Spellsword", "Fistmage", "Spellhammer", "Shield Mage"], damagePenalty: -20, attackSpeedPenalty: -40, damageAt70: 45, attackSpeedAt70: 90, regenerationAt70: -50, spreadAt70: 0 },
-      ranged: { id: "Berserker's_Soul_Ranged", classes: ["Twinmage", "Gunmancer", "Thaumaturge", "Nekomancer"], damagePenalty: -10, attackSpeedPenalty: -20, damageAt70: 22.5, attackSpeedAt70: 45, regenerationAt70: 0, spreadAt70: 2 }
+      ranged: { id: "Berserker's_Soul_Ranged", classes: ["Twinmage", "Gunmancer", "Thaumaturge"], damagePenalty: -10, attackSpeedPenalty: -20, damageAt70: 22.5, attackSpeedAt70: 45, regenerationAt70: 0, spreadAt70: 2 }
     };
     const CLASS_BASE_HEALTH = {
       Spellsword: 150,
@@ -1101,6 +1126,36 @@
       description: "Poison projectile dealing 30 damage at 0.75 attacks per second. The Japanese wiki also lists 26 m/s projectile speed and 50 m range.",
       components: [{ id: "projectile", name: "Poison projectile", element: "poison", damage: 30, projectiles: () => 1 + count("Thaumaturge_Splitshot"), canCrit: true }]
     };
+    const NEKOMANCER_PRIMARY = {
+      id: "staff",
+      name: "Staff of Feline Mortality",
+      iconUrl: "pictures/Nekomancer-Primary-2.png",
+      interval: 1 / .6,
+      attackSpeedAffected: true,
+      status: { id: "breached", name: "Breached", chance: .10 },
+      components: [{ id: "projectile", name: "Shadow projectile", element: "shadow", damage: 20, projectiles: 1, canCrit: true }]
+    };
+    const NEKOMANCER_MINION_LIMIT = 3;
+    const NEKOMANCER_MINIONS = [
+      { id: "zombie", name: "Zombie Kitty", iconUrl: "pictures/Neko_Zombie.png", element: "shadow", damage: 25, baseActivationRate: .6, status: { id: "breached", name: "Breached", chance: .05 } },
+      { id: "balloon", name: "Balloon Kitty", iconUrl: "pictures/Neko_Balloon.png", element: "fire", damage: 36, baseActivationRate: .4, status: { id: "burning", name: "Burning", chance: .10 } },
+      { id: "ballista", name: "Ballista Kitty", iconUrl: "pictures/Neko_Ballista.png", element: "physical", damage: 25, baseActivationRate: .5, status: { id: "bleeding", name: "Bleeding", chance: .10 } }
+    ];
+    const DAMAGE_SOURCE_SHARE_KEYS = [
+      "twinmage-hand-primary", "twinmage-hand-secondary", "twinmage-mastery-primary", "twinmage-mastery-secondary",
+      "twinmage-flaming-spirit", "twinmage-charged-strike",
+      "gunmancer-va11-beam", "gunmancer-va11-explosion", "gunmancer-kinetic-projectile",
+      "gunmancer-firebomb-projectile", "gunmancer-firebomb-explosion", "gunmancer-photon-projectile", "gunmancer-antimatter-projectile",
+      "gunmancer-airblast-primary-va11-beam", "gunmancer-airblast-primary-va11-explosion", "gunmancer-airblast-primary-kinetic-projectile",
+      "gunmancer-airblast-secondary-firebomb-projectile", "gunmancer-airblast-secondary-firebomb-explosion",
+      "gunmancer-airblast-secondary-photon-projectile", "gunmancer-airblast-secondary-antimatter-projectile",
+      "gunmancer-flaming-spirit", "gunmancer-charged-strike",
+      "thaumaturge-foul-pustule-projectile", "thaumaturge-flaming-spirit", "thaumaturge-charged-strike",
+      "nekomancer-staff-projectile", "nekomancer-minion-zombie", "nekomancer-minion-balloon", "nekomancer-minion-ballista",
+      "nekomancer-flaming-spirit", "nekomancer-charged-strike",
+      "status-burning", "status-bleeding", "status-poisoned"
+    ];
+    const DAMAGE_SOURCE_SHARE_ID = new Map(DAMAGE_SOURCE_SHARE_KEYS.map((key, id) => [key, id]));
 
     const CLASS_DAMAGE_SOURCES = {
       Spellsword: ["physical"],
@@ -1263,6 +1318,49 @@
       safeSetStorage("ecliptica-upgrade-explorer-v1", JSON.stringify(counts));
     }
 
+    function normalizeNekomancerMinions(value) {
+      const saved = value && typeof value === "object" ? value : {};
+      let remaining = NEKOMANCER_MINION_LIMIT;
+      return Object.fromEntries(NEKOMANCER_MINIONS.map(minion => {
+        const selected = Math.min(remaining, Math.max(0, Math.floor(Number(saved[minion.id]) || 0)));
+        remaining -= selected;
+        return [minion.id, selected];
+      }));
+    }
+
+    function normalizeExcludedDamageSources(value) {
+      const saved = value && typeof value === "object" && !Array.isArray(value) ? value : {};
+      return Object.fromEntries(CLASS_FAMILIES.map(className => {
+        const entries = Array.isArray(saved[className]) ? saved[className] : [];
+        return [className, [...new Set(entries.filter(key => typeof key === "string" && DAMAGE_SOURCE_SHARE_ID.has(key)))]];
+      }));
+    }
+
+    function excludedDamageSourceKeys(className = selectedClass) {
+      buildOptions.excludedDamageSources = normalizeExcludedDamageSources(buildOptions.excludedDamageSources);
+      return buildOptions.excludedDamageSources[className];
+    }
+
+    function resetClassBuildConfiguration(className = selectedClass) {
+      buildOptions.excludedDamageSources = normalizeExcludedDamageSources(buildOptions.excludedDamageSources);
+      buildOptions.excludedDamageSources[className] = [];
+      if (className === "Twinmage") {
+        buildOptions.twinmagePrimary = "fire";
+        buildOptions.twinmageSecondary = "lightning";
+        buildOptions.twinmagePrimaryDamage = true;
+        buildOptions.twinmageSecondaryDamage = true;
+      } else if (className === "Gunmancer") {
+        buildOptions.gunmancerPrimary = "va11";
+        buildOptions.gunmancerSecondary = "photon";
+        buildOptions.gunmancerPrimaryDamage = true;
+        buildOptions.gunmancerSecondaryDamage = false;
+        buildOptions.gunmancerAirblastTarget = "none";
+      } else if (className === "Nekomancer") {
+        buildOptions.nekomancerMinions = normalizeNekomancerMinions();
+        buildOptions.nekomancerSouls = 5;
+      }
+    }
+
     function loadBuildOptions() {
       try {
         const saved = JSON.parse(localStorage.getItem("ecliptica-build-options-v1") || "{}");
@@ -1285,9 +1383,12 @@
           gunmancerPrimaryDamage: savedGunmancerDps === "primary",
           gunmancerSecondaryDamage: savedGunmancerDps === "secondary",
           gunmancerAirblastTarget: ["none", "primary", "secondary"].includes(saved.gunmancerAirblastTarget) ? saved.gunmancerAirblastTarget : "none",
-          berserkerSoulStacks: saved.berserkerSoulStacks == null ? defaultBerserkerStacks : Math.max(0, Math.floor(Number(saved.berserkerSoulStacks) || 0))
+          nekomancerMinions: normalizeNekomancerMinions(saved.nekomancerMinions),
+          nekomancerSouls: Math.min(5, Math.max(0, Math.floor(saved.nekomancerSouls == null ? 5 : Number(saved.nekomancerSouls) || 0))),
+          berserkerSoulStacks: saved.berserkerSoulStacks == null ? defaultBerserkerStacks : Math.max(0, Math.floor(Number(saved.berserkerSoulStacks) || 0)),
+          excludedDamageSources: normalizeExcludedDamageSources(saved.excludedDamageSources)
         };
-      } catch { return { artifacts: {}, runes: [null, null, null, null], curses: [null, null, null, null], twinmagePrimary: "fire", twinmageSecondary: "lightning", twinmagePrimaryDamage: true, twinmageSecondaryDamage: true, gunmancerPrimary: "va11", gunmancerSecondary: "photon", gunmancerPrimaryDamage: true, gunmancerSecondaryDamage: false, gunmancerAirblastTarget: "none", berserkerSoulStacks: 0 }; }
+      } catch { return { artifacts: {}, runes: [null, null, null, null], curses: [null, null, null, null], twinmagePrimary: "fire", twinmageSecondary: "lightning", twinmagePrimaryDamage: true, twinmageSecondaryDamage: true, gunmancerPrimary: "va11", gunmancerSecondary: "photon", gunmancerPrimaryDamage: true, gunmancerSecondaryDamage: false, gunmancerAirblastTarget: "none", nekomancerMinions: normalizeNekomancerMinions(), nekomancerSouls: 5, berserkerSoulStacks: 0, excludedDamageSources: normalizeExcludedDamageSources() }; }
     }
 
     function saveBuildOptions() {
@@ -1486,6 +1587,24 @@
         });
       }
 
+      const nekomancerMasteryStacks = selectedClass === "Nekomancer" ? count("Nekomancer_Mastery") : 0;
+      const nekomancerSouls = Math.min(5, Math.max(0, Math.floor(Number(buildOptions.nekomancerSouls) || 0)));
+      if (nekomancerMasteryStacks > 0 && nekomancerSouls > 0) {
+        const masteryEffects = {
+          overallDamage: 2 * nekomancerMasteryStacks * nekomancerSouls,
+          healthRegeneration: 20 * nekomancerMasteryStacks * nekomancerSouls
+        };
+        for (const [stat, value] of Object.entries(masteryEffects)) {
+          bonus[stat] += value;
+          breakdowns[stat].push({
+            value: formatContribution(stat, value, true),
+            type: "Additive",
+            source: upgradeIndex.get("Nekomancer_Mastery")?.name || "Nekomancer: Mastery",
+            notes: `${nekomancerMasteryStacks} upgrade stack${nekomancerMasteryStacks === 1 ? "" : "s"}; ${nekomancerSouls} soul${nekomancerSouls === 1 ? "" : "s"} held.`
+          });
+        }
+      }
+
       const berserkerVariant = berserkerVariantForClass();
       const berserkerCopies = berserkerUpgradeCount();
       const berserkerStacks = clampBerserkerStacks(berserkerCopies);
@@ -1588,7 +1707,17 @@
       }
       if (result.health < 1) result.health = 1;
       if (result.projectileSpread < 0) result.projectileSpread = 0;
-      return { stats: result, base: activeBase, breakdowns, caps, defenseCalculations };
+      const bigAndLazyStacks = count("Big_and_Lazy");
+      const bigAndLazyMultiplier = bigAndLazyStacks > 0 ? 3 + .5 * (bigAndLazyStacks - 1) : 1;
+      const healthRegenerationCalculation = {
+        basePerSecond: BASE_HEALTH_REGENERATION_PER_SECOND,
+        percentage: result.healthRegeneration,
+        percentageMultiplier: result.healthRegeneration / 100,
+        bigAndLazyStacks,
+        bigAndLazyMultiplier,
+        perSecond: BASE_HEALTH_REGENERATION_PER_SECOND * result.healthRegeneration / 100 * bigAndLazyMultiplier
+      };
+      return { stats: result, base: activeBase, breakdowns, caps, defenseCalculations, healthRegenerationCalculation };
     }
 
     function formatNumber(value) {
@@ -1609,6 +1738,10 @@
       return `${formatNumber(value)}%`;
     }
 
+    function formatHealthPerSecond(value) {
+      return Number(Number(value).toFixed(2)).toString();
+    }
+
     let latestCalculation;
 
     function renderStats() {
@@ -1621,10 +1754,13 @@
         const changed = Math.abs(delta) > .001;
         const deltaHtml = changed
           ? `<span class="delta ${delta > 0 ? "up" : "down"}">${delta > 0 ? "+" : ""}${formatNumber(delta)}</span>`
+            : "";
+        const derivedHtml = stat === "healthRegeneration"
+          ? `<span class="health-regeneration-rate" data-health-regeneration-rate="${escapeHtml(String(latestCalculation.healthRegenerationCalculation.perSecond))}">(${formatHealthPerSecond(latestCalculation.healthRegenerationCalculation.perSecond)} hp/s)</span>`
           : "";
         return `<div class="stat-row ${color ? `element ${color}` : ""} ${changed ? "changed" : ""}"
           data-stat="${stat}" data-label="${escapeHtml(label)}" tabindex="0">
-          <span>${label}:</span><span class="value">${formatStat(stat, stats[stat])}${deltaHtml}</span>
+          <span>${label}:</span><span class="value">${formatStat(stat, stats[stat])}${deltaHtml}${derivedHtml}</span>
         </div>`;
       }).join("");
     }
@@ -1680,6 +1816,23 @@
       </div>`;
     }
 
+    function healthRegenerationCalculationMarkup(stat) {
+      if (stat !== "healthRegeneration") return "";
+      const calculation = latestCalculation?.healthRegenerationCalculation;
+      if (!calculation) return "";
+      const stacks = calculation.bigAndLazyStacks;
+      const bigAndLazyLine = stacks > 0
+        ? `Big and Lazy: <span class="cap-formula">100% + 200%${stacks > 1 ? ` + (${stacks - 1} × 50%)` : ""} = ${formatNumber(calculation.bigAndLazyMultiplier * 100)}% = ×${formatNumber(calculation.bigAndLazyMultiplier)}</span><br>`
+        : "";
+      return `<div class="health-regeneration-calculation">
+        <strong>Regenerated HP per second</strong><br>
+        Base regeneration: ${formatHealthPerSecond(calculation.basePerSecond)} hp/s<br>
+        Shown Health Regeneration: <span class="cap-formula">${formatNumber(calculation.percentage)}% = ×${formatNumber(calculation.percentageMultiplier)}</span><br>
+        ${bigAndLazyLine}
+        <span class="cap-formula">${formatHealthPerSecond(calculation.basePerSecond)} × ${formatNumber(calculation.percentageMultiplier)} × ${formatNumber(calculation.bigAndLazyMultiplier)} = ${formatHealthPerSecond(calculation.perSecond)} hp/s</span>
+      </div>`;
+    }
+
     function showStatTooltip(row) {
       const stat = row.dataset.stat;
       const label = row.dataset.label;
@@ -1695,6 +1848,7 @@
             <td>${escapeHtml(entry.notes || "—")}</td>
           </tr>`).join("")}</tbody>
         </table>
+        ${healthRegenerationCalculationMarkup(stat)}
         ${defenseCalculationMarkup(stat)}
         ${softCapMarkup(stat)}`;
       tooltip.classList.add("visible");
@@ -1808,6 +1962,77 @@
 
     let loadingSharedBuild = false;
 
+    function getSharedConfiguration() {
+      const configuration = {};
+      const maximumBerserkerStacks = berserkerMaximumStacks();
+      if (maximumBerserkerStacks > 0) {
+        const stacks = Math.min(maximumBerserkerStacks, Math.max(0, Math.floor(Number(buildOptions.berserkerSoulStacks) || 0)));
+        if (stacks !== maximumBerserkerStacks) configuration.berserkerSoulStacks = stacks;
+      }
+      if (selectedClass === "Twinmage") {
+        configuration.twinmage = {
+          primary: TWINMAGE_ELEMENTS.findIndex(element => element.id === buildOptions.twinmagePrimary),
+          secondary: TWINMAGE_ELEMENTS.findIndex(element => element.id === buildOptions.twinmageSecondary),
+          primaryDamage: buildOptions.twinmagePrimaryDamage !== false,
+          secondaryDamage: buildOptions.twinmageSecondaryDamage !== false
+        };
+      } else if (selectedClass === "Gunmancer") {
+        configuration.gunmancer = {
+          primary: GUNMANCER_ABILITIES.primary.findIndex(ability => ability.id === buildOptions.gunmancerPrimary),
+          secondary: GUNMANCER_ABILITIES.secondary.findIndex(ability => ability.id === buildOptions.gunmancerSecondary),
+          damageGroup: buildOptions.gunmancerSecondaryDamage === true && buildOptions.gunmancerPrimaryDamage !== true ? 1 : 0,
+          airblastTarget: ["none", "primary", "secondary"].indexOf(buildOptions.gunmancerAirblastTarget)
+        };
+      } else if (selectedClass === "Nekomancer") {
+        const minions = normalizeNekomancerMinions(buildOptions.nekomancerMinions);
+        configuration.nekomancer = {
+          zombie: minions.zombie,
+          balloon: minions.balloon,
+          ballista: minions.ballista,
+          souls: Math.min(5, Math.max(0, Math.floor(Number(buildOptions.nekomancerSouls) || 0)))
+        };
+      }
+      const excludedSources = excludedDamageSourceKeys().map(key => DAMAGE_SOURCE_SHARE_ID.get(key)).filter(Number.isInteger);
+      if (excludedSources.length) configuration.excludedDamageSources = excludedSources;
+      return configuration;
+    }
+
+    function applySharedConfiguration(configuration = {}) {
+      resetClassBuildConfiguration(selectedClass);
+      buildOptions.berserkerSoulStacks = berserkerMaximumStacks();
+      if (selectedClass === "Twinmage" && configuration.twinmage) {
+        const value = configuration.twinmage;
+        buildOptions.twinmagePrimary = TWINMAGE_ELEMENTS[value.primary].id;
+        buildOptions.twinmageSecondary = TWINMAGE_ELEMENTS[value.secondary].id;
+        buildOptions.twinmagePrimaryDamage = value.primaryDamage;
+        buildOptions.twinmageSecondaryDamage = value.secondaryDamage;
+      } else if (selectedClass === "Gunmancer" && configuration.gunmancer) {
+        const value = configuration.gunmancer;
+        buildOptions.gunmancerPrimary = GUNMANCER_ABILITIES.primary[value.primary].id;
+        buildOptions.gunmancerSecondary = GUNMANCER_ABILITIES.secondary[value.secondary].id;
+        buildOptions.gunmancerPrimaryDamage = value.damageGroup === 0;
+        buildOptions.gunmancerSecondaryDamage = value.damageGroup === 1;
+        buildOptions.gunmancerAirblastTarget = ["none", "primary", "secondary"][value.airblastTarget];
+      } else if (selectedClass === "Nekomancer" && configuration.nekomancer) {
+        const value = configuration.nekomancer;
+        buildOptions.nekomancerMinions = normalizeNekomancerMinions({
+          zombie: value.zombie,
+          balloon: value.balloon,
+          ballista: value.ballista
+        });
+        buildOptions.nekomancerSouls = value.souls;
+      }
+      if (Array.isArray(configuration.excludedDamageSources)) {
+        const classPrefix = `${selectedClass.toLowerCase().replaceAll(" ", "")}-`;
+        buildOptions.excludedDamageSources[selectedClass] = configuration.excludedDamageSources
+          .map(id => DAMAGE_SOURCE_SHARE_KEYS[id])
+          .filter(key => key && (key.startsWith(classPrefix) || key.startsWith("status-")));
+      }
+      if (configuration.berserkerSoulStacks != null && berserkerMaximumStacks() > 0) {
+        buildOptions.berserkerSoulStacks = Math.min(berserkerMaximumStacks(), configuration.berserkerSoulStacks);
+      }
+    }
+
     function getCurrentBuild() {
       return {
         version: ShareBuildCodec.FORMAT_VERSION,
@@ -1817,7 +2042,8 @@
           .sort((a, b) => a.id - b.id),
         artifacts: ARTIFACTS.map((artifact, id) => ({ id, count: buildOptions.artifacts[artifact.id] || 0 })).filter(entry => entry.count),
         runes: buildOptions.runes.map(id => id == null ? null : RUNES.findIndex(rune => rune.id === id)),
-        curses: buildOptions.curses.map(id => id == null ? null : CURSES.findIndex(curse => curse.id === id))
+        curses: buildOptions.curses.map(id => id == null ? null : CURSES.findIndex(curse => curse.id === id)),
+        configuration: getSharedConfiguration()
       };
     }
 
@@ -1854,6 +2080,7 @@
             if (importedId) counts[importedId] = entry.count;
           }
         }
+        applySharedConfiguration(build.configuration);
         buildOptions.artifacts = Object.fromEntries((build.artifacts || []).flatMap(entry => {
           const artifact = ARTIFACTS[entry.id];
           return artifact && Number.isInteger(entry.count) && entry.count >= 1 && entry.count <= 100 ? [[artifact.id, entry.count]] : [];
@@ -2028,9 +2255,9 @@
         return;
       }
 
-      if (!["Twinmage", "Gunmancer", "Thaumaturge"].includes(selectedClass)) {
+      if (!["Twinmage", "Gunmancer", "Thaumaturge", "Nekomancer"].includes(selectedClass)) {
         dpsRankingSnapshot = null;
-        listElement.innerHTML = '<div class="dps-ranking-empty">DPS ranking is currently available for Twinmage, Gunmancer, and Thaumaturge.</div>';
+        listElement.innerHTML = '<div class="dps-ranking-empty">DPS ranking is currently available for Twinmage, Gunmancer, Thaumaturge, and Nekomancer.</div>';
         return;
       }
 
@@ -2177,6 +2404,41 @@
       </div>`;
     }
 
+    function renderNekomancerConfiguration(content) {
+      buildOptions.nekomancerMinions = normalizeNekomancerMinions(buildOptions.nekomancerMinions);
+      buildOptions.nekomancerSouls = Math.min(5, Math.max(0, Math.floor(Number(buildOptions.nekomancerSouls) || 0)));
+      const totalMinions = Object.values(buildOptions.nekomancerMinions).reduce((sum, value) => sum + value, 0);
+      content.innerHTML = `<div class="nekomancer-configuration">
+        <fieldset class="ability-picker">
+          <legend><span class="ability-picker-heading"><span class="ability-picker-title">Main attack</span></span></legend>
+          <div class="ability-options"><div class="ability-option">
+            <img class="ability-icon" src="${escapeHtml(NEKOMANCER_PRIMARY.iconUrl)}" alt="">
+            <span class="ability-copy"><span class="ability-name">${escapeHtml(NEKOMANCER_PRIMARY.name)}</span></span>
+          </div></div>
+        </fieldset>
+        <fieldset class="ability-picker">
+          <legend><span class="ability-picker-heading"><span class="ability-picker-title">Minions</span><span class="ability-picker-subtitle">${totalMinions} / ${NEKOMANCER_MINION_LIMIT}</span></span></legend>
+          <div class="nekomancer-minion-options">${NEKOMANCER_MINIONS.map(minion => {
+            const selected = buildOptions.nekomancerMinions[minion.id] || 0;
+            return `<div class="nekomancer-minion-card" data-minion-id="${escapeHtml(minion.id)}" data-count="${selected}">
+              <img class="ability-icon" src="${escapeHtml(minion.iconUrl)}" alt="">
+              <span class="ability-copy"><span class="ability-name">${escapeHtml(minion.name)}</span>
+                <span class="nekomancer-minion-controls">
+                  <button type="button" data-nekomancer-minion-action="remove" data-minion-id="${escapeHtml(minion.id)}" aria-label="Remove one ${escapeHtml(minion.name)}" ${selected <= 0 ? "disabled" : ""}>−</button>
+                  <span class="nekomancer-minion-count">${selected}</span>
+                  <button type="button" data-nekomancer-minion-action="add" data-minion-id="${escapeHtml(minion.id)}" aria-label="Add one ${escapeHtml(minion.name)}" ${totalMinions >= NEKOMANCER_MINION_LIMIT ? "disabled" : ""}>+</button>
+                </span>
+              </span>
+            </div>`;
+          }).join("")}</div>
+        </fieldset>
+        <fieldset class="ability-picker">
+          <legend><span class="ability-picker-heading"><span class="ability-picker-title">Souls held</span></span></legend>
+          <div class="nekomancer-souls-control"><input type="number" name="nekomancer-souls" min="0" max="5" step="1" value="${buildOptions.nekomancerSouls}" aria-label="Souls held"></div>
+        </fieldset>
+      </div>`;
+    }
+
     function berserkerStackControlMarkup() {
       const variant = berserkerVariantForClass();
       const upgradeCount = berserkerUpgradeCount();
@@ -2212,6 +2474,10 @@
       if (selectedClass === "Thaumaturge") {
         renderThaumaturgeConfiguration(content);
         appendBerserkerStackControl(content);
+        return;
+      }
+      if (selectedClass === "Nekomancer") {
+        renderNekomancerConfiguration(content);
         return;
       }
       if (selectedClass !== "Twinmage") {
@@ -2376,6 +2642,49 @@
       };
     }
 
+    function buildNekomancerSourceModel(stats) {
+      const attackSpeedMultiplier = Number(stats.attackSpeed || 0) / 100;
+      const primaryActivationRate = NEKOMANCER_PRIMARY.interval > 0 ? attackSpeedMultiplier / NEKOMANCER_PRIMARY.interval : 0;
+      const minionCounts = normalizeNekomancerMinions(buildOptions.nekomancerMinions);
+      const minionSources = NEKOMANCER_MINIONS.flatMap(minion => {
+        const selected = minionCounts[minion.id] || 0;
+        if (!selected) return [];
+        const statusChance = effectiveSourceStatusChance(minion.status.id, minion.status.chance, attackSpeedMultiplier);
+        return [{
+          id: `nekomancer-minion-${minion.id}`,
+          name: `${minion.name} ×${selected}`,
+          position: "Minion",
+          sourceIcon: minion.iconUrl,
+          element: minion.element,
+          baseDamage: minion.damage,
+          canCrit: true,
+          activationRate: minion.baseActivationRate * selected * attackSpeedMultiplier,
+          baseActivationRate: minion.baseActivationRate,
+          rateMultipliers: [
+            { label: selected === 1 ? "Minion" : "Minions", value: selected },
+            { label: "Attack Speed", value: attackSpeedMultiplier }
+          ],
+          rateRefs: ["stat:attackSpeed"],
+          instancesPerActivation: 1,
+          projectiles: 1,
+          statuses: statusChance == null ? [] : [{ id: minion.status.id, name: minion.status.name, chance: statusChance }]
+        }];
+      });
+      return {
+        className: "Nekomancer",
+        classKey: "nekomancer",
+        sources: [
+          ...abilityDamageSourceSpecs("nekomancer", NEKOMANCER_PRIMARY, "Primary", attackSpeedMultiplier),
+          ...minionSources,
+          ...sharedUpgradeSourceSpecs("nekomancer", primaryActivationRate, attackSpeedMultiplier, {
+            baseActivationRate: NEKOMANCER_PRIMARY.interval > 0 ? 1 / NEKOMANCER_PRIMARY.interval : 0,
+            rateMultipliers: [{ label: "Attack Speed", value: attackSpeedMultiplier }],
+            rateRefs: ["stat:attackSpeed"]
+          })
+        ]
+      };
+    }
+
     function buildTwinmageSourceModel(stats) {
       const selectedHands = [
         { position: "Primary hand", elementId: buildOptions.twinmagePrimary, enabled: buildOptions.twinmagePrimaryDamage },
@@ -2399,6 +2708,7 @@
         });
         return {
           id: `twinmage-hand-${index}`, name: hand.element.handName, position: hand.position,
+          exclusionKey: `twinmage-hand-${hand.position === "Primary hand" ? "primary" : "secondary"}`,
           sourceIcon: hand.element.image, element: hand.element.id, baseDamage: hand.element.baseDamage, canCrit: true,
            activationRate: baseActivationRate * attackSpeedMultiplier * sourceMultiplier,
            instancesPerActivation: 1, projectiles: 1, sourceMultiplier, statuses,
@@ -2412,6 +2722,7 @@
       });
       const masterySources = count("Twinmage_Mastery") > 0 ? handSources.map((source, index) => ({
         ...source, id: `twinmage-mastery-${index}`, name: `${TWINMAGE_ELEMENTS.find(element => element.id === source.element)?.name || source.name} Blast`,
+        exclusionKey: `twinmage-mastery-${source.position === "Primary hand" ? "primary" : "secondary"}`,
         position: "Mastery explosion", sourceUpgradeId: "Twinmage_Mastery", baseDamage: source.baseDamage * .25,
         trigger: { type: "sourceActivation", sourceId: source.id }, linkedSourceId: source.id
       })) : [];
@@ -2431,7 +2742,8 @@
       const sourceModel = selectedClass === "Twinmage" ? buildTwinmageSourceModel(stats)
         : selectedClass === "Gunmancer" ? buildGunmancerSourceModel(stats)
           : selectedClass === "Thaumaturge" ? buildThaumaturgeSourceModel(stats)
-            : null;
+            : selectedClass === "Nekomancer" ? buildNekomancerSourceModel(stats)
+              : null;
       if (!sourceModel) return null;
       const criticalChancePercent = count("Pocket_Abacus") > 0 ? 20 : Number(stats.criticalChance || 0);
       const elementalMultipliers = calculationElementMultipliers(stats);
@@ -2449,7 +2761,14 @@
         statusDefinitions: { ...DAMAGE_STATUS_DEFINITIONS, ...Object.fromEntries(NON_DAMAGE_STATUS_DEFINITIONS.map(status => [status.id, status])) },
         stickyStacks: count("Sticky")
       });
-      return { ...sourceModel, ...calculation, criticalChancePercent, criticalDamagePercent: Number(stats.criticalDamage || 0) };
+      const excludedKeys = new Set(excludedDamageSourceKeys());
+      const damageSources = calculation.damageSources.map(source => {
+        const exclusionKey = source.exclusionKey || source.id;
+        return { ...source, exclusionKey, excluded: excludedKeys.has(exclusionKey) };
+      });
+      const combinedTotalDps = damageSources.filter(source => !source.excluded)
+        .reduce((sum, source) => sum + source.damage.totalDps, 0);
+      return { ...sourceModel, ...calculation, damageSources, combinedTotalDps, criticalChancePercent, criticalDamagePercent: Number(stats.criticalDamage || 0) };
     }
 
     function renderUnifiedCalculations(options = {}) {
@@ -2457,7 +2776,7 @@
       const content = $("#calculation-content");
       const model = buildUnifiedCalculationModel();
       if (!model) {
-        if (render) content.innerHTML = '<div class="calculation-empty">Damage calculations are currently available for Twinmage, Gunmancer, and Thaumaturge.</div>';
+        if (render) content.innerHTML = '<div class="calculation-empty">Damage calculations are currently available for Twinmage, Gunmancer, Thaumaturge, and Nekomancer.</div>';
         return { combinedTotalDps: 0 };
       }
       if (model.emptyMessage) {
@@ -2474,6 +2793,8 @@
       const sourceIconAttributes = source => source.sourceIcon ? `data-calculation-source-icon="${escapeHtml(source.sourceIcon)}"` : "";
       const sourceUpgradeAttributes = source => source.sourceUpgradeId ? `data-calculation-source-upgrade="${escapeHtml(source.sourceUpgradeId)}"` : "";
       const damageTypeAttributes = source => `data-calculation-damage-type="${escapeHtml(source.element)}" data-calculation-damage-id="${escapeHtml(source.element)}"`;
+      const sourceColumnClasses = source => `${source.isStatusEffect ? "status-effect-column" : ""} ${source.isStatusGroupStart ? "status-group-start" : ""} ${source.excluded ? "source-excluded" : ""}`;
+      const sourceColumnToggle = source => `<button class="source-column-toggle" type="button" data-source-exclusion="${escapeHtml(source.exclusionKey)}" aria-pressed="${String(!source.excluded)}" aria-label="${source.excluded ? "Include" : "Exclude"} ${escapeHtml(source.name)} in Combined DPS" title="${source.excluded ? "Include in" : "Exclude from"} Combined DPS" ${calculationAttributes(`source:${source.id}`, sourceFormula(source))} ${sourceIconAttributes(source)} ${sourceUpgradeAttributes(source)}><span class="damage-hand-position">${escapeHtml(source.position)}</span><span class="damage-hand-title">${escapeHtml(source.name)}</span></button>`;
       const hasSourceMultiplier = model.damageSources.some(source => !source.isStatusEffect && Math.abs(source.damage.sourceMultiplier - 1) > .0001);
       const hasMultipleProjectiles = model.attackSources.some(source => source.hitsPerActivation > 1);
       const sourceStatusLines = source => source.statuses.map(status => `${status.name || model.statuses.find(item => item.id === status.id)?.name || status.id} chance: ${percent(status.chance)} per instance`);
@@ -2557,13 +2878,14 @@
         ["crit:rate", "Crits per second", number(model.criticalHitsPerSecond), `(${number(model.criticalHitEligibleRate)} hit instances/s) × ${number(model.context.criticalChance * 100)}% = ${number(model.criticalHitsPerSecond)}`],
         ["crit:effective", "Eff. Crit Multiplier", number(1 + (model.context.criticalDamageMultiplier - 1) * model.context.criticalChance), "Weighted critical multiplier"]
       ];
-      const combinedBreakdown = Object.values(model.damageSources.reduce((groups, source) => {
+      const includedSources = model.damageSources.filter(source => !source.excluded);
+      const combinedBreakdown = Object.values(includedSources.reduce((groups, source) => {
         groups[source.element] ||= { id: source.element, name: source.element[0].toUpperCase() + source.element.slice(1), exact: 0 };
         groups[source.element].exact += source.damage.totalDps;
         return groups;
       }, {})).map(item => ({ ...item, value: number(item.exact) }));
       const columns = model.damageSources;
-      content.innerHTML = `<div class="calculation-stack"><section class="damage-calculation"><div class="damage-table-wrap"><table class="damage-table ${model.classKey === "twinmage" && model.attackSources.filter(source => source.position?.includes("hand")).length > 1 ? "dual-hand" : "single-hand"} shared-ability-table"><colgroup><col class="damage-label-col"><col class="damage-data-col" span="${columns.length}"></colgroup><thead><tr><th scope="col"><span class="damage-hand-position">Current build</span><span class="damage-hand-title">${escapeHtml(model.className)}</span></th>${columns.map(source => `<th scope="col" class="damage-column ${source.isStatusEffect ? "status-effect-column" : ""} ${source.isStatusGroupStart ? "status-group-start" : ""}" data-element="${escapeHtml(source.element)}" ${calculationAttributes(`source:${source.id}`, sourceFormula(source))} ${sourceIconAttributes(source)} ${sourceUpgradeAttributes(source)}><span class="damage-hand-position">${escapeHtml(source.position)}</span><span class="damage-hand-title">${escapeHtml(source.name)}</span></th>`).join("")}</tr></thead><tbody>${rows.map(row => `<tr class="${row.sectionBreak ? "damage-section-break " : ""}${row.total ? "damage-total-row" : ""}"><th scope="row" class="damage-label">${escapeHtml(row.label)}</th>${columns.map(source => `<td class="damage-column ${source.isStatusEffect ? "status-effect-column" : ""} ${source.isStatusGroupStart ? "status-group-start" : ""}" data-element="${escapeHtml(source.element)}"><span class="damage-value ${row.value(source) === "-" ? "damage-value-unknown" : ""}" data-exact-value="${escapeHtml(String(row.exact(source)))}" ${calculationAttributes(damageKey(source, row.key), row.formula(source), row.refs ? row.refs(source) : [])} ${row.damageValue ? damageTypeAttributes(source) : ""} ${sourceIconAttributes(source)} ${sourceUpgradeAttributes(source)}>${escapeHtml(row.value(source))}</span></td>`).join("")}</tr>`).join("")}</tbody><tfoot><tr class="damage-combined-row"><th scope="row" class="damage-combined-label">Combined DPS</th><td colspan="${columns.length}" class="damage-column"><span class="damage-combined-value" data-exact-value="${escapeHtml(String(model.combinedTotalDps))}" data-calculation-breakdown="${escapeHtml(JSON.stringify(combinedBreakdown))}" ${calculationAttributes("damage:combined:total-dps", `${columns.map(source => number(source.damage.totalDps)).join(" + ")} = ${number(model.combinedTotalDps)}`)}>${number(model.combinedTotalDps)}</span></td></tr></tfoot></table></div></section><div class="calculation-secondary"><section class="crit-table-wrap"><table class="crit-table"><thead><tr><th colspan="2">Critical hits</th></tr></thead><tbody>${criticalRows.map(row => `<tr><th scope="row" class="crit-label">${escapeHtml(row[1])}</th><td class="crit-value" ${calculationAttributes(row[0], row[3])}>${escapeHtml(row[2])}</td></tr>`).join("")}</tbody></table></section>${statusMarkup}</div></div>`;
+      content.innerHTML = `<div class="calculation-stack"><section class="damage-calculation"><div class="damage-table-wrap"><table class="damage-table ${model.classKey === "twinmage" && model.attackSources.filter(source => source.position?.includes("hand")).length > 1 ? "dual-hand" : "single-hand"} shared-ability-table"><colgroup><col class="damage-label-col"><col class="damage-data-col" span="${columns.length}"></colgroup><thead><tr><th scope="col"><span class="damage-hand-position">Current build</span><span class="damage-hand-title">${escapeHtml(model.className)}</span></th>${columns.map(source => `<th scope="col" class="damage-column ${sourceColumnClasses(source)}" data-element="${escapeHtml(source.element)}">${sourceColumnToggle(source)}</th>`).join("")}</tr></thead><tbody>${rows.map(row => `<tr class="${row.sectionBreak ? "damage-section-break " : ""}${row.total ? "damage-total-row" : ""}"><th scope="row" class="damage-label">${escapeHtml(row.label)}</th>${columns.map(source => `<td class="damage-column ${sourceColumnClasses(source)}" data-element="${escapeHtml(source.element)}"><span class="damage-value ${row.value(source) === "-" ? "damage-value-unknown" : ""}" data-exact-value="${escapeHtml(String(row.exact(source)))}" ${calculationAttributes(damageKey(source, row.key), row.formula(source), row.refs ? row.refs(source) : [])} ${row.damageValue ? damageTypeAttributes(source) : ""} ${sourceIconAttributes(source)} ${sourceUpgradeAttributes(source)}>${escapeHtml(row.value(source))}</span></td>`).join("")}</tr>`).join("")}</tbody><tfoot><tr class="damage-combined-row"><th scope="row" class="damage-combined-label">Combined DPS</th><td colspan="${columns.length}" class="damage-column"><span class="damage-combined-value" data-exact-value="${escapeHtml(String(model.combinedTotalDps))}" data-calculation-breakdown="${escapeHtml(JSON.stringify(combinedBreakdown))}" ${calculationAttributes("damage:combined:total-dps", `${includedSources.length ? includedSources.map(source => number(source.damage.totalDps)).join(" + ") : "0.00"} = ${number(model.combinedTotalDps)}`)}>${number(model.combinedTotalDps)}</span></td></tr></tfoot></table></div></section><div class="calculation-secondary"><section class="crit-table-wrap"><table class="crit-table"><thead><tr><th colspan="2">Critical hits</th></tr></thead><tbody>${criticalRows.map(row => `<tr><th scope="row" class="crit-label">${escapeHtml(row[1])}</th><td class="crit-value" ${calculationAttributes(row[0], row[3])}>${escapeHtml(row[2])}</td></tr>`).join("")}</tbody></table></section>${statusMarkup}</div></div>`;
       return { combinedTotalDps: model.combinedTotalDps };
     }
 
@@ -2668,6 +2990,22 @@
 
     $("#stats").addEventListener("focusout", hideStatTooltip);
 
+    $("#calculation-content").addEventListener("click", event => {
+      const button = event.target.closest("[data-source-exclusion]");
+      if (!button) return;
+      const key = button.dataset.sourceExclusion;
+      if (!DAMAGE_SOURCE_SHARE_ID.has(key)) return;
+      const excluded = excludedDamageSourceKeys();
+      buildOptions.excludedDamageSources[selectedClass] = excluded.includes(key)
+        ? excluded.filter(value => value !== key)
+        : [...excluded, key];
+      saveBuildOptions();
+      hideCalculationTooltip();
+      renderCalculations();
+      renderDpsRanking();
+      updateShareWidget();
+    });
+
     $("#calculation-content").addEventListener("mouseover", event => {
       const value = event.target.closest("[data-calculation-formula]");
       if (value) showCalculationTooltip(value, event.clientX, event.clientY);
@@ -2741,7 +3079,32 @@
       document.querySelectorAll(".tab-pane").forEach(pane => { pane.hidden = pane.id !== `tab-${button.dataset.tab}`; });
     });
 
+    $("#configuration-content").addEventListener("click", event => {
+      const button = event.target.closest("button[data-nekomancer-minion-action]");
+      if (!button || selectedClass !== "Nekomancer") return;
+      const minion = NEKOMANCER_MINIONS.find(item => item.id === button.dataset.minionId);
+      if (!minion) return;
+      const countsByType = normalizeNekomancerMinions(buildOptions.nekomancerMinions);
+      const total = Object.values(countsByType).reduce((sum, value) => sum + value, 0);
+      const direction = button.dataset.nekomancerMinionAction === "add" ? 1 : -1;
+      if (direction > 0 && total >= NEKOMANCER_MINION_LIMIT) return;
+      countsByType[minion.id] = Math.min(NEKOMANCER_MINION_LIMIT, Math.max(0, countsByType[minion.id] + direction));
+      buildOptions.nekomancerMinions = normalizeNekomancerMinions(countsByType);
+      saveBuildOptions();
+      renderConfiguration();
+      renderCalculations();
+      renderDpsRanking();
+      updateShareWidget();
+    });
+
     $("#configuration-content").addEventListener("change", event => {
+      const nekomancerSoulsInput = event.target.closest('input[name="nekomancer-souls"]');
+      if (nekomancerSoulsInput) {
+        buildOptions.nekomancerSouls = Math.min(5, Math.max(0, Math.floor(Number(nekomancerSoulsInput.value) || 0)));
+        saveBuildOptions();
+        render();
+        return;
+      }
       const berserkerStacksInput = event.target.closest('input[name="berserker-soul-stacks"]');
       if (berserkerStacksInput) {
         buildOptions.berserkerSoulStacks = Math.min(berserkerMaximumStacks(), Math.max(0, Math.floor(Number(berserkerStacksInput.value) || 0)));
@@ -2896,18 +3259,7 @@
     });
 
     $("#reset-configuration").addEventListener("click", () => {
-      if (selectedClass === "Twinmage") {
-        buildOptions.twinmagePrimary = "fire";
-        buildOptions.twinmageSecondary = "lightning";
-        buildOptions.twinmagePrimaryDamage = true;
-        buildOptions.twinmageSecondaryDamage = true;
-      } else if (selectedClass === "Gunmancer") {
-        buildOptions.gunmancerPrimary = "va11";
-        buildOptions.gunmancerSecondary = "photon";
-        buildOptions.gunmancerPrimaryDamage = true;
-        buildOptions.gunmancerSecondaryDamage = false;
-        buildOptions.gunmancerAirblastTarget = "none";
-      }
+      resetClassBuildConfiguration(selectedClass);
       buildOptions.berserkerSoulStacks = berserkerMaximumStacks();
       saveBuildOptions();
       render();

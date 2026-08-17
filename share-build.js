@@ -7,7 +7,9 @@
 
   // V1 layout: version(3), character(3), entry count(7), then ID(7) + stack prefix per entry.
   // V2 appends artifacts and the four positional rune/curse selections.
-  const FORMAT_VERSION = 2;
+  // V3 byte-aligns that same core and appends a length-delimited configuration block.
+  const FORMAT_VERSION = 3;
+  const PREVIOUS_FORMAT_VERSION = 2;
   const LEGACY_FORMAT_VERSION = 1;
   const VERSION_BITS = 3;       // Versions 0-7; version 1 is the first supported format.
   const CHARACTER_ID_BITS = 3;  // Eight current/supported character IDs (0-7).
@@ -19,6 +21,18 @@
   const RUNE_ID_BITS = 5;
   const CURSE_ID_BITS = 4;
   const RUNE_SLOT_COUNT = 4;
+  const CONFIG_FIELD_IDS = Object.freeze({
+    BERSERKER_SOUL_STACKS: 1,
+    TWINMAGE: 2,
+    GUNMANCER: 3,
+    NEKOMANCER: 4,
+    EXCLUDED_DAMAGE_SOURCES: 5
+  });
+  const CONFIG_DEFAULTS = Object.freeze({
+    twinmage: Object.freeze({ primary: 0, secondary: 2, primaryDamage: true, secondaryDamage: true }),
+    gunmancer: Object.freeze({ primary: 0, secondary: 1, damageGroup: 0, airblastTarget: 0 }),
+    nekomancer: Object.freeze({ zombie: 0, balloon: 0, ballista: 0, souls: 5 })
+  });
 
   class BitWriter {
     constructor() { this.bits = []; }
@@ -66,6 +80,14 @@
     }
   }
 
+  function concatBytes(...groups) {
+    const length = groups.reduce((sum, group) => sum + group.length, 0);
+    const combined = new Uint8Array(length);
+    let offset = 0;
+    for (const group of groups) { combined.set(group, offset); offset += group.length; }
+    return combined;
+  }
+
   function bytesToBase64Url(bytes) {
     let binary = "";
     bytes.forEach(byte => { binary += String.fromCharCode(byte); });
@@ -110,13 +132,12 @@
     writer.writeBits(id, bitCount);
   }
 
-  function encodeBuildV2(build) {
-    const writer = new BitWriter();
+  function writeBuildV2Core(writer, build, version) {
     if (!build || !Number.isInteger(build.characterId) || build.characterId < 0 || build.characterId >= 2 ** CHARACTER_ID_BITS)
       throw new Error("Invalid character ID");
     const upgrades = (build.upgrades || []).filter(entry => entry.count !== 0).slice().sort((a, b) => a.id - b.id);
     if (upgrades.length >= 2 ** ENTRY_COUNT_BITS) throw new Error("Too many selected upgrades");
-    writer.writeBits(FORMAT_VERSION, VERSION_BITS);
+    writer.writeBits(version, VERSION_BITS);
     writer.writeBits(build.characterId, CHARACTER_ID_BITS);
     writer.writeBits(upgrades.length, ENTRY_COUNT_BITS);
     const upgradeIds = new Set();
@@ -143,13 +164,95 @@
       writeOptionalId(writer, build.runes?.[slot], RUNE_ID_BITS, "rune");
       writeOptionalId(writer, build.curses?.[slot], CURSE_ID_BITS, "curse");
     }
+  }
+
+  function encodeBuildV2(build) {
+    const writer = new BitWriter();
+    writeBuildV2Core(writer, build, PREVIOUS_FORMAT_VERSION);
     return bytesToBase64Url(writer.toBytes());
+  }
+
+  function sameConfiguration(actual, expected, keys) {
+    return keys.every(key => actual[key] === expected[key]);
+  }
+
+  function encodeConfiguration(configuration = {}) {
+    if (!configuration || typeof configuration !== "object" || Array.isArray(configuration))
+      throw new Error("Invalid build configuration");
+    const entries = [];
+    const add = (id, payload) => entries.push(Uint8Array.from([id, payload.length, ...payload]));
+
+    if (configuration.berserkerSoulStacks != null) {
+      const stacks = configuration.berserkerSoulStacks;
+      if (!Number.isInteger(stacks) || stacks < 0 || stacks > 0xFFFF) throw new Error("Invalid Berserker's Soul stack count");
+      add(CONFIG_FIELD_IDS.BERSERKER_SOUL_STACKS, [(stacks >> 8) & 0xFF, stacks & 0xFF]);
+    }
+
+    if (configuration.twinmage != null) {
+      const value = configuration.twinmage;
+      if (!value || !Number.isInteger(value.primary) || value.primary < 0 || value.primary > 5
+        || !Number.isInteger(value.secondary) || value.secondary < 0 || value.secondary > 5
+        || typeof value.primaryDamage !== "boolean" || typeof value.secondaryDamage !== "boolean"
+        || (!value.primaryDamage && !value.secondaryDamage)) throw new Error("Invalid Twinmage configuration");
+      if (!sameConfiguration(value, CONFIG_DEFAULTS.twinmage, ["primary", "secondary", "primaryDamage", "secondaryDamage"])) {
+        add(CONFIG_FIELD_IDS.TWINMAGE, [
+          (value.primary << 5) | (value.secondary << 2) | (value.primaryDamage ? 2 : 0) | (value.secondaryDamage ? 1 : 0)
+        ]);
+      }
+    }
+
+    if (configuration.gunmancer != null) {
+      const value = configuration.gunmancer;
+      if (!value || !Number.isInteger(value.primary) || value.primary < 0 || value.primary > 1
+        || !Number.isInteger(value.secondary) || value.secondary < 0 || value.secondary > 2
+        || !Number.isInteger(value.damageGroup) || value.damageGroup < 0 || value.damageGroup > 1
+        || !Number.isInteger(value.airblastTarget) || value.airblastTarget < 0 || value.airblastTarget > 2)
+        throw new Error("Invalid Gunmancer configuration");
+      if (!sameConfiguration(value, CONFIG_DEFAULTS.gunmancer, ["primary", "secondary", "damageGroup", "airblastTarget"])) {
+        add(CONFIG_FIELD_IDS.GUNMANCER, [
+          (value.primary << 5) | (value.secondary << 3) | (value.damageGroup << 2) | value.airblastTarget
+        ]);
+      }
+    }
+
+    if (configuration.nekomancer != null) {
+      const value = configuration.nekomancer;
+      const counts = [value?.zombie, value?.balloon, value?.ballista];
+      if (!counts.every(count => Number.isInteger(count) && count >= 0 && count <= 3)
+        || counts.reduce((sum, count) => sum + count, 0) > 3
+        || !Number.isInteger(value?.souls) || value.souls < 0 || value.souls > 5)
+        throw new Error("Invalid Nekomancer configuration");
+      if (!sameConfiguration(value, CONFIG_DEFAULTS.nekomancer, ["zombie", "balloon", "ballista", "souls"])) {
+        const packed = (value.zombie << 7) | (value.balloon << 5) | (value.ballista << 3) | value.souls;
+        add(CONFIG_FIELD_IDS.NEKOMANCER, [(packed >> 8) & 0xFF, packed & 0xFF]);
+      }
+    }
+
+    if (configuration.excludedDamageSources != null) {
+      const values = configuration.excludedDamageSources;
+      if (!Array.isArray(values) || values.length > 0xFF
+        || values.some(value => !Number.isInteger(value) || value < 0 || value > 0xFF)
+        || new Set(values).size !== values.length)
+        throw new Error("Invalid excluded damage sources");
+      if (values.length) add(CONFIG_FIELD_IDS.EXCLUDED_DAMAGE_SOURCES, values.slice().sort((a, b) => a - b));
+    }
+
+    const payload = concatBytes(...entries);
+    if (payload.length > 0xFF) throw new Error("Build configuration is too large");
+    return concatBytes(Uint8Array.from([payload.length]), payload);
+  }
+
+  function encodeBuildV3(build) {
+    const writer = new BitWriter();
+    writeBuildV2Core(writer, build, FORMAT_VERSION);
+    return bytesToBase64Url(concatBytes(writer.toBytes(), encodeConfiguration(build.configuration)));
   }
 
   function encodeBuild(build) {
     const version = build && build.version == null ? FORMAT_VERSION : build && build.version;
     if (version === LEGACY_FORMAT_VERSION) return encodeBuildV1(build);
-    if (version === FORMAT_VERSION) return encodeBuildV2(build);
+    if (version === PREVIOUS_FORMAT_VERSION) return encodeBuildV2(build);
+    if (version === FORMAT_VERSION) return encodeBuildV3(build);
     throw new Error(`Unsupported build format version: ${version}`);
   }
 
@@ -159,14 +262,14 @@
     const upgrades = [];
     for (let index = 0; index < entryCount; index++)
       upgrades.push({ id: reader.readBits(UPGRADE_ID_BITS), count: reader.readStackCount() });
-    return { version: LEGACY_FORMAT_VERSION, characterId, upgrades, artifacts: [], runes: Array(RUNE_SLOT_COUNT).fill(null), curses: Array(RUNE_SLOT_COUNT).fill(null) };
+    return { version: LEGACY_FORMAT_VERSION, characterId, upgrades, artifacts: [], runes: Array(RUNE_SLOT_COUNT).fill(null), curses: Array(RUNE_SLOT_COUNT).fill(null), configuration: {} };
   }
 
   function readOptionalId(reader, bitCount) { return reader.readBits(1) ? reader.readBits(bitCount) : null; }
 
   function decodeBuildV2(reader) {
     const decoded = decodeBuildV1(reader);
-    decoded.version = FORMAT_VERSION;
+    decoded.version = PREVIOUS_FORMAT_VERSION;
     const artifactCount = reader.readBits(ARTIFACT_COUNT_BITS);
     decoded.artifacts = [];
     for (let index = 0; index < artifactCount; index++)
@@ -180,14 +283,99 @@
     return decoded;
   }
 
+  function decodeConfiguration(bytes, reader) {
+    let position = Math.ceil(reader.position / 8);
+    if (position >= bytes.length) throw new Error("Truncated configuration block");
+    const blockLength = bytes[position++];
+    const end = position + blockLength;
+    if (end > bytes.length) throw new Error("Truncated configuration block");
+    if (end !== bytes.length) throw new Error("Unexpected trailing build data");
+    const configuration = {};
+    const warnings = [];
+    const seen = new Set();
+
+    while (position < end) {
+      if (end - position < 2) throw new Error("Truncated configuration entry");
+      const id = bytes[position++];
+      const length = bytes[position++];
+      if (position + length > end) throw new Error("Truncated configuration entry");
+      const payload = bytes.slice(position, position + length);
+      position += length;
+      if (seen.has(id)) {
+        warnings.push(`Ignored duplicate configuration field ${id}`);
+        continue;
+      }
+      seen.add(id);
+
+      if (id === CONFIG_FIELD_IDS.BERSERKER_SOUL_STACKS) {
+        if (length !== 2) throw new Error("Invalid Berserker's Soul configuration payload");
+        configuration.berserkerSoulStacks = (payload[0] << 8) | payload[1];
+      } else if (id === CONFIG_FIELD_IDS.TWINMAGE) {
+        if (length !== 1) throw new Error("Invalid Twinmage configuration payload");
+        const value = payload[0];
+        const twinmage = {
+          primary: value >> 5,
+          secondary: (value >> 2) & 7,
+          primaryDamage: Boolean(value & 2),
+          secondaryDamage: Boolean(value & 1)
+        };
+        if (twinmage.primary > 5 || twinmage.secondary > 5 || (!twinmage.primaryDamage && !twinmage.secondaryDamage))
+          throw new Error("Invalid Twinmage configuration payload");
+        configuration.twinmage = twinmage;
+      } else if (id === CONFIG_FIELD_IDS.GUNMANCER) {
+        if (length !== 1 || (payload[0] & 0xC0)) throw new Error("Invalid Gunmancer configuration payload");
+        const value = payload[0];
+        const gunmancer = {
+          primary: (value >> 5) & 1,
+          secondary: (value >> 3) & 3,
+          damageGroup: (value >> 2) & 1,
+          airblastTarget: value & 3
+        };
+        if (gunmancer.secondary > 2 || gunmancer.airblastTarget > 2) throw new Error("Invalid Gunmancer configuration payload");
+        configuration.gunmancer = gunmancer;
+      } else if (id === CONFIG_FIELD_IDS.NEKOMANCER) {
+        if (length !== 2 || payload[0] > 1) throw new Error("Invalid Nekomancer configuration payload");
+        const value = (payload[0] << 8) | payload[1];
+        const nekomancer = {
+          zombie: (value >> 7) & 3,
+          balloon: (value >> 5) & 3,
+          ballista: (value >> 3) & 3,
+          souls: value & 7
+        };
+        if (nekomancer.zombie + nekomancer.balloon + nekomancer.ballista > 3 || nekomancer.souls > 5)
+          throw new Error("Invalid Nekomancer configuration payload");
+        configuration.nekomancer = nekomancer;
+      } else if (id === CONFIG_FIELD_IDS.EXCLUDED_DAMAGE_SOURCES) {
+        if (!length || new Set(payload).size !== payload.length) throw new Error("Invalid excluded damage sources payload");
+        configuration.excludedDamageSources = Array.from(payload);
+      } else {
+        warnings.push(`Ignored unknown configuration field ${id}`);
+      }
+    }
+    return { configuration, warnings };
+  }
+
+  function decodeBuildV3(reader, bytes) {
+    const decoded = decodeBuildV2(reader);
+    decoded.version = FORMAT_VERSION;
+    const result = decodeConfiguration(bytes, reader);
+    decoded.configuration = result.configuration;
+    decoded.configurationWarnings = result.warnings;
+    return decoded;
+  }
+
   function decodeBuild(code, options = {}) {
-    const reader = new BitReader(base64UrlToBytes(code));
+    const bytes = base64UrlToBytes(code);
+    const reader = new BitReader(bytes);
     const version = reader.readBits(VERSION_BITS);
-    if (version !== LEGACY_FORMAT_VERSION && version !== FORMAT_VERSION) throw new Error(`Unsupported build format version: ${version}`);
-    const decoded = version === FORMAT_VERSION ? decodeBuildV2(reader) : decodeBuildV1(reader);
+    if (![LEGACY_FORMAT_VERSION, PREVIOUS_FORMAT_VERSION, FORMAT_VERSION].includes(version))
+      throw new Error(`Unsupported build format version: ${version}`);
+    const decoded = version === FORMAT_VERSION ? decodeBuildV3(reader, bytes)
+      : version === PREVIOUS_FORMAT_VERSION ? decodeBuildV2(reader) : decodeBuildV1(reader);
     if (options.characterCount != null && decoded.characterId >= options.characterCount)
       throw new Error(`Unknown character ID: ${decoded.characterId}`);
-    const warnings = [];
+    const warnings = [...(decoded.configurationWarnings || [])];
+    delete decoded.configurationWarnings;
     const seen = new Set();
     decoded.upgrades = decoded.upgrades.filter(entry => {
       if ((options.upgradeCount != null && entry.id >= options.upgradeCount) || seen.has(entry.id)) {
@@ -215,8 +403,9 @@
   }
 
   return {
-    FORMAT_VERSION, LEGACY_FORMAT_VERSION, VERSION_BITS, CHARACTER_ID_BITS, ENTRY_COUNT_BITS, UPGRADE_ID_BITS,
-    BitWriter, BitReader, encodeBuildV1, encodeBuildV2, decodeBuildV1, decodeBuildV2, encodeBuild, decodeBuild,
+    FORMAT_VERSION, PREVIOUS_FORMAT_VERSION, LEGACY_FORMAT_VERSION, VERSION_BITS, CHARACTER_ID_BITS, ENTRY_COUNT_BITS, UPGRADE_ID_BITS,
+    CONFIG_FIELD_IDS, CONFIG_DEFAULTS,
+    BitWriter, BitReader, encodeBuildV1, encodeBuildV2, encodeBuildV3, decodeBuildV1, decodeBuildV2, decodeBuildV3, encodeBuild, decodeBuild,
     bytesToBase64Url, base64UrlToBytes
   };
 });
