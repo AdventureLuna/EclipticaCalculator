@@ -26,12 +26,14 @@
     TWINMAGE: 2,
     GUNMANCER: 3,
     NEKOMANCER: 4,
-    EXCLUDED_DAMAGE_SOURCES: 5
+    EXCLUDED_DAMAGE_SOURCES: 5,
+    SPELLSWORD: 6
   });
   const CONFIG_DEFAULTS = Object.freeze({
     twinmage: Object.freeze({ primary: 0, secondary: 2, primaryDamage: true, secondaryDamage: true }),
     gunmancer: Object.freeze({ primary: 0, secondary: 1, damageGroup: 0, airblastTarget: 0 }),
-    nekomancer: Object.freeze({ zombie: 0, balloon: 0, ballista: 0, souls: 5 })
+    nekomancer: Object.freeze({ zombie: 0, balloon: 0, ballista: 0, souls: 5 }),
+    spellsword: Object.freeze({ damageGroup: 0, chargeMode: 1, customChargeMs: 3000, bleedChance: null, whirlwindHits: 1 })
   });
 
   class BitWriter {
@@ -228,6 +230,21 @@
       }
     }
 
+    if (configuration.spellsword != null) {
+      const value = configuration.spellsword;
+      if (!value || !Number.isInteger(value.damageGroup) || value.damageGroup < 0 || value.damageGroup > 1
+        || !Number.isInteger(value.chargeMode) || value.chargeMode < 0 || value.chargeMode > 3
+        || !Number.isInteger(value.customChargeMs) || value.customChargeMs < 2000 || value.customChargeMs > 6000
+        || (value.bleedChance != null && (!Number.isFinite(value.bleedChance) || value.bleedChance < 0 || value.bleedChance > 100 || !Number.isInteger(value.bleedChance * 2)))
+        || !Number.isInteger(value.whirlwindHits) || value.whirlwindHits < 1 || value.whirlwindHits > 32)
+        throw new Error("Invalid Spellsword configuration");
+      if (!sameConfiguration(value, CONFIG_DEFAULTS.spellsword, ["damageGroup", "chargeMode", "customChargeMs", "bleedChance", "whirlwindHits"])) {
+        const packed = (value.damageGroup << 7) | (value.chargeMode << 5) | (value.whirlwindHits - 1);
+        const bleedChance = value.bleedChance == null ? 0xFF : Math.round(value.bleedChance * 2);
+        add(CONFIG_FIELD_IDS.SPELLSWORD, [packed, (value.customChargeMs >> 8) & 0xFF, value.customChargeMs & 0xFF, bleedChance]);
+      }
+    }
+
     if (configuration.excludedDamageSources != null) {
       const values = configuration.excludedDamageSources;
       if (!Array.isArray(values) || values.length > 0xFF
@@ -348,6 +365,20 @@
       } else if (id === CONFIG_FIELD_IDS.EXCLUDED_DAMAGE_SOURCES) {
         if (!length || new Set(payload).size !== payload.length) throw new Error("Invalid excluded damage sources payload");
         configuration.excludedDamageSources = Array.from(payload);
+      } else if (id === CONFIG_FIELD_IDS.SPELLSWORD) {
+        if (length !== 4 || (payload[3] > 200 && payload[3] !== 0xFF)) throw new Error("Invalid Spellsword configuration payload");
+        const customChargeMs = (payload[1] << 8) | payload[2];
+        const spellsword = {
+          damageGroup: payload[0] >> 7,
+          chargeMode: (payload[0] >> 5) & 3,
+          customChargeMs,
+          bleedChance: payload[3] === 0xFF ? null : payload[3] / 2,
+          whirlwindHits: (payload[0] & 31) + 1
+        };
+        // Accept the former 0.170-5.075s custom range so existing V3 links still load;
+        // the application clamps those legacy values into the current 2-6s range.
+        if (customChargeMs < 170 || customChargeMs > 6000) throw new Error("Invalid Spellsword configuration payload");
+        configuration.spellsword = spellsword;
       } else {
         warnings.push(`Ignored unknown configuration field ${id}`);
       }

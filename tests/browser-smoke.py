@@ -21,6 +21,12 @@ with sync_playwright() as playwright:
     errors = []
     page.on("pageerror", lambda error: errors.append(str(error)))
     page.goto(URL)
+    assert page.title() == "AdventureLuna's Ecliptica Build Forge"
+    assert page.locator("h1").inner_text() == "AdventureLuna's Ecliptica Build Forge"
+    assert "Left-click to add an artifact" not in page.locator("#tab-artifacts").inner_text()
+    assert page.locator("#combined-dps-summary").is_visible()
+    initial_combined_dps = page.evaluate("EclipticaBuildForge.buildUnifiedCalculationModel().combinedTotalDps")
+    assert float(page.locator("#combined-dps-summary").get_attribute("data-exact-value")) == initial_combined_dps
 
     codec_checks = page.evaluate("""() => {
       const base = ShareBuildCodec.encodeBuild({ version: 3, characterId: 1, upgrades: [], configuration: {} });
@@ -48,6 +54,10 @@ with sync_playwright() as playwright:
         catch { rejected.push(true); }
       }
       const v2 = ShareBuildCodec.encodeBuild({ version: 2, characterId: 1, upgrades: [] });
+      const spellsword = ShareBuildCodec.decodeBuild(ShareBuildCodec.encodeBuild({
+        version: 3, characterId: 0, upgrades: [],
+        configuration: { spellsword: { damageGroup: 1, chargeMode: 3, customChargeMs: 2375, bleedChance: 27.5, whirlwindHits: 12 } }
+      }));
       return {
         unknownConfiguration: unknown.configuration,
         unknownWarning: unknown.warnings[0],
@@ -55,7 +65,8 @@ with sync_playwright() as playwright:
         duplicateWarning: duplicate.warnings[0],
         rejected,
         defaultGrowth: baseBytes.length - ShareBuildCodec.base64UrlToBytes(v2).length,
-        configuredGrowth: configured.length - base.length
+        configuredGrowth: configured.length - base.length,
+        spellswordConfiguration: spellsword.configuration.spellsword
       };
     }""")
     assert codec_checks["unknownConfiguration"] == {"twinmage": {"primary": 5, "secondary": 1, "primaryDamage": True, "secondaryDamage": False}}
@@ -65,6 +76,7 @@ with sync_playwright() as playwright:
     assert codec_checks["rejected"] == [True, True, True]
     assert codec_checks["defaultGrowth"] == 1
     assert codec_checks["configuredGrowth"] <= 6
+    assert codec_checks["spellswordConfiguration"] == {"damageGroup": 1, "chargeMode": 3, "customChargeMs": 2375, "bleedChance": 27.5, "whirlwindHits": 12}
 
     # Shared engine: volley damage is per activation, while crit/status chances
     # still use every hit in the volley.
@@ -114,6 +126,75 @@ with sync_playwright() as playwright:
     upgrade(page, "Vitality", 0)
     upgrade(page, "Big_and_Lazy", 0)
 
+    # Spellsword switches exclusively between its primary and charged secondary.
+    # Whirlwind is represented as a multi-hit full-charge source.
+    page.select_option("#class-select", "Spellsword")
+    page.locator('[data-tab="configuration"]').click()
+    assert page.locator('input[name="spellsword-dps"][value="primary"]').is_checked()
+    assert not page.locator('input[name="spellsword-dps"][value="secondary"]').is_checked()
+    assert page.locator('#configuration-content img').evaluate_all("images => images.every(image => image.complete && image.naturalWidth > 0)")
+    assert page.locator('#configuration-content p').count() == 0
+    spellsword_model = page.evaluate("EclipticaBuildForge.buildUnifiedCalculationModel()")
+    primary = next(source for source in spellsword_model["attackSources"] if source["id"] == "spellsword-telekinetic-strike")
+    assert primary["baseDamage"] == 65
+    assert primary["damage"]["activationRate"] == 1
+    assert primary["statuses"][0]["id"] == "bleeding"
+    assert primary["statuses"][0]["chance"] == .1
+    upgrade(page, "Spellsword_Shieldbreaker")
+    assert page.locator('[data-calculation-key="damage:spellsword-telekinetic-strike:base"]').get_attribute("data-exact-value") == "82"
+
+    page.locator('label.spellsword-attack-option', has_text="Piercing Strike").click()
+    assert not page.locator('input[name="spellsword-dps"][value="primary"]').is_checked()
+    assert page.locator('input[name="spellsword-charge-mode"][value="dps"]').is_checked()
+    piercing = page.evaluate("EclipticaBuildForge.buildUnifiedCalculationModel().attackSources.find(source => source.id === 'spellsword-piercing-strike')")
+    assert piercing["baseDamage"] == 143
+    assert abs(piercing["damage"]["activationRate"] - (1 / 4.5)) < 1e-12
+    assert piercing["canCrit"] is True
+    assert piercing["statuses"] == []
+    assert piercing["unknownStatuses"][0]["id"] == "bleeding"
+    assert page.evaluate("[SPELLSWORD_SECONDARY.minimumCharge, SPELLSWORD_SECONDARY.optimalCharge, SPELLSWORD_SECONDARY.maximumCharge]") == [2, 3, 6]
+    assert page.evaluate("[spellswordPiercingDamage(2), spellswordPiercingDamage(6)]") == [87, 170]
+    bleed_input = page.locator('input[name="spellsword-bleed-chance"]')
+    bleed_input.fill("25")
+    bleed_input.blur()
+    piercing = page.evaluate("EclipticaBuildForge.buildUnifiedCalculationModel().attackSources.find(source => source.id === 'spellsword-piercing-strike')")
+    assert piercing["statuses"][0]["chance"] == .25
+
+    upgrade(page, "Spellsword_Whirlwind")
+    page.locator("label.spellsword-charge-option", has_text="Full").click()
+    whirlwind_hits = page.locator('input[name="spellsword-whirlwind-hits"]')
+    whirlwind_hits.fill("4")
+    whirlwind_hits.blur()
+    spellsword_model = page.evaluate("EclipticaBuildForge.buildUnifiedCalculationModel()")
+    spellsword_sources = {source["id"]: source for source in spellsword_model["attackSources"]}
+    piercing = spellsword_sources["spellsword-piercing-strike"]
+    whirlwind = spellsword_sources["spellsword-whirlwind"]
+    expected_spellsword_rate = 1 / (6 * 1.3 + 1.5)
+    assert piercing["baseDamage"] == 170
+    assert abs(piercing["damage"]["activationRate"] - expected_spellsword_rate) < 1e-12
+    assert whirlwind["baseDamage"] == 11
+    assert whirlwind["canCrit"] is False
+    assert whirlwind["hitsPerActivation"] == 4
+    assert whirlwind["damage"]["averageDamage"] == 44
+    assert whirlwind["damage"]["activationRate"] == piercing["damage"]["activationRate"]
+    assert whirlwind["statuses"][0]["chance"] == .5
+    assert abs(spellsword_model["criticalHitEligibleRate"] - piercing["damage"]["hitsPerSecond"]) < 1e-12
+    assert page.locator('th.damage-label', has_text="Hits / Activation").count() == 1
+
+    spellsword_code = page.evaluate("new URLSearchParams(location.hash.slice(1)).get('b')")
+    shared_spellsword = page.evaluate("code => decodeBuild(code).configuration.spellsword", spellsword_code)
+    assert shared_spellsword == {"damageGroup": 1, "chargeMode": 2, "customChargeMs": 3000, "bleedChance": 25, "whirlwindHits": 4}
+    page.locator("#reset-configuration").click()
+    assert page.evaluate("buildOptions.spellswordDamageGroup") == "primary"
+    page.goto(f"{URL}#b={spellsword_code}")
+    page.reload()
+    page.locator('[data-tab="configuration"]').click()
+    assert page.locator('input[name="spellsword-dps"][value="secondary"]').is_checked()
+    assert page.locator('input[name="spellsword-charge-mode"][value="full"]').is_checked()
+    assert page.locator('input[name="spellsword-whirlwind-hits"]').input_value() == "4"
+    page.locator("#reset-build").click()
+    page.select_option("#class-select", "Thaumaturge")
+
     # Thaumaturge: splitshot multiplies only Foul Pustule projectiles. Flaming Spirit
     # follows primary activations once and contributes Burning on the same shared path.
     upgrade(page, "Thaumaturge_Splitshot")
@@ -122,6 +203,10 @@ with sync_playwright() as playwright:
     upgrade(page, "Pocket_Abacus")
     assert source_rate(page, "thaumaturge-foul-pustule-projectile") == "0.75"
     assert source_rate(page, "thaumaturge-flaming-spirit") == "0.75"
+    assert page.locator('[data-calculation-key="damage:thaumaturge-flaming-spirit:base"]').get_attribute("data-exact-value") == "16"
+    upgrade(page, "Flaming_Spirit", 2)
+    assert page.locator('[data-calculation-key="damage:thaumaturge-flaming-spirit:base"]').get_attribute("data-exact-value") == "24"
+    upgrade(page, "Flaming_Spirit")
     foul_key = "thaumaturge-foul-pustule-projectile"
     assert page.locator(f'[data-calculation-key="damage:{foul_key}:overall"]').inner_text().startswith("x")
     assert page.locator(f'[data-calculation-key="damage:{foul_key}:elemental"]').inner_text().startswith("x")
@@ -144,25 +229,32 @@ with sync_playwright() as playwright:
     assert page.locator('[data-calculation-key="crit:rate"]').inner_text() == "0.45"
     assert source_rate(page, "thaumaturge-charged-strike") == "0.45"
 
-    # Excluded columns stay visible but no longer contribute to Combined DPS.
-    # Their underlying crit and status mechanics continue to operate normally.
+    # Excluded columns stay visible but no longer contribute to damage, crits,
+    # status applications, or downstream on-crit sources.
     page.locator('[data-tab="calculations"]').click()
     spirit_toggle = page.locator('[data-source-exclusion="thaumaturge-flaming-spirit"]')
     assert page.locator('.source-inclusion-toggle').count() == 0
     assert spirit_toggle.get_attribute('class') == 'source-column-toggle'
     assert "✓" not in spirit_toggle.inner_text()
     combined_before = float(page.locator('[data-calculation-key="damage:combined:total-dps"]').get_attribute("data-exact-value"))
+    assert float(page.locator("#combined-dps-summary").get_attribute("data-exact-value")) == combined_before
     spirit_total = float(page.locator('[data-calculation-key="damage:thaumaturge-flaming-spirit:total-dps"]').get_attribute("data-exact-value"))
-    crit_rate_before = page.locator('[data-calculation-key="crit:rate"]').get_attribute("data-exact-value")
-    burning_rate_before = page.evaluate("EclipticaBuildForge.buildUnifiedCalculationModel().statuses.find(status => status.id === 'burning').applicationsPerSecond")
+    crit_rate_before = float(page.locator('[data-calculation-key="crit:rate"]').inner_text())
+    charged_rate_before = float(page.locator('[data-calculation-key="damage:thaumaturge-charged-strike:rate"]').get_attribute("data-exact-value"))
     spirit_toggle.click()
     combined_after = float(page.locator('[data-calculation-key="damage:combined:total-dps"]').get_attribute("data-exact-value"))
-    assert abs(combined_after - (combined_before - spirit_total)) < 1e-9
+    assert float(page.locator("#combined-dps-summary").get_attribute("data-exact-value")) == combined_after
+    assert combined_after < combined_before - spirit_total
     assert page.locator('th.source-excluded [data-source-exclusion="thaumaturge-flaming-spirit"]').count() == 1
     assert page.locator('[data-source-exclusion="thaumaturge-flaming-spirit"]').get_attribute("aria-pressed") == "false"
     assert page.locator('td.source-excluded [data-calculation-key="damage:thaumaturge-flaming-spirit:total-dps"]').count() == 1
-    assert page.locator('[data-calculation-key="crit:rate"]').get_attribute("data-exact-value") == crit_rate_before
-    assert page.evaluate("EclipticaBuildForge.buildUnifiedCalculationModel().statuses.find(status => status.id === 'burning').applicationsPerSecond") == burning_rate_before
+    crit_rate_after = float(page.locator('[data-calculation-key="crit:rate"]').inner_text())
+    charged_rate_after = float(page.locator('[data-calculation-key="damage:thaumaturge-charged-strike:rate"]').get_attribute("data-exact-value"))
+    assert crit_rate_after < crit_rate_before
+    assert charged_rate_after < charged_rate_before
+    assert abs(charged_rate_after - crit_rate_after) < 1e-12
+    assert page.locator('[data-status="burning"]').count() == 0
+    assert page.locator('[data-source-exclusion="status-burning"]').count() == 0
     exclusion_code = page.evaluate("new URLSearchParams(location.hash.slice(1)).get('b')")
     excluded_share_id = page.evaluate("DAMAGE_SOURCE_SHARE_ID.get('thaumaturge-flaming-spirit')")
     assert excluded_share_id in page.evaluate("code => decodeBuild(code).configuration.excludedDamageSources", exclusion_code)
@@ -182,6 +274,23 @@ with sync_playwright() as playwright:
     assert page.locator('[data-status="burning"]').count() == 1
     page.locator('[data-source-exclusion="status-burning"]').click()
 
+    # Frozen Heart uses the same shared primary-activation path, but has its
+    # own damage scaling and Frozen application chance.
+    upgrade(page, "Flaming_Spirit", 0)
+    upgrade(page, "Frozen_Heart")
+    assert source_rate(page, "thaumaturge-frozen-heart") == "0.75"
+    assert page.locator('[data-calculation-key="damage:thaumaturge-frozen-heart:base"]').get_attribute("data-exact-value") == "18"
+    frozen_source = page.evaluate("EclipticaBuildForge.buildUnifiedCalculationModel().attackSources.find(source => source.id === 'thaumaturge-frozen-heart')")
+    assert frozen_source["element"] == "frost"
+    assert frozen_source["canCrit"] is True
+    assert frozen_source["statuses"][0]["id"] == "frozen"
+    assert frozen_source["statuses"][0]["chance"] == .10
+    assert page.locator('[data-status="frozen"]').count() == 1
+    upgrade(page, "Frozen_Heart", 2)
+    assert page.locator('[data-calculation-key="damage:thaumaturge-frozen-heart:base"]').get_attribute("data-exact-value") == "27"
+    upgrade(page, "Frozen_Heart", 0)
+    upgrade(page, "Flaming_Spirit")
+
     # Switching classes must replace—not merely recolor—the configuration and table.
     page.select_option("#class-select", "Gunmancer")
     assert page.locator("#calculation-content").inner_text().find("Gunmancer") >= 0
@@ -190,6 +299,7 @@ with sync_playwright() as playwright:
     configuration_text = page.locator("#configuration-content").inner_text()
     assert "Gunmancer calculation setup" not in configuration_text
     assert "Sources:" not in configuration_text
+    assert "This gets calculated as using the charged shot on cooldown in addition to whatever is selected above" in configuration_text
     page.locator('[data-tab="configuration"]').click()
     assert page.locator('[data-gunmancer-picker="primary"] input[name="gunmancer-dps"]').is_checked()
     assert not page.locator('[data-gunmancer-picker="secondary"] input[name="gunmancer-dps"]').is_checked()
@@ -249,9 +359,11 @@ with sync_playwright() as playwright:
     page.locator('input[name="gunmancer-dps"][value="primary"]').check()
 
     page.evaluate("buildOptions.gunmancerSecondary = 'firebomb'; counts.Gunmancer_Proficiency_Firebomb = 3; saveBuildOptions(); render();")
+    assert page.evaluate("GUNMANCER_ABILITIES.secondary.find(ability => ability.id === 'firebomb').status.chance") == .10
     charged_fire = page.evaluate("window.EclipticaBuildForge.buildUnifiedCalculationModel().attackSources.filter(source => source.id.startsWith('gunmancer-airblast-secondary-firebomb'))")
     assert len(charged_fire) == 2
     assert all(source["hitsPerActivation"] == 1 for source in charged_fire)
+    assert charged_fire[0]["statuses"][0]["id"] == "burning"
 
     page.locator('[data-tab="upgrades"]').click()
     page.locator("#dps-ranking-toggle").click()
@@ -480,6 +592,15 @@ with sync_playwright() as playwright:
     assert page.evaluate("buildOptions.gunmancerSecondary") == "photon"
     assert page.evaluate("buildOptions.gunmancerPrimaryDamage && !buildOptions.gunmancerSecondaryDamage")
     assert page.evaluate("buildOptions.gunmancerAirblastTarget") == "none"
+
+    unimplemented_message = "I havent decided on how this class should produce a useful DPS number yet, lol"
+    for class_name in ["Fistmage", "Spellhammer", "Shield Mage"]:
+        page.select_option("#class-select", class_name)
+        assert unimplemented_message in page.locator("#configuration-content").inner_text()
+        assert unimplemented_message in page.locator("#calculation-content").inner_text()
+        assert not page.locator("#combined-dps-panel").is_visible()
+    page.select_option("#class-select", "Gunmancer")
+    assert page.locator("#combined-dps-panel").is_visible()
 
     assert not errors, errors
     browser.close()

@@ -39,6 +39,22 @@ assert.equal(result.statuses.find(status => status.id === "burning").sources[0].
 assert.equal(result.statuses.find(status => status.id === "burning").sources[0].baseApplicationChance, .1 / 3);
 assert.equal(result.statusSources.find(source => source.statusId === "burning").damage.activationRate, 2);
 
+const excludedSpirit = Engine.calculate({
+  ...baseInput,
+  sources: [
+    { id: "foul", name: "Foul Pustule", element: "poison", baseDamage: 30, canCrit: true, activationRate: .75, instancesPerActivation: 2, statuses: [{ id: "poisoned", chance: .1 }] },
+    { id: "spirit", name: "Flaming Spirit", element: "fire", baseDamage: 16, canCrit: true, activationRate: .75, excluded: true, statuses: [{ id: "burning", chance: .1 / 3 }] },
+    { id: "charged", name: "Charged Strike", element: "physical", baseDamage: 25, canCrit: false, trigger: { type: "onCrit" }, statuses: [] }
+  ]
+});
+assert.ok(excludedSpirit.attackSources.some(source => source.id === "spirit" && source.excluded));
+assert.ok(excludedSpirit.activeAttackSources.every(source => source.id !== "spirit"));
+assert.equal(excludedSpirit.criticalHitEligibleRate, 1.5);
+assert.equal(excludedSpirit.criticalHitsPerSecond, .3);
+assert.equal(excludedSpirit.attackSources.find(source => source.id === "charged").damage.activationRate, .3);
+assert.ok(excludedSpirit.statuses.some(status => status.id === "poisoned"));
+assert.ok(!excludedSpirit.statuses.some(status => status.id === "burning"));
+
 const volley = Engine.calculate({
   ...baseInput,
   criticalChance: .2,

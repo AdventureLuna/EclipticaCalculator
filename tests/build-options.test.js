@@ -2,8 +2,11 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs");
 
 const page = fs.readFileSync(`${__dirname}/../index.html`, "utf8");
-for (const icon of ["Nekomancer-Primary-2.png", "Neko_Zombie.png", "Neko_Balloon.png", "Neko_Ballista.png"]) {
-  assert.ok(fs.existsSync(`${__dirname}/../pictures/${icon}`), `Missing Nekomancer icon: ${icon}`);
+assert.match(page, /<title>AdventureLuna's Ecliptica Build Forge<\/title>/);
+assert.match(page, /<h1>AdventureLuna's Ecliptica Build Forge<\/h1>/);
+assert.doesNotMatch(page, /Left-click to add an artifact/);
+for (const icon of ["Nekomancer-Primary-2.png", "Neko_Zombie.png", "Neko_Balloon.png", "Neko_Ballista.png", "Spellsword-Primary.png", "Spellsword-Secondary.png"]) {
+  assert.ok(fs.existsSync(`${__dirname}/../pictures/${icon}`), `Missing class ability icon: ${icon}`);
 }
 
 assert.match(page, /if \(result\.health < 1\) result\.health = 1/);
@@ -68,6 +71,7 @@ assert.match(page, /name: "Kinetic Fletchette"/);
 assert.match(page, /name: "Firebomb"/);
 assert.match(page, /name: "Photon Condenser"/);
 assert.match(page, /name: "Antimatter Accelerator"/);
+assert.match(page, /id: "firebomb"[\s\S]*?status: \{ id: "burning", name: "Burning", chance: \.10 \}/);
 assert.match(page, /iconFile: "Gunmancer-Primary\.png"/);
 assert.match(page, /iconFile: "Gunmancer-Flechette\.png"/);
 assert.match(page, /iconFile: "Gumancer-Photon-Cannon\.png"/);
@@ -86,6 +90,7 @@ assert.match(page, /damage: 8, projectiles: 5, chargedProjectiles: \(\) => 3 \+ 
 assert.match(page, /name: "Airblast"/);
 assert.match(page, /cooldown: 12, chargedMultiplier: 2/);
 assert.match(page, /function renderGunmancerConfiguration/);
+assert.match(page, /This gets calculated as using the charged shot on cooldown in addition to whatever is selected above/);
 assert.match(page, /function gunmancerDpsGroup()/);
 assert.match(page, /name="gunmancer-dps" value="primary"/);
 assert.match(page, /name="gunmancer-dps" value="secondary"/);
@@ -133,6 +138,20 @@ assert.match(page, /minion\.baseActivationRate \* selected \* attackSpeedMultipl
 assert.match(page, /selectedClass === "Nekomancer" \? buildNekomancerSourceModel\(stats\)/);
 assert.match(page, /2 \* nekomancerMasteryStacks \* nekomancerSouls/);
 assert.match(page, /20 \* nekomancerMasteryStacks \* nekomancerSouls/);
+assert.match(page, /const SPELLSWORD_PRIMARY = \{/);
+assert.match(page, /name: "Telekinetic Strike", iconUrl: "pictures\/Spellsword-Primary\.png"/);
+assert.match(page, /element: "physical", damage: 65, baseActivationRate: 1/);
+assert.match(page, /const SPELLSWORD_SECONDARY = \{/);
+assert.match(page, /name: "Piercing Strike", iconUrl: "pictures\/Spellsword-Secondary\.png"/);
+assert.match(page, /minimumCharge: 2, optimalCharge: 3, maximumCharge: 6/);
+assert.match(page, /curveMinimumCharge: \.170, curveMaximumCharge: 5\.075/);
+assert.match(page, /function renderSpellswordConfiguration\(content\)/);
+assert.match(page, /name="spellsword-dps" value="\$\{value\}"/);
+assert.match(page, /function buildSpellswordSourceModel\(stats\)/);
+assert.match(page, /selectedClass === "Spellsword" \? buildSpellswordSourceModel\(stats\)/);
+assert.match(page, /function spellswordPiercingCurveTime\(chargeTime\)/);
+assert.match(page, /Math\.round\(170\.70 - 97\.33 \* Math\.exp\(-\.8927 \* curveTime\)\)/);
+assert.match(page, /id: "spellsword-whirlwind"/);
 assert.match(page, /function changeClass\(nextClass\)/);
 assert.match(page, /dpsRankingRun \+= 1;/);
 assert.match(page, /restoreCounts\(dpsRankingSnapshot\);/);
@@ -173,6 +192,9 @@ assert.match(page, /const canCrit = target\.components\.some\(component => compo
 assert.match(page, /Gunmancer: Marksman is selected/);
 assert.match(page, /id="calculation-content"/);
 assert.match(page, /function renderCalculations\(\)/);
+assert.match(page, /const UNIMPLEMENTED_DPS_MESSAGE = "I havent decided on how this class should produce a useful DPS number yet, lol"/);
+assert.match(page, /configuration-empty">\$\{escapeHtml\(UNIMPLEMENTED_DPS_MESSAGE\)\}/);
+assert.match(page, /calculation-empty">\$\{escapeHtml\(UNIMPLEMENTED_DPS_MESSAGE\)\}/);
 assert.match(page, /const uptimePercent = value =>/);
 assert.match(page, /formatted\.endsWith\("\.00"\) \? formatted\.slice\(0, -3\) : formatted/);
 assert.match(page, /value: hand => uptimePercent\(hand\.damage\.uptime\)/);
@@ -311,7 +333,11 @@ assert.match(page, /id: "weakened", name: "Weakened", baseStacks: 10, stacksPerS
 assert.match(page, /id: "breached", name: "Breached", baseStacks: 10, stacksPerSticky: 2, durationPerStack: \.7, bossApplicationPenalty: 2/);
 assert.equal((page.match(/Bosses likely build up resistance against this status effect over time!/g) || []).length, 2);
 assert.match(page, /class="status-note" colspan="2"/);
-assert.match(page, /const combinedTotalDps = damageColumns\.reduce\(\(sum, hand\) => sum \+ hand\.damage\.totalDps, 0\);/);
+assert.match(page, /const combinedTotalDps = damageSources\.filter\(source => !source\.excluded\)[\s\S]*?\.reduce\(\(sum, source\) => sum \+ source\.damage\.totalDps, 0\);/);
+assert.match(page, /id="combined-dps-summary"[^>]*aria-live="polite">0\.00<\/strong>/);
+assert.match(page, /function updateCombinedDpsSummary\(value, visible = true\)/);
+assert.match(page, /updateCombinedDpsSummary\(0, false\);/);
+assert.match(page, /updateCombinedDpsSummary\(model\.combinedTotalDps\);/);
 assert.match(page, /<th scope="row" class="damage-combined-label">Combined DPS<\/th>/);
 assert.match(page, /calculationAttributes\("damage:combined:total-dps"/);
 assert.match(page, /const combinedDpsBreakdown = Object\.values\(damageColumns\.reduce/);
@@ -372,10 +398,12 @@ assert.match(page, /id="catalog"/);
 assert.match(page, /\$\("#catalog"\)\.addEventListener\("click"/);
 assert.match(page, /instanceRate: 2/);
 assert.match(page, /const flamingSpiritColumn = count\("Flaming_Spirit"\)/);
-assert.match(page, /baseDamage: 16 \+ 16 \* Math\.max\(0, spiritStacks - 1\)/);
+assert.match(page, /firstStackDamage: 16, additionalStackDamage: 8/);
 assert.match(page, /const instancesPerSecond = primaryHand\.damage\.instancesPerSecond/);
 assert.match(page, /const overallMultiplier = 1;/);
 assert.match(page, /sourceUpgradeId: "Flaming_Spirit"/);
+assert.match(page, /upgradeId: "Flaming_Spirit".+firstStackDamage: 16, additionalStackDamage: 8/);
+assert.match(page, /upgradeId: "Frozen_Heart".+firstStackDamage: 18, additionalStackDamage: 9.+statusId: "frozen".+statusChance: \.10/);
 assert.match(page, /overallDamageApplies: false/);
 assert.match(page, /hand\.damage\.overallDamageApplies === false \? "-"/);
 assert.match(page, /const instancesPerSecond = 2;/);
