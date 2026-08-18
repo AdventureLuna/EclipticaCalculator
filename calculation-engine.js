@@ -71,7 +71,8 @@
   function weightedSourceMultiplier(sources, statusId) {
     const weighted = sources.reduce((total, source) => {
       const status = source.statuses.find(item => item.id === statusId);
-      return total + source.damage.hitsPerSecond * finite(status?.chance) * finite(source.damage.sourceMultiplier, 1);
+      const sourceMultiplier = source.statusSourceMultiplierApplies === false ? 1 : finite(source.damage.sourceMultiplier, 1);
+      return total + source.damage.hitsPerSecond * finite(status?.chance) * sourceMultiplier;
     }, 0);
     const weight = sources.reduce((total, source) => {
       const status = source.statuses.find(item => item.id === statusId);
@@ -165,7 +166,8 @@
     const directSpecs = input.sources.filter(source => source.trigger?.type !== "onCrit");
     const onCritSpecs = input.sources.filter(source => source.trigger?.type === "onCrit");
     const directSources = directSpecs.map(source => resolveSource(source, context));
-    const criticalSources = directSources.filter(source => source.canCrit);
+    const activeDirectSources = directSources.filter(source => source.excluded !== true);
+    const criticalSources = activeDirectSources.filter(source => source.canCrit);
     const criticalHitEligibleRate = criticalSources.reduce((sum, source) => sum + source.damage.hitsPerSecond, 0);
     const criticalHitsPerSecond = criticalHitEligibleRate * context.criticalChance;
     const weightedCriticalSourceMultiplier = criticalHitEligibleRate > 0
@@ -176,14 +178,17 @@
       sourceMultiplier: source.sourceMultiplierStrategy === "weightedCritSources" ? weightedCriticalSourceMultiplier : source.sourceMultiplier
     }, context, criticalHitsPerSecond));
     const attackSources = [...directSources, ...triggeredSources];
-    const statuses = resolveStatuses(attackSources, context);
+    const activeAttackSources = [...activeDirectSources, ...triggeredSources.filter(source => source.excluded !== true)];
+    const statuses = resolveStatuses(activeAttackSources, context);
     const statusSources = statuses.map(status => createStatusDamageSource(status, context)).filter(Boolean);
     statusSources.forEach((source, index) => { source.isStatusGroupStart = index === 0; });
     const damageSources = [...attackSources, ...statusSources];
-    const combinedTotalDps = damageSources.reduce((sum, source) => sum + source.damage.totalDps, 0);
+    const combinedTotalDps = damageSources.filter(source => source.excluded !== true)
+      .reduce((sum, source) => sum + source.damage.totalDps, 0);
     return {
       context,
       attackSources,
+      activeAttackSources,
       statusSources,
       damageSources,
       statuses,

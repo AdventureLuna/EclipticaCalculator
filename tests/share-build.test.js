@@ -89,6 +89,11 @@ roundTripV3(2, {
 roundTripV3(7, {
   nekomancer: { zombie: 2, balloon: 0, ballista: 1, souls: 3 }
 });
+roundTripV3(0, {
+  berserkerSoulStacks: 70,
+  spellsword: { damageGroup: 1, chargeMode: 3, customChargeMs: 2375, bleedChance: 27.5, whirlwindHits: 12 },
+  excludedDamageSources: [39, 40]
+});
 
 // Default class values are represented by the empty configuration marker.
 const defaultV2 = encodeBuild({ version: 2, characterId: 1, upgrades: [] });
@@ -139,5 +144,9 @@ assert.throws(() => encodeBuild({
 }), /Invalid Nekomancer/);
 assert.throws(() => encodeBuild({ version: 3, characterId: 2, upgrades: [], configuration: { excludedDamageSources: [4, 4] } }), /Invalid excluded damage sources/);
 assert.throws(() => decodeBuild(replaceConfigurationBlock(defaultV3, [2, CONFIG_FIELD_IDS.EXCLUDED_DAMAGE_SOURCES, 0]), options), /Invalid excluded damage sources payload/);
+assert.throws(() => encodeBuild({ version: 3, characterId: 0, upgrades: [], configuration: { spellsword: { damageGroup: 1, chargeMode: 3, customChargeMs: 5076, bleedChance: null, whirlwindHits: 1 } } }), /Invalid Spellsword/);
+const legacySpellswordCharge = decodeBuild(replaceConfigurationBlock(defaultV3, [6, CONFIG_FIELD_IDS.SPELLSWORD, 4, 96, 1, 244, 255]), options);
+assert.equal(legacySpellswordCharge.configuration.spellsword.customChargeMs, 500);
+assert.throws(() => decodeBuild(replaceConfigurationBlock(defaultV3, [6, CONFIG_FIELD_IDS.SPELLSWORD, 4, 0, 0, 100, 255]), options), /Invalid Spellsword/);
 
 console.log("Share-build codec tests passed.");

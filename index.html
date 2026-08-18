@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ecliptica Build Forge</title>
+  <title>AdventureLuna's Ecliptica Build Forge</title>
   <style>
     :root {
       color-scheme: dark;
@@ -181,10 +181,37 @@
       backdrop-filter: blur(14px);
     }
 
-    .stats-panel {
+    .left-rail {
       position: sticky;
       top: 18px;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 12px;
       max-height: calc(100vh - 36px);
+    }
+    .left-rail.combined-dps-hidden { grid-template-rows: minmax(0, 1fr); }
+
+    .combined-dps-panel {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 15px 20px;
+      border-color: rgba(var(--class-rgb), .45);
+    }
+    .combined-dps-panel[hidden] { display: none; }
+
+    .combined-dps-panel .panel-title { color: var(--muted); }
+    .combined-dps-summary {
+      color: rgb(var(--class-rgb));
+      font-size: 1.55rem;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+    }
+
+    .stats-panel {
+      min-height: 0;
       overflow: auto;
       padding: 20px;
     }
@@ -352,6 +379,18 @@
     .nekomancer-minion-count { color: var(--ink); font-size: .78rem; font-weight: 900; text-align: center; font-variant-numeric: tabular-nums; }
     .nekomancer-souls-control { display: flex; align-items: center; gap: 10px; }
     .nekomancer-souls-control input { width: 82px; border: 1px solid var(--line); border-radius: 8px; color: var(--ink); background: rgba(0,0,0,.22); padding: 7px 8px; font: inherit; font-variant-numeric: tabular-nums; }
+    .spellsword-configuration { display: grid; gap: 22px; }
+    .spellsword-configuration .ability-options { grid-template-columns: repeat(2, minmax(180px, 1fr)); }
+    .spellsword-attack-option input { position: absolute; opacity: 0; pointer-events: none; }
+    .spellsword-charge-options { display: grid; grid-template-columns: repeat(4, minmax(90px, 1fr)); gap: 8px; }
+    .spellsword-charge-option { position: relative; display: flex; justify-content: center; border: 1px solid var(--line); border-radius: 9px; color: var(--muted); background: rgba(255,255,255,.025); padding: 8px 9px; font-size: .7rem; font-weight: 800; cursor: pointer; }
+    .spellsword-charge-option input { position: absolute; opacity: 0; pointer-events: none; }
+    .spellsword-charge-option:has(input:checked) { border-color: rgba(var(--class-rgb), .75); color: var(--ink); background: rgba(var(--class-rgb), .13); }
+    .spellsword-charge-control { display: grid; grid-template-columns: minmax(160px, 1fr) 92px; gap: 12px; align-items: center; margin-top: 10px; }
+    .spellsword-charge-control input[type="range"] { width: 100%; accent-color: rgb(var(--class-rgb)); }
+    .spellsword-charge-control input[type="number"], .spellsword-compact-input input { width: 100%; border: 1px solid var(--line); border-radius: 8px; color: var(--ink); background: rgba(0,0,0,.22); padding: 7px 8px; font: inherit; font-variant-numeric: tabular-nums; }
+    .spellsword-secondary-controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; margin-top: 10px; }
+    .spellsword-compact-input { display: grid; grid-template-columns: minmax(0, 1fr) 82px; gap: 10px; align-items: center; color: var(--muted); font-size: .7rem; }
     .element-picker { border: 0; margin: 0; padding: 0; }
     .element-picker legend { width: 100%; margin-bottom: 10px; color: var(--ink); }
     .element-picker-heading { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
@@ -677,7 +716,8 @@
     @media (max-width: 900px) {
       .shell { padding: 14px; }
       .layout { grid-template-columns: 1fr; }
-      .stats-panel { position: relative; top: 0; max-height: none; }
+      .left-rail { position: relative; top: 0; max-height: none; }
+      .stats-panel { max-height: none; }
       .tools { grid-template-columns: 1fr 1fr; }
       .tools input { grid-column: 1 / -1; }
       .slot-grid { width: 100%; }
@@ -731,7 +771,7 @@
       .tools input { grid-column: auto; }
       .catalog { grid-template-columns: 1fr; }
       .element-options { grid-template-columns: repeat(3, minmax(76px, 1fr)); }
-      .ability-options, .airblast-options, .nekomancer-minion-options { grid-template-columns: 1fr; }
+      .ability-options, .airblast-options, .nekomancer-minion-options, .spellsword-configuration .ability-options, .spellsword-charge-options { grid-template-columns: 1fr; }
       .element-picker-heading { align-items: flex-start; flex-direction: column; gap: 7px; }
       .damage-table th, .damage-table td { padding: 6px 8px; }
       .slot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; aspect-ratio: auto; }
@@ -747,7 +787,7 @@
         <img class="class-logo" id="class-logo" src="pictures/Class7.png" alt="">
         <div>
           <p class="eyebrow" id="active-class-label">Thaumaturge</p>
-          <h1>Ecliptica Build Forge</h1>
+          <h1>AdventureLuna's Ecliptica Build Forge</h1>
         </div>
       </div>
       <div class="top-actions">
@@ -768,16 +808,22 @@
     </header>
 
     <div class="layout">
-      <aside class="panel stats-panel">
-        <h2 class="panel-title">Current statistics</h2>
-        <div class="stat-list" id="stats"></div>
-        <div class="share-build" aria-labelledby="share-build-title">
-          <h2 class="panel-title" id="share-build-title">Share build</h2>
-          <input class="share-url" id="share-url" type="text" readonly aria-label="Share build URL">
-          <button class="copy-link" id="copy-link" type="button">Copy link</button>
-          <span class="copy-status" id="copy-status" role="status" aria-live="polite"></span>
-        </div>
-      </aside>
+      <div class="left-rail">
+        <section class="panel combined-dps-panel" id="combined-dps-panel" aria-labelledby="combined-dps-title">
+          <h2 class="panel-title" id="combined-dps-title">Combined DPS</h2>
+          <strong class="combined-dps-summary" id="combined-dps-summary" data-exact-value="0" aria-live="polite">0.00</strong>
+        </section>
+        <aside class="panel stats-panel">
+          <h2 class="panel-title">Current statistics</h2>
+          <div class="stat-list" id="stats"></div>
+          <div class="share-build" aria-labelledby="share-build-title">
+            <h2 class="panel-title" id="share-build-title">Share build</h2>
+            <input class="share-url" id="share-url" type="text" readonly aria-label="Share build URL">
+            <button class="copy-link" id="copy-link" type="button">Copy link</button>
+            <span class="copy-status" id="copy-status" role="status" aria-live="polite"></span>
+          </div>
+        </aside>
+      </div>
 
       <section class="panel explorer">
         <nav class="tabs" role="tablist" aria-label="Build sections">
@@ -828,7 +874,6 @@
         </div>
         <div class="tab-pane" id="tab-artifacts" role="tabpanel" hidden>
           <div class="catalog-head"><h2 class="section-title">Artifacts</h2><span class="summary" id="artifact-summary"></span></div>
-          <p class="rune-help">Left-click to add an artifact and right-click to remove one. Artifacts can stack up to 100 times.</p>
           <div class="catalog" id="artifact-catalog"></div>
         </div>
         <div class="tab-pane" id="tab-runes" role="tabpanel" hidden>
@@ -969,8 +1014,8 @@
       ["Chronowizard","Rare","Shadow_Aspect.png","Shadow Aspect","SHADOW Damage +15% (+15% per stack) Chance to inflict the BREACHED status effect +5% (+5% per stack) LUMINOUS Defense -10% (+10% per stack)"],
       ["Chronowizard","Legendary","Charged_Strike.png","Charged Strike","Critical Hits will cause an explosion dealing X (+X per stack) PHYSICAL Damage Critical Strike Chance -5% (-5% per stack)"],
       ["Chronowizard","Legendary","Pocket_Abacus.png","Pocket Abacus","Every fifth (5th) instance of Damage you deal will become a guaranteed Critical Strike Critical Strike Damage +10% (+10% per stack) Overall Damage -10% (-10% per stack) Sets Critical Strike Chance to 0%"],
-      ["Chronowizard","Legendary","Flaming_Spirit.png","Flaming Spirit","When at full HP, performing your primary skill fires a fireball dealing 16 (+X per stack) FIRE Damage Received Healing -5% (-5% per stack) Health Regeneration -20% (-20% per stack)"],
-      ["Chronowizard","Legendary","Frozen_Heart.png","Frozen Heart","When at full HP, performing your primary skill fires an icicle dealing 18 (+X per stack) FROST damage Received Healing -5% (-5% per stack) Health Regeneration -20% (-20% per stack)"],
+      ["Chronowizard","Legendary","Flaming_Spirit.png","Flaming Spirit","When at full HP, performing your primary skill fires a fireball dealing 16 (+8 per additional stack) FIRE Damage Received Healing -5% (-5% per stack) Health Regeneration -20% (-20% per stack)"],
+      ["Chronowizard","Legendary","Frozen_Heart.png","Frozen Heart","When at full HP, performing your primary skill fires an icicle dealing 18 (+9 per additional stack) FROST damage with a 10% base chance to inflict FROZEN Received Healing -5% (-5% per stack) Health Regeneration -20% (-20% per stack)"],
       ["Chronowizard","Legendary","Third_Law.png","Third Law","Upon taking Damage, deal 150% (+25% per stack) of its RAW value to enemies around you as PHYSICAL Damage On Fistmage's Parry, deal 50% of the Damage around you as PHYSICAL Damage"],
       ["Chronowizard","Legendary","Warrior's_Will.png","Warrior’s Will","Using your Utility Skill grants you 4 (+2 per stack) stacks of the EMPOWERED status effect Utility Cooldown Rate -15% (-15% per stack)"]
       , ["Mobility Crystal","Legendary","Berserker's_Soul.png","Berserker’s Soul (Ranged)","Dealing damage with your main attack grants Berserker's Soul stacks, up to 70 per selected upgrade. Each stack adds 22.5/70% Overall Damage, 45/70% Attack Speed, and 2/70% Projectile Spread. Each selected upgrade initially gives -10% Overall Damage and -20% Attack Speed. Taking damage resets the in-run stacks.","Berserker's_Soul_Ranged"]
@@ -1033,6 +1078,7 @@
     ];
 
     const CLASS_FAMILIES = ["Spellsword","Twinmage","Gunmancer","Fistmage","Spellhammer","Shield Mage","Thaumaturge","Nekomancer"];
+    const UNIMPLEMENTED_DPS_MESSAGE = "I havent decided on how this class should produce a useful DPS number yet, lol";
     const DEFAULT_FAMILIES = ["Endurance Crystal","Mobility Crystal","Chronowizard"];
     const BERSERKER_SOUL = {
       melee: { id: "Berserker's_Soul_Melee", classes: ["Spellsword", "Fistmage", "Spellhammer", "Shield Mage"], damagePenalty: -20, attackSpeedPenalty: -40, damageAt70: 45, attackSpeedAt70: 90, regenerationAt70: -50, spreadAt70: 0 },
@@ -1058,6 +1104,16 @@
       Thaumaturge: "Class7.png",
       Nekomancer: "Class8.png"
     };
+    const SPELLSWORD_PRIMARY = {
+      id: "telekinetic-strike", name: "Telekinetic Strike", iconUrl: "pictures/Spellsword-Primary.png",
+      element: "physical", damage: 65, baseActivationRate: 1,
+      status: { id: "bleeding", name: "Bleeding", chance: .10 }
+    };
+    const SPELLSWORD_SECONDARY = {
+      id: "piercing-strike", name: "Piercing Strike", iconUrl: "pictures/Spellsword-Secondary.png",
+      element: "physical", cooldown: 1.5, minimumCharge: .170, optimalCharge: .5, maximumCharge: 5.075
+    };
+    const SPELLSWORD_CHARGE_MODES = ["quick", "dps", "full", "custom"];
     const TWINMAGE_ELEMENTS = [
       { id: "fire", name: "Fire", handName: "Flaming Hand", baseDamage: 30, damageStat: "fireDamage", canCrit: true, statusChances: { burning: 0.10 }, image: "Twinmage_Element_Fire.png" },
       { id: "frost", name: "Frost", handName: "Ice Hand", baseDamage: 30, damageStat: "frostDamage", canCrit: true, statusChances: { frozen: 0.10 }, image: "Twinmage_Element_Frost.png" },
@@ -1089,7 +1145,7 @@
       secondary: [
         {
           id: "firebomb", name: "Firebomb", iconFile: "Gunmancer-Firebomb.png", iconUrl: gunmancerIconUrl("Gunmancer-Firebomb.png"),
-          interval: 1 / 0.33, attackSpeedAffected: true, status: { id: "burning", name: "Burning", chance: null },
+          interval: 1 / 0.33, attackSpeedAffected: true, status: { id: "burning", name: "Burning", chance: .10 },
           description: "High-gravity explosive projectile. The Japanese wiki reports 0.33 shots/s (~3.03 seconds per shot); its wide explosion deals 100% of the projectile damage.",
           components: [
             { id: "projectile", name: "Fire projectile", element: "fire", damage: 50, projectiles: 1, chargedProjectiles: 1, canCrit: true },
@@ -1153,7 +1209,10 @@
       "thaumaturge-foul-pustule-projectile", "thaumaturge-flaming-spirit", "thaumaturge-charged-strike",
       "nekomancer-staff-projectile", "nekomancer-minion-zombie", "nekomancer-minion-balloon", "nekomancer-minion-ballista",
       "nekomancer-flaming-spirit", "nekomancer-charged-strike",
-      "status-burning", "status-bleeding", "status-poisoned"
+      "status-burning", "status-bleeding", "status-poisoned",
+      "twinmage-frozen-heart", "gunmancer-frozen-heart", "thaumaturge-frozen-heart", "nekomancer-frozen-heart",
+      "spellsword-telekinetic-strike", "spellsword-piercing-strike", "spellsword-whirlwind",
+      "spellsword-flaming-spirit", "spellsword-frozen-heart", "spellsword-charged-strike"
     ];
     const DAMAGE_SOURCE_SHARE_ID = new Map(DAMAGE_SOURCE_SHARE_KEYS.map((key, id) => [key, id]));
 
@@ -1221,6 +1280,10 @@
       breached: { upgradeId: "Shadow_Aspect", chancePerStack: 0.05 },
       poisoned: { upgradeId: "Poison_Aspect", chancePerStack: 0.05 }
     };
+    const PRIMARY_TRIGGERED_UPGRADE_SOURCES = [
+      { upgradeId: "Flaming_Spirit", sourceId: "flaming-spirit", name: "Flaming Spirit", icon: "Flaming_Spirit.png", element: "fire", firstStackDamage: 16, additionalStackDamage: 8, statusId: "burning", statusName: "Burning", statusChance: .10, overallDamageApplies: false },
+      { upgradeId: "Frozen_Heart", sourceId: "frozen-heart", name: "Frozen Heart", icon: "Frozen_Heart.png", element: "frost", firstStackDamage: 18, additionalStackDamage: 9, statusId: "frozen", statusName: "Frozen", statusChance: .10 }
+    ];
     const NON_DAMAGE_STATUS_DEFINITIONS = [
       { id: "frozen", name: "Frozen", baseStacks: 8, stacksPerSticky: 2, durationPerStack: .6, bossApplicationPenalty: 10, note: "Bosses likely build up resistance against this status effect over time!" },
       { id: "paralyzed", name: "Paralyzed", baseStacks: 8, stacksPerSticky: 2, durationPerStack: .3, bossApplicationPenalty: 10, note: "Bosses likely build up resistance against this status effect over time!" },
@@ -1328,6 +1391,18 @@
       }));
     }
 
+    function normalizeSpellswordChargeMode(value) {
+      return SPELLSWORD_CHARGE_MODES.includes(value) ? value : "dps";
+    }
+
+    function clampSpellswordChargeTime(value) {
+      return Math.min(SPELLSWORD_SECONDARY.maximumCharge, Math.max(SPELLSWORD_SECONDARY.minimumCharge, Number(value) || SPELLSWORD_SECONDARY.optimalCharge));
+    }
+
+    function normalizeSpellswordWhirlwindHits(value) {
+      return Math.min(32, Math.max(1, Math.floor(Number(value) || 1)));
+    }
+
     function normalizeExcludedDamageSources(value) {
       const saved = value && typeof value === "object" && !Array.isArray(value) ? value : {};
       return Object.fromEntries(CLASS_FAMILIES.map(className => {
@@ -1344,7 +1419,12 @@
     function resetClassBuildConfiguration(className = selectedClass) {
       buildOptions.excludedDamageSources = normalizeExcludedDamageSources(buildOptions.excludedDamageSources);
       buildOptions.excludedDamageSources[className] = [];
-      if (className === "Twinmage") {
+      if (className === "Spellsword") {
+        buildOptions.spellswordDamageGroup = "primary";
+        buildOptions.spellswordChargeMode = "dps";
+        buildOptions.spellswordCustomChargeTime = SPELLSWORD_SECONDARY.optimalCharge;
+        buildOptions.spellswordWhirlwindHits = 1;
+      } else if (className === "Twinmage") {
         buildOptions.twinmagePrimary = "fire";
         buildOptions.twinmageSecondary = "lightning";
         buildOptions.twinmagePrimaryDamage = true;
@@ -1374,6 +1454,10 @@
           artifacts: Object.fromEntries(ARTIFACTS.map(item => [item.id, Math.min(100, Math.max(0, Number(savedArtifacts[item.id]) || 0))]).filter(([, count]) => count)),
           runes: RUNE_SLOTS.map((_, index) => RUNES.some(item => item.id === saved.runes?.[index]) ? saved.runes[index] : null),
           curses: RUNE_SLOTS.map((_, index) => CURSES.some(item => item.id === saved.curses?.[index]) ? saved.curses[index] : null),
+          spellswordDamageGroup: saved.spellswordDamageGroup === "secondary" ? "secondary" : "primary",
+          spellswordChargeMode: normalizeSpellswordChargeMode(saved.spellswordChargeMode),
+          spellswordCustomChargeTime: clampSpellswordChargeTime(saved.spellswordCustomChargeTime),
+          spellswordWhirlwindHits: normalizeSpellswordWhirlwindHits(saved.spellswordWhirlwindHits),
           twinmagePrimary: TWINMAGE_ELEMENTS.some(item => item.id === saved.twinmagePrimary) ? saved.twinmagePrimary : "fire",
           twinmageSecondary: TWINMAGE_ELEMENTS.some(item => item.id === saved.twinmageSecondary) ? saved.twinmageSecondary : "lightning",
           twinmagePrimaryDamage: saved.twinmagePrimaryDamage !== false,
@@ -1388,7 +1472,7 @@
           berserkerSoulStacks: saved.berserkerSoulStacks == null ? defaultBerserkerStacks : Math.max(0, Math.floor(Number(saved.berserkerSoulStacks) || 0)),
           excludedDamageSources: normalizeExcludedDamageSources(saved.excludedDamageSources)
         };
-      } catch { return { artifacts: {}, runes: [null, null, null, null], curses: [null, null, null, null], twinmagePrimary: "fire", twinmageSecondary: "lightning", twinmagePrimaryDamage: true, twinmageSecondaryDamage: true, gunmancerPrimary: "va11", gunmancerSecondary: "photon", gunmancerPrimaryDamage: true, gunmancerSecondaryDamage: false, gunmancerAirblastTarget: "none", nekomancerMinions: normalizeNekomancerMinions(), nekomancerSouls: 5, berserkerSoulStacks: 0, excludedDamageSources: normalizeExcludedDamageSources() }; }
+      } catch { return { artifacts: {}, runes: [null, null, null, null], curses: [null, null, null, null], spellswordDamageGroup: "primary", spellswordChargeMode: "dps", spellswordCustomChargeTime: SPELLSWORD_SECONDARY.optimalCharge, spellswordWhirlwindHits: 1, twinmagePrimary: "fire", twinmageSecondary: "lightning", twinmagePrimaryDamage: true, twinmageSecondaryDamage: true, gunmancerPrimary: "va11", gunmancerSecondary: "photon", gunmancerPrimaryDamage: true, gunmancerSecondaryDamage: false, gunmancerAirblastTarget: "none", nekomancerMinions: normalizeNekomancerMinions(), nekomancerSouls: 5, berserkerSoulStacks: 0, excludedDamageSources: normalizeExcludedDamageSources() }; }
     }
 
     function saveBuildOptions() {
@@ -1969,7 +2053,15 @@
         const stacks = Math.min(maximumBerserkerStacks, Math.max(0, Math.floor(Number(buildOptions.berserkerSoulStacks) || 0)));
         if (stacks !== maximumBerserkerStacks) configuration.berserkerSoulStacks = stacks;
       }
-      if (selectedClass === "Twinmage") {
+      if (selectedClass === "Spellsword") {
+        configuration.spellsword = {
+          damageGroup: buildOptions.spellswordDamageGroup === "secondary" ? 1 : 0,
+          chargeMode: SPELLSWORD_CHARGE_MODES.indexOf(normalizeSpellswordChargeMode(buildOptions.spellswordChargeMode)),
+          customChargeMs: Math.round(clampSpellswordChargeTime(buildOptions.spellswordCustomChargeTime) * 1000),
+          bleedChance: null,
+          whirlwindHits: normalizeSpellswordWhirlwindHits(buildOptions.spellswordWhirlwindHits)
+        };
+      } else if (selectedClass === "Twinmage") {
         configuration.twinmage = {
           primary: TWINMAGE_ELEMENTS.findIndex(element => element.id === buildOptions.twinmagePrimary),
           secondary: TWINMAGE_ELEMENTS.findIndex(element => element.id === buildOptions.twinmageSecondary),
@@ -2000,7 +2092,13 @@
     function applySharedConfiguration(configuration = {}) {
       resetClassBuildConfiguration(selectedClass);
       buildOptions.berserkerSoulStacks = berserkerMaximumStacks();
-      if (selectedClass === "Twinmage" && configuration.twinmage) {
+      if (selectedClass === "Spellsword" && configuration.spellsword) {
+        const value = configuration.spellsword;
+        buildOptions.spellswordDamageGroup = value.damageGroup === 1 ? "secondary" : "primary";
+        buildOptions.spellswordChargeMode = SPELLSWORD_CHARGE_MODES[value.chargeMode];
+        buildOptions.spellswordCustomChargeTime = clampSpellswordChargeTime(value.customChargeMs / 1000);
+        buildOptions.spellswordWhirlwindHits = normalizeSpellswordWhirlwindHits(value.whirlwindHits);
+      } else if (selectedClass === "Twinmage" && configuration.twinmage) {
         const value = configuration.twinmage;
         buildOptions.twinmagePrimary = TWINMAGE_ELEMENTS[value.primary].id;
         buildOptions.twinmageSecondary = TWINMAGE_ELEMENTS[value.secondary].id;
@@ -2255,9 +2353,9 @@
         return;
       }
 
-      if (!["Twinmage", "Gunmancer", "Thaumaturge", "Nekomancer"].includes(selectedClass)) {
+      if (!["Spellsword", "Twinmage", "Gunmancer", "Thaumaturge", "Nekomancer"].includes(selectedClass)) {
         dpsRankingSnapshot = null;
-        listElement.innerHTML = '<div class="dps-ranking-empty">DPS ranking is currently available for Twinmage, Gunmancer, Thaumaturge, and Nekomancer.</div>';
+        listElement.innerHTML = '<div class="dps-ranking-empty">DPS ranking is currently available for Spellsword, Twinmage, Gunmancer, Thaumaturge, and Nekomancer.</div>';
         return;
       }
 
@@ -2344,6 +2442,54 @@
       return buildOptions.gunmancerSecondaryDamage === true && buildOptions.gunmancerPrimaryDamage !== true ? "secondary" : "primary";
     }
 
+    function spellswordNominalChargeTime() {
+      const mode = normalizeSpellswordChargeMode(buildOptions.spellswordChargeMode);
+      if (mode === "quick") return SPELLSWORD_SECONDARY.minimumCharge;
+      if (mode === "full") return SPELLSWORD_SECONDARY.maximumCharge;
+      if (mode === "custom") return clampSpellswordChargeTime(buildOptions.spellswordCustomChargeTime);
+      return SPELLSWORD_SECONDARY.optimalCharge;
+    }
+
+    function spellswordUsesFullCharge() {
+      return spellswordNominalChargeTime() >= SPELLSWORD_SECONDARY.maximumCharge - .0005;
+    }
+
+    function renderSpellswordConfiguration(content) {
+      const group = buildOptions.spellswordDamageGroup === "secondary" ? "secondary" : "primary";
+      const mode = normalizeSpellswordChargeMode(buildOptions.spellswordChargeMode);
+      const customCharge = clampSpellswordChargeTime(buildOptions.spellswordCustomChargeTime);
+      const fullCharge = spellswordUsesFullCharge();
+      const bleedChance = spellswordBleedingChance(spellswordNominalChargeTime());
+      const abilityCard = (value, label, ability) => `<label class="ability-option spellsword-attack-option">
+        <input type="checkbox" name="spellsword-dps" value="${value}" ${group === value ? "checked" : ""}>
+        <img class="ability-icon" src="${escapeHtml(ability.iconUrl)}" alt="">
+        <span class="ability-copy"><span class="ability-name">${escapeHtml(ability.name)}</span><span class="ability-effect">${label}</span></span>
+      </label>`;
+      const chargeLabels = { quick: "Quick", dps: "Best DPS", full: "Full", custom: "Custom" };
+      content.innerHTML = `<div class="spellsword-configuration">
+        <fieldset class="ability-picker">
+          <legend><span class="ability-picker-heading"><span class="ability-picker-title">Attack</span></span></legend>
+          <div class="ability-options">
+            ${abilityCard("primary", "Primary", SPELLSWORD_PRIMARY)}
+            ${abilityCard("secondary", "Secondary", SPELLSWORD_SECONDARY)}
+          </div>
+        </fieldset>
+        ${group === "secondary" ? `<fieldset class="ability-picker">
+          <legend><span class="ability-picker-heading"><span class="ability-picker-title">Charge</span><span class="ability-picker-subtitle">${formatNumber(spellswordNominalChargeTime())}s</span></span></legend>
+          <div class="spellsword-charge-options">${SPELLSWORD_CHARGE_MODES.map(value => `<label class="spellsword-charge-option"><input type="radio" name="spellsword-charge-mode" value="${value}" ${mode === value ? "checked" : ""}>${chargeLabels[value]}</label>`).join("")}</div>
+          ${mode === "custom" ? `<div class="spellsword-charge-control">
+            <input type="range" name="spellsword-custom-charge" min="${SPELLSWORD_SECONDARY.minimumCharge}" max="${SPELLSWORD_SECONDARY.maximumCharge}" step="0.005" value="${customCharge}" aria-label="Custom Piercing Strike charge time">
+            <input type="number" name="spellsword-custom-charge" min="${SPELLSWORD_SECONDARY.minimumCharge}" max="${SPELLSWORD_SECONDARY.maximumCharge}" step="0.005" value="${customCharge}" aria-label="Custom Piercing Strike charge time in seconds">
+          </div>` : ""}
+          <div class="spellsword-secondary-controls">
+            <div class="spellsword-compact-input"><span>Cooldown</span><strong>${formatNumber(SPELLSWORD_SECONDARY.cooldown)}s</strong></div>
+            <div class="spellsword-compact-input"><span>Bleeding chance</span><strong>${formatNumber(bleedChance * 100)}%</strong></div>
+            ${count("Spellsword_Whirlwind") > 0 && fullCharge ? `<label class="spellsword-compact-input"><span>Whirlwind hits / cast</span><input type="number" name="spellsword-whirlwind-hits" min="1" max="32" step="1" value="${normalizeSpellswordWhirlwindHits(buildOptions.spellswordWhirlwindHits)}"></label>` : ""}
+          </div>
+        </fieldset>` : ""}
+      </div>`;
+    }
+
     function gunmancerChargedCooldown(stats = latestCalculation?.stats) {
       const cooldownRate = Math.max(0, Number(stats?.utilityCooldownRate || 0)) / 100;
       return cooldownRate > 0 ? GUNMANCER_AIRBLAST.cooldown / cooldownRate : Infinity;
@@ -2380,6 +2526,7 @@
             <label class="airblast-option"><input type="radio" name="gunmancer-airblast" value="primary" ${buildOptions.gunmancerAirblastTarget === "primary" ? "checked" : ""}> Charge Primary</label>
             <label class="airblast-option"><input type="radio" name="gunmancer-airblast" value="secondary" ${buildOptions.gunmancerAirblastTarget === "secondary" ? "checked" : ""}> Charge Secondary</label>
           </div>
+          <p class="gunmancer-source-note">This gets calculated as using the charged shot on cooldown in addition to whatever is selected above</p>
         </fieldset>
       </div>`;
     }
@@ -2466,6 +2613,11 @@
     function renderConfiguration() {
       const content = $("#configuration-content");
       content.classList.remove("configuration-stack");
+      if (selectedClass === "Spellsword") {
+        renderSpellswordConfiguration(content);
+        appendBerserkerStackControl(content);
+        return;
+      }
       if (selectedClass === "Gunmancer") {
         renderGunmancerConfiguration(content);
         appendBerserkerStackControl(content);
@@ -2482,7 +2634,7 @@
       }
       if (selectedClass !== "Twinmage") {
         const stackControl = berserkerStackControlMarkup();
-        content.innerHTML = stackControl || '<div class="configuration-empty">No configuration options are available for this class yet.</div>';
+        content.innerHTML = `<div class="configuration-empty">${escapeHtml(UNIMPLEMENTED_DPS_MESSAGE)}</div>${stackControl}`;
         if (stackControl) content.classList.add("configuration-stack");
         return;
       }
@@ -2557,19 +2709,21 @@
 
     function sharedUpgradeSourceSpecs(classKey, primaryActivationRate, attackSpeedMultiplier, primaryRateDetails = {}) {
       const sources = [];
-      const flamingSpiritStacks = count("Flaming_Spirit");
-      if (flamingSpiritStacks > 0 && primaryActivationRate > 0) {
-        const burningChance = effectiveSourceStatusChance("burning", .10, attackSpeedMultiplier);
+      PRIMARY_TRIGGERED_UPGRADE_SOURCES.forEach(upgrade => {
+        const stacks = count(upgrade.upgradeId);
+        if (stacks <= 0 || primaryActivationRate <= 0) return;
+        const statusChance = effectiveSourceStatusChance(upgrade.statusId, upgrade.statusChance, attackSpeedMultiplier);
         sources.push({
-          id: `${classKey}-flaming-spirit`, name: "Flaming Spirit", position: "Upgrade effect",
-          sourceIcon: "Flaming_Spirit.png", sourceUpgradeId: "Flaming_Spirit",
-           element: "fire", baseDamage: 16 + 16 * Math.max(0, flamingSpiritStacks - 1), canCrit: true,
-           activationRate: primaryActivationRate, instancesPerActivation: 1, projectiles: 1,
-           ...primaryRateDetails,
-           overallDamageApplies: false, statuses: burningChance == null ? [] : [{ id: "burning", name: "Burning", chance: burningChance }],
+          id: `${classKey}-${upgrade.sourceId}`, name: upgrade.name, position: "Upgrade effect",
+          sourceIcon: upgrade.icon, sourceUpgradeId: upgrade.upgradeId,
+          element: upgrade.element, baseDamage: upgrade.firstStackDamage + upgrade.additionalStackDamage * Math.max(0, stacks - 1), canCrit: true,
+          activationRate: primaryActivationRate, instancesPerActivation: 1, projectiles: 1,
+          ...primaryRateDetails,
+          ...(upgrade.overallDamageApplies === false ? { overallDamageApplies: false } : {}),
+          statuses: statusChance == null ? [] : [{ id: upgrade.statusId, name: upgrade.statusName, chance: statusChance }],
           trigger: { type: "primaryActivation" }
         });
-      }
+      });
       const chargedStrikeStacks = count("Charged_Strike");
       if (chargedStrikeStacks > 0) sources.push({
         id: `${classKey}-charged-strike`, name: "Charged Strike", position: "Upgrade effect",
@@ -2578,6 +2732,88 @@
         trigger: { type: "onCrit", instancesPerTrigger: 1 }, sourceMultiplierStrategy: "weightedCritSources", statuses: []
       });
       return sources;
+    }
+
+    function spellswordPiercingDamage(chargeTime) {
+      const clampedCharge = clampSpellswordChargeTime(chargeTime);
+      return Math.round(170.70 - 97.33 * Math.exp(-.8927 * clampedCharge));
+    }
+
+    function spellswordBleedingChance(chargeTime) {
+      return .5 * spellswordPiercingDamage(chargeTime) / 170;
+    }
+
+    function buildSpellswordSourceModel(stats) {
+      const attackSpeedMultiplier = Math.max(0, Number(stats.attackSpeed || 0) / 100);
+      const group = buildOptions.spellswordDamageGroup === "secondary" ? "secondary" : "primary";
+      const sources = [];
+      let primaryActivationRate = 0;
+      let primaryRateDetails = {};
+      if (group === "primary") {
+        const shieldbreakerStacks = count("Spellsword_Shieldbreaker");
+        const shieldbreakerMultiplier = 1 + .25 * shieldbreakerStacks;
+        const baseDamage = Math.ceil(SPELLSWORD_PRIMARY.damage * shieldbreakerMultiplier);
+        primaryActivationRate = SPELLSWORD_PRIMARY.baseActivationRate * attackSpeedMultiplier;
+        primaryRateDetails = {
+          baseActivationRate: SPELLSWORD_PRIMARY.baseActivationRate,
+          rateMultipliers: [{ label: "Attack Speed", value: attackSpeedMultiplier }],
+          rateRefs: ["stat:attackSpeed"]
+        };
+        const bleedingChance = effectiveSourceStatusChance("bleeding", SPELLSWORD_PRIMARY.status.chance, attackSpeedMultiplier);
+        sources.push({
+          id: "spellsword-telekinetic-strike", name: SPELLSWORD_PRIMARY.name, position: "Primary",
+          sourceIcon: SPELLSWORD_PRIMARY.iconUrl, element: SPELLSWORD_PRIMARY.element, baseDamage, canCrit: true,
+          baseDamageFormula: shieldbreakerStacks > 0
+            ? `ceil(${SPELLSWORD_PRIMARY.damage} × (1 + 25% × ${shieldbreakerStacks})) = ${baseDamage}`
+            : `Base damage per instance = ${baseDamage}`,
+          activationRate: primaryActivationRate, instancesPerActivation: 1, projectiles: 1,
+          ...primaryRateDetails,
+          statuses: bleedingChance == null ? [] : [{ id: "bleeding", name: "Bleeding", chance: bleedingChance }]
+        });
+      } else {
+        const nominalChargeTime = spellswordNominalChargeTime();
+        const whirlwindStacks = count("Spellsword_Whirlwind");
+        const chargeTimeMultiplier = 1 + .30 * whirlwindStacks;
+        const chargeSpeedMultiplier = Math.max(.1, 1 + 1.5 * (attackSpeedMultiplier - 1));
+        const effectiveChargeTime = nominalChargeTime * chargeTimeMultiplier / chargeSpeedMultiplier;
+        const cycleTime = effectiveChargeTime + SPELLSWORD_SECONDARY.cooldown;
+        const activationRate = cycleTime > 0 ? 1 / cycleTime : 0;
+        const swiftStabStacks = count("Spellsword_Swift_Stab");
+        const movementExcess = Math.max(0, Number(stats.movementSpeed || 0) / 100 - 1);
+        const swiftStabMultiplier = 1 + .35 * swiftStabStacks * movementExcess;
+        const baseBleedingChance = spellswordBleedingChance(nominalChargeTime);
+        const bleedingChance = effectiveSourceStatusChance("bleeding", baseBleedingChance, attackSpeedMultiplier);
+        const rateCalculation = `${nominalChargeTime.toFixed(3)}s charge × x${chargeTimeMultiplier.toFixed(2)} Whirlwind charge time ÷ x${chargeSpeedMultiplier.toFixed(2)} charge speed + ${SPELLSWORD_SECONDARY.cooldown.toFixed(2)}s cooldown = ${cycleTime.toFixed(3)}s cycle; 1 ÷ ${cycleTime.toFixed(3)}s = ${activationRate.toFixed(4)} activations/s`;
+        const piercing = {
+          id: "spellsword-piercing-strike", name: SPELLSWORD_SECONDARY.name, position: "Secondary",
+          sourceIcon: SPELLSWORD_SECONDARY.iconUrl, element: SPELLSWORD_SECONDARY.element,
+          baseDamage: spellswordPiercingDamage(nominalChargeTime), canCrit: true,
+          baseDamageFormula: `${nominalChargeTime.toFixed(3)}s charge on the 87-170 damage curve; rounded damage = ${spellswordPiercingDamage(nominalChargeTime)}`,
+          activationRate, instancesPerActivation: 1, projectiles: 1,
+          sourceMultiplier: swiftStabMultiplier,
+          statusSourceMultiplierApplies: false,
+          sourceMultiplierFormula: swiftStabStacks > 0
+            ? `1 + (35% × ${swiftStabStacks}) × ${Math.round(movementExcess * 100)}% Movement Speed above 100% = x${swiftStabMultiplier.toFixed(4)}`
+            : "No Piercing Strike source multiplier",
+          rateCalculation, rateRefs: ["stat:attackSpeed"],
+          statuses: [{ id: "bleeding", name: "Bleeding", chance: bleedingChance }]
+        };
+        sources.push(piercing);
+        if (whirlwindStacks > 0 && spellswordUsesFullCharge()) {
+          const hits = normalizeSpellswordWhirlwindHits(buildOptions.spellswordWhirlwindHits);
+          sources.push({
+            id: "spellsword-whirlwind", name: "Whirlwind", position: "Upgrade effect",
+            sourceIcon: "Spellsword_Whirlwind.png", sourceUpgradeId: "Spellsword_Whirlwind",
+            element: "physical", baseDamage: 11 + 6 * Math.max(0, whirlwindStacks - 1), canCrit: false,
+            activationRate, instancesPerActivation: hits, projectiles: 1, showInstances: true, instanceCountKind: "hits",
+            rateCalculation: `Full-charge Piercing Strike rate = ${activationRate.toFixed(4)} casts/s`, rateRefs: ["calc:damage:spellsword-piercing-strike:rate"],
+            statuses: [{ id: "bleeding", name: "Bleeding", chance: bleedingChance }],
+            trigger: { type: "sourceActivation", sourceId: piercing.id }, linkedSourceId: piercing.id
+          });
+        }
+      }
+      sources.push(...sharedUpgradeSourceSpecs("spellsword", primaryActivationRate, attackSpeedMultiplier, primaryRateDetails));
+      return { className: "Spellsword", classKey: "spellsword", sources };
     }
 
     function buildGunmancerSourceModel(stats) {
@@ -2732,14 +2968,15 @@
           baseActivationRate: primarySource.baseActivationRate,
           rateMultipliers: primarySource.rateMultipliers,
           rateRefs: primarySource.rateRefs
-        }).map(source => source.id.endsWith("flaming-spirit") ? { ...source, sourceMultiplier: primarySource.sourceMultiplier } : source)
+        }).map(source => source.trigger?.type === "primaryActivation" ? { ...source, sourceMultiplier: primarySource.sourceMultiplier } : source)
         : sharedUpgradeSourceSpecs("twinmage", 0, attackSpeedMultiplier);
       return { className: "Twinmage", classKey: "twinmage", sources: [...handSources, ...masterySources, ...sharedSources] };
     }
 
     function buildUnifiedCalculationModel() {
       const stats = latestCalculation.stats;
-      const sourceModel = selectedClass === "Twinmage" ? buildTwinmageSourceModel(stats)
+      const sourceModel = selectedClass === "Spellsword" ? buildSpellswordSourceModel(stats)
+        : selectedClass === "Twinmage" ? buildTwinmageSourceModel(stats)
         : selectedClass === "Gunmancer" ? buildGunmancerSourceModel(stats)
           : selectedClass === "Thaumaturge" ? buildThaumaturgeSourceModel(stats)
             : selectedClass === "Nekomancer" ? buildNekomancerSourceModel(stats)
@@ -2747,11 +2984,17 @@
       if (!sourceModel) return null;
       const criticalChancePercent = count("Pocket_Abacus") > 0 ? 20 : Number(stats.criticalChance || 0);
       const elementalMultipliers = calculationElementMultipliers(stats);
-      const sources = sourceModel.sources.map(source => ({
-        ...source,
-        overallMultiplier: Number(stats.overallDamage || 0) / 100,
-        elementalMultiplier: elementalMultipliers[source.element] || 1
-      }));
+      const excludedKeys = new Set(excludedDamageSourceKeys());
+      const sources = sourceModel.sources.map(source => {
+        const exclusionKey = source.exclusionKey || source.id;
+        return {
+          ...source,
+          exclusionKey,
+          excluded: excludedKeys.has(exclusionKey),
+          overallMultiplier: Number(stats.overallDamage || 0) / 100,
+          elementalMultiplier: elementalMultipliers[source.element] || 1
+        };
+      });
       const calculation = EclipticaCalculationEngine.calculate({
         sources,
         criticalChance: Math.max(0, criticalChancePercent) / 100,
@@ -2761,14 +3004,22 @@
         statusDefinitions: { ...DAMAGE_STATUS_DEFINITIONS, ...Object.fromEntries(NON_DAMAGE_STATUS_DEFINITIONS.map(status => [status.id, status])) },
         stickyStacks: count("Sticky")
       });
-      const excludedKeys = new Set(excludedDamageSourceKeys());
       const damageSources = calculation.damageSources.map(source => {
         const exclusionKey = source.exclusionKey || source.id;
-        return { ...source, exclusionKey, excluded: excludedKeys.has(exclusionKey) };
+        return { ...source, exclusionKey, excluded: source.excluded === true || excludedKeys.has(exclusionKey) };
       });
       const combinedTotalDps = damageSources.filter(source => !source.excluded)
         .reduce((sum, source) => sum + source.damage.totalDps, 0);
       return { ...sourceModel, ...calculation, damageSources, combinedTotalDps, criticalChancePercent, criticalDamagePercent: Number(stats.criticalDamage || 0) };
+    }
+
+    function updateCombinedDpsSummary(value, visible = true) {
+      $("#combined-dps-panel").hidden = !visible;
+      document.querySelector(".left-rail").classList.toggle("combined-dps-hidden", !visible);
+      const summary = $("#combined-dps-summary");
+      const combinedDps = Number.isFinite(Number(value)) ? Number(value) : 0;
+      summary.textContent = combinedDps.toFixed(2);
+      summary.dataset.exactValue = String(combinedDps);
     }
 
     function renderUnifiedCalculations(options = {}) {
@@ -2776,14 +3027,21 @@
       const content = $("#calculation-content");
       const model = buildUnifiedCalculationModel();
       if (!model) {
-        if (render) content.innerHTML = '<div class="calculation-empty">Damage calculations are currently available for Twinmage, Gunmancer, Thaumaturge, and Nekomancer.</div>';
+        if (render) {
+          content.innerHTML = `<div class="calculation-empty">${escapeHtml(UNIMPLEMENTED_DPS_MESSAGE)}</div>`;
+          updateCombinedDpsSummary(0, false);
+        }
         return { combinedTotalDps: 0 };
       }
       if (model.emptyMessage) {
-        if (render) content.innerHTML = `<div class="calculation-empty">${escapeHtml(model.emptyMessage)}</div>`;
+        if (render) {
+          content.innerHTML = `<div class="calculation-empty">${escapeHtml(model.emptyMessage)}</div>`;
+          updateCombinedDpsSummary(0);
+        }
         return { combinedTotalDps: 0 };
       }
       if (!render) return { combinedTotalDps: model.combinedTotalDps };
+      updateCombinedDpsSummary(model.combinedTotalDps);
 
       const number = value => Number(value).toFixed(2);
       const rateNumber = value => Number(value).toFixed(4).replace(/0+$/, "").replace(/\.$/, "");
@@ -2794,10 +3052,14 @@
       const sourceUpgradeAttributes = source => source.sourceUpgradeId ? `data-calculation-source-upgrade="${escapeHtml(source.sourceUpgradeId)}"` : "";
       const damageTypeAttributes = source => `data-calculation-damage-type="${escapeHtml(source.element)}" data-calculation-damage-id="${escapeHtml(source.element)}"`;
       const sourceColumnClasses = source => `${source.isStatusEffect ? "status-effect-column" : ""} ${source.isStatusGroupStart ? "status-group-start" : ""} ${source.excluded ? "source-excluded" : ""}`;
-      const sourceColumnToggle = source => `<button class="source-column-toggle" type="button" data-source-exclusion="${escapeHtml(source.exclusionKey)}" aria-pressed="${String(!source.excluded)}" aria-label="${source.excluded ? "Include" : "Exclude"} ${escapeHtml(source.name)} in Combined DPS" title="${source.excluded ? "Include in" : "Exclude from"} Combined DPS" ${calculationAttributes(`source:${source.id}`, sourceFormula(source))} ${sourceIconAttributes(source)} ${sourceUpgradeAttributes(source)}><span class="damage-hand-position">${escapeHtml(source.position)}</span><span class="damage-hand-title">${escapeHtml(source.name)}</span></button>`;
+      const sourceColumnToggle = source => `<button class="source-column-toggle" type="button" data-source-exclusion="${escapeHtml(source.exclusionKey)}" aria-pressed="${String(!source.excluded)}" aria-label="${source.excluded ? "Include" : "Exclude"} ${escapeHtml(source.name)} in calculations" title="${source.excluded ? "Include in" : "Exclude from"} calculations" ${calculationAttributes(`source:${source.id}`, sourceFormula(source))} ${sourceIconAttributes(source)} ${sourceUpgradeAttributes(source)}><span class="damage-hand-position">${escapeHtml(source.position)}</span><span class="damage-hand-title">${escapeHtml(source.name)}</span></button>`;
       const hasSourceMultiplier = model.damageSources.some(source => !source.isStatusEffect && Math.abs(source.damage.sourceMultiplier - 1) > .0001);
       const hasMultipleProjectiles = model.attackSources.some(source => source.hitsPerActivation > 1);
-      const sourceStatusLines = source => source.statuses.map(status => `${status.name || model.statuses.find(item => item.id === status.id)?.name || status.id} chance: ${percent(status.chance)} per instance`);
+      const hasNonProjectileHits = model.attackSources.some(source => source.hitsPerActivation > 1 && source.instanceCountKind === "hits");
+      const sourceStatusLines = source => [
+        ...source.statuses.map(status => `${status.name || model.statuses.find(item => item.id === status.id)?.name || status.id} chance: ${percent(status.chance)} per instance`),
+        ...(source.unknownStatuses || []).map(status => `${status.name || status.id} chance: UNKNOWN`)
+      ];
       const sourceFormula = source => [
         source.name,
         `${source.element[0].toUpperCase()}${source.element.slice(1)} · Base ${source.baseDamage}`,
@@ -2806,6 +3068,7 @@
         ...sourceStatusLines(source)
       ].join("\n");
       const rateFormula = source => {
+        if (source.rateCalculation) return source.rateCalculation;
         if (source.rateInterval > 0) return `1 ÷ ${number(source.rateInterval)}s ${source.rateIntervalLabel || "interval"} = ${number(source.damage.activationRate)} activations/s`;
         if (source.isStatusEffect) return `1 ÷ ${number(1 / source.damage.activationRate)}s tick interval = ${number(source.damage.activationRate)} activations/s`;
         if (source.trigger?.type === "onCrit") {
@@ -2830,12 +3093,12 @@
         return `Non-crit per hit: ${source.damage.nonCriticalDamage}\nCrit per hit: ${source.damage.criticalDamage}\nAverage per hit: ${source.damage.nonCriticalDamage} × ${number((1 - model.context.criticalChance) * 100)}% + ${source.damage.criticalDamage} × ${number(model.context.criticalChance * 100)}% = ${number(source.damage.averageDamagePerHit)}\n${number(source.damage.averageDamagePerHit)} × ${hits} ${hitLabel} = ${number(source.damage.averageDamage)}`;
       };
       const rows = [
-        { key: "base", label: "Base Damage", value: source => String(source.baseDamage), exact: source => source.baseDamage, formula: source => `Base damage per instance = ${source.baseDamage}`, damageValue: true },
+        { key: "base", label: "Base Damage", value: source => String(source.baseDamage), exact: source => source.baseDamage, formula: source => source.baseDamageFormula || `Base damage per instance = ${source.baseDamage}`, damageValue: true },
         { key: "overall", label: "Overall Damage", value: source => source.damage.overallDamageApplies ? `x${number(source.damage.overallMultiplier)}` : "-", exact: source => source.damage.overallDamageApplies ? source.damage.overallMultiplier : null, formula: source => source.damage.overallDamageApplies ? `${number(source.damage.overallMultiplier * 100)}% ÷ 100` : "Does not apply to this damage source", refs: source => source.damage.overallDamageApplies ? ["stat:overallDamage"] : [] },
         { key: "elemental", label: "Elemental Damage", value: source => `x${number(source.damage.elementalMultiplier)}`, exact: source => source.damage.elementalMultiplier, formula: source => source.damageScaling === .75 ? `1 + (elemental multiplier - 1) × 75% = ${number(source.damage.elementalMultiplier)}` : `${number(source.damage.elementalMultiplier * 100)}% ÷ 100`, refs: source => [`stat:${source.element}Damage`] },
         { key: "crit", label: "Eff. Crit Multiplier", value: source => source.canCrit ? `x${number(source.damage.effectiveCriticalMultiplier)}` : "-", exact: source => source.damage.effectiveCriticalMultiplier, formula: source => source.canCrit ? `Effective crit multiplier = ${number(source.damage.effectiveCriticalMultiplier)}` : "This damage cannot crit", refs: source => source.canCrit ? ["calc:crit:effective"] : [] },
-        ...(hasSourceMultiplier ? [{ key: "source-multiplier", label: "Hand Damage", value: source => source.isStatusEffect || Math.abs(source.damage.sourceMultiplier - 1) < .0001 ? "-" : `x${number(source.damage.sourceMultiplier)}`, exact: source => source.damage.sourceMultiplier, formula: source => source.isStatusEffect || Math.abs(source.damage.sourceMultiplier - 1) < .0001 ? "Does not apply to this damage source" : `Source multiplier = ${number(source.damage.sourceMultiplier)}` }] : []),
-        ...(hasMultipleProjectiles ? [{ key: "projectiles", label: "Projectiles / Shot", value: source => source.isStatusEffect || (source.trigger && source.showProjectiles !== true) ? "-" : String(source.hitsPerActivation), exact: source => source.hitsPerActivation, formula: source => source.isStatusEffect || (source.trigger && source.showProjectiles !== true) ? "Not projectile-count based" : `${source.hitsPerActivation} damage ${source.hitsPerActivation === 1 ? "instance" : "instances"} per activation` }] : []),
+        ...(hasSourceMultiplier ? [{ key: "source-multiplier", label: model.classKey === "twinmage" ? "Hand Damage" : "Source Damage", value: source => source.isStatusEffect || Math.abs(source.damage.sourceMultiplier - 1) < .0001 ? "-" : `x${number(source.damage.sourceMultiplier)}`, exact: source => source.damage.sourceMultiplier, formula: source => source.isStatusEffect || Math.abs(source.damage.sourceMultiplier - 1) < .0001 ? "Does not apply to this damage source" : source.sourceMultiplierFormula || `Source multiplier = ${number(source.damage.sourceMultiplier)}` }] : []),
+        ...(hasMultipleProjectiles ? [{ key: "projectiles", label: hasNonProjectileHits ? "Hits / Activation" : "Projectiles / Shot", value: source => source.isStatusEffect || (source.trigger && source.showProjectiles !== true && source.showInstances !== true) ? "-" : String(source.hitsPerActivation), exact: source => source.hitsPerActivation, formula: source => source.isStatusEffect || (source.trigger && source.showProjectiles !== true && source.showInstances !== true) ? "Not hit-count based" : `${source.hitsPerActivation} damage ${source.hitsPerActivation === 1 ? "instance" : "instances"} per activation` }] : []),
         { key: "average", label: "Average Damage", value: source => number(source.damage.averageDamage), exact: source => source.damage.averageDamage, formula: averageDamageFormula, refs: source => ["base", "overall", "elemental", "crit"].map(key => `calc:${damageKey(source, key)}`), sectionBreak: true, damageValue: true },
         { key: "rate", label: "Instance Rate", value: source => number(source.damage.activationRate), exact: source => source.damage.activationRate, formula: rateFormula, refs: source => source.trigger?.type === "onCrit" ? ["calc:crit:rate"] : source.isStatusEffect ? [] : (source.rateRefs || ["stat:attackSpeed"]) },
         { key: "dps", label: "DPS", value: source => number(source.damage.dps), exact: source => source.damage.dps, formula: source => `${number(source.damage.averageDamage)} × ${number(source.damage.activationRate)} = ${number(source.damage.dps)}`, refs: source => [`calc:${damageKey(source, "average")}`, `calc:${damageKey(source, "rate")}`], damageValue: true },
@@ -3098,6 +3361,47 @@
     });
 
     $("#configuration-content").addEventListener("change", event => {
+      const spellswordDpsToggle = event.target.closest('input[type="checkbox"][name="spellsword-dps"]');
+      if (spellswordDpsToggle) {
+        if (spellswordDpsToggle.checked) buildOptions.spellswordDamageGroup = spellswordDpsToggle.value === "secondary" ? "secondary" : "primary";
+        else spellswordDpsToggle.checked = true;
+        saveBuildOptions();
+        renderConfiguration();
+        renderCalculations();
+        renderDpsRanking();
+        updateShareWidget();
+        return;
+      }
+      const spellswordChargeMode = event.target.closest('input[type="radio"][name="spellsword-charge-mode"]');
+      if (spellswordChargeMode) {
+        buildOptions.spellswordChargeMode = normalizeSpellswordChargeMode(spellswordChargeMode.value);
+        saveBuildOptions();
+        renderConfiguration();
+        renderCalculations();
+        renderDpsRanking();
+        updateShareWidget();
+        return;
+      }
+      const spellswordChargeInput = event.target.closest('input[name="spellsword-custom-charge"]');
+      if (spellswordChargeInput) {
+        buildOptions.spellswordCustomChargeTime = clampSpellswordChargeTime(spellswordChargeInput.value);
+        saveBuildOptions();
+        renderConfiguration();
+        renderCalculations();
+        renderDpsRanking();
+        updateShareWidget();
+        return;
+      }
+      const spellswordWhirlwindHits = event.target.closest('input[name="spellsword-whirlwind-hits"]');
+      if (spellswordWhirlwindHits) {
+        buildOptions.spellswordWhirlwindHits = normalizeSpellswordWhirlwindHits(spellswordWhirlwindHits.value);
+        saveBuildOptions();
+        renderConfiguration();
+        renderCalculations();
+        renderDpsRanking();
+        updateShareWidget();
+        return;
+      }
       const nekomancerSoulsInput = event.target.closest('input[name="nekomancer-souls"]');
       if (nekomancerSoulsInput) {
         buildOptions.nekomancerSouls = Math.min(5, Math.max(0, Math.floor(Number(nekomancerSoulsInput.value) || 0)));
@@ -3173,6 +3477,16 @@
     });
 
     $("#configuration-content").addEventListener("input", event => {
+      const spellswordChargeInput = event.target.closest('input[name="spellsword-custom-charge"]');
+      if (spellswordChargeInput) {
+        buildOptions.spellswordCustomChargeTime = clampSpellswordChargeTime(spellswordChargeInput.value);
+        $("#configuration-content").querySelectorAll('input[name="spellsword-custom-charge"]').forEach(input => { input.value = buildOptions.spellswordCustomChargeTime; });
+        saveBuildOptions();
+        renderCalculations();
+        renderDpsRanking();
+        updateShareWidget();
+        return;
+      }
       const berserkerStacksInput = event.target.closest('input[name="berserker-soul-stacks"]');
       if (!berserkerStacksInput) return;
       buildOptions.berserkerSoulStacks = Math.min(berserkerMaximumStacks(), Math.max(0, Math.floor(Number(berserkerStacksInput.value) || 0)));
