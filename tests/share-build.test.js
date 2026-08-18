@@ -144,7 +144,7 @@ assert.throws(() => encodeBuild({
 }), /Invalid Nekomancer/);
 assert.throws(() => encodeBuild({ version: 3, characterId: 2, upgrades: [], configuration: { excludedDamageSources: [4, 4] } }), /Invalid excluded damage sources/);
 assert.throws(() => decodeBuild(replaceConfigurationBlock(defaultV3, [2, CONFIG_FIELD_IDS.EXCLUDED_DAMAGE_SOURCES, 0]), options), /Invalid excluded damage sources payload/);
-assert.throws(() => encodeBuild({ version: 3, characterId: 0, upgrades: [], configuration: { spellsword: { damageGroup: 1, chargeMode: 3, customChargeMs: 1999, bleedChance: null, whirlwindHits: 1 } } }), /Invalid Spellsword/);
+assert.throws(() => encodeBuild({ version: 3, characterId: 0, upgrades: [], configuration: { spellsword: { damageGroup: 1, chargeMode: 3, customChargeMs: 5076, bleedChance: null, whirlwindHits: 1 } } }), /Invalid Spellsword/);
 const legacySpellswordCharge = decodeBuild(replaceConfigurationBlock(defaultV3, [6, CONFIG_FIELD_IDS.SPELLSWORD, 4, 96, 1, 244, 255]), options);
 assert.equal(legacySpellswordCharge.configuration.spellsword.customChargeMs, 500);
 assert.throws(() => decodeBuild(replaceConfigurationBlock(defaultV3, [6, CONFIG_FIELD_IDS.SPELLSWORD, 4, 0, 0, 100, 255]), options), /Invalid Spellsword/);

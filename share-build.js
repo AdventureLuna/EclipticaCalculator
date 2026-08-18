@@ -33,7 +33,7 @@
     twinmage: Object.freeze({ primary: 0, secondary: 2, primaryDamage: true, secondaryDamage: true }),
     gunmancer: Object.freeze({ primary: 0, secondary: 1, damageGroup: 0, airblastTarget: 0 }),
     nekomancer: Object.freeze({ zombie: 0, balloon: 0, ballista: 0, souls: 5 }),
-    spellsword: Object.freeze({ damageGroup: 0, chargeMode: 1, customChargeMs: 3000, bleedChance: null, whirlwindHits: 1 })
+    spellsword: Object.freeze({ damageGroup: 0, chargeMode: 1, customChargeMs: 500, bleedChance: null, whirlwindHits: 1 })
   });
 
   class BitWriter {
@@ -234,7 +234,7 @@
       const value = configuration.spellsword;
       if (!value || !Number.isInteger(value.damageGroup) || value.damageGroup < 0 || value.damageGroup > 1
         || !Number.isInteger(value.chargeMode) || value.chargeMode < 0 || value.chargeMode > 3
-        || !Number.isInteger(value.customChargeMs) || value.customChargeMs < 2000 || value.customChargeMs > 6000
+        || !Number.isInteger(value.customChargeMs) || value.customChargeMs < 170 || value.customChargeMs > 5075
         || (value.bleedChance != null && (!Number.isFinite(value.bleedChance) || value.bleedChance < 0 || value.bleedChance > 100 || !Number.isInteger(value.bleedChance * 2)))
         || !Number.isInteger(value.whirlwindHits) || value.whirlwindHits < 1 || value.whirlwindHits > 32)
         throw new Error("Invalid Spellsword configuration");
@@ -375,8 +375,8 @@
           bleedChance: payload[3] === 0xFF ? null : payload[3] / 2,
           whirlwindHits: (payload[0] & 31) + 1
         };
-        // Accept the former 0.170-5.075s custom range so existing V3 links still load;
-        // the application clamps those legacy values into the current 2-6s range.
+        // Accept the temporary 2-6s range so links created during development still load;
+        // the application clamps those values into the restored wiki range.
         if (customChargeMs < 170 || customChargeMs > 6000) throw new Error("Invalid Spellsword configuration payload");
         configuration.spellsword = spellsword;
       } else {

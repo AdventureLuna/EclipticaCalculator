@@ -143,14 +143,14 @@ assert.match(page, /name: "Telekinetic Strike", iconUrl: "pictures\/Spellsword-P
 assert.match(page, /element: "physical", damage: 65, baseActivationRate: 1/);
 assert.match(page, /const SPELLSWORD_SECONDARY = \{/);
 assert.match(page, /name: "Piercing Strike", iconUrl: "pictures\/Spellsword-Secondary\.png"/);
-assert.match(page, /minimumCharge: 2, optimalCharge: 3, maximumCharge: 6/);
-assert.match(page, /curveMinimumCharge: \.170, curveMaximumCharge: 5\.075/);
+assert.match(page, /minimumCharge: \.170, optimalCharge: \.5, maximumCharge: 5\.075/);
 assert.match(page, /function renderSpellswordConfiguration\(content\)/);
 assert.match(page, /name="spellsword-dps" value="\$\{value\}"/);
 assert.match(page, /function buildSpellswordSourceModel\(stats\)/);
 assert.match(page, /selectedClass === "Spellsword" \? buildSpellswordSourceModel\(stats\)/);
-assert.match(page, /function spellswordPiercingCurveTime\(chargeTime\)/);
-assert.match(page, /Math\.round\(170\.70 - 97\.33 \* Math\.exp\(-\.8927 \* curveTime\)\)/);
+assert.match(page, /Math\.round\(170\.70 - 97\.33 \* Math\.exp\(-\.8927 \* clampedCharge\)\)/);
+assert.match(page, /return \.5 \* spellswordPiercingDamage\(chargeTime\) \/ 170/);
+assert.match(page, /<span>Cooldown<\/span><strong>\$\{formatNumber\(SPELLSWORD_SECONDARY\.cooldown\)\}s<\/strong>/);
 assert.match(page, /id: "spellsword-whirlwind"/);
 assert.match(page, /function changeClass\(nextClass\)/);
 assert.match(page, /dpsRankingRun \+= 1;/);

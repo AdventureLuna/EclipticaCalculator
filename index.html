@@ -1111,8 +1111,7 @@
     };
     const SPELLSWORD_SECONDARY = {
       id: "piercing-strike", name: "Piercing Strike", iconUrl: "pictures/Spellsword-Secondary.png",
-      element: "physical", cooldown: 1.5, minimumCharge: 2, optimalCharge: 3, maximumCharge: 6,
-      curveMinimumCharge: .170, curveMaximumCharge: 5.075
+      element: "physical", cooldown: 1.5, minimumCharge: .170, optimalCharge: .5, maximumCharge: 5.075
     };
     const SPELLSWORD_CHARGE_MODES = ["quick", "dps", "full", "custom"];
     const TWINMAGE_ELEMENTS = [
@@ -1400,12 +1399,6 @@
       return Math.min(SPELLSWORD_SECONDARY.maximumCharge, Math.max(SPELLSWORD_SECONDARY.minimumCharge, Number(value) || SPELLSWORD_SECONDARY.optimalCharge));
     }
 
-    function normalizeSpellswordBleedChance(value) {
-      if (value == null || value === "") return null;
-      const chance = Number(value);
-      return Number.isFinite(chance) ? Math.min(100, Math.max(0, Math.round(chance * 2) / 2)) : null;
-    }
-
     function normalizeSpellswordWhirlwindHits(value) {
       return Math.min(32, Math.max(1, Math.floor(Number(value) || 1)));
     }
@@ -1430,7 +1423,6 @@
         buildOptions.spellswordDamageGroup = "primary";
         buildOptions.spellswordChargeMode = "dps";
         buildOptions.spellswordCustomChargeTime = SPELLSWORD_SECONDARY.optimalCharge;
-        buildOptions.spellswordBleedChance = null;
         buildOptions.spellswordWhirlwindHits = 1;
       } else if (className === "Twinmage") {
         buildOptions.twinmagePrimary = "fire";
@@ -1465,7 +1457,6 @@
           spellswordDamageGroup: saved.spellswordDamageGroup === "secondary" ? "secondary" : "primary",
           spellswordChargeMode: normalizeSpellswordChargeMode(saved.spellswordChargeMode),
           spellswordCustomChargeTime: clampSpellswordChargeTime(saved.spellswordCustomChargeTime),
-          spellswordBleedChance: normalizeSpellswordBleedChance(saved.spellswordBleedChance),
           spellswordWhirlwindHits: normalizeSpellswordWhirlwindHits(saved.spellswordWhirlwindHits),
           twinmagePrimary: TWINMAGE_ELEMENTS.some(item => item.id === saved.twinmagePrimary) ? saved.twinmagePrimary : "fire",
           twinmageSecondary: TWINMAGE_ELEMENTS.some(item => item.id === saved.twinmageSecondary) ? saved.twinmageSecondary : "lightning",
@@ -1481,7 +1472,7 @@
           berserkerSoulStacks: saved.berserkerSoulStacks == null ? defaultBerserkerStacks : Math.max(0, Math.floor(Number(saved.berserkerSoulStacks) || 0)),
           excludedDamageSources: normalizeExcludedDamageSources(saved.excludedDamageSources)
         };
-      } catch { return { artifacts: {}, runes: [null, null, null, null], curses: [null, null, null, null], spellswordDamageGroup: "primary", spellswordChargeMode: "dps", spellswordCustomChargeTime: SPELLSWORD_SECONDARY.optimalCharge, spellswordBleedChance: null, spellswordWhirlwindHits: 1, twinmagePrimary: "fire", twinmageSecondary: "lightning", twinmagePrimaryDamage: true, twinmageSecondaryDamage: true, gunmancerPrimary: "va11", gunmancerSecondary: "photon", gunmancerPrimaryDamage: true, gunmancerSecondaryDamage: false, gunmancerAirblastTarget: "none", nekomancerMinions: normalizeNekomancerMinions(), nekomancerSouls: 5, berserkerSoulStacks: 0, excludedDamageSources: normalizeExcludedDamageSources() }; }
+      } catch { return { artifacts: {}, runes: [null, null, null, null], curses: [null, null, null, null], spellswordDamageGroup: "primary", spellswordChargeMode: "dps", spellswordCustomChargeTime: SPELLSWORD_SECONDARY.optimalCharge, spellswordWhirlwindHits: 1, twinmagePrimary: "fire", twinmageSecondary: "lightning", twinmagePrimaryDamage: true, twinmageSecondaryDamage: true, gunmancerPrimary: "va11", gunmancerSecondary: "photon", gunmancerPrimaryDamage: true, gunmancerSecondaryDamage: false, gunmancerAirblastTarget: "none", nekomancerMinions: normalizeNekomancerMinions(), nekomancerSouls: 5, berserkerSoulStacks: 0, excludedDamageSources: normalizeExcludedDamageSources() }; }
     }
 
     function saveBuildOptions() {
@@ -2067,7 +2058,7 @@
           damageGroup: buildOptions.spellswordDamageGroup === "secondary" ? 1 : 0,
           chargeMode: SPELLSWORD_CHARGE_MODES.indexOf(normalizeSpellswordChargeMode(buildOptions.spellswordChargeMode)),
           customChargeMs: Math.round(clampSpellswordChargeTime(buildOptions.spellswordCustomChargeTime) * 1000),
-          bleedChance: normalizeSpellswordBleedChance(buildOptions.spellswordBleedChance),
+          bleedChance: null,
           whirlwindHits: normalizeSpellswordWhirlwindHits(buildOptions.spellswordWhirlwindHits)
         };
       } else if (selectedClass === "Twinmage") {
@@ -2106,7 +2097,6 @@
         buildOptions.spellswordDamageGroup = value.damageGroup === 1 ? "secondary" : "primary";
         buildOptions.spellswordChargeMode = SPELLSWORD_CHARGE_MODES[value.chargeMode];
         buildOptions.spellswordCustomChargeTime = clampSpellswordChargeTime(value.customChargeMs / 1000);
-        buildOptions.spellswordBleedChance = normalizeSpellswordBleedChance(value.bleedChance);
         buildOptions.spellswordWhirlwindHits = normalizeSpellswordWhirlwindHits(value.whirlwindHits);
       } else if (selectedClass === "Twinmage" && configuration.twinmage) {
         const value = configuration.twinmage;
@@ -2469,7 +2459,7 @@
       const mode = normalizeSpellswordChargeMode(buildOptions.spellswordChargeMode);
       const customCharge = clampSpellswordChargeTime(buildOptions.spellswordCustomChargeTime);
       const fullCharge = spellswordUsesFullCharge();
-      const bleedChance = fullCharge ? 50 : normalizeSpellswordBleedChance(buildOptions.spellswordBleedChance);
+      const bleedChance = spellswordBleedingChance(spellswordNominalChargeTime());
       const abilityCard = (value, label, ability) => `<label class="ability-option spellsword-attack-option">
         <input type="checkbox" name="spellsword-dps" value="${value}" ${group === value ? "checked" : ""}>
         <img class="ability-icon" src="${escapeHtml(ability.iconUrl)}" alt="">
@@ -2492,7 +2482,8 @@
             <input type="number" name="spellsword-custom-charge" min="${SPELLSWORD_SECONDARY.minimumCharge}" max="${SPELLSWORD_SECONDARY.maximumCharge}" step="0.005" value="${customCharge}" aria-label="Custom Piercing Strike charge time in seconds">
           </div>` : ""}
           <div class="spellsword-secondary-controls">
-            ${fullCharge ? `<div class="spellsword-compact-input"><span>Bleeding chance</span><strong>50%</strong></div>` : `<label class="spellsword-compact-input"><span>Bleeding chance</span><input type="number" name="spellsword-bleed-chance" min="0" max="100" step="0.5" value="${bleedChance == null ? "" : bleedChance}" placeholder="?" aria-label="Piercing Strike Bleeding chance"></label>`}
+            <div class="spellsword-compact-input"><span>Cooldown</span><strong>${formatNumber(SPELLSWORD_SECONDARY.cooldown)}s</strong></div>
+            <div class="spellsword-compact-input"><span>Bleeding chance</span><strong>${formatNumber(bleedChance * 100)}%</strong></div>
             ${count("Spellsword_Whirlwind") > 0 && fullCharge ? `<label class="spellsword-compact-input"><span>Whirlwind hits / cast</span><input type="number" name="spellsword-whirlwind-hits" min="1" max="32" step="1" value="${normalizeSpellswordWhirlwindHits(buildOptions.spellswordWhirlwindHits)}"></label>` : ""}
           </div>
         </fieldset>` : ""}
@@ -2743,17 +2734,13 @@
       return sources;
     }
 
-    function spellswordPiercingCurveTime(chargeTime) {
+    function spellswordPiercingDamage(chargeTime) {
       const clampedCharge = clampSpellswordChargeTime(chargeTime);
-      const chargeProgress = (clampedCharge - SPELLSWORD_SECONDARY.minimumCharge)
-        / (SPELLSWORD_SECONDARY.maximumCharge - SPELLSWORD_SECONDARY.minimumCharge);
-      return SPELLSWORD_SECONDARY.curveMinimumCharge
-        + chargeProgress * (SPELLSWORD_SECONDARY.curveMaximumCharge - SPELLSWORD_SECONDARY.curveMinimumCharge);
+      return Math.round(170.70 - 97.33 * Math.exp(-.8927 * clampedCharge));
     }
 
-    function spellswordPiercingDamage(chargeTime) {
-      const curveTime = spellswordPiercingCurveTime(chargeTime);
-      return Math.round(170.70 - 97.33 * Math.exp(-.8927 * curveTime));
+    function spellswordBleedingChance(chargeTime) {
+      return .5 * spellswordPiercingDamage(chargeTime) / 170;
     }
 
     function buildSpellswordSourceModel(stats) {
@@ -2794,14 +2781,14 @@
         const swiftStabStacks = count("Spellsword_Swift_Stab");
         const movementExcess = Math.max(0, Number(stats.movementSpeed || 0) / 100 - 1);
         const swiftStabMultiplier = 1 + .35 * swiftStabStacks * movementExcess;
-        const configuredBleedChance = spellswordUsesFullCharge() ? 50 : normalizeSpellswordBleedChance(buildOptions.spellswordBleedChance);
-        const bleedingChance = configuredBleedChance == null ? null : effectiveSourceStatusChance("bleeding", configuredBleedChance / 100, attackSpeedMultiplier);
+        const baseBleedingChance = spellswordBleedingChance(nominalChargeTime);
+        const bleedingChance = effectiveSourceStatusChance("bleeding", baseBleedingChance, attackSpeedMultiplier);
         const rateCalculation = `${nominalChargeTime.toFixed(3)}s charge × x${chargeTimeMultiplier.toFixed(2)} Whirlwind charge time ÷ x${chargeSpeedMultiplier.toFixed(2)} charge speed + ${SPELLSWORD_SECONDARY.cooldown.toFixed(2)}s cooldown = ${cycleTime.toFixed(3)}s cycle; 1 ÷ ${cycleTime.toFixed(3)}s = ${activationRate.toFixed(4)} activations/s`;
         const piercing = {
           id: "spellsword-piercing-strike", name: SPELLSWORD_SECONDARY.name, position: "Secondary",
           sourceIcon: SPELLSWORD_SECONDARY.iconUrl, element: SPELLSWORD_SECONDARY.element,
           baseDamage: spellswordPiercingDamage(nominalChargeTime), canCrit: true,
-          baseDamageFormula: `${nominalChargeTime.toFixed(3)}s charge maps to ${spellswordPiercingCurveTime(nominalChargeTime).toFixed(4)} on the 87-170 damage curve; rounded damage = ${spellswordPiercingDamage(nominalChargeTime)}`,
+          baseDamageFormula: `${nominalChargeTime.toFixed(3)}s charge on the 87-170 damage curve; rounded damage = ${spellswordPiercingDamage(nominalChargeTime)}`,
           activationRate, instancesPerActivation: 1, projectiles: 1,
           sourceMultiplier: swiftStabMultiplier,
           statusSourceMultiplierApplies: false,
@@ -2809,8 +2796,7 @@
             ? `1 + (35% × ${swiftStabStacks}) × ${Math.round(movementExcess * 100)}% Movement Speed above 100% = x${swiftStabMultiplier.toFixed(4)}`
             : "No Piercing Strike source multiplier",
           rateCalculation, rateRefs: ["stat:attackSpeed"],
-          statuses: bleedingChance == null ? [] : [{ id: "bleeding", name: "Bleeding", chance: bleedingChance }],
-          unknownStatuses: configuredBleedChance == null ? [{ id: "bleeding", name: "Bleeding" }] : []
+          statuses: [{ id: "bleeding", name: "Bleeding", chance: bleedingChance }]
         };
         sources.push(piercing);
         if (whirlwindStacks > 0 && spellswordUsesFullCharge()) {
@@ -2821,8 +2807,7 @@
             element: "physical", baseDamage: 11 + 6 * Math.max(0, whirlwindStacks - 1), canCrit: false,
             activationRate, instancesPerActivation: hits, projectiles: 1, showInstances: true, instanceCountKind: "hits",
             rateCalculation: `Full-charge Piercing Strike rate = ${activationRate.toFixed(4)} casts/s`, rateRefs: ["calc:damage:spellsword-piercing-strike:rate"],
-            statuses: bleedingChance == null ? [] : [{ id: "bleeding", name: "Bleeding", chance: bleedingChance }],
-            unknownStatuses: configuredBleedChance == null ? [{ id: "bleeding", name: "Bleeding" }] : [],
+            statuses: [{ id: "bleeding", name: "Bleeding", chance: bleedingChance }],
             trigger: { type: "sourceActivation", sourceId: piercing.id }, linkedSourceId: piercing.id
           });
         }
@@ -3402,15 +3387,6 @@
         buildOptions.spellswordCustomChargeTime = clampSpellswordChargeTime(spellswordChargeInput.value);
         saveBuildOptions();
         renderConfiguration();
-        renderCalculations();
-        renderDpsRanking();
-        updateShareWidget();
-        return;
-      }
-      const spellswordBleedInput = event.target.closest('input[name="spellsword-bleed-chance"]');
-      if (spellswordBleedInput) {
-        buildOptions.spellswordBleedChance = normalizeSpellswordBleedChance(spellswordBleedInput.value);
-        saveBuildOptions();
         renderCalculations();
         renderDpsRanking();
         updateShareWidget();

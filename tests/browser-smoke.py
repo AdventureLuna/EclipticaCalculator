@@ -146,19 +146,15 @@ with sync_playwright() as playwright:
     page.locator('label.spellsword-attack-option', has_text="Piercing Strike").click()
     assert not page.locator('input[name="spellsword-dps"][value="primary"]').is_checked()
     assert page.locator('input[name="spellsword-charge-mode"][value="dps"]').is_checked()
+    assert page.locator('.spellsword-compact-input', has_text="Cooldown").inner_text() == "Cooldown\n1.5s"
     piercing = page.evaluate("EclipticaBuildForge.buildUnifiedCalculationModel().attackSources.find(source => source.id === 'spellsword-piercing-strike')")
-    assert piercing["baseDamage"] == 143
-    assert abs(piercing["damage"]["activationRate"] - (1 / 4.5)) < 1e-12
+    assert piercing["baseDamage"] == 108
+    assert abs(piercing["damage"]["activationRate"] - .5) < 1e-12
     assert piercing["canCrit"] is True
-    assert piercing["statuses"] == []
-    assert piercing["unknownStatuses"][0]["id"] == "bleeding"
-    assert page.evaluate("[SPELLSWORD_SECONDARY.minimumCharge, SPELLSWORD_SECONDARY.optimalCharge, SPELLSWORD_SECONDARY.maximumCharge]") == [2, 3, 6]
-    assert page.evaluate("[spellswordPiercingDamage(2), spellswordPiercingDamage(6)]") == [87, 170]
-    bleed_input = page.locator('input[name="spellsword-bleed-chance"]')
-    bleed_input.fill("25")
-    bleed_input.blur()
-    piercing = page.evaluate("EclipticaBuildForge.buildUnifiedCalculationModel().attackSources.find(source => source.id === 'spellsword-piercing-strike')")
-    assert piercing["statuses"][0]["chance"] == .25
+    assert abs(piercing["statuses"][0]["chance"] - (.5 * 108 / 170)) < 1e-12
+    assert page.locator('.spellsword-compact-input', has_text="Bleeding chance").inner_text() == "Bleeding chance\n31.8%"
+    assert page.evaluate("[SPELLSWORD_SECONDARY.minimumCharge, SPELLSWORD_SECONDARY.optimalCharge, SPELLSWORD_SECONDARY.maximumCharge]") == [.17, .5, 5.075]
+    assert page.evaluate("[spellswordPiercingDamage(.17), spellswordPiercingDamage(5.075)]") == [87, 170]
 
     upgrade(page, "Spellsword_Whirlwind")
     page.locator("label.spellsword-charge-option", has_text="Full").click()
@@ -169,7 +165,7 @@ with sync_playwright() as playwright:
     spellsword_sources = {source["id"]: source for source in spellsword_model["attackSources"]}
     piercing = spellsword_sources["spellsword-piercing-strike"]
     whirlwind = spellsword_sources["spellsword-whirlwind"]
-    expected_spellsword_rate = 1 / (6 * 1.3 + 1.5)
+    expected_spellsword_rate = 1 / (5.075 * 1.3 + 1.5)
     assert piercing["baseDamage"] == 170
     assert abs(piercing["damage"]["activationRate"] - expected_spellsword_rate) < 1e-12
     assert whirlwind["baseDamage"] == 11
@@ -183,7 +179,7 @@ with sync_playwright() as playwright:
 
     spellsword_code = page.evaluate("new URLSearchParams(location.hash.slice(1)).get('b')")
     shared_spellsword = page.evaluate("code => decodeBuild(code).configuration.spellsword", spellsword_code)
-    assert shared_spellsword == {"damageGroup": 1, "chargeMode": 2, "customChargeMs": 3000, "bleedChance": 25, "whirlwindHits": 4}
+    assert shared_spellsword == {"damageGroup": 1, "chargeMode": 2, "customChargeMs": 500, "bleedChance": None, "whirlwindHits": 4}
     page.locator("#reset-configuration").click()
     assert page.evaluate("buildOptions.spellswordDamageGroup") == "primary"
     page.goto(f"{URL}#b={spellsword_code}")
