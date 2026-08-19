@@ -586,6 +586,43 @@
       font-size: .82rem;
     }
 
+    .upgrade-counts {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 6px;
+    }
+
+    .upgrade-count {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 5px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: #c9bdcf;
+      background: rgba(255,255,255,.035);
+      padding: 4px 9px;
+      font-size: .67rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .upgrade-count strong {
+      color: var(--ink);
+      font-size: .79rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .upgrade-count.total {
+      border-color: rgba(var(--class-rgb), .45);
+      background: rgba(var(--class-rgb), .11);
+    }
+    .upgrade-count.total strong { color: rgb(var(--class-rgb)); }
+    .upgrade-count.rare { border-color: rgba(78, 162, 255, .45); background: rgba(34, 105, 181, .1); }
+    .upgrade-count.rare strong { color: #83bdff; }
+    .upgrade-count.legendary { border-color: rgba(255, 157, 56, .5); background: rgba(181, 87, 25, .11); }
+    .upgrade-count.legendary strong { color: #ffb86f; }
+
     .picked-list {
       display: flex;
       flex-wrap: wrap;
@@ -767,6 +804,8 @@
       .class-picker { flex: 1; }
       .class-picker select { width: 100%; min-width: 0; }
       .explorer, .stats-panel { padding: 14px; }
+      .picked-head { align-items: flex-start; flex-direction: column; }
+      .upgrade-counts { width: 100%; justify-content: flex-start; }
       .tools { grid-template-columns: 1fr; }
       .tools input { grid-column: auto; }
       .catalog { grid-template-columns: 1fr; }
@@ -840,7 +879,12 @@
         <div class="tab-pane" id="tab-upgrades" role="tabpanel">
         <div class="picked-head">
           <h2 class="section-title">Picked upgrades</h2>
-          <span class="summary" id="picked-summary">0 upgrades</span>
+          <div class="upgrade-counts" id="picked-summary" aria-label="Picked upgrade counts" aria-live="polite">
+            <span class="upgrade-count total"><strong data-upgrade-count="total">0</strong> Total</span>
+            <span class="upgrade-count common"><strong data-upgrade-count="common">0</strong> Common</span>
+            <span class="upgrade-count rare"><strong data-upgrade-count="rare">0</strong> Rare</span>
+            <span class="upgrade-count legendary"><strong data-upgrade-count="legendary">0</strong> Legendary</span>
+          </div>
         </div>
         <div class="picked-list" id="picked-list"></div>
 
@@ -852,7 +896,7 @@
           </div>
         </div>
         <div class="tools">
-          <input class="control" id="search" type="search" placeholder="Search upgrades…" autocomplete="off">
+          <input class="control" id="search" type="search" placeholder="Search upgradesƒ?İ" autocomplete="off">
           <select class="control" id="family-filter" aria-label="Filter by family">
             <option value="">All families</option>
             <option>Thaumaturge</option>
@@ -973,7 +1017,7 @@
       ["Endurance Crystal","Rare","Last_Stand.png","Last Stand","Upon taking damage which leaves you at 1 HP, receive X stacks of the INVINCIBLE status effect"],
       ["Endurance Crystal","Rare","Life_Leech.png","Life Leech","Restore 1 (+1 per stack) HP upon dealing damage. Overall Damage: -10% (-10% per stack) Health Regeneration: -50% (-50% per stack) Received Healing -20% (-20% per stack)"],
       ["Endurance Crystal","Rare","Masochist.png","Masochist","Reduce number of stacks taken of the PARALYZED status effect by X (X per stack) ELECTRIC Defense: +15% (+15% per stack) PHYSICAL Defense: -10% (-15% per stack)"],
-      ["Endurance Crystal","Rare","Nature's_Gift.png","Nature’s Gift","Spawn up to 3 (+1 per level) personal Healing Auras at a random location on the stage every 10 seconds which heals you for 20 HP."],
+      ["Endurance Crystal","Rare","Nature's_Gift.png","Natureƒ?Ts Gift","Spawn up to 3 (+1 per level) personal Healing Auras at a random location on the stage every 10 seconds which heals you for 20 HP."],
       ["Endurance Crystal","Legendary","Benison_of_Purification.png","Benison of Purification","Periodically fire a projectile dealing 25 (+X per stack) LUMINOUS damage at the closest enemy within 64 meters. SHADOW Defense +10% (+10% per stack) Overall Defense -5% (-5% per stack)"],
       ["Endurance Crystal","Legendary","Curse_of_Wrath.png","Curse of Wrath","Periodically fire a projectile dealing 25 (+X per stack) SHADOW damage at the closest enemy within 32 meters. LUMINOUS Defense -20% (-20% per stack)"],
       ["Endurance Crystal","Legendary","Glass_Cannon.png","Glass Cannon","Damage +30% (+30% per stack) Health -50 (-50 per stack)"],
@@ -991,7 +1035,7 @@
       ["Mobility Crystal","Rare","Reactive_Panic.png","Reactive Panic","Taking damage will grant you 1 (+1 per stack) stack of the FRENZIED status effect"],
       ["Mobility Crystal","Rare","Smell_the_Roses.png","Smell the Roses","Falling to low HP will grant you 7 (+2 per stack) stacks of the HASTE status effect with a 30 second Cooldown"],
       ["Mobility Crystal","Rare","Thunder_Aura.png","Thunder Aura","Every second inflict 25 (+X per stack) ELECTRIC Damage to enemies in a radius around you.. Overall Damage: -10% (-X% per stack) Movement Speed: -5% (-X% per stack)"],
-      ["Mobility Crystal","Legendary","Berserker's_Soul.png","Berserker’s Soul (Melee)","Dealing damage with your main attack grants Berserker's Soul stacks, up to 70 per selected upgrade. Each stack adds 45/70% Overall Damage, 90/70% Attack Speed, and -50/70% Health Regeneration. Each selected upgrade initially gives -20% Overall Damage and -40% Attack Speed. Taking damage resets the in-run stacks.","Berserker's_Soul_Melee"],
+      ["Mobility Crystal","Legendary","Berserker's_Soul.png","Berserkerƒ?Ts Soul (Melee)","Dealing damage with your main attack grants Berserker's Soul stacks, up to 70 per selected upgrade. Each stack adds 45/70% Overall Damage, 90/70% Attack Speed, and -50/70% Health Regeneration. Each selected upgrade initially gives -20% Overall Damage and -40% Attack Speed. Taking damage resets the in-run stacks.","Berserker's_Soul_Melee"],
       ["Mobility Crystal","Legendary","Big_and_Speedy.png","Big and Speedy","Utility Cooldown Rate: +50% (+50% per stack) Overall Defense: -20% (-20% per stack)"],
       ["Mobility Crystal","Legendary","Featherweight.png","Featherweight","Movement Speed: +30% (+30% per stack) Overall Defense: -20% (-20% per stack)"],
       ["Mobility Crystal","Legendary","Heavy_Hand.png","Heavy Hand","Damage +30% (+30% per stack) Attack Speed -40% (-40% per stack)"],
@@ -1000,7 +1044,7 @@
       ["Mobility Crystal","Legendary","Way_of_the_Law.png","Way of the Law","Periodically switch between the STOP and GO status effects. STOP reduces Movement and Attack Speed, but increases Damage. GO increases Movement and Attack Speed, but decreases Damage"],
       ["Chronowizard","Common","Full_Focus.png","Full Focus","Critical Strike Chance +5% (+5% per stack) Critical Strike Damage +5% (+5% per stack)"],
       ["Chronowizard","Common","Potent_Strike.png","Potent Strike","Critical Strikes have a 6% (+6% per stack) higher chance to inflict a status effect."],
-      ["Chronowizard","Common","Sorcerer's_Mastery.png","Sorcerer’s Mastery","ELEMENTAL Damage +8% (+8% per stack)"],
+      ["Chronowizard","Common","Sorcerer's_Mastery.png","Sorcererƒ?Ts Mastery","ELEMENTAL Damage +8% (+8% per stack)"],
       ["Chronowizard","Common","Strength.png","Strength","PHYSICAL Damage +10% (+10% per stack)"],
       ["Chronowizard","Rare","Clutch_or_Kick.png","Clutch or Kick","Gain +7% (+7% per stack) Overall Damage for every dead player in the party"],
       ["Chronowizard","Rare","Greater_Focus.png","Greater Focus","Critical Strike Chance at low HP +10% (+10% per stack) Critical Strike Damage +3% (+3% per stack)"],
@@ -1017,8 +1061,8 @@
       ["Chronowizard","Legendary","Flaming_Spirit.png","Flaming Spirit","When at full HP, performing your primary skill fires a fireball dealing 16 (+8 per additional stack) FIRE Damage Received Healing -5% (-5% per stack) Health Regeneration -20% (-20% per stack)"],
       ["Chronowizard","Legendary","Frozen_Heart.png","Frozen Heart","When at full HP, performing your primary skill fires an icicle dealing 18 (+9 per additional stack) FROST damage with a 10% base chance to inflict FROZEN Received Healing -5% (-5% per stack) Health Regeneration -20% (-20% per stack)"],
       ["Chronowizard","Legendary","Third_Law.png","Third Law","Upon taking Damage, deal 150% (+25% per stack) of its RAW value to enemies around you as PHYSICAL Damage On Fistmage's Parry, deal 50% of the Damage around you as PHYSICAL Damage"],
-      ["Chronowizard","Legendary","Warrior's_Will.png","Warrior’s Will","Using your Utility Skill grants you 4 (+2 per stack) stacks of the EMPOWERED status effect Utility Cooldown Rate -15% (-15% per stack)"]
-      , ["Mobility Crystal","Legendary","Berserker's_Soul.png","Berserker’s Soul (Ranged)","Dealing damage with your main attack grants Berserker's Soul stacks, up to 70 per selected upgrade. Each stack adds 22.5/70% Overall Damage, 45/70% Attack Speed, and 2/70% Projectile Spread. Each selected upgrade initially gives -10% Overall Damage and -20% Attack Speed. Taking damage resets the in-run stacks.","Berserker's_Soul_Ranged"]
+      ["Chronowizard","Legendary","Warrior's_Will.png","Warriorƒ?Ts Will","Using your Utility Skill grants you 4 (+2 per stack) stacks of the EMPOWERED status effect Utility Cooldown Rate -15% (-15% per stack)"]
+      , ["Mobility Crystal","Legendary","Berserker's_Soul.png","Berserkerƒ?Ts Soul (Ranged)","Dealing damage with your main attack grants Berserker's Soul stacks, up to 70 per selected upgrade. Each stack adds 22.5/70% Overall Damage, 45/70% Attack Speed, and 2/70% Projectile Spread. Each selected upgrade initially gives -10% Overall Damage and -20% Attack Speed. Taking damage resets the in-run stacks.","Berserker's_Soul_Ranged"]
     ].map(([family, rarity, icon, name, effect, explicitId], globalId) => ({
       // Array position is the permanent global ID. Append new upgrades; never reorder or reuse removed IDs.
       family, rarity, icon, name, effect, id: explicitId || icon.replace(".png", ""), globalId
@@ -1033,6 +1077,25 @@
       overallDamage: 100, physicalDamage: 100, fireDamage: 100, frostDamage: 100,
       electricDamage: 100, luminousDamage: 100, shadowDamage: 100, poisonDamage: 100
     };
+    const DAMAGE_TYPE_STATS = Object.freeze({
+      physical: "physicalDamage",
+      fire: "fireDamage",
+      frost: "frostDamage",
+      electric: "electricDamage",
+      luminous: "luminousDamage",
+      shadow: "shadowDamage",
+      poison: "poisonDamage"
+    });
+
+    function normalizeDamageType(value) {
+      const damageType = EclipticaCalculationEngine.normalizeDamageType(value);
+      if (!Object.hasOwn(DAMAGE_TYPE_STATS, damageType)) throw new Error(`Unknown damage type: ${value}`);
+      return damageType;
+    }
+
+    function damageStatForType(value) {
+      return DAMAGE_TYPE_STATS[normalizeDamageType(value)];
+    }
     const BASE_HEALTH_REGENERATION_PER_SECOND = .5;
 
     const CAPS = {
@@ -1078,6 +1141,7 @@
     ];
 
     const CLASS_FAMILIES = ["Spellsword","Twinmage","Gunmancer","Fistmage","Spellhammer","Shield Mage","Thaumaturge","Nekomancer"];
+    const RANGED_CLASSES = ["Twinmage", "Gunmancer", "Thaumaturge", "Nekomancer"];
     const UNIMPLEMENTED_DPS_MESSAGE = "I havent decided on how this class should produce a useful DPS number yet, lol";
     const DEFAULT_FAMILIES = ["Endurance Crystal","Mobility Crystal","Chronowizard"];
     const BERSERKER_SOUL = {
@@ -1248,6 +1312,7 @@
       Third_Law: ["physical"]
     };
     const CONDITIONAL_UPGRADE_RULES = {
+      Third_Law: { blockedClasses: RANGED_CLASSES, reason: "available only to melee classes" },
       Flaming_Spirit: { blockedBy: "frost", reason: "a Frost damage source is present" },
       Frozen_Heart: { blockedBy: "fire", reason: "a Fire damage source is present" },
       Curse_of_Wrath: { blockedBy: "luminous", reason: "a Luminous damage source is present" },
@@ -1505,21 +1570,24 @@
       const { group, id } = rule.requiresAbility;
       return gunmancerAbility(buildOptions[group === "primary" ? "gunmancerPrimary" : "gunmancerSecondary"], group).id === id;
     }
+    function classRequirementSatisfied(rule) {
+      return !rule?.blockedClasses?.includes(selectedClass);
+    }
     function getDamageSources() {
-      const sources = new Set(CLASS_DAMAGE_SOURCES[selectedClass] || []);
+      const sources = new Set((CLASS_DAMAGE_SOURCES[selectedClass] || []).map(normalizeDamageType));
       if (selectedClass === "Twinmage") {
-        if (buildOptions.twinmagePrimaryDamage) sources.add(buildOptions.twinmagePrimary);
-        if (buildOptions.twinmageSecondaryDamage) sources.add(buildOptions.twinmageSecondary);
+        if (buildOptions.twinmagePrimaryDamage) sources.add(normalizeDamageType(buildOptions.twinmagePrimary));
+        if (buildOptions.twinmageSecondaryDamage) sources.add(normalizeDamageType(buildOptions.twinmageSecondary));
       }
       if (selectedClass === "Gunmancer") {
         [gunmancerAbility(buildOptions.gunmancerPrimary, "primary"), gunmancerAbility(buildOptions.gunmancerSecondary, "secondary")]
           .flatMap(ability => ability.components.map(component => component.element))
-          .forEach(element => sources.add(element));
+          .forEach(element => sources.add(normalizeDamageType(element)));
       }
       Object.entries(PICKED_DAMAGE_SOURCES).forEach(([upgradeId, elements]) => {
         const upgrade = upgradeIndex.get(upgradeId);
         const rule = CONDITIONAL_UPGRADE_RULES[upgradeId];
-        if (upgrade && isUpgradeAvailable(upgrade) && abilityRequirementSatisfied(rule) && rawCount(upgradeId) > 0) elements.forEach(element => sources.add(element));
+        if (upgrade && isUpgradeAvailable(upgrade) && classRequirementSatisfied(rule) && abilityRequirementSatisfied(rule) && rawCount(upgradeId) > 0) elements.forEach(element => sources.add(normalizeDamageType(element)));
       });
       return sources;
     }
@@ -1529,6 +1597,7 @@
       const rule = CONDITIONAL_UPGRADE_RULES[upgrade.id];
       if (!rule) return "";
       const sources = getDamageSources();
+      if (!classRequirementSatisfied(rule)) return `Unavailable: ${rule.reason}.`;
       if (!abilityRequirementSatisfied(rule)) return `Unavailable: ${rule.reason}.`;
       if (rule.requires && !sources.has(rule.requires)) return `Unavailable: requires ${rule.reason}.`;
       if (rule.blockedBy && sources.has(rule.blockedBy)) return `Unavailable: ${rule.reason}.`;
@@ -1573,7 +1642,7 @@
       ["overallDefense", "Iron_Skin", 8], ["overallDefense", "Big_and_Speedy", -20],
       ["overallDefense", "Featherweight", -20], ["overallDefense", "Benison_of_Purification", -5],
       ["physicalDefense", "Conductive_Armor", 20], ["physicalDefense", "Cutting_Edge", -5],
-      ["physicalDefense", "Masochist", n => -10 - 15 * (n - 1), { notes: "First stack: −10%. Each additional stack: −15%." }],
+      ["physicalDefense", "Masochist", n => -10 - 15 * (n - 1), { notes: "First stack: ƒ^'10%. Each additional stack: ƒ^'15%." }],
       ...["fireDefense","frostDefense","electricDefense","luminousDefense","shadowDefense","poisonDefense"]
         .map(stat => [stat, "Conductive_Armor", -5]),
       ["frostDefense", "Cold_Blooded", 15], ["fireDefense", "Cold_Blooded", -15],
@@ -1582,7 +1651,7 @@
       ["electricDefense", "Masochist", 15], ["poisonDefense", "Poison_Aspect", 15],
       ["luminousDefense", "Holy_Blessing", 15], ["shadowDefense", "Holy_Blessing", 15],
       ["shadowDefense", "Benison_of_Purification", 10], ["luminousDefense", "Curse_of_Wrath", -20],
-      ["shadowDefense", "Luminous_Aspect", 10, { notes: "Net result of the listed +15% and −5% Shadow Defence modifiers." }],
+      ["shadowDefense", "Luminous_Aspect", 10, { notes: "Net result of the listed +15% and ƒ^'5% Shadow Defence modifiers." }],
       ["luminousDefense", "Shadow_Aspect", -10],
 
       ["overallDamage", "Thaumaturge_Splitshot", -30], ["overallDamage", "Iron_Skin", -2],
@@ -1659,7 +1728,7 @@
         bonus[effect.stat] += total;
 
         const stackNote = typeof effect.value === "number" && selected > 1
-          ? `${selected} stacks × ${formatContribution(effect.stat, effect.value)}.`
+          ? `${selected} stacks Ç- ${formatContribution(effect.stat, effect.value)}.`
           : effect.once && selected > 1
             ? `${selected} selected; the modifier is only applied once.`
             : "";
@@ -1726,13 +1795,13 @@
         if (!artifact) continue;
         const totalMultiplier = artifactCount;
         addBuildStats(Object.fromEntries(Object.entries(artifact.stats).map(([stat, value]) => [stat, value * totalMultiplier])),
-          artifact.name, `Artifact ×${artifactCount}`);
+          artifact.name, `Artifact Ç-${artifactCount}`);
       }
       buildOptions.runes.forEach((runeId, index) => {
         const rune = RUNES.find(item => item.id === runeId);
-        if (rune?.stats) addBuildStats(rune.stats(index + 1), `${RUNE_SLOTS[index]} · ${rune.name}`, "Rune");
+        if (rune?.stats) addBuildStats(rune.stats(index + 1), `${RUNE_SLOTS[index]} ¶ْ ${rune.name}`, "Rune");
         const curse = rune && CURSES.find(item => item.id === buildOptions.curses[index]);
-        if (curse?.stats) addBuildStats(curse.stats(index + 1), `${RUNE_SLOTS[index]} · Runic Curse: ${curse.name}`, "Curse");
+        if (curse?.stats) addBuildStats(curse.stats(index + 1), `${RUNE_SLOTS[index]} ¶ْ Runic Curse: ${curse.name}`, "Curse");
       });
 
       const caps = {};
@@ -1782,10 +1851,10 @@
       if (wardenStacks) {
         const divisor = 1 + wardenStacks;
         breakdowns.utilityCooldownRate.push({
-          value: `÷${formatNumber(divisor)}`,
+          value: `اْ${formatNumber(divisor)}`,
           type: "Multiplicative",
           source: upgradeIndex.get("Shieldmage_Warden")?.name || "Shieldmage: Warden",
-          notes: `+100% cooldown per stack is converted to recovery rate; ${formatNumber(result.utilityCooldownRate)}% ÷ ${formatNumber(divisor)}.`
+          notes: `+100% cooldown per stack is converted to recovery rate; ${formatNumber(result.utilityCooldownRate)}% اْ ${formatNumber(divisor)}.`
         });
         result.utilityCooldownRate /= divisor;
       }
@@ -1818,7 +1887,7 @@
     function formatStat(stat, value) {
       if (stat === "health" || stat === "extraJumps") return formatNumber(value);
       if (stat === "attackSpeed") return `${Number(Number(value).toFixed(2))}%`;
-      if (stat === "movementSpeed") return `${formatNumber(value)}% · ${formatNumber(7 * value / 100)} m/s`;
+      if (stat === "movementSpeed") return `${formatNumber(value)}% ¶ْ ${formatNumber(7 * value / 100)} m/s`;
       return `${formatNumber(value)}%`;
     }
 
@@ -1857,9 +1926,9 @@
       if (cap.kind === "lower") {
         return `<div class="cap-calculation">
           <strong>Lower soft-cap calculation</strong><br>
-          Raw additive sum: <span class="cap-formula">${n(cap.base)} ${cap.bonus < 0 ? "−" : "+"} ${n(Math.abs(cap.bonus))} = ${n(cap.raw)}</span><br>
+          Raw additive sum: <span class="cap-formula">${n(cap.base)} ${cap.bonus < 0 ? "ƒ^'" : "+"} ${n(Math.abs(cap.bonus))} = ${n(cap.raw)}</span><br>
           Negative modifier exceeds the ${n(cap.soft)} lower soft cap.<br>
-          <span class="cap-formula">${formatNumber(cap.soft)}² ÷ |${n(cap.bonus)}| = ${formatNumber(cap.numerator)} ÷ ${n(cap.divisor)} = ${n(cap.effective)}</span>
+          <span class="cap-formula">${formatNumber(cap.soft)}¶‎ اْ |${n(cap.bonus)}| = ${formatNumber(cap.numerator)} اْ ${n(cap.divisor)} = ${n(cap.effective)}</span>
         </div>`;
       }
       if (cap.kind === "hard") {
@@ -1874,9 +1943,9 @@
         <strong>Upper soft-cap calculation</strong><br>
         <em>Warning: the game's exact approaching-hard-cap formula is not yet known; this is an estimate.</em><br>
         Raw additive sum: <span class="cap-formula">${n(cap.base)} + ${n(cap.bonus)} = ${n(cap.raw)}</span><br>
-        Soft cap ${n(cap.soft)} · hard-cap limit ${n(cap.hard)}<br>
-        <span class="cap-formula">${n(cap.soft)} + (${n(cap.range)} × ${n(cap.overflow)} ÷ (${n(cap.range)} + ${n(cap.overflow)})) = ${n(cap.cappedRaw)}</span><br>
-        Effective result: <span class="cap-formula">${n(cap.base)} + ${n(cap.cappedRaw)} − ${n(cap.cappedBase)} = ${n(cap.effective)}</span>
+        Soft cap ${n(cap.soft)} ¶ْ hard-cap limit ${n(cap.hard)}<br>
+        <span class="cap-formula">${n(cap.soft)} + (${n(cap.range)} ا- ${n(cap.overflow)} اْ (${n(cap.range)} + ${n(cap.overflow)})) = ${n(cap.cappedRaw)}</span><br>
+        Effective result: <span class="cap-formula">${n(cap.base)} + ${n(cap.cappedRaw)} ƒ^' ${n(cap.cappedBase)} = ${n(cap.effective)}</span>
       </div>`;
     }
 
@@ -1887,16 +1956,16 @@
       const modifier = calculation.defenseModifier;
       const modifierFormula = modifier === 0
         ? n(calculation.rawDamageTaken)
-        : `${n(DefenseCalculation.BASE_DAMAGE_TAKEN)} ${modifier > 0 ? "−" : "+"} ${n(Math.abs(modifier))} = ${n(calculation.rawDamageTaken)}`;
+        : `${n(DefenseCalculation.BASE_DAMAGE_TAKEN)} ${modifier > 0 ? "ƒ^'" : "+"} ${n(Math.abs(modifier))} = ${n(calculation.rawDamageTaken)}`;
       const capMarkup = calculation.isSoftCapped
         ? `<br>Reduction exceeds the ${n(calculation.softCap)} damage-taken lower soft cap.<br>
-          <span class="cap-formula">${formatNumber(calculation.softCap)}² ÷ ${n(modifier)} = ${formatNumber(calculation.numerator)} ÷ ${n(modifier)} = ${n(calculation.damageTaken)}</span>`
+          <span class="cap-formula">${formatNumber(calculation.softCap)}¶‎ اْ ${n(modifier)} = ${formatNumber(calculation.numerator)} اْ ${n(modifier)} = ${n(calculation.damageTaken)}</span>`
         : "";
       return `<div class="cap-calculation">
         <strong>Defense derived from damage taken</strong><br>
         Defense modifiers apply inversely to damage taken.<br>
         Damage taken: <span class="cap-formula">${modifierFormula}</span>${capMarkup}<br>
-        Shown defense: <span class="cap-formula">100% ÷ ${n(calculation.damageTaken)} = ${n(calculation.defense)}</span>
+        Shown defense: <span class="cap-formula">100% اْ ${n(calculation.damageTaken)} = ${n(calculation.defense)}</span>
       </div>`;
     }
 
@@ -1906,14 +1975,14 @@
       if (!calculation) return "";
       const stacks = calculation.bigAndLazyStacks;
       const bigAndLazyLine = stacks > 0
-        ? `Big and Lazy: <span class="cap-formula">100% + 200%${stacks > 1 ? ` + (${stacks - 1} × 50%)` : ""} = ${formatNumber(calculation.bigAndLazyMultiplier * 100)}% = ×${formatNumber(calculation.bigAndLazyMultiplier)}</span><br>`
+        ? `Big and Lazy: <span class="cap-formula">100% + 200%${stacks > 1 ? ` + (${stacks - 1} ا- 50%)` : ""} = ${formatNumber(calculation.bigAndLazyMultiplier * 100)}% = ا-${formatNumber(calculation.bigAndLazyMultiplier)}</span><br>`
         : "";
       return `<div class="health-regeneration-calculation">
         <strong>Regenerated HP per second</strong><br>
         Base regeneration: ${formatHealthPerSecond(calculation.basePerSecond)} hp/s<br>
-        Shown Health Regeneration: <span class="cap-formula">${formatNumber(calculation.percentage)}% = ×${formatNumber(calculation.percentageMultiplier)}</span><br>
+        Shown Health Regeneration: <span class="cap-formula">${formatNumber(calculation.percentage)}% = ا-${formatNumber(calculation.percentageMultiplier)}</span><br>
         ${bigAndLazyLine}
-        <span class="cap-formula">${formatHealthPerSecond(calculation.basePerSecond)} × ${formatNumber(calculation.percentageMultiplier)} × ${formatNumber(calculation.bigAndLazyMultiplier)} = ${formatHealthPerSecond(calculation.perSecond)} hp/s</span>
+        <span class="cap-formula">${formatHealthPerSecond(calculation.basePerSecond)} ا- ${formatNumber(calculation.percentageMultiplier)} ا- ${formatNumber(calculation.bigAndLazyMultiplier)} = ${formatHealthPerSecond(calculation.perSecond)} hp/s</span>
       </div>`;
     }
 
@@ -1922,14 +1991,14 @@
       const label = row.dataset.label;
       const entries = latestCalculation?.breakdowns?.[stat] || [];
       const tooltip = $("#stat-tooltip");
-      tooltip.innerHTML = `<h3>${escapeHtml(label)} · ${formatStat(stat, latestCalculation.stats[stat])}</h3>
+      tooltip.innerHTML = `<h3>${escapeHtml(label)} ¶ْ ${formatStat(stat, latestCalculation.stats[stat])}</h3>
         <table>
           <thead><tr><th>Value</th><th>Type</th><th>Source</th><th>Notes</th></tr></thead>
           <tbody>${entries.map(entry => `<tr>
             <td class="source-value">${escapeHtml(entry.value)}</td>
             <td class="source-type">${escapeHtml(entry.type)}</td>
             <td>${escapeHtml(entry.source)}</td>
-            <td>${escapeHtml(entry.notes || "—")}</td>
+            <td>${escapeHtml(entry.notes || "ƒ?"")}</td>
           </tr>`).join("")}</tbody>
         </table>
         ${healthRegenerationCalculationMarkup(stat)}
@@ -2005,7 +2074,7 @@
         ? `<div class="calculation-damage-breakdown">${damageBreakdown.map(item => `<div class="calculation-damage-breakdown-row damage-type-${escapeHtml(item.id)}"><span>${escapeHtml(item.name)}</span><strong>${escapeHtml(item.value)}</strong></div>`).join("")}</div>`
         : "";
       const applicationBreakdownMarkup = applicationBreakdown?.sources?.length
-        ? `<div class="application-breakdown"><table><thead><tr><th>Source</th><th>Hit instances/s</th><th>Chance after boss penalty</th><th>Applications/s</th></tr></thead><tbody>${applicationBreakdown.sources.map(source => `<tr><td>${escapeHtml(source.name)}</td><td>${escapeHtml(source.hitsPerSecond)}</td><td>${escapeHtml(source.chanceCalculation)}</td><td>${escapeHtml(source.applicationsPerSecond)}</td></tr>`).join("")}</tbody><tfoot><tr><th colspan="3">Total applications/s</th><td>${escapeHtml(applicationBreakdown.total)}</td></tr></tfoot></table><div class="application-breakdown-result">1 ÷ ${escapeHtml(applicationBreakdown.total)} = ${escapeHtml(applicationBreakdown.interval)} s</div></div>`
+        ? `<div class="application-breakdown"><table><thead><tr><th>Source</th><th>Hit instances/s</th><th>Chance after boss penalty</th><th>Applications/s</th></tr></thead><tbody>${applicationBreakdown.sources.map(source => `<tr><td>${escapeHtml(source.name)}</td><td>${escapeHtml(source.hitsPerSecond)}</td><td>${escapeHtml(source.chanceCalculation)}</td><td>${escapeHtml(source.applicationsPerSecond)}</td></tr>`).join("")}</tbody><tfoot><tr><th colspan="3">Total applications/s</th><td>${escapeHtml(applicationBreakdown.total)}</td></tr></tfoot></table><div class="application-breakdown-result">1 اْ ${escapeHtml(applicationBreakdown.total)} = ${escapeHtml(applicationBreakdown.interval)} s</div></div>`
         : "";
       const upgradeMarkup = sourceUpgrade
         ? `<div class="calculation-tooltip-upgrade">
@@ -2028,9 +2097,9 @@
         : "";
       tooltip.style.setProperty("--tooltip-accent", accent);
       const contextMarkup = isSource
-        ? `<div class="calculation-tooltip-head"><span class="calculation-tooltip-icon">◆</span>Damage source${damageBadge}</div>
+        ? `<div class="calculation-tooltip-head"><span class="calculation-tooltip-icon">ƒ-إ</span>Damage source${damageBadge}</div>
           ${sourceDetailsMarkup}`
-        : `<div class="calculation-tooltip-head"><span class="calculation-tooltip-icon">ƒ</span>Formula${formulaSourceIcon}${damageBadge}</div>
+        : `<div class="calculation-tooltip-head"><span class="calculation-tooltip-icon">▓'</span>Formula${formulaSourceIcon}${damageBadge}</div>
           <div class="calculation-tooltip-expression">${applicationBreakdownMarkup || lines.map(line => `<span class="calculation-tooltip-expression-line">${escapeHtml(line)}</span>`).join("")}</div>${breakdownMarkup}`;
       tooltip.innerHTML = `${upgradeMarkup}${contextMarkup}`;
       tooltip.classList.add("visible");
@@ -2237,7 +2306,7 @@
         }
         $("#copy-status").textContent = "Copied!";
       } catch {
-        $("#copy-status").textContent = "Copy failed — select the link manually.";
+        $("#copy-status").textContent = "Copy failed ┐?" select the link manually.";
       }
     }
 
@@ -2260,14 +2329,22 @@
 
     function renderPicked() {
       const selected = U.filter(u => count(u.id));
-      const total = selected.reduce((sum, u) => sum + count(u.id), 0);
-      $("#picked-summary").textContent = `${total} upgrade${total === 1 ? "" : "s"} · ${selected.length} unique`;
+      const totals = selected.reduce((result, upgrade) => {
+        const stacks = count(upgrade.id);
+        result.total += stacks;
+        const rarity = upgrade.rarity.toLowerCase();
+        if (Object.hasOwn(result, rarity)) result[rarity] += stacks;
+        return result;
+      }, { total: 0, common: 0, rare: 0, legendary: 0 });
+      Object.entries(totals).forEach(([rarity, value]) => {
+        $(`[data-upgrade-count="${rarity}"]`).textContent = value;
+      });
       $("#picked-list").innerHTML = selected.length ? selected.map(u => `
         <div class="picked-item ${u.rarity.toLowerCase()}" title="${escapeHtml(u.effect)}">
           <img src="pictures/${encodeURIComponent(u.icon).replaceAll("%2F", "/")}" alt="">
           <span class="picked-name">${escapeHtml(u.name)}</span>
           <span class="picked-stepper">
-            <button type="button" data-action="minus" data-id="${u.id}" aria-label="Remove one ${escapeHtml(u.name)}">−</button>
+            <button type="button" data-action="minus" data-id="${u.id}" aria-label="Remove one ${escapeHtml(u.name)}">┐^'</button>
             <span>${count(u.id)}</span>
             <button type="button" data-action="plus" data-id="${u.id}" aria-label="Add one ${escapeHtml(u.name)}">+</button>
           </span>
@@ -2298,12 +2375,12 @@
       $("#result-summary").textContent = `${list.length} of ${availableTotal}`;
       $("#catalog").innerHTML = list.length ? list.map(u => `
         <article class="upgrade ${u.rarity.toLowerCase()} ${count(u.id) ? "selected" : ""} ${isUpgradeConditionallyAvailable(u) ? "" : "conditional-unavailable"}"
-          data-id="${u.id}" title="Left-click to add · Right-click to remove">
-          ${count(u.id) ? `<span class="count">×${count(u.id)}</span>` : ""}
+          data-id="${u.id}" title="Left-click to add ІЗ Right-click to remove">
+          ${count(u.id) ? `<span class="count">г-${count(u.id)}</span>` : ""}
           <img src="pictures/${encodeURIComponent(u.icon).replaceAll("%2F", "/")}" alt="">
           <div class="upgrade-copy">
             <h3 class="upgrade-name">${escapeHtml(u.name)}</h3>
-            <div class="meta">${escapeHtml(u.rarity)} · ${escapeHtml(u.family)}</div>
+            <div class="meta">${escapeHtml(u.rarity)} ІЗ ${escapeHtml(u.family)}</div>
             ${conditionalAvailabilityReason(u) ? `<div class="conditional-note">${escapeHtml(conditionalAvailabilityReason(u))}</div>` : ""}
             <p class="effect">${escapeHtml(u.effect)}</p>
           </div>
@@ -2365,7 +2442,7 @@
       dpsRankingBuildOptionsSnapshot = buildOptionsSnapshot;
       const results = [];
       const candidates = U.filter(upgrade => isUpgradeAvailable(upgrade) && isUpgradeConditionallyAvailable(upgrade)).filter(upgrade => count(upgrade.id) < 100);
-      listElement.innerHTML = `<div class="dps-ranking-loading"><span class="dps-ranking-spinner" aria-hidden="true"></span><span class="dps-ranking-progress">Calculating 0 / ${candidates.length}…</span></div>`;
+      listElement.innerHTML = `<div class="dps-ranking-loading"><span class="dps-ranking-spinner" aria-hidden="true"></span><span class="dps-ranking-progress">Calculating 0 / ${candidates.length}ƒ?Ý</span></div>`;
       const progressElement = listElement.querySelector(".dps-ranking-progress");
       latestCalculation = calculateStats();
       const baseDps = renderCalculations({ render: false })?.combinedTotalDps || 0;
@@ -2395,7 +2472,7 @@
           restoreCounts(snapshot);
           restoreRankingBuildOptions(buildOptionsSnapshot);
         }
-        if (progressElement) progressElement.textContent = `Calculating ${index} / ${candidates.length}…`;
+        if (progressElement) progressElement.textContent = `Calculating ${index} / ${candidates.length}ƒ?Ý`;
         if (index < candidates.length) {
           dpsRankingFrame = requestAnimationFrame(processChunk);
           return;
@@ -2424,10 +2501,10 @@
     function renderArtifacts() {
       const total = Object.values(buildOptions.artifacts).reduce((sum, value) => sum + value, 0);
       const unique = Object.keys(buildOptions.artifacts).length;
-      $("#artifact-summary").textContent = `${total} artifact${total === 1 ? "" : "s"} · ${unique} unique`;
+      $("#artifact-summary").textContent = `${total} artifact${total === 1 ? "" : "s"} ¶ú ${unique} unique`;
       $("#artifact-catalog").innerHTML = ARTIFACTS.map(item => `
-        <article class="upgrade artifact-card ${buildOptions.artifacts[item.id] ? "selected" : ""}" data-id="${item.id}" title="Left-click to add · Right-click to remove">
-          ${buildOptions.artifacts[item.id] ? `<span class="count">×${buildOptions.artifacts[item.id]}</span>` : ""}
+        <article class="upgrade artifact-card ${buildOptions.artifacts[item.id] ? "selected" : ""}" data-id="${item.id}" title="Left-click to add ¶ú Right-click to remove">
+          ${buildOptions.artifacts[item.id] ? `<span class="count">Ç-${buildOptions.artifacts[item.id]}</span>` : ""}
           <div class="item-placeholder"><img class="item-art" src="pictures/${encodeURIComponent(item.image)}" alt="${escapeHtml(item.name)}"></div>
           <div class="upgrade-copy"><h3 class="upgrade-name">${escapeHtml(item.name)}</h3>
             <div class="meta">Party artifact</div><p class="effect">${escapeHtml(item.effect)}</p></div>
@@ -2544,7 +2621,7 @@
           <legend><span class="ability-picker-heading"><span class="ability-picker-title">Primary skill</span><span class="ability-picker-subtitle">Foul Pustule</span></span></legend>
           <div class="ability-options"><div class="ability-option">
             <img class="ability-icon" src="${escapeHtml(THAUMATURGE_PRIMARY.iconUrl)}" alt="">
-            <span class="ability-copy"><span class="ability-name">${escapeHtml(THAUMATURGE_PRIMARY.name)}</span><span class="ability-effect">30 Poison damage · 0.75 attacks/s · 10% Poisoned chance<br>26 m/s projectile speed · 50 m range</span></span>
+            <span class="ability-copy"><span class="ability-name">${escapeHtml(THAUMATURGE_PRIMARY.name)}</span><span class="ability-effect">30 Poison damage ¶ú 0.75 attacks/s ¶ú 10% Poisoned chance<br>26 m/s projectile speed ¶ú 50 m range</span></span>
           </div></div>
         </fieldset>
         ${splitshotStacks > 0 ? `<p class="gunmancer-source-note"><strong>Splitshot:</strong> ${projectileCount} projectiles per shot (${splitshotStacks} stack${splitshotStacks === 1 ? "" : "s"}). Its -30% Damage per stack is already represented by Overall Damage; the Japanese wiki says that penalty is additive and has an unspecified lower bound.</p>` : ""}
@@ -2571,7 +2648,7 @@
               <img class="ability-icon" src="${escapeHtml(minion.iconUrl)}" alt="">
               <span class="ability-copy"><span class="ability-name">${escapeHtml(minion.name)}</span>
                 <span class="nekomancer-minion-controls">
-                  <button type="button" data-nekomancer-minion-action="remove" data-minion-id="${escapeHtml(minion.id)}" aria-label="Remove one ${escapeHtml(minion.name)}" ${selected <= 0 ? "disabled" : ""}>−</button>
+                  <button type="button" data-nekomancer-minion-action="remove" data-minion-id="${escapeHtml(minion.id)}" aria-label="Remove one ${escapeHtml(minion.name)}" ${selected <= 0 ? "disabled" : ""}>ƒ^'</button>
                   <span class="nekomancer-minion-count">${selected}</span>
                   <button type="button" data-nekomancer-minion-action="add" data-minion-id="${escapeHtml(minion.id)}" aria-label="Add one ${escapeHtml(minion.name)}" ${totalMinions >= NEKOMANCER_MINION_LIMIT ? "disabled" : ""}>+</button>
                 </span>
@@ -2670,8 +2747,11 @@
     }
 
     function calculationElementMultipliers(stats) {
-      return Object.fromEntries(["physical", "fire", "frost", "electric", "luminous", "shadow", "poison"]
-        .map(element => [element, Number(stats[`${element}Damage`] || 0) / 100]));
+      return Object.fromEntries(Object.entries(DAMAGE_TYPE_STATS).map(([damageType, stat]) => {
+        const value = Number(stats[stat]);
+        if (!Number.isFinite(value)) throw new Error(`Missing damage stat: ${stat}`);
+        return [damageType, value / 100];
+      }));
     }
 
     function componentProjectileCount(component, mode = "normal") {
@@ -2764,7 +2844,7 @@
           id: "spellsword-telekinetic-strike", name: SPELLSWORD_PRIMARY.name, position: "Primary",
           sourceIcon: SPELLSWORD_PRIMARY.iconUrl, element: SPELLSWORD_PRIMARY.element, baseDamage, canCrit: true,
           baseDamageFormula: shieldbreakerStacks > 0
-            ? `ceil(${SPELLSWORD_PRIMARY.damage} × (1 + 25% × ${shieldbreakerStacks})) = ${baseDamage}`
+            ? `ceil(${SPELLSWORD_PRIMARY.damage} ا- (1 + 25% ا- ${shieldbreakerStacks})) = ${baseDamage}`
             : `Base damage per instance = ${baseDamage}`,
           activationRate: primaryActivationRate, instancesPerActivation: 1, projectiles: 1,
           ...primaryRateDetails,
@@ -2783,7 +2863,7 @@
         const swiftStabMultiplier = 1 + .35 * swiftStabStacks * movementExcess;
         const baseBleedingChance = spellswordBleedingChance(nominalChargeTime);
         const bleedingChance = effectiveSourceStatusChance("bleeding", baseBleedingChance, attackSpeedMultiplier);
-        const rateCalculation = `${nominalChargeTime.toFixed(3)}s charge × x${chargeTimeMultiplier.toFixed(2)} Whirlwind charge time ÷ x${chargeSpeedMultiplier.toFixed(2)} charge speed + ${SPELLSWORD_SECONDARY.cooldown.toFixed(2)}s cooldown = ${cycleTime.toFixed(3)}s cycle; 1 ÷ ${cycleTime.toFixed(3)}s = ${activationRate.toFixed(4)} activations/s`;
+        const rateCalculation = `${nominalChargeTime.toFixed(3)}s charge ا- x${chargeTimeMultiplier.toFixed(2)} Whirlwind charge time اْ x${chargeSpeedMultiplier.toFixed(2)} charge speed + ${SPELLSWORD_SECONDARY.cooldown.toFixed(2)}s cooldown = ${cycleTime.toFixed(3)}s cycle; 1 اْ ${cycleTime.toFixed(3)}s = ${activationRate.toFixed(4)} activations/s`;
         const piercing = {
           id: "spellsword-piercing-strike", name: SPELLSWORD_SECONDARY.name, position: "Secondary",
           sourceIcon: SPELLSWORD_SECONDARY.iconUrl, element: SPELLSWORD_SECONDARY.element,
@@ -2793,7 +2873,7 @@
           sourceMultiplier: swiftStabMultiplier,
           statusSourceMultiplierApplies: false,
           sourceMultiplierFormula: swiftStabStacks > 0
-            ? `1 + (35% × ${swiftStabStacks}) × ${Math.round(movementExcess * 100)}% Movement Speed above 100% = x${swiftStabMultiplier.toFixed(4)}`
+            ? `1 + (35% ا- ${swiftStabStacks}) ا- ${Math.round(movementExcess * 100)}% Movement Speed above 100% = x${swiftStabMultiplier.toFixed(4)}`
             : "No Piercing Strike source multiplier",
           rateCalculation, rateRefs: ["stat:attackSpeed"],
           statuses: [{ id: "bleeding", name: "Bleeding", chance: bleedingChance }]
@@ -2888,7 +2968,7 @@
         const statusChance = effectiveSourceStatusChance(minion.status.id, minion.status.chance, attackSpeedMultiplier);
         return [{
           id: `nekomancer-minion-${minion.id}`,
-          name: `${minion.name} ×${selected}`,
+          name: `${minion.name} ا-${selected}`,
           position: "Minion",
           sourceIcon: minion.iconUrl,
           element: minion.element,
@@ -2987,12 +3067,16 @@
       const excludedKeys = new Set(excludedDamageSourceKeys());
       const sources = sourceModel.sources.map(source => {
         const exclusionKey = source.exclusionKey || source.id;
+        const element = normalizeDamageType(source.element);
+        const damageStat = damageStatForType(element);
         return {
           ...source,
+          element,
+          damageStat,
           exclusionKey,
           excluded: excludedKeys.has(exclusionKey),
           overallMultiplier: Number(stats.overallDamage || 0) / 100,
-          elementalMultiplier: elementalMultipliers[source.element] || 1
+          elementalMultiplier: elementalMultipliers[element]
         };
       });
       const calculation = EclipticaCalculationEngine.calculate({
@@ -3062,22 +3146,22 @@
       ];
       const sourceFormula = source => [
         source.name,
-        `${source.element[0].toUpperCase()}${source.element.slice(1)} · Base ${source.baseDamage}`,
+        `${source.element[0].toUpperCase()}${source.element.slice(1)} ¶ْ Base ${source.baseDamage}`,
         `Crit: ${source.canCrit ? "Yes" : "No"}`,
         ...(source.projectiles > 1 ? [`Projectiles: ${source.projectiles}`] : []),
         ...sourceStatusLines(source)
       ].join("\n");
       const rateFormula = source => {
         if (source.rateCalculation) return source.rateCalculation;
-        if (source.rateInterval > 0) return `1 ÷ ${number(source.rateInterval)}s ${source.rateIntervalLabel || "interval"} = ${number(source.damage.activationRate)} activations/s`;
-        if (source.isStatusEffect) return `1 ÷ ${number(1 / source.damage.activationRate)}s tick interval = ${number(source.damage.activationRate)} activations/s`;
+        if (source.rateInterval > 0) return `1 اْ ${number(source.rateInterval)}s ${source.rateIntervalLabel || "interval"} = ${number(source.damage.activationRate)} activations/s`;
+        if (source.isStatusEffect) return `1 اْ ${number(1 / source.damage.activationRate)}s tick interval = ${number(source.damage.activationRate)} activations/s`;
         if (source.trigger?.type === "onCrit") {
           return `${number(model.criticalHitsPerSecond)} crits/s = ${number(source.damage.activationRate)} activations/s`;
         }
         if (Number.isFinite(source.baseActivationRate)) {
           const factors = [
             `${number(source.baseActivationRate)} base activations/s`,
-            ...(source.rateMultipliers || []).map(factor => `× x${number(factor.value)} ${factor.label}`)
+            ...(source.rateMultipliers || []).map(factor => `ا- x${number(factor.value)} ${factor.label}`)
           ];
           return `${factors.join(" ")} = ${number(source.damage.activationRate)} activations/s`;
         }
@@ -3089,21 +3173,21 @@
       const averageDamageFormula = source => {
         const hits = source.hitsPerActivation;
         const hitLabel = hits === 1 ? "hit" : "hits";
-        if (!source.canCrit) return `Non-crit per hit: ${source.damage.nonCriticalDamage}\n${number(source.damage.averageDamagePerHit)} average per hit × ${hits} ${hitLabel} = ${number(source.damage.averageDamage)}`;
-        return `Non-crit per hit: ${source.damage.nonCriticalDamage}\nCrit per hit: ${source.damage.criticalDamage}\nAverage per hit: ${source.damage.nonCriticalDamage} × ${number((1 - model.context.criticalChance) * 100)}% + ${source.damage.criticalDamage} × ${number(model.context.criticalChance * 100)}% = ${number(source.damage.averageDamagePerHit)}\n${number(source.damage.averageDamagePerHit)} × ${hits} ${hitLabel} = ${number(source.damage.averageDamage)}`;
+        if (!source.canCrit) return `Non-crit per hit: ${source.damage.nonCriticalDamage}\n${number(source.damage.averageDamagePerHit)} average per hit ا- ${hits} ${hitLabel} = ${number(source.damage.averageDamage)}`;
+        return `Non-crit per hit: ${source.damage.nonCriticalDamage}\nCrit per hit: ${source.damage.criticalDamage}\nAverage per hit: ${source.damage.nonCriticalDamage} ا- ${number((1 - model.context.criticalChance) * 100)}% + ${source.damage.criticalDamage} ا- ${number(model.context.criticalChance * 100)}% = ${number(source.damage.averageDamagePerHit)}\n${number(source.damage.averageDamagePerHit)} ا- ${hits} ${hitLabel} = ${number(source.damage.averageDamage)}`;
       };
       const rows = [
         { key: "base", label: "Base Damage", value: source => String(source.baseDamage), exact: source => source.baseDamage, formula: source => source.baseDamageFormula || `Base damage per instance = ${source.baseDamage}`, damageValue: true },
-        { key: "overall", label: "Overall Damage", value: source => source.damage.overallDamageApplies ? `x${number(source.damage.overallMultiplier)}` : "-", exact: source => source.damage.overallDamageApplies ? source.damage.overallMultiplier : null, formula: source => source.damage.overallDamageApplies ? `${number(source.damage.overallMultiplier * 100)}% ÷ 100` : "Does not apply to this damage source", refs: source => source.damage.overallDamageApplies ? ["stat:overallDamage"] : [] },
-        { key: "elemental", label: "Elemental Damage", value: source => `x${number(source.damage.elementalMultiplier)}`, exact: source => source.damage.elementalMultiplier, formula: source => source.damageScaling === .75 ? `1 + (elemental multiplier - 1) × 75% = ${number(source.damage.elementalMultiplier)}` : `${number(source.damage.elementalMultiplier * 100)}% ÷ 100`, refs: source => [`stat:${source.element}Damage`] },
+        { key: "overall", label: "Overall Damage", value: source => source.damage.overallDamageApplies ? `x${number(source.damage.overallMultiplier)}` : "-", exact: source => source.damage.overallDamageApplies ? source.damage.overallMultiplier : null, formula: source => source.damage.overallDamageApplies ? `${number(source.damage.overallMultiplier * 100)}% اْ 100` : "Does not apply to this damage source", refs: source => source.damage.overallDamageApplies ? ["stat:overallDamage"] : [] },
+        { key: "elemental", label: "Elemental Damage", value: source => `x${number(source.damage.elementalMultiplier)}`, exact: source => source.damage.elementalMultiplier, formula: source => source.damageScaling === .75 ? `1 + (elemental multiplier - 1) ا- 75% = ${number(source.damage.elementalMultiplier)}` : `${number(source.damage.elementalMultiplier * 100)}% اْ 100`, refs: source => [`stat:${source.damageStat}`] },
         { key: "crit", label: "Eff. Crit Multiplier", value: source => source.canCrit ? `x${number(source.damage.effectiveCriticalMultiplier)}` : "-", exact: source => source.damage.effectiveCriticalMultiplier, formula: source => source.canCrit ? `Effective crit multiplier = ${number(source.damage.effectiveCriticalMultiplier)}` : "This damage cannot crit", refs: source => source.canCrit ? ["calc:crit:effective"] : [] },
         ...(hasSourceMultiplier ? [{ key: "source-multiplier", label: model.classKey === "twinmage" ? "Hand Damage" : "Source Damage", value: source => source.isStatusEffect || Math.abs(source.damage.sourceMultiplier - 1) < .0001 ? "-" : `x${number(source.damage.sourceMultiplier)}`, exact: source => source.damage.sourceMultiplier, formula: source => source.isStatusEffect || Math.abs(source.damage.sourceMultiplier - 1) < .0001 ? "Does not apply to this damage source" : source.sourceMultiplierFormula || `Source multiplier = ${number(source.damage.sourceMultiplier)}` }] : []),
         ...(hasMultipleProjectiles ? [{ key: "projectiles", label: hasNonProjectileHits ? "Hits / Activation" : "Projectiles / Shot", value: source => source.isStatusEffect || (source.trigger && source.showProjectiles !== true && source.showInstances !== true) ? "-" : String(source.hitsPerActivation), exact: source => source.hitsPerActivation, formula: source => source.isStatusEffect || (source.trigger && source.showProjectiles !== true && source.showInstances !== true) ? "Not hit-count based" : `${source.hitsPerActivation} damage ${source.hitsPerActivation === 1 ? "instance" : "instances"} per activation` }] : []),
         { key: "average", label: "Average Damage", value: source => number(source.damage.averageDamage), exact: source => source.damage.averageDamage, formula: averageDamageFormula, refs: source => ["base", "overall", "elemental", "crit"].map(key => `calc:${damageKey(source, key)}`), sectionBreak: true, damageValue: true },
         { key: "rate", label: "Instance Rate", value: source => number(source.damage.activationRate), exact: source => source.damage.activationRate, formula: rateFormula, refs: source => source.trigger?.type === "onCrit" ? ["calc:crit:rate"] : source.isStatusEffect ? [] : (source.rateRefs || ["stat:attackSpeed"]) },
-        { key: "dps", label: "DPS", value: source => number(source.damage.dps), exact: source => source.damage.dps, formula: source => `${number(source.damage.averageDamage)} × ${number(source.damage.activationRate)} = ${number(source.damage.dps)}`, refs: source => [`calc:${damageKey(source, "average")}`, `calc:${damageKey(source, "rate")}`], damageValue: true },
-        { key: "uptime", label: "Uptime", value: source => percent(source.damage.uptime), exact: source => source.damage.uptime, formula: source => source.isStatusEffect ? `${number(source.statusDuration)}s duration ÷ ${number(source.statusInterval)}s interval = ${percent(source.damage.uptime)}` : "Always active = 100%" },
-        { key: "total-dps", label: "Total DPS", value: source => number(source.damage.totalDps), exact: source => source.damage.totalDps, formula: source => `${number(source.damage.dps)} × ${percent(source.damage.uptime)} = ${number(source.damage.totalDps)}`, refs: source => [`calc:${damageKey(source, "dps")}`, `calc:${damageKey(source, "uptime")}`], sectionBreak: true, total: true, damageValue: true }
+        { key: "dps", label: "DPS", value: source => number(source.damage.dps), exact: source => source.damage.dps, formula: source => `${number(source.damage.averageDamage)} ا- ${number(source.damage.activationRate)} = ${number(source.damage.dps)}`, refs: source => [`calc:${damageKey(source, "average")}`, `calc:${damageKey(source, "rate")}`], damageValue: true },
+        { key: "uptime", label: "Uptime", value: source => percent(source.damage.uptime), exact: source => source.damage.uptime, formula: source => source.isStatusEffect ? `${number(source.statusDuration)}s duration اْ ${number(source.statusInterval)}s interval = ${percent(source.damage.uptime)}` : "Always active = 100%" },
+        { key: "total-dps", label: "Total DPS", value: source => number(source.damage.totalDps), exact: source => source.damage.totalDps, formula: source => `${number(source.damage.dps)} ا- ${percent(source.damage.uptime)} = ${number(source.damage.totalDps)}`, refs: source => [`calc:${damageKey(source, "dps")}`, `calc:${damageKey(source, "uptime")}`], sectionBreak: true, total: true, damageValue: true }
       ];
       const statusRows = status => {
         const breakdown = {
@@ -3111,7 +3195,7 @@
             name: source.name,
             hitsPerSecond: rateNumber(source.hitsPerSecond),
             chanceCalculation: source.bossApplicationPenalty > 1
-              ? `${percent(source.baseApplicationChance)} ÷ ${rateNumber(source.bossApplicationPenalty)}× boss penalty = ${percent(source.applicationChance)}`
+              ? `${percent(source.baseApplicationChance)} اْ ${rateNumber(source.bossApplicationPenalty)}ا- boss penalty = ${percent(source.applicationChance)}`
               : percent(source.applicationChance),
             applicationsPerSecond: rateNumber(source.applicationsPerSecond)
           })),
@@ -3119,15 +3203,15 @@
         };
         const rowsForStatus = [{
           key: `${status.id}:interval`, label: "Average time between applications", value: `${number(status.applicationInterval)} s`, exact: status.applicationInterval,
-          formula: `1 ÷ ${rateNumber(status.applicationsPerSecond)} applications/s = ${number(status.applicationInterval)}s`, applicationBreakdown: breakdown
+          formula: `1 اْ ${rateNumber(status.applicationsPerSecond)} applications/s = ${number(status.applicationInterval)}s`, applicationBreakdown: breakdown
         }];
         if (status.stacksPerApplication == null) {
           rowsForStatus.push({ key: `${status.id}:stacks`, label: "Stacks per application", value: "?", exact: "unknown", formula: "Not configured yet", unknown: true });
           rowsForStatus.push({ key: `${status.id}:uptime`, label: "Uptime", value: "?", exact: "unknown", formula: "Not configured yet", unknown: true });
         } else {
           rowsForStatus.push({ key: `${status.id}:stacks`, label: "Stacks per application", value: String(status.stacksPerApplication), exact: status.stacksPerApplication, formula: `${status.baseStacks} base + Sticky` });
-          rowsForStatus.push({ key: `${status.id}:duration`, label: `${status.name} duration`, value: `${number(status.duration)} s`, exact: status.duration, formula: `${status.stacksPerApplication} stacks × ${number(status.durationPerStack)}s` });
-          rowsForStatus.push({ key: `${status.id}:uptime`, label: "Uptime", value: percent(status.uptime), valueHtml: status.rawUptime > 1 ? `100% <span class="status-uncapped-uptime">(${percent(status.rawUptime)})</span>` : null, exact: status.uptime, formula: `${number(status.duration)}s ÷ ${number(status.applicationInterval)}s = ${percent(status.rawUptime)}${status.rawUptime > 1 ? "; capped at 100%" : ""}` });
+          rowsForStatus.push({ key: `${status.id}:duration`, label: `${status.name} duration`, value: `${number(status.duration)} s`, exact: status.duration, formula: `${status.stacksPerApplication} stacks ا- ${number(status.durationPerStack)}s` });
+          rowsForStatus.push({ key: `${status.id}:uptime`, label: "Uptime", value: percent(status.uptime), valueHtml: status.rawUptime > 1 ? `100% <span class="status-uncapped-uptime">(${percent(status.rawUptime)})</span>` : null, exact: status.uptime, formula: `${number(status.duration)}s اْ ${number(status.applicationInterval)}s = ${percent(status.rawUptime)}${status.rawUptime > 1 ? "; capped at 100%" : ""}` });
         }
         return rowsForStatus;
       };
@@ -3138,7 +3222,7 @@
       const criticalRows = [
         ["crit:chance", "Crit Chance", `${number(model.criticalChancePercent)}%`, count("Pocket_Abacus") > 0 ? "Pocket Abacus guarantees every fifth damage instance: effective 20%" : `Stats = ${number(model.criticalChancePercent)}%`],
         ["crit:damage", "Crit Damage", `${number(model.criticalDamagePercent)}%`, `Stats = ${number(model.criticalDamagePercent)}%`],
-        ["crit:rate", "Crits per second", number(model.criticalHitsPerSecond), `(${number(model.criticalHitEligibleRate)} hit instances/s) × ${number(model.context.criticalChance * 100)}% = ${number(model.criticalHitsPerSecond)}`],
+        ["crit:rate", "Crits per second", number(model.criticalHitsPerSecond), `(${number(model.criticalHitEligibleRate)} hit instances/s) ا- ${number(model.context.criticalChance * 100)}% = ${number(model.criticalHitsPerSecond)}`],
         ["crit:effective", "Eff. Crit Multiplier", number(1 + (model.context.criticalDamageMultiplier - 1) * model.context.criticalChance), "Weighted critical multiplier"]
       ];
       const includedSources = model.damageSources.filter(source => !source.excluded);
@@ -3168,9 +3252,9 @@
         const rune = RUNES.find(item => item.id === buildOptions.runes[index]);
         return `<div class="rune-slot ${activeRuneSlot === index ? "active" : ""}" data-slot="${index}" role="button" tabindex="0">
           <span class="slot-name">${slot}</span>
-          ${rune ? `<button class="remove-rune" type="button" data-remove-rune="${index}" aria-label="Remove ${escapeHtml(rune.name)} from ${slot}">×</button>` : ""}
-          ${rune ? `<img class="slot-rune-art" src="pictures/${encodeURIComponent(rune.image)}" alt="">` : `<span class="slot-rune-empty" aria-hidden="true">◇</span>`}
-          <span class="slot-rune">${rune ? escapeHtml(rune.name) : "Choose a rune…"}</span>
+          ${rune ? `<button class="remove-rune" type="button" data-remove-rune="${index}" aria-label="Remove ${escapeHtml(rune.name)} from ${slot}">ا-</button>` : ""}
+          ${rune ? `<img class="slot-rune-art" src="pictures/${encodeURIComponent(rune.image)}" alt="">` : `<span class="slot-rune-empty" aria-hidden="true">ƒ-خ</span>`}
+          <span class="slot-rune">${rune ? escapeHtml(rune.name) : "Choose a runeƒ?ف"}</span>
           <div class="curse-row">${buildOptions.curses[index] ? `<img class="curse-art" src="pictures/Runic_Curse.png" alt="Runic Curse">` : ""}<select class="curse-select" data-curse-slot="${index}" aria-label="${slot} Runic Curse">${curseOptions}</select></div>
         </div>`;
       }).join("");
@@ -3293,6 +3377,7 @@
     $("#catalog").addEventListener("click", event => {
       const card = event.target.closest(".upgrade");
       const upgrade = card && upgradeIndex.get(card.dataset.id);
+      if (upgrade && document.activeElement === $("#search")) $("#search").blur();
       if (upgrade && isUpgradeConditionallyAvailable(upgrade)) setCount(card.dataset.id, count(card.dataset.id) + 1);
     });
 
@@ -3324,14 +3409,16 @@
       $(`#${id}`).addEventListener(id === "search" ? "input" : "change", renderCatalog);
     });
 
-    document.querySelector(".explorer").addEventListener("keydown", event => {
+    document.addEventListener("keydown", event => {
       const search = $("#search");
-      if (event.code !== "Space" || event.target === search || event.defaultPrevented) return;
+      const interactiveTarget = event.target instanceof Element
+        ? event.target.closest('input, textarea, select, button, a[href], [contenteditable]:not([contenteditable="false"])')
+        : null;
+      if (event.code !== "Space" || event.defaultPrevented || event.repeat || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+      if ($("#tab-upgrades").hidden || interactiveTarget) return;
       event.preventDefault();
-      if (search.value) {
-        search.value = "";
-        renderCatalog();
-      }
+      search.value = "";
+      renderCatalog();
       search.focus();
     });
 

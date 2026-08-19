@@ -25,6 +25,41 @@ with sync_playwright() as playwright:
     assert page.locator("h1").inner_text() == "AdventureLuna's Ecliptica Build Forge"
     assert "Left-click to add an artifact" not in page.locator("#tab-artifacts").inner_text()
     assert page.locator("#combined-dps-summary").is_visible()
+    page.locator('[data-tab="upgrades"]').click()
+    assert page.locator("#picked-summary").is_visible()
+    assert page.locator("#picked-summary [data-upgrade-count]").all_inner_texts() == ["0", "0", "0", "0"]
+    search = page.locator("#search")
+    search.fill("Vitality")
+    assert page.locator("#catalog .upgrade").count() == 1
+    page.locator("#catalog .upgrade").click()
+    assert page.evaluate("document.activeElement.id") != "search"
+    page.keyboard.press("Space")
+    assert search.input_value() == ""
+    assert page.evaluate("document.activeElement.id") == "search"
+    assert page.locator("#catalog .upgrade").count() > 1
+    search.fill("Vitality")
+    page.keyboard.press("Space")
+    assert search.input_value() == "Vitality "
+    search.fill("")
+    for ranged_class in ["Twinmage", "Gunmancer", "Thaumaturge", "Nekomancer"]:
+        page.select_option("#class-select", ranged_class)
+        assert not page.evaluate("isUpgradeConditionallyAvailable(upgradeIndex.get('Third_Law'))")
+        assert page.evaluate("conditionalAvailabilityReason(upgradeIndex.get('Third_Law'))") == "Unavailable: available only to melee classes."
+        page.evaluate("counts.Third_Law = 1; render();")
+        assert page.evaluate("rawCount('Third_Law')") == 1
+        assert page.evaluate("count('Third_Law')") == 0
+    page.select_option("#class-select", "Spellsword")
+    assert page.evaluate("isUpgradeConditionallyAvailable(upgradeIndex.get('Third_Law'))")
+    page.evaluate("delete counts.Third_Law; render();")
+    page.select_option("#class-select", "Thaumaturge")
+    upgrade(page, "Vitality", 2)
+    upgrade(page, "Big_and_Lazy")
+    upgrade(page, "Charged_Strike", 3)
+    picked_counts = page.locator("#picked-summary [data-upgrade-count]").all_inner_texts()
+    assert picked_counts == ["6", "2", "1", "3"]
+    upgrade(page, "Vitality", 0)
+    upgrade(page, "Big_and_Lazy", 0)
+    upgrade(page, "Charged_Strike", 0)
     initial_combined_dps = page.evaluate("EclipticaBuildForge.buildUnifiedCalculationModel().combinedTotalDps")
     assert float(page.locator("#combined-dps-summary").get_attribute("data-exact-value")) == initial_combined_dps
 
@@ -105,6 +140,35 @@ with sync_playwright() as playwright:
     }""")
     assert volley == {"nonCrit": 10, "crit": 15, "averagePerHit": 11, "average": 55, "activationRate": .2, "hitsPerSecond": 1, "dps": 11, "critsPerSecond": .2, "applicationsPerSecond": .1}
 
+    damage_type_audit = page.evaluate("""() => {
+      const types = ["physical", "fire", "frost", "electric", "luminous", "shadow", "poison"];
+      const multipliers = Object.fromEntries(types.map((type, index) => [type, 1 + (index + 1) / 10]));
+      const result = EclipticaCalculationEngine.calculate({
+        criticalChance: 0,
+        criticalDamageMultiplier: 1.5,
+        overallMultiplier: 1,
+        elementalMultipliers: multipliers,
+        sources: [...types, "lightning"].map((element, index) => ({
+          id: `source-${index}`, name: element, element, baseDamage: 10, canCrit: false, activationRate: 1, statuses: []
+        }))
+      });
+      return result.attackSources.map(source => ({
+        element: source.element,
+        damageStat: source.damageStat,
+        multiplier: source.damage.elementalMultiplier
+      }));
+    }""")
+    assert damage_type_audit == [
+        {"element": "physical", "damageStat": "physicalDamage", "multiplier": 1.1},
+        {"element": "fire", "damageStat": "fireDamage", "multiplier": 1.2},
+        {"element": "frost", "damageStat": "frostDamage", "multiplier": 1.3},
+        {"element": "electric", "damageStat": "electricDamage", "multiplier": 1.4},
+        {"element": "luminous", "damageStat": "luminousDamage", "multiplier": 1.5},
+        {"element": "shadow", "damageStat": "shadowDamage", "multiplier": 1.6},
+        {"element": "poison", "damageStat": "poisonDamage", "multiplier": 1.7},
+        {"element": "electric", "damageStat": "electricDamage", "multiplier": 1.4},
+    ]
+
     # Health Regeneration keeps its visible percentage while showing derived
     # HP/s beneath it. Big and Lazy is a separate hidden multiplier.
     regeneration_row = page.locator('[data-stat="healthRegeneration"]')
@@ -117,12 +181,12 @@ with sync_playwright() as playwright:
     regeneration_row.hover()
     regeneration_tooltip = page.locator('#stat-tooltip').inner_text()
     assert "Base regeneration: 0.5 hp/s" in regeneration_tooltip
-    assert "100% + 200% = 300% = ×3" in regeneration_tooltip
-    assert "0.5 × 1.8 × 3 = 2.7 hp/s" in regeneration_tooltip
+    assert "100% + 200% = 300% = Ç-3" in regeneration_tooltip
+    assert "0.5 Ç- 1.8 Ç- 3 = 2.7 hp/s" in regeneration_tooltip
     upgrade(page, "Big_and_Lazy", 2)
     assert regeneration_row.locator('[data-health-regeneration-rate]').inner_text() == "(3.15 hp/s)"
     regeneration_row.hover()
-    assert "100% + 200% + (1 × 50%) = 350% = ×3.5" in page.locator('#stat-tooltip').inner_text()
+    assert "100% + 200% + (1 Ç- 50%) = 350% = Ç-3.5" in page.locator('#stat-tooltip').inner_text()
     upgrade(page, "Vitality", 0)
     upgrade(page, "Big_and_Lazy", 0)
 
@@ -216,7 +280,7 @@ with sync_playwright() as playwright:
     foul_average_formula = page.locator(f'[data-calculation-key="damage:{foul_key}:average"]').get_attribute("data-calculation-formula")
     assert "Non-crit per hit:" in foul_average_formula
     assert "Crit per hit:" in foul_average_formula
-    assert "× 2 hits" in foul_average_formula
+    assert "Ç- 2 hits" in foul_average_formula
     spirit_rate_formula = page.locator('[data-calculation-key="damage:thaumaturge-flaming-spirit:rate"]').get_attribute("data-calculation-formula")
     assert "0.75 base activations/s" in spirit_rate_formula
     assert "instances/activation" not in spirit_rate_formula
@@ -231,7 +295,7 @@ with sync_playwright() as playwright:
     spirit_toggle = page.locator('[data-source-exclusion="thaumaturge-flaming-spirit"]')
     assert page.locator('.source-inclusion-toggle').count() == 0
     assert spirit_toggle.get_attribute('class') == 'source-column-toggle'
-    assert "✓" not in spirit_toggle.inner_text()
+    assert "ƒo"" not in spirit_toggle.inner_text()
     combined_before = float(page.locator('[data-calculation-key="damage:combined:total-dps"]').get_attribute("data-exact-value"))
     assert float(page.locator("#combined-dps-summary").get_attribute("data-exact-value")) == combined_before
     spirit_total = float(page.locator('[data-calculation-key="damage:thaumaturge-flaming-spirit:total-dps"]').get_attribute("data-exact-value"))
@@ -287,7 +351,7 @@ with sync_playwright() as playwright:
     upgrade(page, "Frozen_Heart", 0)
     upgrade(page, "Flaming_Spirit")
 
-    # Switching classes must replace—not merely recolor—the configuration and table.
+    # Switching classes must replaceƒ?"not merely recolorƒ?"the configuration and table.
     page.select_option("#class-select", "Gunmancer")
     assert page.locator("#calculation-content").inner_text().find("Gunmancer") >= 0
     assert page.locator("#calculation-content").inner_text().find("Foul Pustule") < 0
@@ -332,9 +396,9 @@ with sync_playwright() as playwright:
     assert page.locator('[data-calculation-key="weakened:stacks"]').get_attribute("data-exact-value") == "10"
     assert page.locator('[data-calculation-key="weakened:duration"]').get_attribute("data-exact-value") == "8"
     paralyzed_breakdown = page.locator('[data-calculation-key="paralyzed:interval"]').get_attribute("data-application-breakdown")
-    assert "10× boss penalty" in paralyzed_breakdown
+    assert "10Ç- boss penalty" in paralyzed_breakdown
     weakened_breakdown = page.locator('[data-calculation-key="weakened:interval"]').get_attribute("data-application-breakdown")
-    assert "2× boss penalty" in weakened_breakdown
+    assert "2Ç- boss penalty" in weakened_breakdown
 
     upgrade(page, "Gunmancer_Proficiency_Photon")
     assert page.locator(f'[data-calculation-key="damage:{charged_photon}:projectiles"]').inner_text() == "5"
@@ -413,7 +477,7 @@ with sync_playwright() as playwright:
     assert ballista["element"] == "physical"
     assert ballista["status"]["id"] == "bleeding"
     assert ballista["status"]["chance"] == .1
-    assert page.locator('[data-calculation-key="source:nekomancer-minion-zombie"]').inner_text().find("×2") >= 0
+    assert page.locator('[data-calculation-key="source:nekomancer-minion-zombie"]').inner_text().find("Ç-2") >= 0
     zombie_rate_formula = page.locator('[data-calculation-key="damage:nekomancer-minion-zombie:rate"]').get_attribute("data-calculation-formula")
     assert "0.60 base activations/s" in zombie_rate_formula
     assert "x2.00 Minions" in zombie_rate_formula
@@ -476,6 +540,21 @@ with sync_playwright() as playwright:
     assert "base activations/s" in twinmage_rate_formula
     assert "Attack Speed" in twinmage_rate_formula
     assert "Hand Attack Speed" in twinmage_rate_formula
+
+    # Twinmage persists the Electric hand as "lightning", but the shared damage
+    # model canonicalizes it to the electricDamage stat instead of falling back to x1.
+    page.evaluate("buildOptions.twinmagePrimary = 'lightning'; buildOptions.twinmagePrimaryDamage = true; buildOptions.twinmageSecondaryDamage = false; saveBuildOptions(); render();")
+    upgrade(page, "An_IQ_Too_High_")
+    electric_hand = page.evaluate("EclipticaBuildForge.buildUnifiedCalculationModel().attackSources.find(source => source.id === 'twinmage-hand-0')")
+    assert page.evaluate("latestCalculation.stats.electricDamage") == 125
+    assert electric_hand["element"] == "electric"
+    assert electric_hand["damageStat"] == "electricDamage"
+    assert electric_hand["damage"]["elementalMultiplier"] == 1.25
+    electric_multiplier = page.locator('[data-calculation-key="damage:twinmage-hand-0:elemental"]')
+    assert electric_multiplier.inner_text() == "x1.25"
+    assert electric_multiplier.get_attribute("data-calculation-refs") == "stat:electricDamage"
+    upgrade(page, "An_IQ_Too_High_", 0)
+    page.evaluate("buildOptions.twinmageSecondaryDamage = true; saveBuildOptions(); render();")
 
     page.evaluate("buildOptions.twinmagePrimary = 'frost'; buildOptions.twinmageSecondary = 'shadow'; saveBuildOptions(); render();")
     assert page.locator('[data-calculation-key="frozen:stacks"]').get_attribute("data-exact-value") == "8"
