@@ -7,23 +7,6 @@
 
   const finite = (value, fallback = 0) => Number.isFinite(Number(value)) ? Number(value) : fallback;
   const attenuate = (multiplier, magnitude) => 1 + (finite(multiplier, 1) - 1) * finite(magnitude, 1);
-  const DAMAGE_TYPE_ALIASES = Object.freeze({ lightning: "electric" });
-
-  function normalizeDamageType(value) {
-    const damageType = String(value || "").trim().toLowerCase();
-    return DAMAGE_TYPE_ALIASES[damageType] || damageType;
-  }
-
-  function normalizeElementalMultipliers(value) {
-    const input = value && typeof value === "object" ? value : {};
-    const normalized = {};
-    Object.entries(input).forEach(([damageType, multiplier]) => {
-      const canonical = normalizeDamageType(damageType);
-      if (canonical !== damageType && Object.hasOwn(input, canonical)) return;
-      normalized[canonical] = finite(multiplier, 1);
-    });
-    return normalized;
-  }
 
   function calculateDamage(source, criticalChance, criticalDamageMultiplier) {
     const overallMultiplier = source.overallDamageApplies === false ? 1 : finite(source.overallMultiplier, 1);
@@ -55,15 +38,6 @@
   }
 
   function resolveSource(spec, context, criticalHitsPerSecond = 0) {
-    const element = normalizeDamageType(spec.element);
-    const normalizedSpec = {
-      ...spec,
-      element,
-      damageStat: spec.damageStat || (element ? `${element}Damage` : ""),
-      elementalMultiplier: spec.elementalMultiplier == null
-        ? finite(context.elementalMultipliers[element], 1)
-        : spec.elementalMultiplier
-    };
     const activationRate = resolveActivationRate(spec, criticalHitsPerSecond);
     const configuredHits = spec.hitsPerActivation
       ?? (spec.trigger?.type === "onCrit" ? spec.trigger.instancesPerTrigger : null)
@@ -71,12 +45,12 @@
       ?? 1;
     const hitsPerActivation = Math.max(0, finite(configuredHits, 1));
     const hitsPerSecond = activationRate * hitsPerActivation;
-    const damage = calculateDamage(normalizedSpec, context.criticalChance, context.criticalDamageMultiplier);
+    const damage = calculateDamage(spec, context.criticalChance, context.criticalDamageMultiplier);
     const averageDamage = damage.averageDamagePerHit * hitsPerActivation;
     const dps = averageDamage * activationRate;
     const uptime = spec.uptime == null ? 1 : Math.max(0, Math.min(1, finite(spec.uptime, 1)));
     return {
-      ...normalizedSpec,
+      ...spec,
       hitsPerActivation,
       instancesPerActivation: hitsPerActivation,
       projectiles: Math.max(1, finite(spec.projectiles, hitsPerActivation || 1)),
@@ -156,13 +130,12 @@
   function createStatusDamageSource(status, context) {
     if (status.baseDamage == null || status.tickInterval == null) return null;
     const magnitude = status.damageScaling == null ? 1 : finite(status.damageScaling, 1);
-    const element = normalizeDamageType(status.damageStat.replace(/Damage$/, ""));
+    const element = status.damageStat.replace(/Damage$/, "");
     return resolveSource({
       id: `status-${status.id}`,
       name: status.name,
       position: "Status effect",
       element,
-      damageStat: status.damageStat,
       baseDamage: status.baseDamage,
       canCrit: false,
       instanceRate: 1 / status.tickInterval,
@@ -186,7 +159,7 @@
       criticalChance: Math.max(0, finite(input.criticalChance)),
       criticalDamageMultiplier: finite(input.criticalDamageMultiplier, 1),
       overallMultiplier: finite(input.overallMultiplier, 1),
-      elementalMultipliers: normalizeElementalMultipliers(input.elementalMultipliers),
+      elementalMultipliers: input.elementalMultipliers || {},
       statusDefinitions: input.statusDefinitions || {},
       stickyStacks: finite(input.stickyStacks)
     };
@@ -228,5 +201,5 @@
     };
   }
 
-  return { calculate, calculateDamage, resolveRate: resolveActivationRate, resolveActivationRate, attenuate, normalizeDamageType, normalizeElementalMultipliers };
+  return { calculate, calculateDamage, resolveRate: resolveActivationRate, resolveActivationRate, attenuate };
 });
