@@ -88,5 +88,29 @@ const noImplicitStatus = Engine.calculate({
 });
 assert.equal(noImplicitStatus.statuses.length, 0);
 
+const canonicalMultipliers = Object.fromEntries(["physical", "fire", "frost", "electric", "luminous", "shadow", "poison"]
+  .map((damageType, index) => [damageType, 1 + (index + 1) / 10]));
+const canonicalDamageTypes = Engine.calculate({
+  ...baseInput,
+  elementalMultipliers: canonicalMultipliers,
+  sources: ["physical", "fire", "frost", "electric", "luminous", "shadow", "poison"].map(damageType => ({
+    id: damageType, name: damageType, element: damageType, baseDamage: 10, canCrit: false, activationRate: 1, statuses: []
+  }))
+});
+canonicalDamageTypes.attackSources.forEach(source => {
+  assert.equal(source.damage.elementalMultiplier, canonicalMultipliers[source.element]);
+  assert.equal(source.damageStat, `${source.element}Damage`);
+});
+
+const lightningAlias = Engine.calculate({
+  ...baseInput,
+  elementalMultipliers: { electric: 1.25 },
+  sources: [{ id: "electric-hand", name: "Electric Hand", element: "lightning", baseDamage: 30, canCrit: false, activationRate: 1, statuses: [] }]
+}).attackSources[0];
+assert.equal(lightningAlias.element, "electric");
+assert.equal(lightningAlias.damageStat, "electricDamage");
+assert.equal(lightningAlias.damage.elementalMultiplier, 1.25);
+assert.equal(lightningAlias.damage.bareDamage, 37.5);
+
 
 console.log("Unified calculation engine tests passed.");
