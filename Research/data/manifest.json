@@ -1,0 +1,16 @@
+{
+  "name": "Ecliptica Research Wiki",
+  "version": "0.1.0",
+  "released": "2026-08-07",
+  "datasetPolicy": "English Ecliptica Miraheze Wiki for imported facts; user research is separate.",
+  "dataFiles": [
+    "upgrades.json",
+    "classes.json",
+    "questions.json",
+    "claims.json",
+    "evidence.json",
+    "tests.json",
+    "sources.json",
+    "import-report.json"
+  ]
+}
