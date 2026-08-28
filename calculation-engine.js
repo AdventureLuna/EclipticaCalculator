@@ -68,15 +68,18 @@
     };
   }
 
-  function weightedSourceMultiplier(sources, statusId) {
-    const weighted = sources.reduce((total, source) => {
+  function weightedSourceMultiplier(sources, statusId, context = {}) {
+    const averageStatusChance = source => {
       const status = source.statuses.find(item => item.id === statusId);
+      const criticalBonus = source.canCrit ? finite(context.criticalStatusChanceBonus) : 0;
+      return finite(status?.chance) + finite(context.criticalChance) * criticalBonus;
+    };
+    const weighted = sources.reduce((total, source) => {
       const sourceMultiplier = source.statusSourceMultiplierApplies === false ? 1 : finite(source.damage.sourceMultiplier, 1);
-      return total + source.damage.hitsPerSecond * finite(status?.chance) * sourceMultiplier;
+      return total + source.damage.hitsPerSecond * averageStatusChance(source) * sourceMultiplier;
     }, 0);
     const weight = sources.reduce((total, source) => {
-      const status = source.statuses.find(item => item.id === statusId);
-      return total + source.damage.hitsPerSecond * finite(status?.chance);
+      return total + source.damage.hitsPerSecond * averageStatusChance(source);
     }, 0);
     return weight > 0 ? weighted / weight : 1;
   }
@@ -90,18 +93,28 @@
         const status = source.statuses.find(item => item.id === statusId);
         if (!status) return [];
         const baseApplicationChance = finite(status.chance);
-        const applicationChance = baseApplicationChance / penalty;
+        const criticalApplicationChanceBonus = source.canCrit ? context.criticalStatusChanceBonus : 0;
+        const criticalApplicationChance = baseApplicationChance + criticalApplicationChanceBonus;
+        const averageApplicationChance = baseApplicationChance + context.criticalChance * criticalApplicationChanceBonus;
+        const applicationChance = averageApplicationChance / penalty;
         return [{
           sourceId: source.id,
           name: source.name,
           hitsPerSecond: source.damage.hitsPerSecond,
           baseApplicationChance,
+          criticalApplicationChanceBonus,
+          criticalApplicationChance,
+          averageApplicationChance,
           bossApplicationPenalty: penalty,
           applicationChance,
           applicationsPerSecond: source.damage.hitsPerSecond * applicationChance
         }];
       });
       const applicationsPerSecond = sources.reduce((sum, source) => sum + source.applicationsPerSecond, 0);
+      const statusHitRate = sources.reduce((sum, source) => sum + source.hitsPerSecond, 0);
+      const averageApplicationChance = statusHitRate > 0
+        ? sources.reduce((sum, source) => sum + source.hitsPerSecond * source.applicationChance, 0) / statusHitRate
+        : 0;
       const applicationInterval = applicationsPerSecond > 0 ? 1 / applicationsPerSecond : Infinity;
       const stacksPerApplication = definition.baseStacks == null
         ? null
@@ -117,12 +130,13 @@
         penalty,
         sources,
         applicationsPerSecond,
+        averageApplicationChance,
         applicationInterval,
         stacksPerApplication,
         duration,
         rawUptime,
         uptime,
-        sourceMultiplier: weightedSourceMultiplier(attackSources, statusId)
+        sourceMultiplier: weightedSourceMultiplier(attackSources, statusId, context)
       };
     }).filter(status => status.applicationsPerSecond > 0);
   }
@@ -157,6 +171,7 @@
   function calculate(input) {
     const context = {
       criticalChance: Math.max(0, finite(input.criticalChance)),
+      criticalStatusChanceBonus: Math.max(0, finite(input.criticalStatusChanceBonus)),
       criticalDamageMultiplier: finite(input.criticalDamageMultiplier, 1),
       overallMultiplier: finite(input.overallMultiplier, 1),
       elementalMultipliers: input.elementalMultipliers || {},

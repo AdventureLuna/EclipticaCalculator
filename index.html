@@ -1,3 +1,8 @@
+<!-- Version: 0.3.0
+Changelog:
+- 2026-08-25: Added expected Potent Strike status application rates, including the crit-only bonus and average chance per hit.
+- 2026-08-25: Added clickable pinned calculation tooltips that remain visible across tabs, refresh with build changes, and can be dragged.
+-->
 <!doctype html>
 <html lang="en">
 <head>
@@ -481,6 +486,11 @@
     .calculation-tooltip { --tooltip-accent: #d9a4ff; position: fixed; z-index: 1100; display: none; min-width: 150px; max-width: min(390px, calc(100vw - 24px)); overflow: hidden; border: 1px solid color-mix(in srgb, var(--tooltip-accent) 58%, transparent); border-radius: 12px; color: #f7f3f8; background: radial-gradient(circle at 8% 0, color-mix(in srgb, var(--tooltip-accent) 18%, transparent), transparent 48%), linear-gradient(145deg, rgba(24, 22, 28, .98), rgba(7, 8, 11, .98)); box-shadow: inset 0 1px rgba(255,255,255,.1), 0 14px 38px rgba(0,0,0,.62), 0 0 22px color-mix(in srgb, var(--tooltip-accent) 18%, transparent); padding: 11px 13px 10px; font: 700 .7rem/1.42 ui-monospace, SFMono-Regular, Consolas, monospace; backdrop-filter: blur(18px) saturate(1.25); pointer-events: none; }
     .calculation-tooltip::before { content: ""; position: absolute; inset: 0 0 auto; height: 3px; background: linear-gradient(90deg, transparent, var(--tooltip-accent) 22% 78%, transparent); box-shadow: 0 0 12px var(--tooltip-accent); }
     .calculation-tooltip.visible { display: block; }
+    .calculation-tooltip.pinned { pointer-events: auto; }
+    .calculation-tooltip-pinned-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: -2px -2px 10px; border-bottom: 1px solid color-mix(in srgb, var(--tooltip-accent) 26%, transparent); padding: 0 0 8px; color: color-mix(in srgb, var(--tooltip-accent) 78%, white); cursor: grab; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: .55rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; user-select: none; touch-action: none; }
+    .calculation-tooltip.dragging .calculation-tooltip-pinned-bar { cursor: grabbing; }
+    .calculation-tooltip-unpin { border: 1px solid color-mix(in srgb, var(--tooltip-accent) 48%, transparent); border-radius: 999px; color: #fff; background: color-mix(in srgb, var(--tooltip-accent) 13%, transparent); padding: 3px 7px; cursor: pointer; font: 800 .56rem/1 Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing: .02em; text-transform: none; }
+    .calculation-tooltip-unpin:hover { background: color-mix(in srgb, var(--tooltip-accent) 25%, transparent); }
     .calculation-tooltip-head { display: flex; gap: 7px; align-items: center; margin-bottom: 4px; color: color-mix(in srgb, var(--tooltip-accent) 86%, white); font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: .58rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
     .calculation-tooltip-icon { width: 15px; height: 15px; display: inline-grid; place-items: center; border: 1px solid color-mix(in srgb, var(--tooltip-accent) 72%, transparent); border-radius: 5px; background: color-mix(in srgb, var(--tooltip-accent) 14%, transparent); box-shadow: 0 0 8px color-mix(in srgb, var(--tooltip-accent) 22%, transparent); font-size: .48rem; }
     .calculation-tooltip-title { margin: 2px 0 6px; color: color-mix(in srgb, var(--tooltip-accent) 80%, white); font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: .82rem; font-weight: 900; }
@@ -999,7 +1009,7 @@
       ["Mobility Crystal","Legendary","Rapid_Fire.png","Rapid Fire","Attack Speed: +50% (+50% per stack) Overall Damage: -20% (-20% per stack)"],
       ["Mobility Crystal","Legendary","Way_of_the_Law.png","Way of the Law","Periodically switch between the STOP and GO status effects. STOP reduces Movement and Attack Speed, but increases Damage. GO increases Movement and Attack Speed, but decreases Damage"],
       ["Chronowizard","Common","Full_Focus.png","Full Focus","Critical Strike Chance +5% (+5% per stack) Critical Strike Damage +5% (+5% per stack)"],
-      ["Chronowizard","Common","Potent_Strike.png","Potent Strike","Critical Strikes have a 6% (+6% per stack) higher chance to inflict a status effect."],
+      ["Chronowizard","Common","Potent_Strike.png","Potent Strike","Critical Strikes have a 5% (+5% per stack) higher chance to inflict a status effect."],
       ["Chronowizard","Common","Sorcerer's_Mastery.png","Sorcerer’s Mastery","ELEMENTAL Damage +8% (+8% per stack)"],
       ["Chronowizard","Common","Strength.png","Strength","PHYSICAL Damage +10% (+10% per stack)"],
       ["Chronowizard","Rare","Clutch_or_Kick.png","Clutch or Kick","Gain +7% (+7% per stack) Overall Damage for every dead player in the party"],
@@ -1969,6 +1979,15 @@
       });
     }
 
+    let pinnedCalculationKey = null;
+    let pinnedCalculationPosition = null;
+    let calculationTooltipDragState = null;
+
+    function calculationValueForKey(key) {
+      if (!key) return null;
+      return document.querySelector(`[data-calculation-key="${CSS.escape(key)}"]`);
+    }
+
     function positionCalculationTooltip(clientX, clientY) {
       const tooltip = $("#calculation-tooltip");
       const gap = 14;
@@ -1977,8 +1996,22 @@
       let top = clientY + gap;
       if (left + box.width > window.innerWidth - 8) left = clientX - box.width - gap;
       if (top + box.height > window.innerHeight - 8) top = clientY - box.height - gap;
-      tooltip.style.left = `${Math.max(8, left)}px`;
-      tooltip.style.top = `${Math.max(8, top)}px`;
+      left = Math.min(Math.max(8, left), Math.max(8, window.innerWidth - box.width - 8));
+      top = Math.min(Math.max(8, top), Math.max(8, window.innerHeight - box.height - 8));
+      tooltip.style.left = `${left}px`;
+      tooltip.style.top = `${top}px`;
+      if (pinnedCalculationKey) pinnedCalculationPosition = { left, top };
+    }
+
+    function clampPinnedCalculationTooltipPosition() {
+      const tooltip = $("#calculation-tooltip");
+      if (!pinnedCalculationKey || !tooltip.classList.contains("visible")) return;
+      const box = tooltip.getBoundingClientRect();
+      const left = Math.min(Math.max(8, box.left), Math.max(8, window.innerWidth - box.width - 8));
+      const top = Math.min(Math.max(8, box.top), Math.max(8, window.innerHeight - box.height - 8));
+      tooltip.style.left = `${left}px`;
+      tooltip.style.top = `${top}px`;
+      pinnedCalculationPosition = { left, top };
     }
 
     function showCalculationTooltip(value, clientX, clientY) {
@@ -2032,17 +2065,101 @@
           ${sourceDetailsMarkup}`
         : `<div class="calculation-tooltip-head"><span class="calculation-tooltip-icon">ƒ</span>Formula${formulaSourceIcon}${damageBadge}</div>
           <div class="calculation-tooltip-expression">${applicationBreakdownMarkup || lines.map(line => `<span class="calculation-tooltip-expression-line">${escapeHtml(line)}</span>`).join("")}</div>${breakdownMarkup}`;
-      tooltip.innerHTML = `${upgradeMarkup}${contextMarkup}`;
+      const pinnedMarkup = pinnedCalculationKey === value.dataset.calculationKey
+        ? `<div class="calculation-tooltip-pinned-bar" data-calculation-tooltip-drag-handle><span>Pinned calculation</span><button class="calculation-tooltip-unpin" type="button" data-calculation-tooltip-unpin>Unpin</button></div>`
+        : "";
+      tooltip.innerHTML = `${pinnedMarkup}${upgradeMarkup}${contextMarkup}`;
+      tooltip.classList.toggle("pinned", Boolean(pinnedCalculationKey));
       tooltip.classList.add("visible");
       highlightCalculationReferences((value.dataset.calculationRefs || "").split("|"));
-      const rect = value.getBoundingClientRect();
-      positionCalculationTooltip(clientX ?? rect.right, clientY ?? rect.bottom);
+      if (pinnedCalculationPosition) {
+        tooltip.style.left = `${pinnedCalculationPosition.left}px`;
+        tooltip.style.top = `${pinnedCalculationPosition.top}px`;
+        clampPinnedCalculationTooltipPosition();
+      } else {
+        const rect = value.getBoundingClientRect();
+        positionCalculationTooltip(clientX ?? rect.right, clientY ?? rect.bottom);
+      }
     }
 
-    function hideCalculationTooltip() {
-      $("#calculation-tooltip").classList.remove("visible");
+    function hideCalculationTooltip(force = false) {
+      if (pinnedCalculationKey && !force) return;
+      const tooltip = $("#calculation-tooltip");
+      tooltip.classList.remove("visible", "pinned", "dragging");
       clearCalculationReferences();
     }
+
+    function unpinCalculationTooltip() {
+      pinnedCalculationKey = null;
+      pinnedCalculationPosition = null;
+      calculationTooltipDragState = null;
+      hideCalculationTooltip(true);
+    }
+
+    function pinCalculationTooltip(value, clientX, clientY) {
+      if (!pinnedCalculationKey) pinnedCalculationPosition = null;
+      pinnedCalculationKey = value.dataset.calculationKey;
+      showCalculationTooltip(value, clientX, clientY);
+    }
+
+    function refreshPinnedCalculationTooltip() {
+      if (!pinnedCalculationKey) return;
+      const value = calculationValueForKey(pinnedCalculationKey);
+      if (!value) {
+        unpinCalculationTooltip();
+        return;
+      }
+      showCalculationTooltip(value);
+    }
+
+    const calculationTooltip = $("#calculation-tooltip");
+    calculationTooltip.addEventListener("click", event => {
+      const button = event.target.closest("[data-calculation-tooltip-unpin]");
+      if (!button) return;
+      event.preventDefault();
+      event.stopPropagation();
+      unpinCalculationTooltip();
+    });
+
+    calculationTooltip.addEventListener("pointerdown", event => {
+      const handle = event.target.closest("[data-calculation-tooltip-drag-handle]");
+      if (!pinnedCalculationKey || !handle || event.target.closest("[data-calculation-tooltip-unpin]")) return;
+      const rect = calculationTooltip.getBoundingClientRect();
+      calculationTooltipDragState = {
+        pointerId: event.pointerId,
+        handle,
+        startX: event.clientX,
+        startY: event.clientY,
+        startLeft: rect.left,
+        startTop: rect.top
+      };
+      handle.setPointerCapture?.(event.pointerId);
+      calculationTooltip.classList.add("dragging");
+      event.preventDefault();
+    });
+
+    calculationTooltip.addEventListener("pointermove", event => {
+      const drag = calculationTooltipDragState;
+      if (!drag || drag.pointerId !== event.pointerId) return;
+      const rect = calculationTooltip.getBoundingClientRect();
+      const left = Math.min(Math.max(8, drag.startLeft + event.clientX - drag.startX), Math.max(8, window.innerWidth - rect.width - 8));
+      const top = Math.min(Math.max(8, drag.startTop + event.clientY - drag.startY), Math.max(8, window.innerHeight - rect.height - 8));
+      calculationTooltip.style.left = `${left}px`;
+      calculationTooltip.style.top = `${top}px`;
+      pinnedCalculationPosition = { left, top };
+    });
+
+    function finishCalculationTooltipDrag(event) {
+      const drag = calculationTooltipDragState;
+      if (!drag || drag.pointerId !== event.pointerId) return;
+      drag.handle.releasePointerCapture?.(event.pointerId);
+      calculationTooltipDragState = null;
+      calculationTooltip.classList.remove("dragging");
+    }
+
+    calculationTooltip.addEventListener("pointerup", finishCalculationTooltipDrag);
+    calculationTooltip.addEventListener("pointercancel", finishCalculationTooltipDrag);
+    window.addEventListener("resize", clampPinnedCalculationTooltipPosition);
 
     let loadingSharedBuild = false;
 
@@ -2669,6 +2786,11 @@
       return (baseChance + (bonus ? count(bonus.upgradeId) * bonus.chancePerStack : 0)) / attackSpeedMultiplier;
     }
 
+    function potentStrikeStatusChanceBonus(attackSpeedMultiplier) {
+      if (!Number.isFinite(attackSpeedMultiplier) || attackSpeedMultiplier <= 0) return 0;
+      return count("Potent_Strike") * 0.05 / attackSpeedMultiplier;
+    }
+
     function calculationElementMultipliers(stats) {
       return Object.fromEntries(["physical", "fire", "frost", "electric", "luminous", "shadow", "poison"]
         .map(element => [element, Number(stats[`${element}Damage`] || 0) / 100]));
@@ -2998,6 +3120,7 @@
       const calculation = EclipticaCalculationEngine.calculate({
         sources,
         criticalChance: Math.max(0, criticalChancePercent) / 100,
+        criticalStatusChanceBonus: potentStrikeStatusChanceBonus(Math.max(0, Number(stats.attackSpeed || 0) / 100)),
         criticalDamageMultiplier: Number(stats.criticalDamage || 0) / 100,
         overallMultiplier: Number(stats.overallDamage || 0) / 100,
         elementalMultipliers,
@@ -3030,6 +3153,7 @@
         if (render) {
           content.innerHTML = `<div class="calculation-empty">${escapeHtml(UNIMPLEMENTED_DPS_MESSAGE)}</div>`;
           updateCombinedDpsSummary(0, false);
+          refreshPinnedCalculationTooltip();
         }
         return { combinedTotalDps: 0 };
       }
@@ -3037,6 +3161,7 @@
         if (render) {
           content.innerHTML = `<div class="calculation-empty">${escapeHtml(model.emptyMessage)}</div>`;
           updateCombinedDpsSummary(0);
+          refreshPinnedCalculationTooltip();
         }
         return { combinedTotalDps: 0 };
       }
@@ -3110,14 +3235,24 @@
           sources: status.sources.map(source => ({
             name: source.name,
             hitsPerSecond: rateNumber(source.hitsPerSecond),
-            chanceCalculation: source.bossApplicationPenalty > 1
-              ? `${percent(source.baseApplicationChance)} ÷ ${rateNumber(source.bossApplicationPenalty)}× boss penalty = ${percent(source.applicationChance)}`
-              : percent(source.applicationChance),
+            chanceCalculation: (() => {
+              const chanceFormula = source.criticalApplicationChanceBonus > 0
+                ? `${percent(source.baseApplicationChance)} + (${percent(model.context.criticalChance)} × ${percent(source.criticalApplicationChanceBonus)}) = ${percent(source.averageApplicationChance)}`
+                : percent(source.averageApplicationChance);
+              return source.bossApplicationPenalty > 1
+                ? `${chanceFormula} ÷ ${rateNumber(source.bossApplicationPenalty)}× boss penalty = ${percent(source.applicationChance)}`
+                : chanceFormula;
+            })(),
             applicationsPerSecond: rateNumber(source.applicationsPerSecond)
           })),
           total: rateNumber(status.applicationsPerSecond), interval: number(status.applicationInterval)
         };
         const rowsForStatus = [{
+          key: `${status.id}:chance`, label: "Average application chance", value: percent(status.averageApplicationChance), exact: status.averageApplicationChance,
+          formula: status.sources.length === 1
+            ? breakdown.sources[0].chanceCalculation
+            : `Weighted by source hit rate = ${percent(status.averageApplicationChance)}`, applicationBreakdown: breakdown
+        }, {
           key: `${status.id}:interval`, label: "Average time between applications", value: `${number(status.applicationInterval)} s`, exact: status.applicationInterval,
           formula: `1 ÷ ${rateNumber(status.applicationsPerSecond)} applications/s = ${number(status.applicationInterval)}s`, applicationBreakdown: breakdown
         }];
@@ -3149,6 +3284,7 @@
       }, {})).map(item => ({ ...item, value: number(item.exact) }));
       const columns = model.damageSources;
       content.innerHTML = `<div class="calculation-stack"><section class="damage-calculation"><div class="damage-table-wrap"><table class="damage-table ${model.classKey === "twinmage" && model.attackSources.filter(source => source.position?.includes("hand")).length > 1 ? "dual-hand" : "single-hand"} shared-ability-table"><colgroup><col class="damage-label-col"><col class="damage-data-col" span="${columns.length}"></colgroup><thead><tr><th scope="col"><span class="damage-hand-position">Current build</span><span class="damage-hand-title">${escapeHtml(model.className)}</span></th>${columns.map(source => `<th scope="col" class="damage-column ${sourceColumnClasses(source)}" data-element="${escapeHtml(source.element)}">${sourceColumnToggle(source)}</th>`).join("")}</tr></thead><tbody>${rows.map(row => `<tr class="${row.sectionBreak ? "damage-section-break " : ""}${row.total ? "damage-total-row" : ""}"><th scope="row" class="damage-label">${escapeHtml(row.label)}</th>${columns.map(source => `<td class="damage-column ${sourceColumnClasses(source)}" data-element="${escapeHtml(source.element)}"><span class="damage-value ${row.value(source) === "-" ? "damage-value-unknown" : ""}" data-exact-value="${escapeHtml(String(row.exact(source)))}" ${calculationAttributes(damageKey(source, row.key), row.formula(source), row.refs ? row.refs(source) : [])} ${row.damageValue ? damageTypeAttributes(source) : ""} ${sourceIconAttributes(source)} ${sourceUpgradeAttributes(source)}>${escapeHtml(row.value(source))}</span></td>`).join("")}</tr>`).join("")}</tbody><tfoot><tr class="damage-combined-row"><th scope="row" class="damage-combined-label">Combined DPS</th><td colspan="${columns.length}" class="damage-column"><span class="damage-combined-value" data-exact-value="${escapeHtml(String(model.combinedTotalDps))}" data-calculation-breakdown="${escapeHtml(JSON.stringify(combinedBreakdown))}" ${calculationAttributes("damage:combined:total-dps", `${includedSources.length ? includedSources.map(source => number(source.damage.totalDps)).join(" + ") : "0.00"} = ${number(model.combinedTotalDps)}`)}>${number(model.combinedTotalDps)}</span></td></tr></tfoot></table></div></section><div class="calculation-secondary"><section class="crit-table-wrap"><table class="crit-table"><thead><tr><th colspan="2">Critical hits</th></tr></thead><tbody>${criticalRows.map(row => `<tr><th scope="row" class="crit-label">${escapeHtml(row[1])}</th><td class="crit-value" ${calculationAttributes(row[0], row[3])}>${escapeHtml(row[2])}</td></tr>`).join("")}</tbody></table></section>${statusMarkup}</div></div>`;
+      refreshPinnedCalculationTooltip();
       return { combinedTotalDps: model.combinedTotalDps };
     }
 
@@ -3269,26 +3405,34 @@
       updateShareWidget();
     });
 
+    $("#calculation-content").addEventListener("click", event => {
+      const value = event.target.closest("[data-calculation-formula]");
+      if (!value || value.matches("button")) return;
+      pinCalculationTooltip(value, event.clientX, event.clientY);
+    });
+
     $("#calculation-content").addEventListener("mouseover", event => {
       const value = event.target.closest("[data-calculation-formula]");
-      if (value) showCalculationTooltip(value, event.clientX, event.clientY);
+      if (value && !pinnedCalculationKey) showCalculationTooltip(value, event.clientX, event.clientY);
     });
 
     $("#calculation-content").addEventListener("mousemove", event => {
-      if (event.target.closest("[data-calculation-formula]")) positionCalculationTooltip(event.clientX, event.clientY);
+      if (!pinnedCalculationKey && event.target.closest("[data-calculation-formula]")) positionCalculationTooltip(event.clientX, event.clientY);
     });
 
     $("#calculation-content").addEventListener("mouseout", event => {
       const value = event.target.closest("[data-calculation-formula]");
-      if (value && !value.contains(event.relatedTarget)) hideCalculationTooltip();
+      if (!pinnedCalculationKey && value && !value.contains(event.relatedTarget)) hideCalculationTooltip();
     });
 
     $("#calculation-content").addEventListener("focusin", event => {
       const value = event.target.closest("[data-calculation-formula]");
-      if (value) showCalculationTooltip(value);
+      if (value && !pinnedCalculationKey) showCalculationTooltip(value);
     });
 
-    $("#calculation-content").addEventListener("focusout", hideCalculationTooltip);
+    $("#calculation-content").addEventListener("focusout", () => {
+      if (!pinnedCalculationKey) hideCalculationTooltip();
+    });
 
     $("#catalog").addEventListener("click", event => {
       const card = event.target.closest(".upgrade");

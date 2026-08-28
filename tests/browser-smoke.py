@@ -105,6 +105,40 @@ with sync_playwright() as playwright:
     }""")
     assert volley == {"nonCrit": 10, "crit": 15, "averagePerHit": 11, "average": 55, "activationRate": .2, "hitsPerSecond": 1, "dps": 11, "critsPerSecond": .2, "applicationsPerSecond": .1}
 
+    potent_strike = page.evaluate("""() => {
+      const result = EclipticaCalculationEngine.calculate({
+        criticalChance: .1,
+        criticalStatusChanceBonus: .2,
+        elementalMultipliers: { fire: 1 },
+        statusDefinitions: { burning: { id: 'burning', name: 'Burning', bossApplicationPenalty: 3 } },
+        sources: [{ id: 'fireball', name: 'Fireball', element: 'fire', baseDamage: 10, canCrit: true, activationRate: 1, statuses: [{ id: 'burning', chance: .1 }] }]
+      });
+      const source = result.statuses[0].sources[0];
+      return {
+        criticalChance: source.criticalApplicationChance,
+        averageChance: source.averageApplicationChance,
+        chanceAfterBossPenalty: source.applicationChance,
+        applicationsPerSecond: result.statuses[0].applicationsPerSecond
+      };
+    }""")
+    assert abs(potent_strike["criticalChance"] - .3) < 1e-12
+    assert abs(potent_strike["averageChance"] - .12) < 1e-12
+    assert potent_strike["chanceAfterBossPenalty"] == .04
+    assert potent_strike["applicationsPerSecond"] == .04
+
+    upgrade(page, "Potent_Strike", 4)
+    upgrade(page, "Flaming_Spirit")
+    potent_model = page.evaluate("EclipticaBuildForge.buildUnifiedCalculationModel()")
+    potent_burning = next(status for status in potent_model["statuses"] if status["id"] == "burning")
+    potent_source = potent_burning["sources"][0]
+    assert potent_burning["id"] == "burning"
+    expected_potent_average = .1 + potent_model["context"]["criticalChance"] * .2
+    assert abs(potent_source["averageApplicationChance"] - expected_potent_average) < 1e-12
+    expected_potent_after_penalty = expected_potent_average / 3
+    assert abs(float(page.locator('[data-calculation-key="burning:chance"]').get_attribute("data-exact-value")) - expected_potent_after_penalty) < 1e-12
+    upgrade(page, "Flaming_Spirit", 0)
+    upgrade(page, "Potent_Strike", 0)
+
     # Health Regeneration keeps its visible percentage while showing derived
     # HP/s beneath it. Big and Lazy is a separate hidden multiplier.
     regeneration_row = page.locator('[data-stat="healthRegeneration"]')
@@ -227,6 +261,33 @@ with sync_playwright() as playwright:
 
     # Excluded columns stay visible but no longer contribute to damage, crits,
     # status applications, or downstream on-crit sources.
+    page.locator('[data-tab="calculations"]').click()
+    pinned_value = page.locator(f'[data-calculation-key="damage:{foul_key}:average"]')
+    pinned_value.click()
+    calculation_tooltip = page.locator("#calculation-tooltip")
+    assert calculation_tooltip.is_visible()
+    assert "pinned" in calculation_tooltip.get_attribute("class")
+    tooltip_before_upgrade = calculation_tooltip.inner_text()
+    page.locator('[data-calculation-key="crit:chance"]').hover()
+    assert calculation_tooltip.inner_text() == tooltip_before_upgrade
+    page.locator('[data-tab="upgrades"]').click()
+    assert calculation_tooltip.is_visible()
+    upgrade(page, "Glass_Cannon")
+    tooltip_after_upgrade = calculation_tooltip.inner_text()
+    assert tooltip_after_upgrade != tooltip_before_upgrade
+    handle = calculation_tooltip.locator("[data-calculation-tooltip-drag-handle]")
+    before_box = calculation_tooltip.bounding_box()
+    handle_box = handle.bounding_box()
+    page.mouse.move(handle_box["x"] + 12, handle_box["y"] + 8)
+    page.mouse.down()
+    page.mouse.move(handle_box["x"] + 52, handle_box["y"] + 38)
+    page.mouse.up()
+    after_box = calculation_tooltip.bounding_box()
+    assert abs(after_box["x"] - before_box["x"]) > 10
+    assert abs(after_box["y"] - before_box["y"]) > 10
+    calculation_tooltip.locator("[data-calculation-tooltip-unpin]").click()
+    assert not calculation_tooltip.is_visible()
+    upgrade(page, "Glass_Cannon", 0)
     page.locator('[data-tab="calculations"]').click()
     spirit_toggle = page.locator('[data-source-exclusion="thaumaturge-flaming-spirit"]')
     assert page.locator('.source-inclusion-toggle').count() == 0

@@ -71,6 +71,29 @@ assert.equal(volleySource.damage.dps, 11);
 assert.equal(volley.criticalHitsPerSecond, .2);
 assert.equal(volley.statuses[0].applicationsPerSecond, .1);
 
+const potentStrike = Engine.calculate({
+  ...baseInput,
+  criticalChance: .1,
+  criticalStatusChanceBonus: .2,
+  sources: [{ id: "fireball", name: "Fireball", element: "fire", baseDamage: 10, canCrit: true, activationRate: 1, statuses: [{ id: "burning", chance: .1 }] }]
+});
+const potentStatus = potentStrike.statuses.find(status => status.id === "burning");
+assert.equal(potentStatus.sources[0].baseApplicationChance, .1);
+assert.equal(potentStatus.sources[0].criticalApplicationChanceBonus, .2);
+assert.ok(Math.abs(potentStatus.sources[0].criticalApplicationChance - .3) < 1e-12);
+assert.ok(Math.abs(potentStatus.sources[0].averageApplicationChance - .12) < 1e-12);
+assert.equal(potentStatus.sources[0].applicationChance, .04);
+assert.equal(potentStatus.averageApplicationChance, .04);
+assert.equal(potentStatus.applicationsPerSecond, .04);
+
+const potentNonCrit = Engine.calculate({
+  ...baseInput,
+  criticalChance: .1,
+  criticalStatusChanceBonus: .2,
+  sources: [{ id: "non-crit-fireball", name: "Non-crit Fireball", element: "fire", baseDamage: 10, canCrit: false, activationRate: 1, statuses: [{ id: "burning", chance: .1 }] }]
+});
+assert.equal(potentNonCrit.statuses[0].sources[0].averageApplicationChance, .1);
+
 const weightedTrigger = Engine.calculate({
   ...baseInput,
   sources: [

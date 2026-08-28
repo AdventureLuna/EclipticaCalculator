@@ -15,6 +15,7 @@ assert.match(page, /\["healingReceived", "Poison_Aspect", -5\]/);
 assert.match(page, /\["healthRegeneration", "Spellsword_Mastery", -100\]/);
 assert.match(page, /"Pocket Abacus","[^"]*Overall Damage -10% \(-10% per stack\)/);
 assert.match(page, /\["overallDamage", "Pocket_Abacus", -10\]/);
+assert.match(page, /"Potent Strike","Critical Strikes have a 5% \(\+5% per stack\) higher chance to inflict a status effect\."/);
 assert.equal((page.match(/Defense -10% per stack\.\", stats: p => \(\{ \w+Defense: -10 \* p \}\)/g) || []).length, 7);
 
 console.log("Upgrade data regression tests passed.");
