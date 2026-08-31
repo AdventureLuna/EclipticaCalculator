@@ -46,6 +46,11 @@ assert.match(page, /twinmageSecondaryDamage: saved\.twinmageSecondaryDamage !== 
 assert.match(page, /if \(!buildOptions\.twinmagePrimaryDamage && !buildOptions\.twinmageSecondaryDamage\) buildOptions\.twinmagePrimaryDamage = true;/);
 assert.match(page, /if \(!buildOptions\.twinmagePrimaryDamage && !buildOptions\.twinmageSecondaryDamage\)/);
 assert.match(page, /buildOptions\.twinmagePrimary = "fire";[\s\S]*buildOptions\.twinmageSecondary = "lightning";[\s\S]*buildOptions\.twinmagePrimaryDamage = true;[\s\S]*buildOptions\.twinmageSecondaryDamage = true;/);
+assert.match(page, /const DAMAGE_TYPE_ALIASES = Object\.freeze\(\{ lightning: "electric" \}\)/);
+assert.match(page, /function normalizeDamageType\(value\)/);
+assert.match(page, /const element = normalizeDamageType\(source\.element\)/);
+assert.match(page, /elementalMultiplier: elementalMultipliers\[element\]/);
+assert.doesNotMatch(page, /elementalMultiplier: elementalMultipliers\[source\.element\] \|\| 1/);
 assert.match(page, /Berserker’s Soul \(Melee\)/);
 assert.match(page, /Berserker’s Soul \(Ranged\)/);
 assert.match(page, /melee: \{ id: "Berserker's_Soul_Melee", classes: \["Spellsword", "Fistmage", "Spellhammer", "Shield Mage"\]/);
