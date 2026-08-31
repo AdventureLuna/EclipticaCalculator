@@ -1,5 +1,6 @@
-<!-- Version: 0.3.0
+<!-- Version: 0.3.1
 Changelog:
+- 2026-08-31: Normalized Twinmage's Electric hand to the electric damage type for multipliers, labels, and source checks.
 - 2026-08-25: Added expected Potent Strike status application rates, including the crit-only bonus and average chance per hit.
 - 2026-08-25: Added clickable pinned calculation tooltips that remain visible across tabs, refresh with build changes, and can be dragged.
 -->
@@ -1043,6 +1044,27 @@ Changelog:
       overallDamage: 100, physicalDamage: 100, fireDamage: 100, frostDamage: 100,
       electricDamage: 100, luminousDamage: 100, shadowDamage: 100, poisonDamage: 100
     };
+    const DAMAGE_TYPE_STATS = Object.freeze({
+      physical: "physicalDamage",
+      fire: "fireDamage",
+      frost: "frostDamage",
+      electric: "electricDamage",
+      luminous: "luminousDamage",
+      shadow: "shadowDamage",
+      poison: "poisonDamage"
+    });
+    const DAMAGE_TYPE_ALIASES = Object.freeze({ lightning: "electric" });
+
+    function normalizeDamageType(value) {
+      const damageType = String(value || "").trim().toLowerCase();
+      const canonical = DAMAGE_TYPE_ALIASES[damageType] || damageType;
+      if (!Object.hasOwn(DAMAGE_TYPE_STATS, canonical)) throw new Error(`Unknown damage type: ${value}`);
+      return canonical;
+    }
+
+    function damageStatForType(value) {
+      return DAMAGE_TYPE_STATS[normalizeDamageType(value)];
+    }
     const BASE_HEALTH_REGENERATION_PER_SECOND = .5;
 
     const CAPS = {
@@ -1516,20 +1538,20 @@ Changelog:
       return gunmancerAbility(buildOptions[group === "primary" ? "gunmancerPrimary" : "gunmancerSecondary"], group).id === id;
     }
     function getDamageSources() {
-      const sources = new Set(CLASS_DAMAGE_SOURCES[selectedClass] || []);
+      const sources = new Set((CLASS_DAMAGE_SOURCES[selectedClass] || []).map(normalizeDamageType));
       if (selectedClass === "Twinmage") {
-        if (buildOptions.twinmagePrimaryDamage) sources.add(buildOptions.twinmagePrimary);
-        if (buildOptions.twinmageSecondaryDamage) sources.add(buildOptions.twinmageSecondary);
+        if (buildOptions.twinmagePrimaryDamage) sources.add(normalizeDamageType(buildOptions.twinmagePrimary));
+        if (buildOptions.twinmageSecondaryDamage) sources.add(normalizeDamageType(buildOptions.twinmageSecondary));
       }
       if (selectedClass === "Gunmancer") {
         [gunmancerAbility(buildOptions.gunmancerPrimary, "primary"), gunmancerAbility(buildOptions.gunmancerSecondary, "secondary")]
           .flatMap(ability => ability.components.map(component => component.element))
-          .forEach(element => sources.add(element));
+          .forEach(element => sources.add(normalizeDamageType(element)));
       }
       Object.entries(PICKED_DAMAGE_SOURCES).forEach(([upgradeId, elements]) => {
         const upgrade = upgradeIndex.get(upgradeId);
         const rule = CONDITIONAL_UPGRADE_RULES[upgradeId];
-        if (upgrade && isUpgradeAvailable(upgrade) && abilityRequirementSatisfied(rule) && rawCount(upgradeId) > 0) elements.forEach(element => sources.add(element));
+        if (upgrade && isUpgradeAvailable(upgrade) && abilityRequirementSatisfied(rule) && rawCount(upgradeId) > 0) elements.forEach(element => sources.add(normalizeDamageType(element)));
       });
       return sources;
     }
@@ -2792,8 +2814,11 @@ Changelog:
     }
 
     function calculationElementMultipliers(stats) {
-      return Object.fromEntries(["physical", "fire", "frost", "electric", "luminous", "shadow", "poison"]
-        .map(element => [element, Number(stats[`${element}Damage`] || 0) / 100]));
+      return Object.fromEntries(Object.entries(DAMAGE_TYPE_STATS).map(([damageType, stat]) => {
+        const value = Number(stats[stat]);
+        if (!Number.isFinite(value)) throw new Error(`Missing damage stat: ${stat}`);
+        return [damageType, value / 100];
+      }));
     }
 
     function componentProjectileCount(component, mode = "normal") {
@@ -3109,12 +3134,16 @@ Changelog:
       const excludedKeys = new Set(excludedDamageSourceKeys());
       const sources = sourceModel.sources.map(source => {
         const exclusionKey = source.exclusionKey || source.id;
+        const element = normalizeDamageType(source.element);
+        const damageStat = damageStatForType(element);
         return {
           ...source,
+          element,
+          damageStat,
           exclusionKey,
           excluded: excludedKeys.has(exclusionKey),
           overallMultiplier: Number(stats.overallDamage || 0) / 100,
-          elementalMultiplier: elementalMultipliers[source.element] || 1
+          elementalMultiplier: elementalMultipliers[element]
         };
       });
       const calculation = EclipticaCalculationEngine.calculate({

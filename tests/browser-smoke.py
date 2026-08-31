@@ -538,6 +538,21 @@ with sync_playwright() as playwright:
     assert "Attack Speed" in twinmage_rate_formula
     assert "Hand Attack Speed" in twinmage_rate_formula
 
+    # The saved Twinmage ID is "lightning", but calculations use the canonical
+    # electric damage type and electricDamage stat.
+    page.evaluate("buildOptions.twinmagePrimary = 'lightning'; buildOptions.twinmagePrimaryDamage = true; buildOptions.twinmageSecondaryDamage = false; saveBuildOptions(); render();")
+    upgrade(page, "An_IQ_Too_High_")
+    electric_hand = page.evaluate("EclipticaBuildForge.buildUnifiedCalculationModel().attackSources.find(source => source.id === 'twinmage-hand-0')")
+    assert page.evaluate("latestCalculation.stats.electricDamage") == 125
+    assert electric_hand["element"] == "electric"
+    assert electric_hand["damageStat"] == "electricDamage"
+    assert electric_hand["damage"]["elementalMultiplier"] == 1.25
+    electric_multiplier = page.locator('[data-calculation-key="damage:twinmage-hand-0:elemental"]')
+    assert electric_multiplier.inner_text() == "x1.25"
+    assert electric_multiplier.get_attribute("data-calculation-refs") == "stat:electricDamage"
+    upgrade(page, "An_IQ_Too_High_", 0)
+    page.evaluate("buildOptions.twinmageSecondaryDamage = true; saveBuildOptions(); render();")
+
     page.evaluate("buildOptions.twinmagePrimary = 'frost'; buildOptions.twinmageSecondary = 'shadow'; saveBuildOptions(); render();")
     assert page.locator('[data-calculation-key="frozen:stacks"]').get_attribute("data-exact-value") == "8"
     assert page.locator('[data-calculation-key="frozen:duration"]').get_attribute("data-exact-value") == "4.8"
