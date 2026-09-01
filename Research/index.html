@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A provenance-first research wiki for reverse-engineering Ecliptica mechanics.">
+  <title>Ecliptica Research Wiki</title>
+  <link rel="stylesheet" href="css/research.css">
+</head>
+<body>
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand" href="#overview" aria-label="Ecliptica Research Wiki home">
+        <span class="brand-mark">E</span>
+        <span><span class="eyebrow">MECHANICS LAB</span><strong>Ecliptica Research Wiki</strong></span>
+      </a>
+      <label class="global-search" for="global-search">
+        <span aria-hidden="true">⌕</span>
+        <input id="global-search" type="search" placeholder="Search mechanics, questions, claims…" autocomplete="off">
+        <kbd>/</kbd>
+      </label>
+      <div class="top-meta"><span class="live-dot"></span><span id="import-date">Loading dataset…</span><button id="notes-visibility-toggle" class="topbar-button" type="button">Hide notes</button></div>
+    </header>
+
+    <div class="workspace">
+      <aside class="sidebar">
+        <nav class="main-nav" aria-label="Main navigation">
+          <p class="nav-label">Research index</p>
+          <a href="#overview" data-route="overview"><span>◈</span> Overview</a>
+          <a href="#upgrades" data-route="upgrades"><span>◇</span> Upgrades <b id="nav-upgrades">—</b></a>
+          <a href="#classes" data-route="classes"><span>◌</span> Classes <b id="nav-classes">—</b></a>
+          <a href="#abilities" data-route="abilities"><span>✦</span> Abilities <b id="nav-abilities">—</b></a>
+          <a href="#questions" data-route="questions"><span>?</span> Research Questions <b id="nav-questions">—</b></a>
+          <a href="#evidence" data-route="evidence"><span>⊙</span> Evidence <b id="nav-evidence">—</b></a>
+          <a href="#tests" data-route="tests"><span>□</span> Tests <b id="nav-tests">—</b></a>
+        </nav>
+        <div class="sidebar-note">
+          <span class="note-icon">!</span>
+          <div><strong>Uncertainty is data.</strong><p>Wiki text, player reports, hypotheses and test results stay separate here.</p></div>
+        </div>
+        <div class="sidebar-footer"><a href="README.md">How to contribute</a><span id="site-version">v—</span></div>
+      </aside>
+
+      <main id="app" tabindex="-1">
+        <div class="loading-state"><span class="spinner"></span> Loading research records…</div>
+      </main>
+      <aside id="page-notes" class="page-notes" aria-label="Notes for the current page">
+        <div class="page-notes-head"><div><span class="section-kicker">HANDOFF NOTES</span><h2>Note to Codex</h2></div><span id="notes-count" class="tag">0 saved</span></div>
+        <p class="page-notes-page" id="notes-page-label">Overview</p>
+        <textarea id="page-note" placeholder="Write what you want addressed on this page…"></textarea>
+        <div class="page-notes-actions"><button id="copy-notes" class="button" type="button">Copy all notes</button><button id="clear-notes" class="button danger-button" type="button">Clear all</button></div>
+        <p id="notes-status" class="page-notes-status" role="status"></p>
+        <p class="page-notes-help">Notes are saved in this browser and attached to the current route. Copy them before sending a message so the page and note travel together.</p>
+      </aside>
+    </div>
+  </div>
+  <script src="data/data.js"></script>
+  <script src="js/research.js"></script>
+</body>
+</html>

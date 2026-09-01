@@ -1,0 +1,3735 @@
+[
+  {
+    "id": "class-spellsword",
+    "entityType": "class",
+    "name": "Spellsword",
+    "icon": "Class1.png",
+    "imageFile": "Class1.png",
+    "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Class1.png",
+    "description": "You may call yourself a Spellsword, but you were ever really strong enough to wield a sword skillfully. However, who said your magical abilities can't make up for that?",
+    "startingStats": null,
+    "statModifiers": [],
+    "reportedMechanics": null,
+    "skills": [
+      {
+        "id": "skill-spellsword-telekinetic-strike",
+        "name": "Telekinetic Strike",
+        "type": "Primary",
+        "icon": "Spellsword-Primary.png",
+        "imageFile": "Spellsword-Primary.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Spellsword-Primary.png",
+        "description": "Swing your sword, dealing 65 PHYSICAL damage.\n10% chance to inflict BLEEDING status effect.",
+        "mechanics": {
+          "sourceText": "Swing your sword, dealing 65 PHYSICAL damage.\n10% chance to inflict BLEEDING status effect.",
+          "signals": {
+            "unknownTokens": [],
+            "numericMentions": [
+              "10",
+              "65 "
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": false,
+            "hasDamage": true,
+            "hasDamageNumber": true,
+            "hasOutgoingDamage": true,
+            "hasChance": true,
+            "hasDuration": false,
+            "hasCooldown": false,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": false
+          },
+          "damageBehavior": {
+            "createsDamageInstance": true,
+            "canCrit": null,
+            "critChance": null,
+            "critNotes": "The English wiki does not state whether this damage instance can critically strike.",
+            "canApplyStatusEffects": true,
+            "statusEffectChance": "10% chance to inflict BLEEDING status effect",
+            "statusNotes": "Explicit status-effect chance wording retained from source."
+          },
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Spellsword: Telekinetic Strike: It appears to create a distinct damage instance when its stated trigger occurs. Whether that damage instance can critically strike is not stated. The source gives status-effect application wording or a chance.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": []
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-spellsword",
+            "sourcePage": "Spellsword",
+            "section": "Skills > Primary: Telekinetic Strike",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Swing your sword, dealing 65 PHYSICAL damage.\n10% chance to inflict BLEEDING status effect.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation",
+              "damageBehavior"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "10",
+            "65 "
+          ],
+          "findings": [],
+          "unresolved": [
+            "question-skill-spellsword-telekinetic-strike-attack-interval",
+            "question-skill-spellsword-telekinetic-strike-crit-behavior"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      },
+      {
+        "id": "skill-spellsword-piercing-strike",
+        "name": "Piercing Strike",
+        "type": "Secondary",
+        "icon": "Spellsword-Secondary.png",
+        "imageFile": "Spellsword-Secondary.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Spellsword-Secondary.png",
+        "description": "Charge for up to X seconds and then release a mid-range piercing attack, dealing 85-170 PHYSICAL damage.\nUp to 50% chance to inflict BLEEDING status effect.\n* Range, Damage, and Bleed chance increases with charge time.\n* Charge time is reduced by Attack Speed.",
+        "mechanics": {
+          "sourceText": "Charge for up to X seconds and then release a mid-range piercing attack, dealing 85-170 PHYSICAL damage.\nUp to 50% chance to inflict BLEEDING status effect.\n* Range, Damage, and Bleed chance increases with charge time.\n* Charge time is reduced by Attack Speed.",
+          "signals": {
+            "unknownTokens": [
+              "X"
+            ],
+            "numericMentions": [
+              "170 ",
+              "50",
+              "85"
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": false,
+            "hasDamage": true,
+            "hasDamageNumber": true,
+            "hasOutgoingDamage": true,
+            "hasChance": true,
+            "hasDuration": false,
+            "hasCooldown": false,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": true
+          },
+          "damageBehavior": {
+            "createsDamageInstance": true,
+            "canCrit": null,
+            "critChance": null,
+            "critNotes": "The English wiki does not state whether this damage instance can critically strike.",
+            "canApplyStatusEffects": true,
+            "statusEffectChance": "50% chance to inflict BLEEDING status effect",
+            "statusNotes": "Explicit status-effect chance wording retained from source."
+          },
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Spellsword: Piercing Strike: It appears to create a distinct damage instance when its stated trigger occurs. Whether that damage instance can critically strike is not stated. The source gives status-effect application wording or a chance. The working model remains incomplete because the source contains unknown or placeholder values.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": [
+              "X"
+            ]
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-spellsword",
+            "sourcePage": "Spellsword",
+            "section": "Skills > Secondary: Piercing Strike",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Charge for up to X seconds and then release a mid-range piercing attack, dealing 85-170 PHYSICAL damage.\nUp to 50% chance to inflict BLEEDING status effect.\n* Range, Damage, and Bleed chance increases with charge time.\n* Charge time is reduced by Attack Speed.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation",
+              "damageBehavior"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "170 ",
+            "50",
+            "85"
+          ],
+          "findings": [
+            {
+              "label": "Charge time",
+              "value": "0.170–5.075 seconds",
+              "evidenceId": "EVID-JA-SPELLSWORD-PIERCING",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            },
+            {
+              "label": "Damage",
+              "value": "87–170",
+              "evidenceId": "EVID-JA-SPELLSWORD-PIERCING",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            },
+            {
+              "label": "Cooldown",
+              "value": "1.5 seconds",
+              "evidenceId": "EVID-JA-SPELLSWORD-PIERCING",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            },
+            {
+              "label": "Bleeding chance",
+              "value": "Up to 50%",
+              "evidenceId": "EVID-JA-SPELLSWORD-PIERCING",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            },
+            {
+              "label": "Attack Speed scaling",
+              "value": "Approximately 1.5% shorter charge time per 1% Attack Speed",
+              "evidenceId": "EVID-JA-SPELLSWORD-PIERCING",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            }
+          ],
+          "unresolved": [
+            "X",
+            "question-skill-spellsword-piercing-strike-attack-interval",
+            "question-skill-spellsword-piercing-strike-crit-behavior"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            },
+            {
+              "category": "Japanese wiki",
+              "confidence": "Reported",
+              "evidenceId": "EVID-JA-SPELLSWORD-PIERCING"
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      },
+      {
+        "id": "skill-spellsword-quick-dash",
+        "name": "Quick Dash",
+        "type": "Utility",
+        "icon": "Spellsword-Dash.png",
+        "imageFile": "Spellsword-Dash.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Spellsword-Dash.png",
+        "description": "Perform a dash in your current movement direction.\n* Has a very short period of I-frames at the beginning of the dash.\n* Can dash through purple attacks.\n3 second cooldown.",
+        "mechanics": {
+          "sourceText": "Perform a dash in your current movement direction.\n* Has a very short period of I-frames at the beginning of the dash.\n* Can dash through purple attacks.\n3 second cooldown.",
+          "signals": {
+            "unknownTokens": [],
+            "numericMentions": [
+              "3 second"
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": true,
+            "hasDamage": false,
+            "hasDamageNumber": false,
+            "hasOutgoingDamage": false,
+            "hasChance": false,
+            "hasDuration": false,
+            "hasCooldown": true,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": false
+          },
+          "damageBehavior": null,
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Spellsword: Quick Dash: The description appears to function as a passive modifier, condition, or utility effect rather than a direct damage source. The source describes a cooldown-gated action.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": []
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-spellsword",
+            "sourcePage": "Spellsword",
+            "section": "Skills > Utility: Quick Dash",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Perform a dash in your current movement direction.\n* Has a very short period of I-frames at the beginning of the dash.\n* Can dash through purple attacks.\n3 second cooldown.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "3 second"
+          ],
+          "findings": [],
+          "unresolved": [],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      }
+    ],
+    "upgradeIds": [
+      "upgrade-spellsword-spellsword-proficiency",
+      "upgrade-spellsword-spellsword-mastery",
+      "upgrade-spellsword-spellsword-burst",
+      "upgrade-spellsword-spellsword-swift-stab",
+      "upgrade-spellsword-spellsword-shieldbreaker",
+      "upgrade-spellsword-spellsword-whirlwind"
+    ],
+    "unknownFields": [
+      "starting stats",
+      "movement characteristics not stated numerically"
+    ],
+    "researchStatus": "Needs Testing",
+    "sourceRefs": [
+      {
+        "sourceId": "wiki-spellsword",
+        "sourcePage": "Spellsword",
+        "section": "Class overview",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "You may call yourself a Spellsword, but you were ever really strong enough to wield a sword skillfully. However, who said your magical abilities can't make up for that?",
+        "derivedFields": [
+          "name",
+          "description",
+          "icon",
+          "skills",
+          "startingStats"
+        ]
+      }
+    ],
+    "importedAt": "2026-08-07",
+    "importedFrom": "English Ecliptica Wiki",
+    "researchAudit": {
+      "status": "Reviewed",
+      "explicitEnglishValues": [],
+      "findings": [],
+      "unresolved": [],
+      "sourceTags": [
+        {
+          "category": "English wiki",
+          "confidence": "Source-stated",
+          "evidenceId": null
+        }
+      ],
+      "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+    }
+  },
+  {
+    "id": "class-twinmage",
+    "entityType": "class",
+    "name": "Twinmage",
+    "icon": "Class2.png",
+    "imageFile": "Class2.png",
+    "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Class2.png",
+    "description": "As much as you've always wanted to become a powerful sorcerer, some people just do not have the necessary talent and innate ability. But, you could always just rely on a pair of Elemental Hands to make up for that.",
+    "startingStats": null,
+    "statModifiers": [],
+    "reportedMechanics": {
+      "elementalHandAttackRates": {
+        "status": "Reported",
+        "appliesTo": [
+          "Flaming Hand",
+          "Ice Hand",
+          "Electric Hand",
+          "Wind Blade",
+          "Divine Hand",
+          "Profane Hand"
+        ],
+        "bothHands": {
+          "attacksPerSecond": 0.8,
+          "perHand": true
+        },
+        "singleHand": {
+          "attacksPerSecond": 1.4,
+          "perHand": true
+        },
+        "rawUserStatement": "0.8 attack speed per hand when using both hands and 1.4 attacks per second when only using both hands.",
+        "interpretationNote": "Stored as the two-hands versus single-hand states; the user's wording repeats 'both hands' for the second state and should be verified.",
+        "sourceType": "User-reported reading of the English wiki",
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-twinmage",
+            "sourcePage": "Twinmage",
+            "section": "Skills",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Firing only one hand will increase your attack speed by 75%",
+            "derivedFields": [
+              "qualitative one-hand attack-speed rule"
+            ]
+          }
+        ]
+      }
+    },
+    "skills": [
+      {
+        "id": "skill-twinmage-flaming-hand",
+        "name": "Flaming Hand",
+        "type": "Hand",
+        "icon": "Twinmage-Fireball.png",
+        "imageFile": "Twinmage-Fireball.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Twinmage-Fireball.png",
+        "description": "Launch a fireball, dealing 30 FIRE damage.\n10% chance to inflict BURNING status effect.\nHas a projectile speed of 16m/s and a max distance of 50m.",
+        "mechanics": {
+          "sourceText": "Launch a fireball, dealing 30 FIRE damage.\n10% chance to inflict BURNING status effect.\nHas a projectile speed of 16m/s and a max distance of 50m.",
+          "signals": {
+            "unknownTokens": [],
+            "numericMentions": [
+              "10",
+              "16m/s",
+              "30 ",
+              "50m"
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": false,
+            "hasDamage": true,
+            "hasDamageNumber": true,
+            "hasOutgoingDamage": true,
+            "hasChance": true,
+            "hasDuration": false,
+            "hasCooldown": false,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": false
+          },
+          "damageBehavior": {
+            "createsDamageInstance": true,
+            "canCrit": null,
+            "critChance": null,
+            "critNotes": "The English wiki does not state whether this damage instance can critically strike.",
+            "canApplyStatusEffects": true,
+            "statusEffectChance": "10% chance to inflict BURNING status effect",
+            "statusNotes": "Explicit status-effect chance wording retained from source."
+          },
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Twinmage: Flaming Hand: It appears to create a distinct damage instance when its stated trigger occurs. Whether that damage instance can critically strike is not stated. The source gives status-effect application wording or a chance.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": []
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-twinmage",
+            "sourcePage": "Twinmage",
+            "section": "Skills > Hand: Flaming Hand",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Launch a fireball, dealing 30 FIRE damage.\n10% chance to inflict BURNING status effect.\nHas a projectile speed of 16m/s and a max distance of 50m.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation",
+              "damageBehavior"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "10",
+            "16m/s",
+            "30 ",
+            "50m"
+          ],
+          "findings": [
+            {
+              "label": "Both hands active rate",
+              "value": "0.8 attacks/s per hand",
+              "evidenceId": "EVID-JA-TWINMAGE-HANDS",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            },
+            {
+              "label": "Single hand active rate",
+              "value": "1.4 attacks/s per hand",
+              "evidenceId": "EVID-JA-TWINMAGE-HANDS",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            },
+            {
+              "label": "Single-hand speed change",
+              "value": "+75% attack speed",
+              "evidenceId": "EVID-JA-TWINMAGE-HANDS",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            },
+            {
+              "label": "Base elemental-hand status chance",
+              "value": "10% for each listed hand/status pair",
+              "evidenceId": "EVID-JA-TWINMAGE-HANDS",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            }
+          ],
+          "unresolved": [
+            "Q-USER-TWINMAGE-MASTERY-STATUS-CHANCE",
+            "question-skill-twinmage-flaming-hand-crit-behavior"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            },
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": "EVID-USER-TWINMAGE-RATE"
+            },
+            {
+              "category": "Japanese wiki",
+              "confidence": "Reported",
+              "evidenceId": "EVID-JA-TWINMAGE-HANDS"
+            },
+            {
+              "category": "Japanese wiki",
+              "confidence": "Reported",
+              "evidenceId": "EVID-JA-TWINMAGE-MASTERY"
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      },
+      {
+        "id": "skill-twinmage-ice-hand",
+        "name": "Ice Hand",
+        "type": "Hand",
+        "icon": "Twinmage-Ice-Missile.png",
+        "imageFile": "Twinmage-Ice-Missile.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Twinmage-Ice-Missile.png",
+        "description": "Launch a frost missile, dealing 30 FROST damage.\n10% chance to inflict FREEZING status effect.\nHas a projectile speed of 20m/s and a max distance of 50m.",
+        "mechanics": {
+          "sourceText": "Launch a frost missile, dealing 30 FROST damage.\n10% chance to inflict FREEZING status effect.\nHas a projectile speed of 20m/s and a max distance of 50m.",
+          "signals": {
+            "unknownTokens": [],
+            "numericMentions": [
+              "10",
+              "20m/s",
+              "30 ",
+              "50m"
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": false,
+            "hasDamage": true,
+            "hasDamageNumber": true,
+            "hasOutgoingDamage": true,
+            "hasChance": true,
+            "hasDuration": false,
+            "hasCooldown": false,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": false
+          },
+          "damageBehavior": {
+            "createsDamageInstance": true,
+            "canCrit": null,
+            "critChance": null,
+            "critNotes": "The English wiki does not state whether this damage instance can critically strike.",
+            "canApplyStatusEffects": true,
+            "statusEffectChance": "10% chance to inflict FREEZING status effect",
+            "statusNotes": "Explicit status-effect chance wording retained from source."
+          },
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Twinmage: Ice Hand: It appears to create a distinct damage instance when its stated trigger occurs. Whether that damage instance can critically strike is not stated. The source gives status-effect application wording or a chance.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": []
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-twinmage",
+            "sourcePage": "Twinmage",
+            "section": "Skills > Hand: Ice Hand",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Launch a frost missile, dealing 30 FROST damage.\n10% chance to inflict FREEZING status effect.\nHas a projectile speed of 20m/s and a max distance of 50m.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation",
+              "damageBehavior"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "10",
+            "20m/s",
+            "30 ",
+            "50m"
+          ],
+          "findings": [
+            {
+              "label": "Both hands active rate",
+              "value": "0.8 attacks/s per hand",
+              "evidenceId": "EVID-JA-TWINMAGE-HANDS",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            },
+            {
+              "label": "Single hand active rate",
+              "value": "1.4 attacks/s per hand",
+              "evidenceId": "EVID-JA-TWINMAGE-HANDS",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            },
+            {
+              "label": "Single-hand speed change",
+              "value": "+75% attack speed",
+              "evidenceId": "EVID-JA-TWINMAGE-HANDS",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            },
+            {
+              "label": "Base elemental-hand status chance",
+              "value": "10% for each listed hand/status pair",
+              "evidenceId": "EVID-JA-TWINMAGE-HANDS",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            }
+          ],
+          "unresolved": [
+            "Q-USER-TWINMAGE-MASTERY-STATUS-CHANCE",
+            "question-skill-twinmage-ice-hand-crit-behavior"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            },
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": "EVID-USER-TWINMAGE-RATE"
+            },
+            {
+              "category": "Japanese wiki",
+              "confidence": "Reported",
+              "evidenceId": "EVID-JA-TWINMAGE-HANDS"
+            },
+            {
+              "category": "Japanese wiki",
+              "confidence": "Reported",
+              "evidenceId": "EVID-JA-TWINMAGE-MASTERY"
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      },
+      {
+        "id": "skill-twinmage-electric-hand",
+        "name": "Electric Hand",
+        "type": "Hand",
+        "icon": "Twinmage-Thunderbolt.png",
+        "imageFile": "Twinmage-Thunderbolt.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Twinmage-Thunderbolt.png",
+        "description": "Cast a bolt of lightning, dealing 30 ELECTRIC damage.\n10% chance to inflict PARALYZED status effect.\nHit scan with a max distance of 50m.",
+        "mechanics": {
+          "sourceText": "Cast a bolt of lightning, dealing 30 ELECTRIC damage.\n10% chance to inflict PARALYZED status effect.\nHit scan with a max distance of 50m.",
+          "signals": {
+            "unknownTokens": [],
+            "numericMentions": [
+              "10",
+              "30 ",
+              "50m"
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": false,
+            "hasDamage": true,
+            "hasDamageNumber": true,
+            "hasOutgoingDamage": true,
+            "hasChance": true,
+            "hasDuration": false,
+            "hasCooldown": false,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": false
+          },
+          "damageBehavior": {
+            "createsDamageInstance": true,
+            "canCrit": null,
+            "critChance": null,
+            "critNotes": "The English wiki does not state whether this damage instance can critically strike.",
+            "canApplyStatusEffects": true,
+            "statusEffectChance": "10% chance to inflict PARALYZED status effect",
+            "statusNotes": "Explicit status-effect chance wording retained from source."
+          },
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Twinmage: Electric Hand: It appears to create a distinct damage instance when its stated trigger occurs. Whether that damage instance can critically strike is not stated. The source gives status-effect application wording or a chance.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": []
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-twinmage",
+            "sourcePage": "Twinmage",
+            "section": "Skills > Hand: Electric Hand",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Cast a bolt of lightning, dealing 30 ELECTRIC damage.\n10% chance to inflict PARALYZED status effect.\nHit scan with a max distance of 50m.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation",
+              "damageBehavior"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "10",
+            "30 ",
+            "50m"
+          ],
+          "findings": [
+            {
+              "label": "Both hands active rate",
+              "value": "0.8 attacks/s per hand",
+              "evidenceId": "EVID-JA-TWINMAGE-HANDS",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            },
+            {
+              "label": "Single hand active rate",
+              "value": "1.4 attacks/s per hand",
+              "evidenceId": "EVID-JA-TWINMAGE-HANDS",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            },
+            {
+              "label": "Single-hand speed change",
+              "value": "+75% attack speed",
+              "evidenceId": "EVID-JA-TWINMAGE-HANDS",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            },
+            {
+              "label": "Base elemental-hand status chance",
+              "value": "10% for each listed hand/status pair",
+              "evidenceId": "EVID-JA-TWINMAGE-HANDS",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            }
+          ],
+          "unresolved": [
+            "Q-USER-TWINMAGE-MASTERY-STATUS-CHANCE",
+            "question-skill-twinmage-electric-hand-crit-behavior"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            },
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": "EVID-USER-TWINMAGE-RATE"
+            },
+            {
+              "category": "Japanese wiki",
+              "confidence": "Reported",
+              "evidenceId": "EVID-JA-TWINMAGE-HANDS"
+            },
+            {
+              "category": "Japanese wiki",
+              "confidence": "Reported",
+              "evidenceId": "EVID-JA-TWINMAGE-MASTERY"
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      },
+      {
+        "id": "skill-twinmage-wind-blade",
+        "name": "Wind Blade",
+        "type": "Hand",
+        "icon": "Twinmage-Windblade.png",
+        "imageFile": "Twinmage-Windblade.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Twinmage-Windblade.png",
+        "description": "Launch a whirlwind, dealing 30 PHYSICAL damage.\n10% chance to inflict BLEEDING status effect.\nHas a projectile speed of 18m/s and a max distance of 50m.",
+        "mechanics": {
+          "sourceText": "Launch a whirlwind, dealing 30 PHYSICAL damage.\n10% chance to inflict BLEEDING status effect.\nHas a projectile speed of 18m/s and a max distance of 50m.",
+          "signals": {
+            "unknownTokens": [],
+            "numericMentions": [
+              "10",
+              "18m/s",
+              "30 ",
+              "50m"
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": false,
+            "hasDamage": true,
+            "hasDamageNumber": true,
+            "hasOutgoingDamage": true,
+            "hasChance": true,
+            "hasDuration": false,
+            "hasCooldown": false,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": false
+          },
+          "damageBehavior": {
+            "createsDamageInstance": true,
+            "canCrit": null,
+            "critChance": null,
+            "critNotes": "The English wiki does not state whether this damage instance can critically strike.",
+            "canApplyStatusEffects": true,
+            "statusEffectChance": "10% chance to inflict BLEEDING status effect",
+            "statusNotes": "Explicit status-effect chance wording retained from source."
+          },
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Twinmage: Wind Blade: It appears to create a distinct damage instance when its stated trigger occurs. Whether that damage instance can critically strike is not stated. The source gives status-effect application wording or a chance.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": []
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-twinmage",
+            "sourcePage": "Twinmage",
+            "section": "Skills > Hand: Wind Blade",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Launch a whirlwind, dealing 30 PHYSICAL damage.\n10% chance to inflict BLEEDING status effect.\nHas a projectile speed of 18m/s and a max distance of 50m.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation",
+              "damageBehavior"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "10",
+            "18m/s",
+            "30 ",
+            "50m"
+          ],
+          "findings": [
+            {
+              "label": "Both hands active rate",
+              "value": "0.8 attacks/s per hand",
+              "evidenceId": "EVID-JA-TWINMAGE-HANDS",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            },
+            {
+              "label": "Single hand active rate",
+              "value": "1.4 attacks/s per hand",
+              "evidenceId": "EVID-JA-TWINMAGE-HANDS",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            },
+            {
+              "label": "Single-hand speed change",
+              "value": "+75% attack speed",
+              "evidenceId": "EVID-JA-TWINMAGE-HANDS",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            },
+            {
+              "label": "Base elemental-hand status chance",
+              "value": "10% for each listed hand/status pair",
+              "evidenceId": "EVID-JA-TWINMAGE-HANDS",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            }
+          ],
+          "unresolved": [
+            "Q-USER-TWINMAGE-MASTERY-STATUS-CHANCE",
+            "question-skill-twinmage-wind-blade-crit-behavior"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            },
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": "EVID-USER-TWINMAGE-RATE"
+            },
+            {
+              "category": "Japanese wiki",
+              "confidence": "Reported",
+              "evidenceId": "EVID-JA-TWINMAGE-HANDS"
+            },
+            {
+              "category": "Japanese wiki",
+              "confidence": "Reported",
+              "evidenceId": "EVID-JA-TWINMAGE-MASTERY"
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      },
+      {
+        "id": "skill-twinmage-divine-hand",
+        "name": "Divine Hand",
+        "type": "Hand",
+        "icon": "Twinmage-Light-Ball.png",
+        "imageFile": "Twinmage-Light-Ball.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Twinmage-Light-Ball.png",
+        "description": "Launch a ball of light, dealing 35 LUMINOUS damage.\n10% chance to apply WEAKENED status effect.\nHas a projectile speed of 24m/s and a max distance of 50m.",
+        "mechanics": {
+          "sourceText": "Launch a ball of light, dealing 35 LUMINOUS damage.\n10% chance to apply WEAKENED status effect.\nHas a projectile speed of 24m/s and a max distance of 50m.",
+          "signals": {
+            "unknownTokens": [],
+            "numericMentions": [
+              "10",
+              "24m/s",
+              "35 ",
+              "50m"
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": false,
+            "hasDamage": true,
+            "hasDamageNumber": true,
+            "hasOutgoingDamage": true,
+            "hasChance": true,
+            "hasDuration": false,
+            "hasCooldown": false,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": false
+          },
+          "damageBehavior": {
+            "createsDamageInstance": true,
+            "canCrit": null,
+            "critChance": null,
+            "critNotes": "The English wiki does not state whether this damage instance can critically strike.",
+            "canApplyStatusEffects": true,
+            "statusEffectChance": "10% chance to apply WEAKENED status effect",
+            "statusNotes": "Explicit status-effect chance wording retained from source."
+          },
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Twinmage: Divine Hand: It appears to create a distinct damage instance when its stated trigger occurs. Whether that damage instance can critically strike is not stated. The source gives status-effect application wording or a chance.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": []
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-twinmage",
+            "sourcePage": "Twinmage",
+            "section": "Skills > Hand: Divine Hand",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Launch a ball of light, dealing 35 LUMINOUS damage.\n10% chance to apply WEAKENED status effect.\nHas a projectile speed of 24m/s and a max distance of 50m.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation",
+              "damageBehavior"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "10",
+            "24m/s",
+            "35 ",
+            "50m"
+          ],
+          "findings": [
+            {
+              "label": "Both hands active rate",
+              "value": "0.8 attacks/s per hand",
+              "evidenceId": "EVID-JA-TWINMAGE-HANDS",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            },
+            {
+              "label": "Single hand active rate",
+              "value": "1.4 attacks/s per hand",
+              "evidenceId": "EVID-JA-TWINMAGE-HANDS",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            },
+            {
+              "label": "Single-hand speed change",
+              "value": "+75% attack speed",
+              "evidenceId": "EVID-JA-TWINMAGE-HANDS",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            },
+            {
+              "label": "Base elemental-hand status chance",
+              "value": "10% for each listed hand/status pair",
+              "evidenceId": "EVID-JA-TWINMAGE-HANDS",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            }
+          ],
+          "unresolved": [
+            "Q-USER-TWINMAGE-MASTERY-STATUS-CHANCE",
+            "question-skill-twinmage-divine-hand-crit-behavior"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            },
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": "EVID-USER-TWINMAGE-RATE"
+            },
+            {
+              "category": "Japanese wiki",
+              "confidence": "Reported",
+              "evidenceId": "EVID-JA-TWINMAGE-HANDS"
+            },
+            {
+              "category": "Japanese wiki",
+              "confidence": "Reported",
+              "evidenceId": "EVID-JA-TWINMAGE-MASTERY"
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      },
+      {
+        "id": "skill-twinmage-profane-hand",
+        "name": "Profane Hand",
+        "type": "Hand",
+        "icon": "Twinmage-Dark-Ball.png",
+        "imageFile": "Twinmage-Dark-Ball.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Twinmage-Dark-Ball.png",
+        "description": "Launch a shadow missile, dealing 20 SHADOW damage.\n10% chance to apply BREACHED status effect.\nHas a projectile speed of 12m/s and a max distance of 50m.",
+        "mechanics": {
+          "sourceText": "Launch a shadow missile, dealing 20 SHADOW damage.\n10% chance to apply BREACHED status effect.\nHas a projectile speed of 12m/s and a max distance of 50m.",
+          "signals": {
+            "unknownTokens": [],
+            "numericMentions": [
+              "10",
+              "12m/s",
+              "20 ",
+              "50m"
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": false,
+            "hasDamage": true,
+            "hasDamageNumber": true,
+            "hasOutgoingDamage": true,
+            "hasChance": true,
+            "hasDuration": false,
+            "hasCooldown": false,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": false
+          },
+          "damageBehavior": {
+            "createsDamageInstance": true,
+            "canCrit": null,
+            "critChance": null,
+            "critNotes": "The English wiki does not state whether this damage instance can critically strike.",
+            "canApplyStatusEffects": true,
+            "statusEffectChance": "10% chance to apply BREACHED status effect",
+            "statusNotes": "Explicit status-effect chance wording retained from source."
+          },
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Twinmage: Profane Hand: It appears to create a distinct damage instance when its stated trigger occurs. Whether that damage instance can critically strike is not stated. The source gives status-effect application wording or a chance.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": []
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-twinmage",
+            "sourcePage": "Twinmage",
+            "section": "Skills > Hand: Profane Hand",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Launch a shadow missile, dealing 20 SHADOW damage.\n10% chance to apply BREACHED status effect.\nHas a projectile speed of 12m/s and a max distance of 50m.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation",
+              "damageBehavior"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "10",
+            "12m/s",
+            "20 ",
+            "50m"
+          ],
+          "findings": [
+            {
+              "label": "Both hands active rate",
+              "value": "0.8 attacks/s per hand",
+              "evidenceId": "EVID-JA-TWINMAGE-HANDS",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            },
+            {
+              "label": "Single hand active rate",
+              "value": "1.4 attacks/s per hand",
+              "evidenceId": "EVID-JA-TWINMAGE-HANDS",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            },
+            {
+              "label": "Single-hand speed change",
+              "value": "+75% attack speed",
+              "evidenceId": "EVID-JA-TWINMAGE-HANDS",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            },
+            {
+              "label": "Base elemental-hand status chance",
+              "value": "10% for each listed hand/status pair",
+              "evidenceId": "EVID-JA-TWINMAGE-HANDS",
+              "status": "Reported",
+              "confidence": "Medium",
+              "sourceCategory": "Japanese wiki"
+            }
+          ],
+          "unresolved": [
+            "Q-USER-TWINMAGE-MASTERY-STATUS-CHANCE",
+            "question-skill-twinmage-profane-hand-crit-behavior"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            },
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": "EVID-USER-TWINMAGE-RATE"
+            },
+            {
+              "category": "Japanese wiki",
+              "confidence": "Reported",
+              "evidenceId": "EVID-JA-TWINMAGE-HANDS"
+            },
+            {
+              "category": "Japanese wiki",
+              "confidence": "Reported",
+              "evidenceId": "EVID-JA-TWINMAGE-MASTERY"
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      },
+      {
+        "id": "skill-twinmage-quickwarp",
+        "name": "Quickwarp",
+        "type": "Utility",
+        "icon": "Twinmage-Teleport.png",
+        "imageFile": "Twinmage-Teleport.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Twinmage-Teleport.png",
+        "description": "Teleport 15 meters to where you are pointing.\n6 second cooldown.",
+        "mechanics": {
+          "sourceText": "Teleport 15 meters to where you are pointing.\n6 second cooldown.",
+          "signals": {
+            "unknownTokens": [],
+            "numericMentions": [
+              "15 meters",
+              "6 second"
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": true,
+            "hasDamage": false,
+            "hasDamageNumber": false,
+            "hasOutgoingDamage": false,
+            "hasChance": false,
+            "hasDuration": false,
+            "hasCooldown": true,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": false
+          },
+          "damageBehavior": null,
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Twinmage: Quickwarp: The description appears to function as a passive modifier, condition, or utility effect rather than a direct damage source. The source describes a cooldown-gated action.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": []
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-twinmage",
+            "sourcePage": "Twinmage",
+            "section": "Skills > Utility: Quickwarp",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Teleport 15 meters to where you are pointing.\n6 second cooldown.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "15 meters",
+            "6 second"
+          ],
+          "findings": [],
+          "unresolved": [],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      }
+    ],
+    "upgradeIds": [
+      "upgrade-twinmage-twinmage-sinistra",
+      "upgrade-twinmage-twinmage-dextra",
+      "upgrade-twinmage-twinmage-proficiency",
+      "upgrade-twinmage-twinmage-rush",
+      "upgrade-twinmage-twinmage-guarded",
+      "upgrade-twinmage-twinmage-mastery",
+      "upgrade-twinmage-twinmage-wicked-sign",
+      "upgrade-twinmage-twinmage-retaliation"
+    ],
+    "unknownFields": [
+      "starting stats",
+      "movement characteristics not stated numerically"
+    ],
+    "researchStatus": "Unknown",
+    "sourceRefs": [
+      {
+        "sourceId": "wiki-twinmage",
+        "sourcePage": "Twinmage",
+        "section": "Class overview",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "As much as you've always wanted to become a powerful sorcerer, some people just do not have the necessary talent and innate ability. But, you could always just rely on a pair of Elemental Hands to make up for that.",
+        "derivedFields": [
+          "name",
+          "description",
+          "icon",
+          "skills",
+          "startingStats"
+        ]
+      }
+    ],
+    "importedAt": "2026-08-07",
+    "importedFrom": "English Ecliptica Wiki",
+    "researchAudit": {
+      "status": "Reviewed",
+      "explicitEnglishValues": [],
+      "findings": [
+        {
+          "label": "Both hands active rate",
+          "value": "0.8 attacks/s per hand",
+          "evidenceId": "EVID-JA-TWINMAGE-HANDS",
+          "status": "Reported",
+          "confidence": "Medium",
+          "sourceCategory": "Japanese wiki"
+        },
+        {
+          "label": "Single hand active rate",
+          "value": "1.4 attacks/s per hand",
+          "evidenceId": "EVID-JA-TWINMAGE-HANDS",
+          "status": "Reported",
+          "confidence": "Medium",
+          "sourceCategory": "Japanese wiki"
+        },
+        {
+          "label": "Single-hand speed change",
+          "value": "+75% attack speed",
+          "evidenceId": "EVID-JA-TWINMAGE-HANDS",
+          "status": "Reported",
+          "confidence": "Medium",
+          "sourceCategory": "Japanese wiki"
+        },
+        {
+          "label": "Base elemental-hand status chance",
+          "value": "10% for each listed hand/status pair",
+          "evidenceId": "EVID-JA-TWINMAGE-HANDS",
+          "status": "Reported",
+          "confidence": "Medium",
+          "sourceCategory": "Japanese wiki"
+        }
+      ],
+      "unresolved": [
+        "Q-USER-TWINMAGE-HAND-RATE",
+        "Q-USER-TWINMAGE-MASTERY-STATUS-CHANCE"
+      ],
+      "sourceTags": [
+        {
+          "category": "English wiki",
+          "confidence": "Source-stated",
+          "evidenceId": null
+        },
+        {
+          "category": "English wiki",
+          "confidence": "Source-stated",
+          "evidenceId": "EVID-USER-TWINMAGE-RATE"
+        },
+        {
+          "category": "Japanese wiki",
+          "confidence": "Reported",
+          "evidenceId": "EVID-JA-TWINMAGE-HANDS"
+        },
+        {
+          "category": "Japanese wiki",
+          "confidence": "Reported",
+          "evidenceId": "EVID-JA-TWINMAGE-MASTERY"
+        }
+      ],
+      "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+    }
+  },
+  {
+    "id": "class-gunmancer",
+    "entityType": "class",
+    "name": "Gunmancer",
+    "icon": "Class3.png",
+    "imageFile": "Class3.png",
+    "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Class3.png",
+    "description": "With enough cybernetic enhancements and a brain-interfaced Blast Cannon, anyone can become a Sorcerer these days.",
+    "startingStats": null,
+    "statModifiers": [],
+    "reportedMechanics": null,
+    "skills": [
+      {
+        "id": "skill-gunmancer-va-11-blast-cannon",
+        "name": "VA-11 Blast Cannon",
+        "type": "Mechanic",
+        "icon": "Gunmancer-Primary.png",
+        "imageFile": "Gunmancer-Primary.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Gunmancer-Primary.png",
+        "description": "Fire a long-range hit scan attack every 2 seconds which deals 50 ELECTRIC Damage.\nAdditionally, apply a small explosion where your attack hits, dealing 50% of the projectile's Damage.\nHas an 15% chance to apply the PARALYZED debuff to enemies.\nOR",
+        "mechanics": {
+          "sourceText": "Fire a long-range hit scan attack every 2 seconds which deals 50 ELECTRIC Damage.\nAdditionally, apply a small explosion where your attack hits, dealing 50% of the projectile's Damage.\nHas an 15% chance to apply the PARALYZED debuff to enemies.\nOR",
+          "signals": {
+            "unknownTokens": [],
+            "numericMentions": [
+              "11 ",
+              "15",
+              "2 seconds",
+              "50",
+              "50 "
+            ],
+            "hasPeriodic": true,
+            "hasExplicitInterval": true,
+            "hasDamage": true,
+            "hasDamageNumber": true,
+            "hasOutgoingDamage": true,
+            "hasChance": true,
+            "hasDuration": false,
+            "hasCooldown": false,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": false
+          },
+          "damageBehavior": {
+            "createsDamageInstance": true,
+            "canCrit": null,
+            "critChance": null,
+            "critNotes": "The English wiki does not state whether this damage instance can critically strike.",
+            "canApplyStatusEffects": true,
+            "statusEffectChance": "15% chance to apply the PARALYZED",
+            "statusNotes": "Explicit status-effect chance wording retained from source."
+          },
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Gunmancer: VA-11 Blast Cannon: The wording suggests an automatic recurring trigger rather than a manually activated one. It appears to create a distinct damage instance when its stated trigger occurs. Whether that damage instance can critically strike is not stated. The source gives status-effect application wording or a chance.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": []
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-gunmancer",
+            "sourcePage": "Gunmancer",
+            "section": "Skills > VA-11 Blast Cannon",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Fire a long-range hit scan attack every 2 seconds which deals 50 ELECTRIC Damage.\nAdditionally, apply a small explosion where your attack hits, dealing 50% of the projectile's Damage.\nHas an 15% chance to apply the PARALYZED debuff to enemies.\nOR",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation",
+              "damageBehavior"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "11 ",
+            "15",
+            "2 seconds",
+            "50",
+            "50 "
+          ],
+          "findings": [],
+          "unresolved": [
+            "question-skill-gunmancer-va-11-blast-cannon-crit-behavior"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      },
+      {
+        "id": "skill-gunmancer-kinetic-fletchette",
+        "name": "Kinetic Fletchette",
+        "type": "Mechanic",
+        "icon": "Gunmancer-Flechette.png",
+        "imageFile": "Gunmancer-Flechette.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Gunmancer-Flechette.png",
+        "description": "Fire a long-range projectile every X seconds which deals 75 PHYSICAL Damage. The projectile can pierce multiple enemies.\n15% Chance to inflict the BLEEDING status effect.",
+        "mechanics": {
+          "sourceText": "Fire a long-range projectile every X seconds which deals 75 PHYSICAL Damage. The projectile can pierce multiple enemies.\n15% Chance to inflict the BLEEDING status effect.",
+          "signals": {
+            "unknownTokens": [
+              "X"
+            ],
+            "numericMentions": [
+              "15",
+              "75 "
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": false,
+            "hasDamage": true,
+            "hasDamageNumber": true,
+            "hasOutgoingDamage": true,
+            "hasChance": true,
+            "hasDuration": false,
+            "hasCooldown": false,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": true
+          },
+          "damageBehavior": {
+            "createsDamageInstance": true,
+            "canCrit": null,
+            "critChance": null,
+            "critNotes": "The English wiki does not state whether this damage instance can critically strike.",
+            "canApplyStatusEffects": true,
+            "statusEffectChance": "15% Chance to inflict the BLEEDING status effect",
+            "statusNotes": "Explicit status-effect chance wording retained from source."
+          },
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Gunmancer: Kinetic Fletchette: It appears to create a distinct damage instance when its stated trigger occurs. Whether that damage instance can critically strike is not stated. The source gives status-effect application wording or a chance. The working model remains incomplete because the source contains unknown or placeholder values.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": [
+              "X"
+            ]
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-gunmancer",
+            "sourcePage": "Gunmancer",
+            "section": "Skills > Kinetic Fletchette",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Fire a long-range projectile every X seconds which deals 75 PHYSICAL Damage. The projectile can pierce multiple enemies.\n15% Chance to inflict the BLEEDING status effect.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation",
+              "damageBehavior"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "15",
+            "75 "
+          ],
+          "findings": [],
+          "unresolved": [
+            "X",
+            "question-skill-gunmancer-kinetic-fletchette-crit-behavior"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      },
+      {
+        "id": "skill-gunmancer-firebomb",
+        "name": "Firebomb",
+        "type": "Mechanic",
+        "icon": "Gunmancer-Firebomb.png",
+        "imageFile": "Gunmancer-Firebomb.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Gunmancer-Firebomb.png",
+        "description": "Launch an explosive projectile with high gravity every X seconds which deals 50 FIRE Damage.\nThis attack explodes in a wide radius when it hits, dealing 100% of the projectile's Damage.",
+        "mechanics": {
+          "sourceText": "Launch an explosive projectile with high gravity every X seconds which deals 50 FIRE Damage.\nThis attack explodes in a wide radius when it hits, dealing 100% of the projectile's Damage.",
+          "signals": {
+            "unknownTokens": [
+              "X"
+            ],
+            "numericMentions": [
+              "100",
+              "50 "
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": false,
+            "hasDamage": true,
+            "hasDamageNumber": true,
+            "hasOutgoingDamage": true,
+            "hasChance": false,
+            "hasDuration": false,
+            "hasCooldown": false,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": true
+          },
+          "damageBehavior": {
+            "createsDamageInstance": true,
+            "canCrit": null,
+            "critChance": null,
+            "critNotes": "The English wiki does not state whether this damage instance can critically strike.",
+            "canApplyStatusEffects": null,
+            "statusEffectChance": null,
+            "statusNotes": "The English wiki does not state whether this damage instance can apply status effects or what chance applies."
+          },
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Gunmancer: Firebomb: It appears to create a distinct damage instance when its stated trigger occurs. Whether that damage instance can critically strike is not stated. Whether that damage instance can apply status effects is not stated. The working model remains incomplete because the source contains unknown or placeholder values.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": [
+              "X"
+            ]
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-gunmancer",
+            "sourcePage": "Gunmancer",
+            "section": "Skills > Firebomb",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Launch an explosive projectile with high gravity every X seconds which deals 50 FIRE Damage.\nThis attack explodes in a wide radius when it hits, dealing 100% of the projectile's Damage.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation",
+              "damageBehavior"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "100",
+            "50 "
+          ],
+          "findings": [],
+          "unresolved": [
+            "X",
+            "question-skill-gunmancer-firebomb-crit-behavior",
+            "question-skill-gunmancer-firebomb-status-behavior"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      },
+      {
+        "id": "skill-gunmancer-photon-condenser",
+        "name": "Photon Condenser",
+        "type": "Mechanic",
+        "icon": "Gumancer-Photon-Cannon.png",
+        "imageFile": "Gumancer-Photon-Cannon.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Gumancer-Photon-Cannon.png",
+        "description": "Fire fast bullets every 0.25 seconds which deals 10 LUMINOUS Damage.\n5% Chance to inflict the WEAKENED status effect.",
+        "mechanics": {
+          "sourceText": "Fire fast bullets every 0.25 seconds which deals 10 LUMINOUS Damage.\n5% Chance to inflict the WEAKENED status effect.",
+          "signals": {
+            "unknownTokens": [],
+            "numericMentions": [
+              "0.25 seconds",
+              "10 ",
+              "5"
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": true,
+            "hasDamage": true,
+            "hasDamageNumber": true,
+            "hasOutgoingDamage": true,
+            "hasChance": true,
+            "hasDuration": false,
+            "hasCooldown": false,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": false
+          },
+          "damageBehavior": {
+            "createsDamageInstance": true,
+            "canCrit": null,
+            "critChance": null,
+            "critNotes": "The English wiki does not state whether this damage instance can critically strike.",
+            "canApplyStatusEffects": true,
+            "statusEffectChance": "5% Chance to inflict the WEAKENED status effect",
+            "statusNotes": "Explicit status-effect chance wording retained from source."
+          },
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Gunmancer: Photon Condenser: It appears to create a distinct damage instance when its stated trigger occurs. Whether that damage instance can critically strike is not stated. The source gives status-effect application wording or a chance.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": []
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-gunmancer",
+            "sourcePage": "Gunmancer",
+            "section": "Skills > Photon Condenser",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Fire fast bullets every 0.25 seconds which deals 10 LUMINOUS Damage.\n5% Chance to inflict the WEAKENED status effect.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation",
+              "damageBehavior"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "0.25 seconds",
+            "10 ",
+            "5"
+          ],
+          "findings": [],
+          "unresolved": [
+            "question-skill-gunmancer-photon-condenser-crit-behavior"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      },
+      {
+        "id": "skill-gunmancer-antimatter-accelerator",
+        "name": "Antimatter Accelerator",
+        "type": "Mechanic",
+        "icon": "Gunmancer-Dark-Rifle.png",
+        "imageFile": "Gunmancer-Dark-Rifle.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Gunmancer-Dark-Rifle.png",
+        "description": "Fire a scattered blast of five projectiles every X seconds which each deal 8 SHADOW Damage. Hold to narrow the spread.\n5% Chance to inflict the BREACHED status effect.",
+        "mechanics": {
+          "sourceText": "Fire a scattered blast of five projectiles every X seconds which each deal 8 SHADOW Damage. Hold to narrow the spread.\n5% Chance to inflict the BREACHED status effect.",
+          "signals": {
+            "unknownTokens": [
+              "X"
+            ],
+            "numericMentions": [
+              "5",
+              "8 "
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": false,
+            "hasDamage": true,
+            "hasDamageNumber": true,
+            "hasOutgoingDamage": true,
+            "hasChance": true,
+            "hasDuration": false,
+            "hasCooldown": false,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": true
+          },
+          "damageBehavior": {
+            "createsDamageInstance": true,
+            "canCrit": null,
+            "critChance": null,
+            "critNotes": "The English wiki does not state whether this damage instance can critically strike.",
+            "canApplyStatusEffects": true,
+            "statusEffectChance": "5% Chance to inflict the BREACHED status effect",
+            "statusNotes": "Explicit status-effect chance wording retained from source."
+          },
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Gunmancer: Antimatter Accelerator: It appears to create a distinct damage instance when its stated trigger occurs. Whether that damage instance can critically strike is not stated. The source gives status-effect application wording or a chance. The working model remains incomplete because the source contains unknown or placeholder values.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": [
+              "X"
+            ]
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-gunmancer",
+            "sourcePage": "Gunmancer",
+            "section": "Skills > Antimatter Accelerator",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Fire a scattered blast of five projectiles every X seconds which each deal 8 SHADOW Damage. Hold to narrow the spread.\n5% Chance to inflict the BREACHED status effect.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation",
+              "damageBehavior"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "5",
+            "8 "
+          ],
+          "findings": [],
+          "unresolved": [
+            "X",
+            "question-skill-gunmancer-antimatter-accelerator-crit-behavior"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      },
+      {
+        "id": "skill-gunmancer-airblast",
+        "name": "Airblast",
+        "type": "Utility",
+        "icon": "Gumancer-Airblast.png",
+        "imageFile": "Gumancer-Airblast.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Gumancer-Airblast.png",
+        "description": "While standing still, launch yourself upwards then gain greatly decreased gravity for a short time. After a short delay, your next skill fired will become CHARGED and deal 200% damage.\nWhile moving, perform a dash in your current movement direction with 75% reduced cooldown.\n* Whether you're considered moving or not is based exclusively on key input and not velocity.\n12 second cooldown.",
+        "mechanics": {
+          "sourceText": "While standing still, launch yourself upwards then gain greatly decreased gravity for a short time. After a short delay, your next skill fired will become CHARGED and deal 200% damage.\nWhile moving, perform a dash in your current movement direction with 75% reduced cooldown.\n* Whether you're considered moving or not is based exclusively on key input and not velocity.\n12 second cooldown.",
+          "signals": {
+            "unknownTokens": [],
+            "numericMentions": [
+              "12 second",
+              "200",
+              "75"
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": true,
+            "hasDamage": true,
+            "hasDamageNumber": true,
+            "hasOutgoingDamage": true,
+            "hasChance": false,
+            "hasDuration": false,
+            "hasCooldown": true,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": false
+          },
+          "damageBehavior": {
+            "createsDamageInstance": false,
+            "canCrit": "not_applicable",
+            "critChance": null,
+            "critNotes": "This ability modifies another skill's damage and does not create its own damage instance.",
+            "canApplyStatusEffects": "not_applicable",
+            "statusEffectChance": null,
+            "statusNotes": "Status application belongs to the modified skill, not this modifier itself."
+          },
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Gunmancer: Airblast: It appears to modify another skill's damage rather than create its own damage instance. The source describes a cooldown-gated action.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": []
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-gunmancer",
+            "sourcePage": "Gunmancer",
+            "section": "Skills > Utility: Airblast",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "While standing still, launch yourself upwards then gain greatly decreased gravity for a short time. After a short delay, your next skill fired will become CHARGED and deal 200% damage.\nWhile moving, perform a dash in your current movement direction with 75% reduced cooldown.\n* Whether you're considered moving or not is based exclusively on key input and not velocity.\n12 second cooldown.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation",
+              "damageBehavior"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "12 second",
+            "200",
+            "75"
+          ],
+          "findings": [],
+          "unresolved": [],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      }
+    ],
+    "upgradeIds": [
+      "upgrade-gunmancer-gunmancer-overcharged-va-11-blast-cannon",
+      "upgrade-gunmancer-gunmancer-proficiency-firebomb",
+      "upgrade-gunmancer-gunmancer-proficiency-photon-condenser",
+      "upgrade-gunmancer-gunmancer-proficiency-antimatter-accelerator",
+      "upgrade-gunmancer-gunmancer-sidestep",
+      "upgrade-gunmancer-gunmancer-marksman-va-11-blast-cannon",
+      "upgrade-gunmancer-gunmancer-mastery"
+    ],
+    "unknownFields": [
+      "starting stats",
+      "movement characteristics not stated numerically"
+    ],
+    "researchStatus": "Needs Testing",
+    "sourceRefs": [
+      {
+        "sourceId": "wiki-gunmancer",
+        "sourcePage": "Gunmancer",
+        "section": "Class overview",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "With enough cybernetic enhancements and a brain-interfaced Blast Cannon, anyone can become a Sorcerer these days.",
+        "derivedFields": [
+          "name",
+          "description",
+          "icon",
+          "skills",
+          "startingStats"
+        ]
+      }
+    ],
+    "importedAt": "2026-08-07",
+    "importedFrom": "English Ecliptica Wiki",
+    "researchAudit": {
+      "status": "Reviewed",
+      "explicitEnglishValues": [],
+      "findings": [],
+      "unresolved": [],
+      "sourceTags": [
+        {
+          "category": "English wiki",
+          "confidence": "Source-stated",
+          "evidenceId": null
+        }
+      ],
+      "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+    }
+  },
+  {
+    "id": "class-fistmage",
+    "entityType": "class",
+    "name": "Fistmage",
+    "icon": "Class4.png",
+    "imageFile": "Class4.png",
+    "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Class4.png",
+    "description": "Someone as musclebrained as you has no reason to become a sorcerer, but you persevered anyway and made it work somehow.\nPowerful hybrid tank/damage class with a strong focus on counterattacks.",
+    "startingStats": null,
+    "statModifiers": [],
+    "reportedMechanics": null,
+    "skills": [
+      {
+        "id": "skill-fistmage-aura-fist",
+        "name": "Aura Fist",
+        "type": "Primary",
+        "icon": "Fistmage-Aura-Fist.png",
+        "imageFile": "Fistmage-Aura-Fist.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Fistmage-Aura-Fist.png",
+        "description": "Charge for up to 1 second and release to punch, dealing 55-100 PHYSICAL damage based on charge level.",
+        "mechanics": {
+          "sourceText": "Charge for up to 1 second and release to punch, dealing 55-100 PHYSICAL damage based on charge level.",
+          "signals": {
+            "unknownTokens": [],
+            "numericMentions": [
+              "1 second",
+              "100 ",
+              "55"
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": true,
+            "hasDamage": true,
+            "hasDamageNumber": true,
+            "hasOutgoingDamage": true,
+            "hasChance": false,
+            "hasDuration": false,
+            "hasCooldown": false,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": false
+          },
+          "damageBehavior": {
+            "createsDamageInstance": true,
+            "canCrit": null,
+            "critChance": null,
+            "critNotes": "The English wiki does not state whether this damage instance can critically strike.",
+            "canApplyStatusEffects": null,
+            "statusEffectChance": null,
+            "statusNotes": "The English wiki does not state whether this damage instance can apply status effects or what chance applies."
+          },
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Fistmage: Aura Fist: It appears to create a distinct damage instance when its stated trigger occurs. Whether that damage instance can critically strike is not stated. Whether that damage instance can apply status effects is not stated.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": []
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-fistmage",
+            "sourcePage": "Fistmage",
+            "section": "Skills > Primary: Aura Fist",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Charge for up to 1 second and release to punch, dealing 55-100 PHYSICAL damage based on charge level.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation",
+              "damageBehavior"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "1 second",
+            "100 ",
+            "55"
+          ],
+          "findings": [],
+          "unresolved": [
+            "question-skill-fistmage-aura-fist-attack-interval",
+            "question-skill-fistmage-aura-fist-crit-behavior",
+            "question-skill-fistmage-aura-fist-status-behavior"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      },
+      {
+        "id": "skill-fistmage-deflecting-swipe",
+        "name": "Deflecting Swipe",
+        "type": "Secondary",
+        "icon": "Fistmage-Deflection.png",
+        "imageFile": "Fistmage-Deflection.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Fistmage-Deflection.png",
+        "description": "Swipe, dealing 40 PHYSICAL damage.\nAfter the swipe, gain a short window where the next instance of damage you take will be fully deflected. Successfully deflecting an attack will grant you 7 stacks of EMPOWERED and ENFORCED, HEAL you for 25 health, and instantly reset the cooldown.\n5 second cooldown.",
+        "mechanics": {
+          "sourceText": "Swipe, dealing 40 PHYSICAL damage.\nAfter the swipe, gain a short window where the next instance of damage you take will be fully deflected. Successfully deflecting an attack will grant you 7 stacks of EMPOWERED and ENFORCED, HEAL you for 25 health, and instantly reset the cooldown.\n5 second cooldown.",
+          "signals": {
+            "unknownTokens": [],
+            "numericMentions": [
+              "25 ",
+              "40 ",
+              "5 second",
+              "7 stacks"
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": true,
+            "hasDamage": true,
+            "hasDamageNumber": true,
+            "hasOutgoingDamage": true,
+            "hasChance": false,
+            "hasDuration": false,
+            "hasCooldown": true,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": false
+          },
+          "damageBehavior": {
+            "createsDamageInstance": true,
+            "canCrit": null,
+            "critChance": null,
+            "critNotes": "The English wiki does not state whether this damage instance can critically strike.",
+            "canApplyStatusEffects": null,
+            "statusEffectChance": null,
+            "statusNotes": "The English wiki does not state whether this damage instance can apply status effects or what chance applies."
+          },
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Fistmage: Deflecting Swipe: It appears to create a distinct damage instance when its stated trigger occurs. Whether that damage instance can critically strike is not stated. Whether that damage instance can apply status effects is not stated. The source describes a cooldown-gated action.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": []
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-fistmage",
+            "sourcePage": "Fistmage",
+            "section": "Skills > Secondary: Deflecting Swipe",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Swipe, dealing 40 PHYSICAL damage.\nAfter the swipe, gain a short window where the next instance of damage you take will be fully deflected. Successfully deflecting an attack will grant you 7 stacks of EMPOWERED and ENFORCED, HEAL you for 25 health, and instantly reset the cooldown.\n5 second cooldown.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation",
+              "damageBehavior"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "25 ",
+            "40 ",
+            "5 second",
+            "7 stacks"
+          ],
+          "findings": [],
+          "unresolved": [
+            "question-skill-fistmage-deflecting-swipe-crit-behavior",
+            "question-skill-fistmage-deflecting-swipe-status-behavior"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      },
+      {
+        "id": "skill-fistmage-super-endurance",
+        "name": "Super Endurance",
+        "type": "Utility",
+        "icon": "Fistmage-Utility.png",
+        "imageFile": "Fistmage-Utility.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Fistmage-Utility.png",
+        "description": "For 5 seconds, enter an enduring stance. During this time you lose X% movement speed, gain X% increased defense, and gain increased Aggro draw.\n12 second cooldown.",
+        "mechanics": {
+          "sourceText": "For 5 seconds, enter an enduring stance. During this time you lose X% movement speed, gain X% increased defense, and gain increased Aggro draw.\n12 second cooldown.",
+          "signals": {
+            "unknownTokens": [
+              "X"
+            ],
+            "numericMentions": [
+              "12 second",
+              "5 seconds"
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": true,
+            "hasDamage": false,
+            "hasDamageNumber": false,
+            "hasOutgoingDamage": false,
+            "hasChance": false,
+            "hasDuration": true,
+            "hasCooldown": true,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": true
+          },
+          "damageBehavior": null,
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Fistmage: Super Endurance: The description appears to function as a passive modifier, condition, or utility effect rather than a direct damage source. The working model remains incomplete because the source contains unknown or placeholder values. The effect appears to persist for a finite duration where stated. The source describes a cooldown-gated action.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": [
+              "X"
+            ]
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-fistmage",
+            "sourcePage": "Fistmage",
+            "section": "Skills > Utility: Super Endurance",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "For 5 seconds, enter an enduring stance. During this time you lose X% movement speed, gain X% increased defense, and gain increased Aggro draw.\n12 second cooldown.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "12 second",
+            "5 seconds"
+          ],
+          "findings": [],
+          "unresolved": [
+            "X",
+            "question-skill-fistmage-super-endurance-unknown"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      }
+    ],
+    "upgradeIds": [
+      "upgrade-fistmage-fistmage-proficiency",
+      "upgrade-fistmage-fistmage-mach-punch",
+      "upgrade-fistmage-fistmage-mastery",
+      "upgrade-fistmage-fistmage-rage",
+      "upgrade-fistmage-fistmage-runner",
+      "upgrade-fistmage-fistmage-apply-force"
+    ],
+    "unknownFields": [
+      "starting stats",
+      "movement characteristics not stated numerically"
+    ],
+    "researchStatus": "Needs Testing",
+    "sourceRefs": [
+      {
+        "sourceId": "wiki-fistmage",
+        "sourcePage": "Fistmage",
+        "section": "Class overview",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "Someone as musclebrained as you has no reason to become a sorcerer, but you persevered anyway and made it work somehow.\nPowerful hybrid tank/damage class with a strong focus on counterattacks.",
+        "derivedFields": [
+          "name",
+          "description",
+          "icon",
+          "skills",
+          "startingStats"
+        ]
+      }
+    ],
+    "importedAt": "2026-08-07",
+    "importedFrom": "English Ecliptica Wiki",
+    "researchAudit": {
+      "status": "Reviewed",
+      "explicitEnglishValues": [],
+      "findings": [],
+      "unresolved": [],
+      "sourceTags": [
+        {
+          "category": "English wiki",
+          "confidence": "Source-stated",
+          "evidenceId": null
+        }
+      ],
+      "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+    }
+  },
+  {
+    "id": "class-spellhammer",
+    "entityType": "class",
+    "name": "Spellhammer",
+    "icon": "Class5.png",
+    "imageFile": "Class5.png",
+    "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Class5.png",
+    "description": "As someone with a high magic aptitude who decided to become a wild barbarian, conventions and common sense won't be the only things you're smashing into pieces.",
+    "startingStats": null,
+    "statModifiers": [],
+    "reportedMechanics": null,
+    "skills": [
+      {
+        "id": "skill-spellhammer-pummel",
+        "name": "Pummel",
+        "type": "Primary",
+        "icon": "Spellhammer-Primary.png",
+        "imageFile": "Spellhammer-Primary.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Spellhammer-Primary.png",
+        "description": "Swing your hammer to deal 90 PHYSICAL damage and knock enemies back.\nWill increase your movement speed by two times during the swing, and is directly scaled with your Movement Speed.",
+        "mechanics": {
+          "sourceText": "Swing your hammer to deal 90 PHYSICAL damage and knock enemies back.\nWill increase your movement speed by two times during the swing, and is directly scaled with your Movement Speed.",
+          "signals": {
+            "unknownTokens": [],
+            "numericMentions": [
+              "90 "
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": false,
+            "hasDamage": true,
+            "hasDamageNumber": true,
+            "hasOutgoingDamage": true,
+            "hasChance": false,
+            "hasDuration": false,
+            "hasCooldown": false,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": false
+          },
+          "damageBehavior": {
+            "createsDamageInstance": true,
+            "canCrit": null,
+            "critChance": null,
+            "critNotes": "The English wiki does not state whether this damage instance can critically strike.",
+            "canApplyStatusEffects": null,
+            "statusEffectChance": null,
+            "statusNotes": "The English wiki does not state whether this damage instance can apply status effects or what chance applies."
+          },
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Spellhammer: Pummel: It appears to create a distinct damage instance when its stated trigger occurs. Whether that damage instance can critically strike is not stated. Whether that damage instance can apply status effects is not stated.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": []
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-spellhammer",
+            "sourcePage": "Spellhammer",
+            "section": "Skills > Primary: Pummel",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Swing your hammer to deal 90 PHYSICAL damage and knock enemies back.\nWill increase your movement speed by two times during the swing, and is directly scaled with your Movement Speed.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation",
+              "damageBehavior"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "90 "
+          ],
+          "findings": [],
+          "unresolved": [
+            "question-skill-spellhammer-pummel-attack-interval",
+            "question-skill-spellhammer-pummel-crit-behavior",
+            "question-skill-spellhammer-pummel-status-behavior"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      },
+      {
+        "id": "skill-spellhammer-jump-smash",
+        "name": "Jump Smash",
+        "type": "Mechanic",
+        "icon": "Spellhammer-Jump-Smash.png",
+        "imageFile": "Spellhammer-Jump-Smash.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Spellhammer-Jump-Smash.png",
+        "description": "Jump upwards, then release to slam back down and deal 130 PHYSICAL damage and knock enemies back. Landing on top of an enemy will deal X extra damage per X based on your initial height and launch you back up.\nOR",
+        "mechanics": {
+          "sourceText": "Jump upwards, then release to slam back down and deal 130 PHYSICAL damage and knock enemies back. Landing on top of an enemy will deal X extra damage per X based on your initial height and launch you back up.\nOR",
+          "signals": {
+            "unknownTokens": [
+              "X"
+            ],
+            "numericMentions": [
+              "130 "
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": false,
+            "hasDamage": true,
+            "hasDamageNumber": true,
+            "hasOutgoingDamage": true,
+            "hasChance": false,
+            "hasDuration": false,
+            "hasCooldown": false,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": true
+          },
+          "damageBehavior": {
+            "createsDamageInstance": true,
+            "canCrit": null,
+            "critChance": null,
+            "critNotes": "The English wiki does not state whether this damage instance can critically strike.",
+            "canApplyStatusEffects": null,
+            "statusEffectChance": null,
+            "statusNotes": "The English wiki does not state whether this damage instance can apply status effects or what chance applies."
+          },
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Spellhammer: Jump Smash: It appears to create a distinct damage instance when its stated trigger occurs. Whether that damage instance can critically strike is not stated. Whether that damage instance can apply status effects is not stated. The working model remains incomplete because the source contains unknown or placeholder values.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": [
+              "X"
+            ]
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-spellhammer",
+            "sourcePage": "Spellhammer",
+            "section": "Skills > Jump Smash",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Jump upwards, then release to slam back down and deal 130 PHYSICAL damage and knock enemies back. Landing on top of an enemy will deal X extra damage per X based on your initial height and launch you back up.\nOR",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation",
+              "damageBehavior"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "130 "
+          ],
+          "findings": [],
+          "unresolved": [
+            "X",
+            "question-skill-spellhammer-jump-smash-crit-behavior",
+            "question-skill-spellhammer-jump-smash-status-behavior"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      },
+      {
+        "id": "skill-spellhammer-chuck",
+        "name": "Chuck",
+        "type": "Mechanic",
+        "icon": "Spellhammer-Hammer-Throw.png",
+        "imageFile": "Spellhammer-Hammer-Throw.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Spellhammer-Hammer-Throw.png",
+        "description": "Hold, then release to throw your hammer. Damage scales on how long you have held the throwing charge, deal X-110 PHYSICAL Damage.",
+        "mechanics": {
+          "sourceText": "Hold, then release to throw your hammer. Damage scales on how long you have held the throwing charge, deal X-110 PHYSICAL Damage.",
+          "signals": {
+            "unknownTokens": [
+              "X"
+            ],
+            "numericMentions": [
+              "110 "
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": false,
+            "hasDamage": true,
+            "hasDamageNumber": true,
+            "hasOutgoingDamage": true,
+            "hasChance": false,
+            "hasDuration": false,
+            "hasCooldown": false,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": true
+          },
+          "damageBehavior": {
+            "createsDamageInstance": true,
+            "canCrit": null,
+            "critChance": null,
+            "critNotes": "The English wiki does not state whether this damage instance can critically strike.",
+            "canApplyStatusEffects": null,
+            "statusEffectChance": null,
+            "statusNotes": "The English wiki does not state whether this damage instance can apply status effects or what chance applies."
+          },
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Spellhammer: Chuck: It appears to create a distinct damage instance when its stated trigger occurs. Whether that damage instance can critically strike is not stated. Whether that damage instance can apply status effects is not stated. The working model remains incomplete because the source contains unknown or placeholder values.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": [
+              "X"
+            ]
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-spellhammer",
+            "sourcePage": "Spellhammer",
+            "section": "Skills > Chuck",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Hold, then release to throw your hammer. Damage scales on how long you have held the throwing charge, deal X-110 PHYSICAL Damage.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation",
+              "damageBehavior"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "110 "
+          ],
+          "findings": [],
+          "unresolved": [
+            "X",
+            "question-skill-spellhammer-chuck-crit-behavior",
+            "question-skill-spellhammer-chuck-status-behavior"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      },
+      {
+        "id": "skill-spellhammer-disperse",
+        "name": "Disperse",
+        "type": "Utility",
+        "icon": "Spellhammer-Utility-a.png",
+        "imageFile": "Spellhammer-Utility-a.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Spellhammer-Utility-a.png",
+        "description": "Release a wide explosion dealing 130 PHYSICAL damage, and jump backwards.\n8 second cooldown. The cooldown applies even while in the air, though is much slower.",
+        "mechanics": {
+          "sourceText": "Release a wide explosion dealing 130 PHYSICAL damage, and jump backwards.\n8 second cooldown. The cooldown applies even while in the air, though is much slower.",
+          "signals": {
+            "unknownTokens": [],
+            "numericMentions": [
+              "130 ",
+              "8 second"
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": true,
+            "hasDamage": true,
+            "hasDamageNumber": true,
+            "hasOutgoingDamage": true,
+            "hasChance": false,
+            "hasDuration": false,
+            "hasCooldown": true,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": false
+          },
+          "damageBehavior": {
+            "createsDamageInstance": true,
+            "canCrit": null,
+            "critChance": null,
+            "critNotes": "The English wiki does not state whether this damage instance can critically strike.",
+            "canApplyStatusEffects": null,
+            "statusEffectChance": null,
+            "statusNotes": "The English wiki does not state whether this damage instance can apply status effects or what chance applies."
+          },
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Spellhammer: Disperse: It appears to create a distinct damage instance when its stated trigger occurs. Whether that damage instance can critically strike is not stated. Whether that damage instance can apply status effects is not stated. The source describes a cooldown-gated action.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": []
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-spellhammer",
+            "sourcePage": "Spellhammer",
+            "section": "Skills > Utility: Disperse",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Release a wide explosion dealing 130 PHYSICAL damage, and jump backwards.\n8 second cooldown. The cooldown applies even while in the air, though is much slower.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation",
+              "damageBehavior"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "130 ",
+            "8 second"
+          ],
+          "findings": [],
+          "unresolved": [
+            "question-skill-spellhammer-disperse-crit-behavior",
+            "question-skill-spellhammer-disperse-status-behavior"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      }
+    ],
+    "upgradeIds": [
+      "upgrade-spellhammer-spellhammer-proficiency-jump-smash",
+      "upgrade-spellhammer-spellhammer-proficiency-chuck",
+      "upgrade-spellhammer-spellhammer-boosted",
+      "upgrade-spellhammer-spellhammer-mastery-jump-smash",
+      "upgrade-spellhammer-spellhammer-mastery-chuck",
+      "upgrade-spellhammer-spellhammer-concussion-jump-smash",
+      "upgrade-spellhammer-spellhammer-concussion-chuck",
+      "upgrade-spellhammer-spellhammer-juggernaut-jump-smash",
+      "upgrade-spellhammer-spellhammer-juggernaut-chuck"
+    ],
+    "unknownFields": [
+      "starting stats",
+      "movement characteristics not stated numerically"
+    ],
+    "researchStatus": "Needs Testing",
+    "sourceRefs": [
+      {
+        "sourceId": "wiki-spellhammer",
+        "sourcePage": "Spellhammer",
+        "section": "Class overview",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "As someone with a high magic aptitude who decided to become a wild barbarian, conventions and common sense won't be the only things you're smashing into pieces.",
+        "derivedFields": [
+          "name",
+          "description",
+          "icon",
+          "skills",
+          "startingStats"
+        ]
+      }
+    ],
+    "importedAt": "2026-08-07",
+    "importedFrom": "English Ecliptica Wiki",
+    "researchAudit": {
+      "status": "Reviewed",
+      "explicitEnglishValues": [],
+      "findings": [],
+      "unresolved": [],
+      "sourceTags": [
+        {
+          "category": "English wiki",
+          "confidence": "Source-stated",
+          "evidenceId": null
+        }
+      ],
+      "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+    }
+  },
+  {
+    "id": "class-shield-mage",
+    "entityType": "class",
+    "name": "Shield Mage",
+    "icon": "Class6.png",
+    "imageFile": "Class6.png",
+    "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Class6.png",
+    "description": "You are a kind of sorcerer who was always too scared to get hurt. You know what they say, sometimes defense is the best offense. Or something like that.",
+    "startingStats": null,
+    "statModifiers": [],
+    "reportedMechanics": null,
+    "skills": [
+      {
+        "id": "skill-shield-mage-offensive-strike",
+        "name": "Offensive Strike",
+        "type": "Primary",
+        "icon": "Shieldmage-Primary.png",
+        "imageFile": "Shieldmage-Primary.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Shieldmage-Primary.png",
+        "description": "Throw your shield forward, dealing 50 PHYSICAL damage. While using Defensive Stance, bash your shield forward, dealing 25 PHYSICAL damage and knocking enemies back.",
+        "mechanics": {
+          "sourceText": "Throw your shield forward, dealing 50 PHYSICAL damage. While using Defensive Stance, bash your shield forward, dealing 25 PHYSICAL damage and knocking enemies back.",
+          "signals": {
+            "unknownTokens": [],
+            "numericMentions": [
+              "25 ",
+              "50 "
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": false,
+            "hasDamage": true,
+            "hasDamageNumber": true,
+            "hasOutgoingDamage": true,
+            "hasChance": false,
+            "hasDuration": false,
+            "hasCooldown": false,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": false
+          },
+          "damageBehavior": {
+            "createsDamageInstance": true,
+            "canCrit": null,
+            "critChance": null,
+            "critNotes": "The English wiki does not state whether this damage instance can critically strike.",
+            "canApplyStatusEffects": null,
+            "statusEffectChance": null,
+            "statusNotes": "The English wiki does not state whether this damage instance can apply status effects or what chance applies."
+          },
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Shield Mage: Offensive Strike: It appears to create a distinct damage instance when its stated trigger occurs. Whether that damage instance can critically strike is not stated. Whether that damage instance can apply status effects is not stated.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": []
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-shield-mage",
+            "sourcePage": "Shield Mage",
+            "section": "Skills > Primary: Offensive Strike",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Throw your shield forward, dealing 50 PHYSICAL damage. While using Defensive Stance, bash your shield forward, dealing 25 PHYSICAL damage and knocking enemies back.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation",
+              "damageBehavior"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "25 ",
+            "50 "
+          ],
+          "findings": [],
+          "unresolved": [
+            "question-skill-shield-mage-offensive-strike-attack-interval",
+            "question-skill-shield-mage-offensive-strike-crit-behavior",
+            "question-skill-shield-mage-offensive-strike-status-behavior"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      },
+      {
+        "id": "skill-shield-mage-defensive-stance",
+        "name": "Defensive Stance",
+        "type": "Secondary",
+        "icon": "Shieldmage-Secondary.png",
+        "imageFile": "Shieldmage-Secondary.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Shieldmage-Secondary.png",
+        "description": "Hold to defend with your shield, blocking incoming damage that hits it and reducing your movement speed by X%.\nWhen blocking attacks, charge up ICEBURST. When lowering your shield, release ICEBURST. Dealing heavy, proportional to Damage you receive, FROST damage in a radius around you, with a power proportional to amount of attacks blocked.",
+        "mechanics": {
+          "sourceText": "Hold to defend with your shield, blocking incoming damage that hits it and reducing your movement speed by X%.\nWhen blocking attacks, charge up ICEBURST. When lowering your shield, release ICEBURST. Dealing heavy, proportional to Damage you receive, FROST damage in a radius around you, with a power proportional to amount of attacks blocked.",
+          "signals": {
+            "unknownTokens": [
+              "X"
+            ],
+            "numericMentions": [],
+            "hasPeriodic": false,
+            "hasExplicitInterval": false,
+            "hasDamage": true,
+            "hasDamageNumber": false,
+            "hasOutgoingDamage": true,
+            "hasChance": false,
+            "hasDuration": false,
+            "hasCooldown": false,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": true
+          },
+          "damageBehavior": {
+            "createsDamageInstance": true,
+            "canCrit": null,
+            "critChance": null,
+            "critNotes": "The English wiki does not state whether this damage instance can critically strike.",
+            "canApplyStatusEffects": null,
+            "statusEffectChance": null,
+            "statusNotes": "The English wiki does not state whether this damage instance can apply status effects or what chance applies."
+          },
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Shield Mage: Defensive Stance: It appears to create a distinct damage instance when its stated trigger occurs. Whether that damage instance can critically strike is not stated. Whether that damage instance can apply status effects is not stated. The working model remains incomplete because the source contains unknown or placeholder values.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": [
+              "X"
+            ]
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-shield-mage",
+            "sourcePage": "Shield Mage",
+            "section": "Skills > Secondary: Defensive Stance",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Hold to defend with your shield, blocking incoming damage that hits it and reducing your movement speed by X%.\nWhen blocking attacks, charge up ICEBURST. When lowering your shield, release ICEBURST. Dealing heavy, proportional to Damage you receive, FROST damage in a radius around you, with a power proportional to amount of attacks blocked.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation",
+              "damageBehavior"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [],
+          "findings": [],
+          "unresolved": [
+            "X",
+            "question-skill-shield-mage-defensive-stance-damage",
+            "question-skill-shield-mage-defensive-stance-attack-interval",
+            "question-skill-shield-mage-defensive-stance-crit-behavior",
+            "question-skill-shield-mage-defensive-stance-status-behavior"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      },
+      {
+        "id": "skill-shield-mage-evasive-maneuver",
+        "name": "Evasive Maneuver",
+        "type": "Utility",
+        "icon": "Shieldmage-Utility.png",
+        "imageFile": "Shieldmage-Utility.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Shieldmage-Utility.png",
+        "description": "For 5 seconds stop yourself in place, creating an impenetrable shield around you. The shield will reduce PURPLE attack damage by 50% and you will gain increased Aggro draw. While using Defensive Stance, perform a short dash in your movement direction.\n4 to 16 second cooldown depending on size.",
+        "mechanics": {
+          "sourceText": "For 5 seconds stop yourself in place, creating an impenetrable shield around you. The shield will reduce PURPLE attack damage by 50% and you will gain increased Aggro draw. While using Defensive Stance, perform a short dash in your movement direction.\n4 to 16 second cooldown depending on size.",
+          "signals": {
+            "unknownTokens": [],
+            "numericMentions": [
+              "16 second",
+              "4 ",
+              "5 seconds",
+              "50"
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": true,
+            "hasDamage": true,
+            "hasDamageNumber": true,
+            "hasOutgoingDamage": true,
+            "hasChance": false,
+            "hasDuration": true,
+            "hasCooldown": true,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": false
+          },
+          "damageBehavior": {
+            "createsDamageInstance": true,
+            "canCrit": null,
+            "critChance": null,
+            "critNotes": "The English wiki does not state whether this damage instance can critically strike.",
+            "canApplyStatusEffects": null,
+            "statusEffectChance": null,
+            "statusNotes": "The English wiki does not state whether this damage instance can apply status effects or what chance applies."
+          },
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Shield Mage: Evasive Maneuver: It appears to create a distinct damage instance when its stated trigger occurs. Whether that damage instance can critically strike is not stated. Whether that damage instance can apply status effects is not stated. The effect appears to persist for a finite duration where stated. The source describes a cooldown-gated action.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": []
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-shield-mage",
+            "sourcePage": "Shield Mage",
+            "section": "Skills > Utility: Evasive Maneuver",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "For 5 seconds stop yourself in place, creating an impenetrable shield around you. The shield will reduce PURPLE attack damage by 50% and you will gain increased Aggro draw. While using Defensive Stance, perform a short dash in your movement direction.\n4 to 16 second cooldown depending on size.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation",
+              "damageBehavior"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "16 second",
+            "4 ",
+            "5 seconds",
+            "50"
+          ],
+          "findings": [],
+          "unresolved": [
+            "question-skill-shield-mage-evasive-maneuver-crit-behavior",
+            "question-skill-shield-mage-evasive-maneuver-status-behavior"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      }
+    ],
+    "upgradeIds": [
+      "upgrade-shield-mage-shieldmage-proficiency",
+      "upgrade-shield-mage-shieldmage-unbreakable",
+      "upgrade-shield-mage-shieldmage-ice-burst",
+      "upgrade-shield-mage-shieldmage-mastery",
+      "upgrade-shield-mage-shieldmage-rally-up",
+      "upgrade-shield-mage-shieldmage-warden"
+    ],
+    "unknownFields": [
+      "starting stats",
+      "movement characteristics not stated numerically"
+    ],
+    "researchStatus": "Needs Testing",
+    "sourceRefs": [
+      {
+        "sourceId": "wiki-shield-mage",
+        "sourcePage": "Shield Mage",
+        "section": "Class overview",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "You are a kind of sorcerer who was always too scared to get hurt. You know what they say, sometimes defense is the best offense. Or something like that.",
+        "derivedFields": [
+          "name",
+          "description",
+          "icon",
+          "skills",
+          "startingStats"
+        ]
+      }
+    ],
+    "importedAt": "2026-08-07",
+    "importedFrom": "English Ecliptica Wiki",
+    "researchAudit": {
+      "status": "Reviewed",
+      "explicitEnglishValues": [],
+      "findings": [],
+      "unresolved": [],
+      "sourceTags": [
+        {
+          "category": "English wiki",
+          "confidence": "Source-stated",
+          "evidenceId": null
+        }
+      ],
+      "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+    }
+  },
+  {
+    "id": "class-thaumaturge",
+    "entityType": "class",
+    "name": "Thaumaturge",
+    "icon": "Class7.png",
+    "imageFile": "Class7.png",
+    "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Class7.png",
+    "description": "In life, everything that gives us pleasure also gives us pain to measure it by.\nDamaging enemies builds up LIFE ENERGY.",
+    "startingStats": null,
+    "statModifiers": [],
+    "reportedMechanics": null,
+    "skills": [
+      {
+        "id": "skill-thaumaturge-passive",
+        "name": "Passive",
+        "type": "Passive",
+        "icon": "Thaumaturge-Life-Energy-a.png",
+        "imageFile": "Thaumaturge-Life-Energy-a.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Thaumaturge-Life-Energy-a.png",
+        "description": "Damaging enemies builds up LIFE ENERGY, LIFE ENERGY gain is proportional to the Damage you do.",
+        "mechanics": {
+          "sourceText": "Damaging enemies builds up LIFE ENERGY, LIFE ENERGY gain is proportional to the Damage you do.",
+          "signals": {
+            "unknownTokens": [],
+            "numericMentions": [],
+            "hasPeriodic": false,
+            "hasExplicitInterval": false,
+            "hasDamage": true,
+            "hasDamageNumber": false,
+            "hasOutgoingDamage": false,
+            "hasChance": false,
+            "hasDuration": false,
+            "hasCooldown": false,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": false
+          },
+          "damageBehavior": null,
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Thaumaturge: Passive: The description appears to modify or cause damage, but it is not parsed as a separate damage instance.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": []
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-thaumaturge",
+            "sourcePage": "Thaumaturge",
+            "section": "Skills > Passive",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Damaging enemies builds up LIFE ENERGY, LIFE ENERGY gain is proportional to the Damage you do.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [],
+          "findings": [],
+          "unresolved": [],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      },
+      {
+        "id": "skill-thaumaturge-foul-pustule",
+        "name": "Foul Pustule",
+        "type": "Primary",
+        "icon": "Thaumaturge-Primary-c.png",
+        "imageFile": "Thaumaturge-Primary-c.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Thaumaturge-Primary-c.png",
+        "description": "Fire a ball of poison, dealing 30 POISON damage.\n10% chance to inflict X stacks of the POISONED status effect.\nHas a projectile speed of Xm/s and a max distance of Xm.",
+        "mechanics": {
+          "sourceText": "Fire a ball of poison, dealing 30 POISON damage.\n10% chance to inflict X stacks of the POISONED status effect.\nHas a projectile speed of Xm/s and a max distance of Xm.",
+          "signals": {
+            "unknownTokens": [
+              "X"
+            ],
+            "numericMentions": [
+              "10",
+              "30 "
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": false,
+            "hasDamage": true,
+            "hasDamageNumber": true,
+            "hasOutgoingDamage": true,
+            "hasChance": true,
+            "hasDuration": false,
+            "hasCooldown": false,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": true
+          },
+          "damageBehavior": {
+            "createsDamageInstance": true,
+            "canCrit": null,
+            "critChance": null,
+            "critNotes": "The English wiki does not state whether this damage instance can critically strike.",
+            "canApplyStatusEffects": true,
+            "statusEffectChance": "10% chance to inflict X stacks of the POISONED status effect",
+            "statusNotes": "Explicit status-effect chance wording retained from source."
+          },
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Thaumaturge: Foul Pustule: It appears to create a distinct damage instance when its stated trigger occurs. Whether that damage instance can critically strike is not stated. The source gives status-effect application wording or a chance. The working model remains incomplete because the source contains unknown or placeholder values.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": [
+              "X"
+            ]
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-thaumaturge",
+            "sourcePage": "Thaumaturge",
+            "section": "Skills > Primary: Foul Pustule",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Fire a ball of poison, dealing 30 POISON damage.\n10% chance to inflict X stacks of the POISONED status effect.\nHas a projectile speed of Xm/s and a max distance of Xm.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation",
+              "damageBehavior"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "10",
+            "30 "
+          ],
+          "findings": [],
+          "unresolved": [
+            "X",
+            "question-skill-thaumaturge-foul-pustule-attack-interval",
+            "question-skill-thaumaturge-foul-pustule-crit-behavior"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      },
+      {
+        "id": "skill-thaumaturge-pain-exchange",
+        "name": "Pain Exchange",
+        "type": "Secondary",
+        "icon": "Thaumaturge-Secondary.png",
+        "imageFile": "Thaumaturge-Secondary.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Thaumaturge-Secondary.png",
+        "description": "Spend 25% LIFE ENERGY to HEAL 60 HP to yourself or an ally.\n* Thaumaturge begins with 50% healing received so the base value is halved for yourself.\n3 second cooldown.\nThe cooldown is increased by 75% if you are healing yourself.",
+        "mechanics": {
+          "sourceText": "Spend 25% LIFE ENERGY to HEAL 60 HP to yourself or an ally.\n* Thaumaturge begins with 50% healing received so the base value is halved for yourself.\n3 second cooldown.\nThe cooldown is increased by 75% if you are healing yourself.",
+          "signals": {
+            "unknownTokens": [],
+            "numericMentions": [
+              "25",
+              "3 second",
+              "50",
+              "60 HP",
+              "75"
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": true,
+            "hasDamage": false,
+            "hasDamageNumber": false,
+            "hasOutgoingDamage": false,
+            "hasChance": false,
+            "hasDuration": false,
+            "hasCooldown": true,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": false
+          },
+          "damageBehavior": null,
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Thaumaturge: Pain Exchange: The description appears to function as a passive modifier, condition, or utility effect rather than a direct damage source. The source describes a cooldown-gated action.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": []
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-thaumaturge",
+            "sourcePage": "Thaumaturge",
+            "section": "Skills > Secondary: Pain Exchange",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Spend 25% LIFE ENERGY to HEAL 60 HP to yourself or an ally.\n* Thaumaturge begins with 50% healing received so the base value is halved for yourself.\n3 second cooldown.\nThe cooldown is increased by 75% if you are healing yourself.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "25",
+            "3 second",
+            "50",
+            "60 HP",
+            "75"
+          ],
+          "findings": [],
+          "unresolved": [],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      },
+      {
+        "id": "skill-thaumaturge-soulborne",
+        "name": "Soulborne",
+        "type": "Utility",
+        "icon": "Thaumaturge-Utility.png",
+        "imageFile": "Thaumaturge-Utility.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Thaumaturge-Utility.png",
+        "description": "For 4 seconds enter an absorption stance, increasing movement speed by X%, defense by X%, and converting any damage taken into LIFE ENERGY.\n10 second cooldown.",
+        "mechanics": {
+          "sourceText": "For 4 seconds enter an absorption stance, increasing movement speed by X%, defense by X%, and converting any damage taken into LIFE ENERGY.\n10 second cooldown.",
+          "signals": {
+            "unknownTokens": [
+              "X"
+            ],
+            "numericMentions": [
+              "10 second",
+              "4 seconds"
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": true,
+            "hasDamage": true,
+            "hasDamageNumber": false,
+            "hasOutgoingDamage": false,
+            "hasChance": false,
+            "hasDuration": true,
+            "hasCooldown": true,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": true
+          },
+          "damageBehavior": null,
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Thaumaturge: Soulborne: The description appears to modify or cause damage, but it is not parsed as a separate damage instance. The working model remains incomplete because the source contains unknown or placeholder values. The effect appears to persist for a finite duration where stated. The source describes a cooldown-gated action.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": [
+              "X"
+            ]
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-thaumaturge",
+            "sourcePage": "Thaumaturge",
+            "section": "Skills > Utility: Soulborne",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "For 4 seconds enter an absorption stance, increasing movement speed by X%, defense by X%, and converting any damage taken into LIFE ENERGY.\n10 second cooldown.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "10 second",
+            "4 seconds"
+          ],
+          "findings": [],
+          "unresolved": [
+            "X",
+            "question-skill-thaumaturge-soulborne-unknown"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      }
+    ],
+    "upgradeIds": [
+      "upgrade-thaumaturge-thaumaturge-keen-eye",
+      "upgrade-thaumaturge-thaumaturge-proficiency",
+      "upgrade-thaumaturge-thaumaturge-mastery",
+      "upgrade-thaumaturge-thaumaturge-splitshot",
+      "upgrade-thaumaturge-thaumaturge-doping",
+      "upgrade-thaumaturge-thaumaturge-everlife",
+      "upgrade-thaumaturge-thaumaturge-splashback"
+    ],
+    "unknownFields": [
+      "starting stats",
+      "movement characteristics not stated numerically"
+    ],
+    "researchStatus": "Needs Testing",
+    "sourceRefs": [
+      {
+        "sourceId": "wiki-thaumaturge",
+        "sourcePage": "Thaumaturge",
+        "section": "Class overview",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "In life, everything that gives us pleasure also gives us pain to measure it by.\nDamaging enemies builds up LIFE ENERGY.",
+        "derivedFields": [
+          "name",
+          "description",
+          "icon",
+          "skills",
+          "startingStats"
+        ]
+      }
+    ],
+    "importedAt": "2026-08-07",
+    "importedFrom": "English Ecliptica Wiki",
+    "researchAudit": {
+      "status": "Reviewed",
+      "explicitEnglishValues": [],
+      "findings": [],
+      "unresolved": [],
+      "sourceTags": [
+        {
+          "category": "English wiki",
+          "confidence": "Source-stated",
+          "evidenceId": null
+        }
+      ],
+      "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+    }
+  },
+  {
+    "id": "class-nekomancer",
+    "entityType": "class",
+    "name": "Nekomancer",
+    "icon": "Class8.png",
+    "imageFile": "Class8.png",
+    "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Class8.png",
+    "description": "Just because your skeletal remains have been reborn as a magical Lich Necromancer doesn't mean you can't still have your hobbies and personality.\nCollect SOULs which periodically spawn around the stage. Slain enemies have chance to leave a SOUL behind.",
+    "startingStats": null,
+    "statModifiers": [],
+    "reportedMechanics": null,
+    "skills": [
+      {
+        "id": "skill-nekomancer-passive",
+        "name": "Passive",
+        "type": "Passive",
+        "icon": "Nekomancer-Souls.png",
+        "imageFile": "Nekomancer-Souls.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Nekomancer-Souls.png",
+        "description": "Collect SOULs which spawn around the stage every X seconds. Slain enemies have a X% chance to leave a SOUL behind.",
+        "mechanics": {
+          "sourceText": "Collect SOULs which spawn around the stage every X seconds. Slain enemies have a X% chance to leave a SOUL behind.",
+          "signals": {
+            "unknownTokens": [
+              "X"
+            ],
+            "numericMentions": [],
+            "hasPeriodic": false,
+            "hasExplicitInterval": false,
+            "hasDamage": false,
+            "hasDamageNumber": false,
+            "hasOutgoingDamage": false,
+            "hasChance": true,
+            "hasDuration": false,
+            "hasCooldown": false,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": true
+          },
+          "damageBehavior": null,
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Nekomancer: Passive: The description appears to function as a passive modifier, condition, or utility effect rather than a direct damage source. The working model remains incomplete because the source contains unknown or placeholder values.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": [
+              "X"
+            ]
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-nekomancer",
+            "sourcePage": "Nekomancer",
+            "section": "Skills > Passive",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Collect SOULs which spawn around the stage every X seconds. Slain enemies have a X% chance to leave a SOUL behind.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [],
+          "findings": [],
+          "unresolved": [
+            "X",
+            "question-skill-nekomancer-passive-unknown"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      },
+      {
+        "id": "skill-nekomancer-staff-of-feline-mortality",
+        "name": "Staff of Feline Mortality",
+        "type": "Primary",
+        "icon": "Nekomancer-Primary-2.png",
+        "imageFile": "Nekomancer-Primary-2.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Nekomancer-Primary-2.png",
+        "description": "Launch a projectile which deals 20 SHADOW damage. Hit enemies will be marked as a target for Undead Kitties.\n10% chance to inflict BREACHED status effect.",
+        "mechanics": {
+          "sourceText": "Launch a projectile which deals 20 SHADOW damage. Hit enemies will be marked as a target for Undead Kitties.\n10% chance to inflict BREACHED status effect.",
+          "signals": {
+            "unknownTokens": [],
+            "numericMentions": [
+              "10",
+              "20 "
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": false,
+            "hasDamage": true,
+            "hasDamageNumber": true,
+            "hasOutgoingDamage": true,
+            "hasChance": true,
+            "hasDuration": false,
+            "hasCooldown": false,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": false
+          },
+          "damageBehavior": {
+            "createsDamageInstance": true,
+            "canCrit": null,
+            "critChance": null,
+            "critNotes": "The English wiki does not state whether this damage instance can critically strike.",
+            "canApplyStatusEffects": true,
+            "statusEffectChance": "10% chance to inflict BREACHED status effect",
+            "statusNotes": "Explicit status-effect chance wording retained from source."
+          },
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Nekomancer: Staff of Feline Mortality: It appears to create a distinct damage instance when its stated trigger occurs. Whether that damage instance can critically strike is not stated. The source gives status-effect application wording or a chance.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": []
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-nekomancer",
+            "sourcePage": "Nekomancer",
+            "section": "Skills > Primary: Staff of Feline Mortality",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Launch a projectile which deals 20 SHADOW damage. Hit enemies will be marked as a target for Undead Kitties.\n10% chance to inflict BREACHED status effect.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation",
+              "damageBehavior"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "10",
+            "20 "
+          ],
+          "findings": [],
+          "unresolved": [
+            "question-skill-nekomancer-staff-of-feline-mortality-attack-interval",
+            "question-skill-nekomancer-staff-of-feline-mortality-crit-behavior"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      },
+      {
+        "id": "skill-nekomancer-call-of-the-undead",
+        "name": "Call of the Undead",
+        "type": "Secondary",
+        "icon": "Nekomancer-Secondary.png",
+        "imageFile": "Nekomancer-Secondary.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Nekomancer-Secondary.png",
+        "description": "Spend 1 SOUL to summon one of many Undead Kitties.\nUsing the skill begins the summoning process. Pressing the skill during the summoning process allows you to select your summon, cycling through them.\nSummoned Undead Kitties do not inherit upgrades directly. However, they will gain an identical amount of the listed stats that the player gains from any upgrade; Elemental Damage, Overall Damage, Attack Speed, Projectile Speed, Projectile Distance, Crit Chance, Crit Damage, and Status Effect Chance..\n{| class=\"wikitable mw-collapsible\" style=\"background:#000000; border:1px solid #555; color:#ffffff; margin:0 auto;\"\n|+All Nekomancer Summons\n! style=\"background:#000000; color:#ffffff;\" | Picture\n! style=\"background:#000000; color:#ffffff;\" | Type\n! style=\"background:#000000; color:#ffffff;\" | Description\n|-\n|\n|Zombie Kitty\n|Grounded unit that deals 25 SHADOW Damage.\n5% chance to inflict the BREACHED status effect.\n|-\n|\n|Balloon Kitty\n|Airborne unit that deals 36 FIRE Damage.\n10% chance to inflict the BURNING status effect.\n|-\n|\n|Ballista Kitty\n|Airborne unit that deal 25 PHYSICAL Damage.\n10% chance to inflict the BLEEDING status effect.\n|-\n|\n|Totem Kitty\n|Heals you and your allies within a small radius. Will expire after some time.\nYou may only be healed by one Totem at a time.\n|}\nMaximum summons scales with Player count:\n{| class=\"wikitable\" style=\"background:#000000; border:1px solid #555; color:#ffffff; margin:0 auto;\"\n! style=\"background:#000000; color:#ffffff;\" | Nekomancer Playercount\n! style=\"background:#000000; color:#ffffff;\" | Maximum Summons Each\n|-\n|1-2 Nekomancers\n|3 Maximum Summons\n|-\n|3-6 Nekomancers\n|2 Maximum Summons\n|-\n|7+ Nekomancers\n|1 Maximum Summon\n|}\nThe Maximum amount of souls you can hold is 5, souls uncollected will expire after 30 seconds.",
+        "mechanics": {
+          "sourceText": "Spend 1 SOUL to summon one of many Undead Kitties.\nUsing the skill begins the summoning process. Pressing the skill during the summoning process allows you to select your summon, cycling through them.\nSummoned Undead Kitties do not inherit upgrades directly. However, they will gain an identical amount of the listed stats that the player gains from any upgrade; Elemental Damage, Overall Damage, Attack Speed, Projectile Speed, Projectile Distance, Crit Chance, Crit Damage, and Status Effect Chance..\n{| class=\"wikitable mw-collapsible\" style=\"background:#000000; border:1px solid #555; color:#ffffff; margin:0 auto;\"\n|+All Nekomancer Summons\n! style=\"background:#000000; color:#ffffff;\" | Picture\n! style=\"background:#000000; color:#ffffff;\" | Type\n! style=\"background:#000000; color:#ffffff;\" | Description\n|-\n|\n|Zombie Kitty\n|Grounded unit that deals 25 SHADOW Damage.\n5% chance to inflict the BREACHED status effect.\n|-\n|\n|Balloon Kitty\n|Airborne unit that deals 36 FIRE Damage.\n10% chance to inflict the BURNING status effect.\n|-\n|\n|Ballista Kitty\n|Airborne unit that deal 25 PHYSICAL Damage.\n10% chance to inflict the BLEEDING status effect.\n|-\n|\n|Totem Kitty\n|Heals you and your allies within a small radius. Will expire after some time.\nYou may only be healed by one Totem at a time.\n|}\nMaximum summons scales with Player count:\n{| class=\"wikitable\" style=\"background:#000000; border:1px solid #555; color:#ffffff; margin:0 auto;\"\n! style=\"background:#000000; color:#ffffff;\" | Nekomancer Playercount\n! style=\"background:#000000; color:#ffffff;\" | Maximum Summons Each\n|-\n|1-2 Nekomancers\n|3 Maximum Summons\n|-\n|3-6 Nekomancers\n|2 Maximum Summons\n|-\n|7+ Nekomancers\n|1 Maximum Summon\n|}\nThe Maximum amount of souls you can hold is 5, souls uncollected will expire after 30 seconds.",
+          "signals": {
+            "unknownTokens": [],
+            "numericMentions": [
+              "0 ",
+              "000000",
+              "1",
+              "1 ",
+              "10",
+              "2 ",
+              "25 ",
+              "3",
+              "3 ",
+              "30 seconds",
+              "36 ",
+              "5",
+              "555",
+              "6 ",
+              "7"
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": true,
+            "hasDamage": true,
+            "hasDamageNumber": true,
+            "hasOutgoingDamage": true,
+            "hasChance": true,
+            "hasDuration": false,
+            "hasCooldown": false,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": false
+          },
+          "damageBehavior": {
+            "createsDamageInstance": true,
+            "canCrit": null,
+            "critChance": null,
+            "critNotes": "The English wiki does not state whether this damage instance can critically strike.",
+            "canApplyStatusEffects": true,
+            "statusEffectChance": "Chance stated, magnitude not parsed",
+            "statusNotes": "Explicit status-effect chance wording retained from source."
+          },
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Nekomancer: Call of the Undead: It appears to create a distinct damage instance when its stated trigger occurs. Whether that damage instance can critically strike is not stated. The source gives status-effect application wording or a chance.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": []
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-nekomancer",
+            "sourcePage": "Nekomancer",
+            "section": "Skills > Secondary: Call of the Undead",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "Spend 1 SOUL to summon one of many Undead Kitties.\nUsing the skill begins the summoning process. Pressing the skill during the summoning process allows you to select your summon, cycling through them.\nSummoned Undead Kitties do not inherit upgrades directly. However, they will gain an identical amount of the listed stats that the player gains from any upgrade; Elemental Damage, Overall Damage, Attack Speed, Projectile Speed, Projectile Distance, Crit Chance, Crit Damage, and Status Effect Chance..\n{| class=\"wikitable mw-collapsible\" style=\"background:#000000; border:1px solid #555; color:#ffffff; margin:0 auto;\"\n|+All Nekomancer Summons\n! style=\"background:#000000; color:#ffffff;\" | Picture\n! style=\"background:#000000; color:#ffffff;\" | Type\n! style=\"background:#000000; color:#ffffff;\" | Description\n|-\n|\n|Zombie Kitty\n|Grounded unit that deals 25 SHADOW Damage.\n5% chance to inflict the BREACHED status effect.\n|-\n|\n|Balloon Kitty\n|Airborne unit that deals 36 FIRE Damage.\n10% chance to inflict the BURNING status effect.\n|-\n|\n|Ballista Kitty\n|Airborne unit that deal 25 PHYSICAL Damage.\n10% chance to inflict the BLEEDING status effect.\n|-\n|\n|Totem Kitty\n|Heals you and your allies within a small radius. Will expire after some time.\nYou may only be healed by one Totem at a time.\n|}\nMaximum summons scales with Player count:\n{| class=\"wikitable\" style=\"background:#000000; border:1px solid #555; color:#ffffff; margin:0 auto;\"\n! style=\"background:#000000; color:#ffffff;\" | Nekomancer Playercount\n! style=\"background:#000000; color:#ffffff;\" | Maximum Summons Each\n|-\n|1-2 Nekomancers\n|3 Maximum Summons\n|-\n|3-6 Nekomancers\n|2 Maximum Summons\n|-\n|7+ Nekomancers\n|1 Maximum Summon\n|}\nThe Maximum amount of souls you can hold is 5, souls uncollected will expire after 30 seconds.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation",
+              "damageBehavior"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "0 ",
+            "000000",
+            "1",
+            "1 ",
+            "10",
+            "2 ",
+            "25 ",
+            "3",
+            "3 ",
+            "30 seconds",
+            "36 ",
+            "5",
+            "555",
+            "6 ",
+            "7"
+          ],
+          "findings": [],
+          "unresolved": [
+            "question-skill-nekomancer-call-of-the-undead-attack-interval",
+            "question-skill-nekomancer-call-of-the-undead-crit-behavior"
+          ],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      },
+      {
+        "id": "skill-nekomancer-spirit-drift",
+        "name": "Spirit Drift",
+        "type": "Utility",
+        "icon": "Nekomancer-Utility.png",
+        "imageFile": "Nekomancer-Utility.png",
+        "imageUrl": "https://ecliptica.miraheze.org/wiki/Special:FilePath/Nekomancer-Utility.png",
+        "description": "For 2 seconds, become invincible and drift forward.\n10 second cooldown.",
+        "mechanics": {
+          "sourceText": "For 2 seconds, become invincible and drift forward.\n10 second cooldown.",
+          "signals": {
+            "unknownTokens": [],
+            "numericMentions": [
+              "10 second",
+              "2 seconds"
+            ],
+            "hasPeriodic": false,
+            "hasExplicitInterval": true,
+            "hasDamage": false,
+            "hasDamageNumber": false,
+            "hasOutgoingDamage": false,
+            "hasChance": false,
+            "hasDuration": true,
+            "hasCooldown": true,
+            "hasStackScaling": false,
+            "hasFormulaLanguage": false,
+            "hasUnknown": false
+          },
+          "damageBehavior": null,
+          "functionalInterpretation": {
+            "status": "Working interpretation",
+            "summary": "Working interpretation for Nekomancer: Spirit Drift: The description appears to function as a passive modifier, condition, or utility effect rather than a direct damage source. The effect appears to persist for a finite duration where stated. The source describes a cooldown-gated action.",
+            "basis": "Conservative paraphrase of the English wiki description for this class ability; it is not a confirmed in-game mechanic.",
+            "uncertainties": []
+          },
+          "arbitrary": []
+        },
+        "sourceRefs": [
+          {
+            "sourceId": "wiki-nekomancer",
+            "sourcePage": "Nekomancer",
+            "section": "Skills > Utility: Spirit Drift",
+            "retrievedAt": "2026-08-07",
+            "excerpt": "For 2 seconds, become invincible and drift forward.\n10 second cooldown.",
+            "derivedFields": [
+              "name",
+              "type",
+              "description",
+              "icon",
+              "functionalInterpretation"
+            ]
+          }
+        ],
+        "researchAudit": {
+          "status": "Reviewed",
+          "explicitEnglishValues": [
+            "10 second",
+            "2 seconds"
+          ],
+          "findings": [],
+          "unresolved": [],
+          "sourceTags": [
+            {
+              "category": "English wiki",
+              "confidence": "Source-stated",
+              "evidenceId": null
+            }
+          ],
+          "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+        }
+      }
+    ],
+    "upgradeIds": [
+      "upgrade-nekomancer-nekomancer-proficiency",
+      "upgrade-nekomancer-nekomancer-death-blossom",
+      "upgrade-nekomancer-nekomancer-mastery",
+      "upgrade-nekomancer-nekomancer-soul-detonation",
+      "upgrade-nekomancer-nekomancer-necropact"
+    ],
+    "unknownFields": [
+      "starting stats",
+      "movement characteristics not stated numerically"
+    ],
+    "researchStatus": "Needs Testing",
+    "sourceRefs": [
+      {
+        "sourceId": "wiki-nekomancer",
+        "sourcePage": "Nekomancer",
+        "section": "Class overview",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "Just because your skeletal remains have been reborn as a magical Lich Necromancer doesn't mean you can't still have your hobbies and personality.\nCollect SOULs which periodically spawn around the stage. Slain enemies have chance to leave a SOUL behind.",
+        "derivedFields": [
+          "name",
+          "description",
+          "icon",
+          "skills",
+          "startingStats"
+        ]
+      }
+    ],
+    "importedAt": "2026-08-07",
+    "importedFrom": "English Ecliptica Wiki",
+    "researchAudit": {
+      "status": "Reviewed",
+      "explicitEnglishValues": [],
+      "findings": [],
+      "unresolved": [],
+      "sourceTags": [
+        {
+          "category": "English wiki",
+          "confidence": "Source-stated",
+          "evidenceId": null
+        }
+      ],
+      "notes": "Findings are source-tagged and do not overwrite the original wiki description or placeholder values."
+    }
+  }
+]

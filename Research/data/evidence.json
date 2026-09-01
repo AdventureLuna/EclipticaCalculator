@@ -1,0 +1,661 @@
+[
+  {
+    "id": "EVID-USER-BERSERKER-MELEE-TOTAL",
+    "mechanicId": "upgrade-crystal-of-mobility-berserker-s-soul-melee",
+    "mechanicName": "Berserker's Soul (Melee)",
+    "questionId": "question-upgrade-crystal-of-mobility-berserker-s-soul-melee-stack-scaling",
+    "questionIds": [
+      "question-upgrade-crystal-of-mobility-berserker-s-soul-melee-stack-scaling"
+    ],
+    "type": "user observation",
+    "source": "User research note handoff",
+    "date": "2026-08-07",
+    "originalInformation": "The displayed per-stack numbers may actually represent approximately 45% Overall Damage, 90% Attack Speed, and 50% Health Regeneration reduction at 70 stacks, divided by 70 for each stack.",
+    "interpretation": "User hypothesis: approximately +0.6429% Overall Damage, +1.2857% Attack Speed, and -0.7143% Health Regeneration per stack. This is close to the Japanese wiki's reported values, but is not itself a confirmed measurement.",
+    "supportsClaimIds": [
+      "CLAIM-USER-BERSERKER-MELEE-TOTAL"
+    ],
+    "contradictsClaimIds": [],
+    "reliabilityNotes": "User interpretation from the page note; requires controlled measurements at known stack counts.",
+    "attachments": [],
+    "sourceCategory": "User observation/speculation",
+    "confidence": "Reported"
+  },
+  {
+    "id": "EVID-USER-BERSERKER-RANGED-TOTAL",
+    "mechanicId": "upgrade-crystal-of-mobility-berserker-s-soul-ranged",
+    "mechanicName": "Berserker's Soul (Ranged)",
+    "questionId": "question-upgrade-crystal-of-mobility-berserker-s-soul-ranged-stack-scaling",
+    "questionIds": [
+      "question-upgrade-crystal-of-mobility-berserker-s-soul-ranged-stack-scaling"
+    ],
+    "type": "user observation",
+    "source": "User research note handoff",
+    "date": "2026-08-07",
+    "originalInformation": "The displayed per-stack numbers may actually represent approximately 45% Overall Damage, 90% Attack Speed, and 2% Projectile Spread at 70 stacks, divided by 70 for each stack.",
+    "interpretation": "User hypothesis: approximately +0.6429% Overall Damage, +1.2857% Attack Speed, and +0.0286% Projectile Spread per stack. The Japanese wiki reports different damage and Attack Speed totals, so both remain separate claims.",
+    "supportsClaimIds": [
+      "CLAIM-USER-BERSERKER-RANGED-TOTAL"
+    ],
+    "contradictsClaimIds": [],
+    "reliabilityNotes": "User interpretation from the page note; conflicts with the Japanese per-stack report and requires controlled measurements.",
+    "attachments": [],
+    "sourceCategory": "User observation/speculation",
+    "confidence": "Reported"
+  },
+  {
+    "id": "EVID-USER-BIG-LAZY-STACKS",
+    "mechanicId": "upgrade-crystal-of-perseverance-big-and-lazy",
+    "mechanicName": "Big and Lazy",
+    "questionId": "Q-USER-BIG-LAZY-VITALITY",
+    "questionIds": [
+      "Q-USER-BIG-LAZY-VITALITY"
+    ],
+    "type": "user observation",
+    "source": "User research note handoff",
+    "date": "2026-08-07",
+    "originalInformation": "Big and Lazy appears to multiply the total regeneration value after Vitality and other regeneration effects by 3 at 1 stack, 3.5 at 2 stacks, and so on. This multiplier is not reflected in the displayed regeneration value but affects regeneration directly.",
+    "interpretation": "User hypothesis: the effective regeneration multiplier may be 2.5 + 0.5 × stack count while stationary, applied after other regeneration modifiers. This needs an isolated comparison of displayed and observed regeneration.",
+    "supportsClaimIds": [
+      "CLAIM-USER-BIG-LAZY-STACKS"
+    ],
+    "contradictsClaimIds": [],
+    "reliabilityNotes": "User observation; exact order of operations and display behavior remain unverified.",
+    "attachments": [],
+    "sourceCategory": "User observation/speculation",
+    "confidence": "Reported"
+  },
+  {
+    "id": "EVID-USER-BIG-ROUND-STACKING",
+    "mechanicId": "upgrade-crystal-of-perseverance-big-and-round",
+    "mechanicName": "Big and Round",
+    "questionId": null,
+    "questionIds": [],
+    "type": "user observation",
+    "source": "User research note handoff",
+    "date": "2026-08-07",
+    "originalInformation": "Big and Round appears to stack linearly as its description states.",
+    "interpretation": "User observation supporting the English description's linear stacking interpretation; no separate unresolved question was created because the note treats this mechanic as sufficiently clear.",
+    "supportsClaimIds": [
+      "CLAIM-USER-BIG-ROUND-STACKING"
+    ],
+    "contradictsClaimIds": [],
+    "reliabilityNotes": "Reported user observation, not a controlled confirmation.",
+    "attachments": [],
+    "sourceCategory": "User observation/speculation",
+    "confidence": "Reported"
+  },
+  {
+    "id": "EVID-USER-BIG-WRATHFUL-STACKING",
+    "mechanicId": "upgrade-crystal-of-perseverance-big-and-wrathful",
+    "mechanicName": "Big and Wrathful",
+    "questionId": "Q-USER-BIG-WRATHFUL-STACKING",
+    "questionIds": [
+      "Q-USER-BIG-WRATHFUL-STACKING"
+    ],
+    "type": "user observation",
+    "source": "User research note handoff",
+    "date": "2026-08-07",
+    "originalInformation": "It is unclear whether Big and Wrathful's damage dealt at LOW HP is an additional multiplier or simply adds 50% to the overall damage value. It probably stacks linearly.",
+    "interpretation": "User hypothesis: the +50% LOW HP damage effect probably stacks linearly, but the operation may be additive to Overall Damage or a separate multiplier.",
+    "supportsClaimIds": [
+      "CLAIM-USER-BIG-WRATHFUL-STACKING"
+    ],
+    "contradictsClaimIds": [],
+    "reliabilityNotes": "User hypothesis; needs tests comparing base damage, Overall Damage modifiers, and multiple Big and Wrathful stacks at LOW HP.",
+    "attachments": [],
+    "sourceCategory": "User observation/speculation",
+    "confidence": "Reported"
+  },
+  {
+    "id": "EVID-USER-001",
+    "mechanicId": "external-shedding",
+    "mechanicName": "Shedding",
+    "questionId": "Q-USER-SHEDDING",
+    "type": "user observation",
+    "source": "User research note",
+    "date": "2026-08-07",
+    "originalInformation": "Experimental observations appear potentially closer to approximately 7% than the previously interpreted 5% value.",
+    "interpretation": "Preliminary observation; not a confirmed value and not an English-wiki citation.",
+    "supportsClaimIds": [
+      "CLAIM-SHEDDING-7"
+    ],
+    "contradictsClaimIds": [
+      "CLAIM-SHEDDING-5"
+    ],
+    "reliabilityNotes": "Uncontrolled initial observation; needs an isolated test.",
+    "attachments": [],
+    "sourceCategory": "User observation/speculation",
+    "confidence": "Reported",
+    "questionIds": []
+  },
+  {
+    "id": "EVID-USER-002",
+    "mechanicId": "external-big-and-lazy-vitality",
+    "mechanicName": "Big and Lazy × Vitality",
+    "questionId": "Q-USER-BIG-LAZY-VITALITY",
+    "type": "user observation",
+    "source": "User research note",
+    "date": "2026-08-07",
+    "originalInformation": "The interaction appears to be multiplicative in some way.",
+    "interpretation": "Hypothesis only; the exact order and cap behavior remain unknown.",
+    "supportsClaimIds": [
+      "CLAIM-BIG-LAZY-VITALITY-MULT"
+    ],
+    "contradictsClaimIds": [],
+    "reliabilityNotes": "Needs tests with neither effect, each effect individually, and both together.",
+    "attachments": [],
+    "sourceCategory": "User observation/speculation",
+    "confidence": "Reported",
+    "questionIds": []
+  },
+  {
+    "id": "EVID-USER-TWINMAGE-RATE",
+    "mechanicId": "class-twinmage",
+    "mechanicName": "Twinmage",
+    "questionId": "Q-USER-TWINMAGE-HAND-RATE",
+    "type": "user-reported wiki reading",
+    "source": "User-provided reading of the English Twinmage wiki",
+    "date": "2026-08-07",
+    "originalInformation": "0.8 attack speed per hand when using both hands and 1.4 attacks per second when only using both hands. The values apply to all six elemental hands.",
+    "interpretation": "Stored as 0.8 attacks per second per hand with both hands active and 1.4 attacks per second per hand with a single hand active. The second state wording needs confirmation.",
+    "supportsClaimIds": [
+      "CLAIM-TWINMAGE-HAND-RATE"
+    ],
+    "contradictsClaimIds": [],
+    "reliabilityNotes": "The retrieved raw page preserves the qualitative one-hand +75% base-speed rule but not these literal numbers; retain as reported until the numeric wording is independently checked.",
+    "sourceRefs": [
+      {
+        "sourceId": "wiki-twinmage",
+        "sourcePage": "Twinmage",
+        "section": "Skills",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "Firing only one hand will increase your attack speed by 75%",
+        "derivedFields": [
+          "qualitative one-hand attack-speed rule"
+        ]
+      }
+    ],
+    "attachments": [],
+    "sourceCategory": "English wiki",
+    "confidence": "Source-stated",
+    "questionIds": []
+  },
+  {
+    "id": "EVID-JA-TWINMAGE-HANDS",
+    "mechanicId": "class-twinmage",
+    "mechanicName": "Twinmage",
+    "questionId": "Q-USER-TWINMAGE-HAND-RATE",
+    "questionIds": [
+      "Q-USER-TWINMAGE-HAND-RATE",
+      "Q-USER-TWINMAGE-MASTERY-STATUS-CHANCE",
+      "Q-USER-TWINMAGE-SINISTRA-STATUS-DAMAGE",
+      "Q-USER-TWINMAGE-DEXTRA-STATUS-DAMAGE"
+    ],
+    "type": "Japanese wiki",
+    "source": "Ecliptica Wiki* / ツインメイジ",
+    "date": "2026-08-07",
+    "originalInformation": "連射速度 | 0.8/s（片手攻撃中は1.4/s）\n片方のみ攻撃中は攻撃速度が75%増加する。\nファイアボール：10%の確率で燃焼\nフロストミサイル：10%の確率で凍結\nサンダーボルト：10%の確率で麻痺\nウィンドブレード：10%の確率で出血\nライトボール：10%の確率で弱体化\nシャドウミサイル：10%の確率で崩壊",
+    "translation": "Fire rate: 0.8/s (1.4/s while attacking with one hand). While attacking with only one hand, attack speed increases by 75%. Each listed elemental hand attack has a 10% chance to apply its associated status effect.",
+    "interpretation": "The Japanese page independently records the reported Twinmage rates and gives 10% status-effect chances for the base elemental hand attacks. It does not state the status chance of Twinmage: Mastery or whether Sinistra/Dextra changes status damage.",
+    "supportsClaimIds": [
+      "CLAIM-TWINMAGE-HAND-RATE"
+    ],
+    "contradictsClaimIds": [],
+    "reliabilityNotes": "Japanese wiki source; translated for this record. The Mastery and hand-modifier interaction remains unresolved.",
+    "sourceRefs": [
+      {
+        "sourceId": "ja-wiki-a7af6fa8bf26",
+        "sourcePage": "ツインメイジ",
+        "section": "PRIMARY & SECONDARY",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "連射速度 | 0.8/s（片手攻撃中は1.4/s）\n片方のみ攻撃中は攻撃速度が75%増加する。\nファイアボール：10%の確率で燃焼\nフロストミサイル：10%の確率で凍結\nサンダーボルト：10%の確率で麻痺\nウィンドブレード：10%の確率で出血\nライトボール：10%の確率で弱体化\nシャドウミサイル：10%の確率で崩壊",
+        "translation": "Fire rate: 0.8/s (1.4/s while attacking with one hand). While attacking with only one hand, attack speed increases by 75%. Each listed elemental hand attack has a 10% chance to apply its associated status effect.",
+        "derivedFields": [
+          "reported hand rates",
+          "base hand status-effect chance"
+        ]
+      }
+    ],
+    "attachments": [],
+    "sourceCategory": "Japanese wiki",
+    "confidence": "Reported"
+  },
+  {
+    "id": "EVID-JA-TWINMAGE-MASTERY",
+    "mechanicId": "upgrade-twinmage-twinmage-mastery",
+    "mechanicName": "Twinmage: Mastery",
+    "questionId": "question-upgrade-twinmage-twinmage-mastery-stack-scaling",
+    "questionIds": [
+      "question-upgrade-twinmage-twinmage-mastery-stack-scaling",
+      "Q-USER-TWINMAGE-MASTERY-STATUS-CHANCE",
+      "Q-USER-TWINMAGE-SINISTRA-MASTERY",
+      "Q-USER-TWINMAGE-DEXTRA-MASTERY"
+    ],
+    "type": "Japanese wiki",
+    "source": "Ecliptica Wiki* / ツインメイジ",
+    "date": "2026-08-07",
+    "originalInformation": "スキルでダメージを与えた時、半径?M(+?M)の爆発が起き、25%のダメージを与える。",
+    "translation": "When a skill deals damage, an explosion occurs with a radius of ? m (+? m), dealing 25% of the damage.",
+    "interpretation": "This preserves the 25% splash-damage ratio and keeps the base/per-stack radius unknown. It does not state whether the explosion can crit, apply status effects, or inherit a hand's status chance.",
+    "supportsClaimIds": [],
+    "contradictsClaimIds": [],
+    "reliabilityNotes": "Japanese wiki source; translation is an interpretation aid, not a replacement for the original.",
+    "sourceRefs": [
+      {
+        "sourceId": "ja-wiki-a7af6fa8bf26",
+        "sourcePage": "ツインメイジ",
+        "section": "ツインメイジ：マスタリー",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "スキルでダメージを与えた時、半径?M(+?M)の爆発が起き、25%のダメージを与える。",
+        "translation": "When a skill deals damage, an explosion occurs with a radius of ? m (+? m), dealing 25% of the damage.",
+        "derivedFields": [
+          "splash ratio",
+          "base radius",
+          "per-stack radius"
+        ]
+      }
+    ],
+    "attachments": [],
+    "sourceCategory": "Japanese wiki",
+    "confidence": "Reported"
+  },
+  {
+    "id": "EVID-JA-TWINMAGE-HAND-MODIFIERS",
+    "mechanicId": "upgrade-twinmage-twinmage-sinistra",
+    "mechanicName": "Twinmage: Sinistra / Dextra",
+    "questionId": "Q-USER-TWINMAGE-SINISTRA-MASTERY",
+    "questionIds": [
+      "Q-USER-TWINMAGE-SINISTRA-MASTERY",
+      "Q-USER-TWINMAGE-SINISTRA-CHARGED-STRIKE",
+      "Q-USER-TWINMAGE-SINISTRA-STATUS-DAMAGE",
+      "Q-USER-TWINMAGE-DEXTRA-MASTERY",
+      "Q-USER-TWINMAGE-DEXTRA-CHARGED-STRIKE",
+      "Q-USER-TWINMAGE-DEXTRA-STATUS-DAMAGE"
+    ],
+    "type": "Japanese wiki",
+    "source": "Ecliptica Wiki* / ツインメイジ",
+    "date": "2026-08-07",
+    "originalInformation": "ツインメイジ：シニストラ：左手のダメージ+5% (+5%)、左手の攻撃速度+5% (+5%)、右手のダメージ-3% (-3%)、右手の攻撃速度-3% (-3%)。\nツインメイジ：デクストラ：右手のダメージ+5% (+5%)、右手の攻撃速度+5% (+5%)、左手のダメージ-3% (-3%)、左手の攻撃速度-3% (-3%)。\n片手のみの強化であり、グループBに属し、グループAとは乗算で計算される。",
+    "translation": "Sinistra: left-hand damage +5% per stack and left-hand attack speed +5%; right-hand damage -3% and right-hand attack speed -3%. Dextra reverses those hand assignments. These are one-hand-only enhancements, and their increases are Group B, calculated multiplicatively with Group A rather than by the normal calculation.",
+    "interpretation": "The page confirms the hand-specific modifiers and their stacking group. It does not explicitly say whether those modifiers affect Mastery splash damage, Charged Strike explosions, or status-effect damage.",
+    "supportsClaimIds": [],
+    "contradictsClaimIds": [],
+    "reliabilityNotes": "Relevant context, not a direct resolution of the interaction questions.",
+    "sourceRefs": [
+      {
+        "sourceId": "ja-wiki-a7af6fa8bf26",
+        "sourcePage": "ツインメイジ",
+        "section": "シニストラ / デクストラ",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "ツインメイジ：シニストラ：左手のダメージ+5% (+5%)、左手の攻撃速度+5% (+5%)、右手のダメージ-3% (-3%)、右手の攻撃速度-3% (-3%)。\nツインメイジ：デクストラ：右手のダメージ+5% (+5%)、右手の攻撃速度+5% (+5%)、左手のダメージ-3% (-3%)、左手の攻撃速度-3% (-3%)。\n片手のみの強化であり、グループBに属し、グループAとは乗算で計算される。",
+        "translation": "Sinistra: left-hand damage +5% per stack and left-hand attack speed +5%; right-hand damage -3% and right-hand attack speed -3%. Dextra reverses those hand assignments. These are one-hand-only enhancements, and their increases are Group B, calculated multiplicatively with Group A rather than by the normal calculation.",
+        "derivedFields": [
+          "hand-specific modifiers",
+          "stacking group"
+        ]
+      }
+    ],
+    "attachments": [],
+    "sourceCategory": "Japanese wiki",
+    "confidence": "Reported"
+  },
+  {
+    "id": "EVID-JA-CHARGED-STRIKE",
+    "mechanicId": "upgrade-chrono-wizard-charged-strike",
+    "mechanicName": "Charged Strike",
+    "questionId": "Q-USER-CHARGED-STRIKE-DAMAGE",
+    "questionIds": [
+      "Q-USER-CHARGED-STRIKE-DAMAGE",
+      "Q-USER-CHARGED-STRIKE-STACK",
+      "Q-USER-CHARGED-STRIKE-OTHER",
+      "Q-USER-TWINMAGE-SINISTRA-CHARGED-STRIKE",
+      "Q-USER-TWINMAGE-DEXTRA-CHARGED-STRIKE"
+    ],
+    "type": "Japanese wiki",
+    "source": "Ecliptica Wiki* / アップグレード",
+    "date": "2026-08-07",
+    "originalInformation": "クリティカルヒット時に25(+10)物理ダメージの爆発が発生する。\nクリティカルヒット率 -5% (-5%)\n備考：与・物理ダメージの影響を受ける。",
+    "translation": "On a critical hit, an explosion dealing 25 (+10) Physical damage occurs. Critical-hit rate is -5% (-5%) per stack. Note: it is affected by dealt Physical Damage.",
+    "interpretation": "This directly conflicts with the English wiki's X placeholders for the explosion base and per-stack damage. The Japanese note supports Physical Damage scaling, but does not resolve whether Sinistra/Dextra hand-specific damage modifiers are included.",
+    "supportsClaimIds": [
+      "CLAIM-JA-CHARGED-STRIKE-DAMAGE",
+      "CLAIM-JA-CHARGED-STRIKE-STACK"
+    ],
+    "contradictsClaimIds": [],
+    "reliabilityNotes": "Japanese and English pages disagree on the numeric values; retain both as source-specific claims.",
+    "sourceRefs": [
+      {
+        "sourceId": "ja-wiki-d500509ec61d",
+        "sourcePage": "アップグレード",
+        "section": "チャージドストライク",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "クリティカルヒット時に25(+10)物理ダメージの爆発が発生する。\nクリティカルヒット率 -5% (-5%)\n備考：与・物理ダメージの影響を受ける。",
+        "translation": "On a critical hit, an explosion dealing 25 (+10) Physical damage occurs. Critical-hit rate is -5% (-5%) per stack. Note: it is affected by dealt Physical Damage.",
+        "derivedFields": [
+          "base explosion damage",
+          "per-stack damage",
+          "physical-damage scaling"
+        ]
+      }
+    ],
+    "attachments": [],
+    "sourceCategory": "Japanese wiki",
+    "confidence": "Reported"
+  },
+  {
+    "id": "EVID-JA-BIG-LAZY",
+    "mechanicId": "upgrade-crystal-of-perseverance-big-and-lazy",
+    "mechanicName": "Big and Lazy / Vitality",
+    "questionId": "Q-USER-BIG-LAZY-VITALITY",
+    "questionIds": [
+      "Q-USER-BIG-LAZY-VITALITY"
+    ],
+    "type": "Japanese wiki",
+    "source": "Ecliptica Wiki* / アップグレード",
+    "date": "2026-08-07",
+    "originalInformation": "自然回復量×(1+巨大な怠惰スタック数)、これ自体に自然回復量はない。\n移動とは移動入力を指しており、慣性やスキルによる移動は対象とならない。",
+    "translation": "Health regeneration is multiplied by (1 + the number of Big and Lazy stacks); Big and Lazy itself does not provide regeneration. Movement means movement input, so inertia and skill-based movement do not count.",
+    "interpretation": "This supports a multiplicative interaction with an existing regeneration source such as Vitality, but it does not state the exact order or cap behavior when other modifiers are present.",
+    "supportsClaimIds": [
+      "CLAIM-BIG-LAZY-VITALITY-MULT"
+    ],
+    "contradictsClaimIds": [],
+    "reliabilityNotes": "Japanese source gives a formula for Big and Lazy; the full Vitality interaction remains a research question.",
+    "sourceRefs": [
+      {
+        "sourceId": "ja-wiki-d500509ec61d",
+        "sourcePage": "アップグレード",
+        "section": "巨大な怠惰",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "自然回復量×(1+巨大な怠惰スタック数)、これ自体に自然回復量はない。\n移動とは移動入力を指しており、慣性やスキルによる移動は対象とならない。",
+        "translation": "Health regeneration is multiplied by (1 + the number of Big and Lazy stacks); Big and Lazy itself does not provide regeneration. Movement means movement input, so inertia and skill-based movement do not count.",
+        "derivedFields": [
+          "Big and Lazy formula",
+          "multiplicative interaction"
+        ]
+      }
+    ],
+    "attachments": [],
+    "sourceCategory": "Japanese wiki",
+    "confidence": "Reported"
+  },
+  {
+    "id": "EVID-JA-BENISON",
+    "mechanicId": "upgrade-crystal-of-perseverance-benison-of-purification",
+    "mechanicName": "Benison of Purification",
+    "questionId": "Q-USER-BENISON-ONE-STACK-INTERVAL",
+    "questionIds": [
+      "Q-USER-BENISON-ONE-STACK-INTERVAL",
+      "Q-USER-BENISON-FREQUENCY-SCALING",
+      "Q-USER-BENISON-DAMAGE",
+      "Q-USER-BENISON-OTHER-SCALING",
+      "Q-USER-ATTACK-SPEED-STATUS-INTERACTION"
+    ],
+    "type": "Japanese wiki",
+    "source": "Ecliptica Wiki* / アップグレード",
+    "date": "2026-08-07",
+    "originalInformation": "定期的に、64メートル以内の最も近い敵へ?ダメージを与える聖属性魔法を発射する。\n複数取得すると発射間隔が短縮する。",
+    "translation": "Periodically fires a Holy magic projectile at the nearest enemy within 64 meters, dealing ? damage. With multiple copies, the firing interval is shortened.",
+    "interpretation": "The Japanese page confirms that additional stacks shorten the interval, but leaves the one-stack interval and projectile damage unknown. It does not state whether Attack Speed affects the proc or its status-effect chance.",
+    "supportsClaimIds": [],
+    "contradictsClaimIds": [],
+    "reliabilityNotes": "Partial answer only; the Japanese placeholder remains explicit.",
+    "sourceRefs": [
+      {
+        "sourceId": "ja-wiki-d500509ec61d",
+        "sourcePage": "アップグレード",
+        "section": "聖なる祝福",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "定期的に、64メートル以内の最も近い敵へ?ダメージを与える聖属性魔法を発射する。\n複数取得すると発射間隔が短縮する。",
+        "translation": "Periodically fires a Holy magic projectile at the nearest enemy within 64 meters, dealing ? damage. With multiple copies, the firing interval is shortened.",
+        "derivedFields": [
+          "interval scaling",
+          "damage remains unknown"
+        ]
+      }
+    ],
+    "attachments": [],
+    "sourceCategory": "Japanese wiki",
+    "confidence": "Reported"
+  },
+  {
+    "id": "EVID-JA-CURSE-OF-WRATH",
+    "mechanicId": "upgrade-crystal-of-perseverance-curse-of-wrath",
+    "mechanicName": "Curse of Wrath",
+    "questionId": "question-upgrade-crystal-of-perseverance-curse-of-wrath-interval",
+    "questionIds": [
+      "question-upgrade-crystal-of-perseverance-curse-of-wrath-interval",
+      "question-upgrade-crystal-of-perseverance-curse-of-wrath-damage",
+      "question-upgrade-crystal-of-perseverance-curse-of-wrath-stack-scaling",
+      "Q-USER-ATTACK-SPEED-STATUS-INTERACTION"
+    ],
+    "type": "Japanese wiki",
+    "source": "Ecliptica Wiki* / アップグレード",
+    "date": "2026-08-07",
+    "originalInformation": "4秒毎に、半径32メートル以内の最も近い敵へ30ダメージを与える闇属性魔法を発射する。\nクリティカル判定があり、?%の確率で崩壊を付与する。\n複数取得すると発射間隔が短縮する。",
+    "translation": "Every 4 seconds, fires a Shadow magic projectile at the nearest enemy within a 32-meter radius, dealing 30 damage. It has a critical-hit check and a ?% chance to apply BREACHED. With multiple copies, the firing interval is shortened.",
+    "interpretation": "This conflicts with the English page's 25 (+X) damage wording and supplies a four-second base interval. The status chance remains unknown, while the Japanese page explicitly says a critical-hit check exists.",
+    "supportsClaimIds": [
+      "CLAIM-JA-CURSE-OF-WRATH"
+    ],
+    "contradictsClaimIds": [],
+    "reliabilityNotes": "Japanese and English numeric damage values conflict; do not merge them into one answer.",
+    "sourceRefs": [
+      {
+        "sourceId": "ja-wiki-d500509ec61d",
+        "sourcePage": "アップグレード",
+        "section": "怒りの呪い",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "4秒毎に、半径32メートル以内の最も近い敵へ30ダメージを与える闇属性魔法を発射する。\nクリティカル判定があり、?%の確率で崩壊を付与する。\n複数取得すると発射間隔が短縮する。",
+        "translation": "Every 4 seconds, fires a Shadow magic projectile at the nearest enemy within a 32-meter radius, dealing 30 damage. It has a critical-hit check and a ?% chance to apply BREACHED. With multiple copies, the firing interval is shortened.",
+        "derivedFields": [
+          "base interval",
+          "base damage",
+          "critical check",
+          "status chance remains unknown"
+        ]
+      }
+    ],
+    "attachments": [],
+    "sourceCategory": "Japanese wiki",
+    "confidence": "Reported"
+  },
+  {
+    "id": "EVID-JA-THUNDER-AURA",
+    "mechanicId": "upgrade-crystal-of-mobility-thunder-aura",
+    "mechanicName": "Thunder Aura",
+    "questionId": "question-upgrade-crystal-of-mobility-thunder-aura-interval",
+    "questionIds": [
+      "question-upgrade-crystal-of-mobility-thunder-aura-interval",
+      "question-upgrade-crystal-of-mobility-thunder-aura-stack-scaling",
+      "Q-USER-ATTACK-SPEED-STATUS-INTERACTION"
+    ],
+    "type": "Japanese wiki",
+    "source": "Ecliptica Wiki* / アップグレード",
+    "date": "2026-08-07",
+    "originalInformation": "毎秒、4m(+?m)内にいる敵へ23(+?)雷属性ダメージを与える。\n与ダメ減少後のダメージ。クリティカル判定があり、確率で麻痺を付与する。\n与・雷属性ダメージの影響を受ける。",
+    "translation": "Every second, deals 23 (+?) Electric damage to enemies within 4 m (+? m). This is damage after dealt-damage reduction. It has a critical-hit check and can apply PARALYZED with an unspecified chance. It is affected by dealt Electric damage.",
+    "interpretation": "This supplies a one-second interval, 4 m base radius, 23 base damage, critical-hit check, and Electric Damage scaling. It conflicts with the English page's 25 base damage and leaves stack/radius/status chance values incomplete.",
+    "supportsClaimIds": [
+      "CLAIM-JA-THUNDER-AURA"
+    ],
+    "contradictsClaimIds": [],
+    "reliabilityNotes": "Japanese and English pages differ on base damage; preserve both.",
+    "sourceRefs": [
+      {
+        "sourceId": "ja-wiki-d500509ec61d",
+        "sourcePage": "アップグレード",
+        "section": "雷のオーラ",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "毎秒、4m(+?m)内にいる敵へ23(+?)雷属性ダメージを与える。\n与ダメ減少後のダメージ。クリティカル判定があり、確率で麻痺を付与する。\n与・雷属性ダメージの影響を受ける。",
+        "translation": "Every second, deals 23 (+?) Electric damage to enemies within 4 m (+? m). This is damage after dealt-damage reduction. It has a critical-hit check and can apply PARALYZED with an unspecified chance. It is affected by dealt Electric damage.",
+        "derivedFields": [
+          "base interval",
+          "radius",
+          "base damage",
+          "critical check",
+          "status chance remains vague"
+        ]
+      }
+    ],
+    "attachments": [],
+    "sourceCategory": "Japanese wiki",
+    "confidence": "Reported"
+  },
+  {
+    "id": "EVID-JA-BERSERKER-MELEE",
+    "mechanicId": "upgrade-crystal-of-mobility-berserker-s-soul-melee",
+    "mechanicName": "Berserker's Soul (Melee)",
+    "questionId": "question-upgrade-crystal-of-mobility-berserker-s-soul-melee-stack-scaling",
+    "questionIds": [
+      "question-upgrade-crystal-of-mobility-berserker-s-soul-melee-stack-scaling"
+    ],
+    "type": "Japanese wiki",
+    "source": "Ecliptica Wiki* / アップグレード",
+    "date": "2026-08-07",
+    "originalInformation": "ダメージを与えると、バーサーカーソウルを最大70スタックまで獲得する。\n1スタックにつき与ダメージ +0.64%\n1スタックにつき攻撃速度 +1.28%\n1スタックにつき自然回復量 -0.71%\nドットダメージでは貯まらない。",
+    "translation": "Dealing damage grants Berserker's Soul, up to 70 stacks. Each stack gives +0.64% dealt damage, +1.28% Attack Speed, and -0.71% regeneration. Damage-over-time does not build stacks.",
+    "interpretation": "This supplies a concrete maximum stack count and per-stack values that differ from the English page's X placeholders.",
+    "supportsClaimIds": [
+      "CLAIM-JA-BERSERKER-MELEE"
+    ],
+    "contradictsClaimIds": [],
+    "reliabilityNotes": "Japanese source; exact game-version applicability should still be checked.",
+    "sourceRefs": [
+      {
+        "sourceId": "ja-wiki-d500509ec61d",
+        "sourcePage": "アップグレード",
+        "section": "バーサーカーソウル（近接）",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "ダメージを与えると、バーサーカーソウルを最大70スタックまで獲得する。\n1スタックにつき与ダメージ +0.64%\n1スタックにつき攻撃速度 +1.28%\n1スタックにつき自然回復量 -0.71%\nドットダメージでは貯まらない。",
+        "translation": "Dealing damage grants Berserker's Soul, up to 70 stacks. Each stack gives +0.64% dealt damage, +1.28% Attack Speed, and -0.71% regeneration. Damage-over-time does not build stacks.",
+        "derivedFields": [
+          "maximum stacks",
+          "per-stack scaling",
+          "DoT exclusion"
+        ]
+      }
+    ],
+    "attachments": [],
+    "sourceCategory": "Japanese wiki",
+    "confidence": "Reported"
+  },
+  {
+    "id": "EVID-JA-BERSERKER-RANGED",
+    "mechanicId": "upgrade-crystal-of-mobility-berserker-s-soul-ranged",
+    "mechanicName": "Berserker's Soul (Ranged)",
+    "questionId": "question-upgrade-crystal-of-mobility-berserker-s-soul-ranged-stack-scaling",
+    "questionIds": [
+      "question-upgrade-crystal-of-mobility-berserker-s-soul-ranged-stack-scaling"
+    ],
+    "type": "Japanese wiki",
+    "source": "Ecliptica Wiki* / アップグレード",
+    "date": "2026-08-07",
+    "originalInformation": "ダメージを与えると、バーサーカーソウルを最大70スタックまで獲得する。\n1スタックにつき与ダメージ +0.32%\n1スタックにつき攻撃速度 +0.64%\n1スタックにつき投射物拡散 +0.0285%\nドットダメージでは貯まらない。",
+    "translation": "Dealing damage grants Berserker's Soul, up to 70 stacks. Each stack gives +0.32% dealt damage, +0.64% Attack Speed, and +0.0285% projectile spread. Damage-over-time does not build stacks.",
+    "interpretation": "This supplies a concrete maximum stack count and per-stack values that differ from the English page's X placeholders.",
+    "supportsClaimIds": [
+      "CLAIM-JA-BERSERKER-RANGED"
+    ],
+    "contradictsClaimIds": [],
+    "reliabilityNotes": "Japanese source; exact game-version applicability should still be checked.",
+    "sourceRefs": [
+      {
+        "sourceId": "ja-wiki-d500509ec61d",
+        "sourcePage": "アップグレード",
+        "section": "バーサーカーソウル（遠距離）",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "ダメージを与えると、バーサーカーソウルを最大70スタックまで獲得する。\n1スタックにつき与ダメージ +0.32%\n1スタックにつき攻撃速度 +0.64%\n1スタックにつき投射物拡散 +0.0285%\nドットダメージでは貯まらない。",
+        "translation": "Dealing damage grants Berserker's Soul, up to 70 stacks. Each stack gives +0.32% dealt damage, +0.64% Attack Speed, and +0.0285% projectile spread. Damage-over-time does not build stacks.",
+        "derivedFields": [
+          "maximum stacks",
+          "per-stack scaling",
+          "DoT exclusion"
+        ]
+      }
+    ],
+    "attachments": [],
+    "sourceCategory": "Japanese wiki",
+    "confidence": "Reported"
+  },
+  {
+    "id": "EVID-JA-SPELLSWORD-PIERCING",
+    "mechanicId": "skill-spellsword-piercing-strike",
+    "mechanicName": "Spellsword: Piercing Strike",
+    "questionId": "question-skill-spellsword-piercing-strike-attack-interval",
+    "questionIds": [
+      "question-skill-spellsword-piercing-strike-attack-interval"
+    ],
+    "type": "Japanese wiki",
+    "source": "Ecliptica Wiki* / スペルソード",
+    "date": "2026-08-07",
+    "originalInformation": "チャージ時間 | 0.170～5.075秒（攻撃速度1%につき約1.5%短縮）\nダメージ | 87～170\nクールダウン | 1.5秒\n最大50%の確率で出血を付与する。\n攻撃速度の影響を受ける。",
+    "translation": "Charge time: 0.170-5.075 seconds, shortened by approximately 1.5% per 1% Attack Speed. Damage: 87-170. Cooldown: 1.5 seconds. Bleeding can be applied with up to a 50% chance. Charge speed scales with Attack Speed.",
+    "interpretation": "This supplies concrete charge-time, damage, cooldown, and status-chance information for the English placeholders and Attack Speed question.",
+    "supportsClaimIds": [
+      "CLAIM-JA-SPELLSWORD-PIERCING"
+    ],
+    "contradictsClaimIds": [],
+    "reliabilityNotes": "Japanese source; the page presents the values as guide information rather than an experimentally verified record.",
+    "sourceRefs": [
+      {
+        "sourceId": "ja-wiki-b3b5f1e7e1a0",
+        "sourcePage": "スペルソード",
+        "section": "SECONDARY / ピアシングストライク",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "チャージ時間 | 0.170～5.075秒（攻撃速度1%につき約1.5%短縮）\nダメージ | 87～170\nクールダウン | 1.5秒\n最大50%の確率で出血を付与する。\n攻撃速度の影響を受ける。",
+        "translation": "Charge time: 0.170-5.075 seconds, shortened by approximately 1.5% per 1% Attack Speed. Damage: 87-170. Cooldown: 1.5 seconds. Bleeding can be applied with up to a 50% chance. Charge speed scales with Attack Speed.",
+        "derivedFields": [
+          "charge time",
+          "damage",
+          "cooldown",
+          "status chance",
+          "Attack Speed scaling"
+        ]
+      }
+    ],
+    "attachments": [],
+    "sourceCategory": "Japanese wiki",
+    "confidence": "Reported"
+  },
+  {
+    "id": "EVID-JA-SPELLSWORD-WHIRLWIND",
+    "mechanicId": "upgrade-spellsword-spellsword-whirlwind",
+    "mechanicName": "Spellsword: Whirlwind",
+    "questionId": "question-upgrade-spellsword-spellsword-whirlwind-damage",
+    "questionIds": [
+      "question-upgrade-spellsword-spellsword-whirlwind-damage",
+      "question-upgrade-spellsword-spellsword-whirlwind-stack-scaling"
+    ],
+    "type": "Japanese wiki",
+    "source": "Ecliptica Wiki* / スペルソード",
+    "date": "2026-08-07",
+    "originalInformation": "フルチャージのピアシングストライクで、球状の旋風を発射する。\n約0.1秒毎に継続的にダメージを与える。\n出血確率を引き継ぐ。旋風のダメージ自体にはクリティカル判定がない。",
+    "translation": "The Whirlwind deals damage approximately every 0.1 seconds, inherits Bleeding chance, and its damage never has a critical-hit check.",
+    "interpretation": "This supplies a tick interval and explicitly says the Whirlwind cannot critically strike, but it does not give the damage per tick or a stack formula.",
+    "supportsClaimIds": [
+      "CLAIM-JA-SPELLSWORD-WHIRLWIND"
+    ],
+    "contradictsClaimIds": [],
+    "reliabilityNotes": "Japanese source; damage magnitude remains unresolved.",
+    "sourceRefs": [
+      {
+        "sourceId": "ja-wiki-b3b5f1e7e1a0",
+        "sourcePage": "スペルソード",
+        "section": "スペルソード：ワールウィンド",
+        "retrievedAt": "2026-08-07",
+        "excerpt": "フルチャージのピアシングストライクで、球状の旋風を発射する。\n約0.1秒毎に継続的にダメージを与える。\n出血確率を引き継ぐ。旋風のダメージ自体にはクリティカル判定がない。",
+        "translation": "The Whirlwind deals damage approximately every 0.1 seconds, inherits Bleeding chance, and its damage never has a critical-hit check.",
+        "derivedFields": [
+          "tick interval",
+          "Bleeding inheritance",
+          "cannot crit"
+        ]
+      }
+    ],
+    "attachments": [],
+    "sourceCategory": "Japanese wiki",
+    "confidence": "Reported"
+  }
+]
